@@ -1,0 +1,6 @@
+{
+  "name": "Try Wears",
+  "description": "Premier B2B sports manufacturer & OEM/ODM factory for combat sportswear, team tracksuits, pro boxing gloves, MMA rashguards, and private label fight gear.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

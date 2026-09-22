@@ -1,0 +1,387 @@
+{
+  "seo": {
+    "title": "Try Wears | Elite Handcrafted Combat Gear, Custom Fightwear & Sports Apparel",
+    "description": "Try Wears specializes in elite handcrafted boxing gloves, custom fight gear, championship shin guards, and ultra-durable performance sportswear designed for athletes and champions."
+  },
+  "global": {
+    "brandName": "Try Wears",
+    "tagline": "OEM/ODM COMBAT SPORTS & ATHLETIC APPAREL FACTORY",
+    "accentColor": "#E21D1D",
+    "logo": "/media/home-page/branding/trylogo.png",
+    "phone": "+1 (800) 555-TRYW",
+    "email": "b2b@trywears.com",
+    "address": "Factory & Export Division: Sialkot Industrial Zone | Global Sales: HQ-2030 Manhattan, NY",
+    "socials": {
+      "instagram": "trywears",
+      "twitter": "trywears",
+      "youtube": "trywears"
+    }
+  },
+  "hero": {
+    "slides": [
+      {
+        "id": "slide-sports-wears",
+        "category": "SPORTS WEARS",
+        "title": "OEM / ODM CUSTOM SPORTS WEARS & TEAM KITS",
+        "subtitle": "PRO MATCH JERSEYS • ATHLETIC UNIFORMS • LOW MOQ 25 PCS",
+        "description": "Specialized sublimation manufacturing of football kits, basketball uniforms, athletic tracksuits, and high-tensile sports apparel. Certified Italian zero-fade inks, anti-microbial dri-fit fabric, and laser-cut ventilation.",
+        "image": "/media/home-page/hero-section/01_sports_jersey.jpg",
+        "buttonText": "CALCULATE B2B SPORTS WEARS",
+        "buttonLink": "#b2b-calculator",
+        "tag": "SPORTS WEARS • OEM / ODM",
+        "slots3D": [
+          {
+            "id": "sports-slot-1",
+            "title": "Pro Sublimated Match Jersey",
+            "subtitle": "CLO 3D Football Kit Simulation",
+            "image": "/media/home-page/hero-section/01_sports_jersey.jpg",
+            "badge": "CLO 3D SIMULATION",
+            "specs": "180GSM Micro-Interlock Poly • Italian Zero-Fade Sublimation"
+          },
+          {
+            "id": "sports-slot-2",
+            "title": "Custom Squad Warmup Tracksuit",
+            "subtitle": "2-Piece Tapered Team Kit",
+            "image": "/media/home-page/hero-section/02_gym_fitness.jpg",
+            "badge": "3D PATTERNED",
+            "specs": "Heavyweight Brushed Tricot • Aerodynamic Contrast Stripes"
+          },
+          {
+            "id": "sports-slot-3",
+            "title": "Athletic Quick-Dry Match Shorts",
+            "subtitle": "High-Mobility Slit Cut",
+            "image": "/media/home-page/hero-section/03_street_wear.jpg",
+            "badge": "TEARPROOF SATIN",
+            "specs": "Ultra-lightweight Microfiber • Inner Drawstring Elastic"
+          },
+          {
+            "id": "sports-slot-4",
+            "title": "Pro Compression Under-Layer",
+            "subtitle": "Second-Skin Base Armor",
+            "image": "/media/home-page/hero-section/04_leather_jacket.jpg",
+            "badge": "4-WAY STRETCH",
+            "specs": "240GSM Anti-Chafing Flatlock • Moisture-Wicking Spandex"
+          }
+        ]
+      },
+      {
+        "id": "slide-gym-fitness",
+        "category": "GYM AND FITNESS WEARS",
+        "title": "ENGINEERED GYM & FITNESS PERFORMANCE APPAREL",
+        "subtitle": "SEAMLESS KNIT • 4-WAY COMPRESSION • HIGH-FLEX SPANDEX",
+        "description": "Private label activewear for global fitness brands, bodybuilding gyms, and athletic influencers. Squat-proof seamless tights, muscle-fit tanks, compression rashguards, and custom silicone branded waistbands.",
+        "image": "/media/home-page/hero-section/02_gym_fitness.jpg",
+        "buttonText": "ORDER FITNESS SAMPLES",
+        "buttonLink": "#b2b-calculator",
+        "tag": "GYM & FITNESS WEARS",
+        "slots3D": [
+          {
+            "id": "gym-slot-1",
+            "title": "Seamless Compression Set",
+            "subtitle": "3D High-Flex Athletic Knit",
+            "image": "/media/home-page/hero-section/02_gym_fitness.jpg",
+            "badge": "CLO 3D SEAMLESS",
+            "specs": "Squat-Proof 320GSM Ribbed Knit • High-Waist Ergonomic Fit"
+          },
+          {
+            "id": "gym-slot-2",
+            "title": "Bodybuilding Stringer Tank",
+            "subtitle": "Deep-Cut Y-Back Silhouette",
+            "image": "/media/home-page/hero-section/03_street_wear.jpg",
+            "badge": "BREATHE-MESH",
+            "specs": "Ultra-combed 95/5 Cotton-Elastane • Raw-Edge Hemming"
+          },
+          {
+            "id": "gym-slot-3",
+            "title": "Heavy-Duty Gym Fleece Shorts",
+            "subtitle": "Raw Cut Functional Workout",
+            "image": "/media/home-page/hero-section/01_sports_jersey.jpg",
+            "badge": "FRENCH TERRY",
+            "specs": "360GSM Loopback Cotton • Deep Zippered Phone Pockets"
+          },
+          {
+            "id": "gym-slot-4",
+            "title": "Vanguard Compression Rashguard",
+            "subtitle": "Grappling & Lifting Shield",
+            "image": "/media/home-page/hero-section/04_leather_jacket.jpg",
+            "badge": "UV50+ PROTECT",
+            "specs": "6-Thread Flatlock Seams • Silicone Anti-Slip Hem"
+          }
+        ]
+      },
+      {
+        "id": "slide-street-wears",
+        "category": "STREET WEARS",
+        "title": "LUXURY STREET WEARS & HEAVYWEIGHT FLEECE",
+        "subtitle": "450GSM FRENCH TERRY • DROPPED SHOULDERS • BOX-FIT SILHOUETTES",
+        "description": "Custom streetwear manufacturing for contemporary high-fashion labels. Ultra-heavy 450GSM loopback cotton hoodies, vintage acid-wash oversized tees, techwear cargo joggers, and high-density 3D puff embroidery.",
+        "image": "/media/home-page/hero-section/03_street_wear.jpg",
+        "buttonText": "CUSTOM STREETWEAR RFQ",
+        "buttonLink": "#b2b-calculator",
+        "tag": "STREET WEARS • LUXURY HEAVY",
+        "slots3D": [
+          {
+            "id": "street-slot-1",
+            "title": "Heavyweight 450GSM Boxy Hoodie",
+            "subtitle": "Oversized Streetwear Silhouette",
+            "image": "/media/home-page/hero-section/03_street_wear.jpg",
+            "badge": "CLO 3D FLEECE",
+            "specs": "100% French Terry Cotton • Double-Layer Hood • Dropped Seams"
+          },
+          {
+            "id": "street-slot-2",
+            "title": "Acid-Wash Oversized Heavy Tee",
+            "subtitle": "260GSM Vintage Mineral Wash",
+            "image": "/media/home-page/hero-section/01_sports_jersey.jpg",
+            "badge": "VINTAGE WASH",
+            "specs": "Pre-Shrunk Organic Cotton • Thick 1.25\" Ribbed Collar"
+          },
+          {
+            "id": "street-slot-3",
+            "title": "Tech Tactical Cargo Joggers",
+            "subtitle": "Urban Modular Street Pants",
+            "image": "/media/home-page/hero-section/02_gym_fitness.jpg",
+            "badge": "MODULAR POCKETS",
+            "specs": "Water-Repellent Stretch Twill • Military Cobra Buckles"
+          },
+          {
+            "id": "street-slot-4",
+            "title": "Club Quarter-Zip Fleece Pullover",
+            "subtitle": "Relaxed Fit Urban Essential",
+            "image": "/media/home-page/hero-section/04_leather_jacket.jpg",
+            "badge": "CUSTOM EMBROIDERY",
+            "specs": "Brushed Micro-Fleece • Silver YKK Metal Hardware"
+          }
+        ]
+      },
+      {
+        "id": "slide-leather-jackets",
+        "category": "LEATHER JACKETS",
+        "title": "HANDCRAFTED GENUINE LEATHER JACKETS & VARSITY",
+        "subtitle": "100% FULL-GRAIN COWHIDE • YKK HARDWARE • BESPOKE EMBROIDERY",
+        "description": "Master artisanal leather outerwear production. Genuine top-grain cowhide, sheep nappa, and buffalo leather biker jackets, custom varsity wool-leather jackets, cafe racers, and vintage distressed bomber collections.",
+        "image": "/media/home-page/hero-section/04_leather_jacket.jpg",
+        "buttonText": "BESPOKE LEATHER ORDERS",
+        "buttonLink": "#b2b-calculator",
+        "tag": "LEATHER JACKETS • GENUINE GRAIN",
+        "slots3D": [
+          {
+            "id": "leather-slot-1",
+            "title": "Full-Grain Cowhide Biker Jacket",
+            "subtitle": "Asymmetric Heavy Moto Outerwear",
+            "image": "/images/3d_leather_jacket.jpg",
+            "badge": "CLO 3D LEATHER",
+            "specs": "1.2mm Drum-Dyed Cowhide • Heavy YKK Antique Silver Zips"
+          },
+          {
+            "id": "leather-slot-2",
+            "title": "Heritage Wool & Leather Varsity",
+            "subtitle": "Custom Chenille Squad Jacket",
+            "image": "/images/product_4.jpg",
+            "badge": "REAL LEATHER ARMS",
+            "specs": "24oz Melton Wool Body • Genuine Top-Grain Leather Sleeves"
+          },
+          {
+            "id": "leather-slot-3",
+            "title": "Classic Cafe Racer Moto Jacket",
+            "subtitle": "Mandarin Snap Collar Silhouette",
+            "image": "/images/hero_1.jpg",
+            "badge": "DIAMOND QUILTED",
+            "specs": "Waxed Antique Finish • CE Armor Compatible Pockets"
+          },
+          {
+            "id": "leather-slot-4",
+            "title": "Aviator Sheepskin Bomber Jacket",
+            "subtitle": "Authentic Shearling Flight Coat",
+            "image": "/images/b2b_factory.jpg",
+            "badge": "NATURAL SHEARLING",
+            "specs": "100% Thick Wool Fur Interior • Brass Buckle Waist Tabs"
+          }
+        ]
+      }
+    ]
+  },
+  "products": [
+    {
+      "id": "prod-1",
+      "name": "Try Wears Pro Sublimated Match Jersey",
+      "category": "Sports Wears",
+      "price": "$55.00",
+      "rating": 5.0,
+      "image": "/media/home-page/catalog-section/prod_01.jpg",
+      "description": "Engineered pro match jersey with zero-fade Italian sublimation, laser-cut ventilation panels, and moisture-wicking interlock.",
+      "specs": [
+        "180GSM Micro-Interlock Poly fabric",
+        "Sublimated club badge & squad numbers",
+        "CLO 3D athletic anatomical fit"
+      ],
+      "customizable": true,
+      "inStock": true
+    },
+    {
+      "id": "prod-2",
+      "name": "Try Wears Seamless Compression Fitness Set",
+      "category": "Gym and Fitness Wears",
+      "price": "$85.00",
+      "rating": 4.9,
+      "image": "/media/home-page/catalog-section/prod_02.jpg",
+      "description": "High-tensile seamless ribbed workout top and compression leggings. Squat-proof, 4-way stretch knit for high-intensity training.",
+      "specs": [
+        "320GSM High-flex seamless knit",
+        "Ergonomic compression contouring",
+        "Moisture-wicking dry-skin technology"
+      ],
+      "customizable": true,
+      "inStock": true
+    },
+    {
+      "id": "prod-3",
+      "name": "Try Wears Heavyweight 450GSM Boxy Hoodie",
+      "category": "Street Wears",
+      "price": "$125.00",
+      "rating": 4.9,
+      "image": "/media/home-page/catalog-section/prod_03.jpg",
+      "description": "Luxury oversized streetwear silhouette cut from ultra-dense loopback French terry. Dropped shoulders and double-lined hood.",
+      "specs": [
+        "450GSM 100% Combed French Terry Cotton",
+        "3D High-density puff embroidery ready",
+        "Reinforced ribbed hems and kangaroo pocket"
+      ],
+      "customizable": true,
+      "inStock": true
+    },
+    {
+      "id": "prod-4",
+      "name": "Try Wears Artisanal Cowhide Biker Leather Jacket",
+      "category": "Leather Jackets",
+      "price": "$295.00",
+      "rating": 5.0,
+      "image": "/media/home-page/catalog-section/prod_04.jpg",
+      "description": "Mastercrafted 1.2mm top-grain cowhide leather jacket with heavy antique silver YKK hardware and satin diamond-quilted lining.",
+      "specs": [
+        "100% Full-grain drum-dyed cowhide",
+        "Industrial heavy-gauge YKK metal zippers",
+        "Custom embossed brand badges & armor pockets"
+      ],
+      "customizable": true,
+      "inStock": true
+    },
+    {
+      "id": "prod-5",
+      "name": "Try Wears Heritage Wool & Leather Varsity",
+      "category": "Leather Jackets",
+      "price": "$260.00",
+      "rating": 4.9,
+      "image": "/media/home-page/catalog-section/prod_05.jpg",
+      "description": "Bespoke varsity letterman jacket featuring 24oz Melton wool body, genuine top-grain cowhide leather sleeves, and chenille embroidery.",
+      "specs": [
+        "24oz Heavy Melton wool core body",
+        "Genuine top-grain cowhide leather sleeves",
+        "Custom chenille squad patches & snap buttons"
+      ],
+      "customizable": true,
+      "inStock": true
+    },
+    {
+      "id": "prod-6",
+      "name": "Try Wears Vanguard MMA Compression Rashguard",
+      "category": "Gym and Fitness Wears",
+      "price": "$65.00",
+      "rating": 4.8,
+      "image": "/media/home-page/catalog-section/prod_06.jpg",
+      "description": "Vanguard 240GSM 4-way compression rashguard engineered for grappling, MMA sparring, and high-intensity strength conditioning.",
+      "specs": [
+        "240GSM Spandex/Lycra anti-chafing blend",
+        "6-Thread reinforced flatlock stitching",
+        "Anti-slip silicone internal hem grip"
+      ],
+      "customizable": true,
+      "inStock": true
+    },
+    {
+      "id": "prod-7",
+      "name": "Try Wears Corner Crew Pro Warmup Tracksuit",
+      "category": "Sports Wears",
+      "price": "$145.00",
+      "rating": 4.9,
+      "image": "/media/home-page/catalog-section/prod_07.jpg",
+      "description": "2-piece tapered athletic warmup tracksuit tailored in brushed tricot fleece with aerodynamic contrast racing stripes.",
+      "specs": [
+        "Heavyweight brushed tricot performance fabric",
+        "Zippered ankle tapered cuffs & coach pockets",
+        "Custom embroidered club badges & sponsor slots"
+      ],
+      "customizable": true,
+      "inStock": true
+    },
+    {
+      "id": "prod-8",
+      "name": "Try Wears Acid-Wash Oversized Heavy Tee",
+      "category": "Street Wears",
+      "price": "$48.00",
+      "rating": 4.8,
+      "image": "/media/home-page/catalog-section/prod_08.jpg",
+      "description": "Vintage mineral acid-wash heavyweight streetwear t-shirt with relaxed box-fit cut and thick 1.25-inch ribbed collar.",
+      "specs": [
+        "260GSM 100% Pre-shrunk organic cotton",
+        "Vintage mineral stone-wash treatment",
+        "Dropped shoulder streetwear silhouette"
+      ],
+      "customizable": true,
+      "inStock": true
+    },
+    {
+      "id": "prod-9",
+      "name": "Try Wears Apex Quick-Dry Fight Shorts",
+      "category": "Sports Wears",
+      "price": "$52.00",
+      "rating": 4.9,
+      "image": "/media/home-page/catalog-section/prod_09.jpg",
+      "description": "High-mobility athletic match shorts with curved lateral slits and inner drawstring elastic waistband for kick and sprint mobility.",
+      "specs": [
+        "Tearproof ultra-lightweight microfiber satin",
+        "4-way stretch flex inner crotch panel",
+        "Sublimated waistband with dual drawstrings"
+      ],
+      "customizable": true,
+      "inStock": true
+    }
+  ],
+  "technology": {
+    "title": "METALLIC METACARPAL TECH",
+    "subtitle": "2030 COMBAT INNOVATIONS",
+    "features": [
+      {
+        "id": "tech-1",
+        "title": "Carbon-Weave Frame",
+        "desc": "High-modulus carbon fiber shell distributed along stress points to deflect high-impact kinetic force."
+      },
+      {
+        "id": "tech-2",
+        "title": "Gel Matrix Dispersion",
+        "desc": "Shock-discharging core that evenly dissipates impact energy, minimizing knuckle fatigue and bone strain."
+      },
+      {
+        "id": "tech-3",
+        "title": "Biomechanical Wrist Lock",
+        "desc": "Extended triple-cuff structural system aligns the wrist and forearm, completely eliminating striking shifts."
+      }
+    ]
+  },
+  "testimonials": [
+    {
+      "id": "test-1",
+      "quote": "Try Wears combat gear feels like an extension of your own hand. The carbon gloves have completely transformed my punch support and speed.",
+      "author": "Marcus 'Sledge' Thompson",
+      "role": "WBA Heavyweight Champion",
+      "avatar": "MT"
+    },
+    {
+      "id": "test-2",
+      "quote": "I've worn every elite brand in my 15-year career. The Aegis Shin Guards are the first ones that never slide during hard grappling-to-kick transitions.",
+      "author": "Sora Takahashi",
+      "role": "ONE Championship Lightweight Fighter",
+      "avatar": "ST"
+    }
+  ]
+}
