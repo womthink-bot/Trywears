@@ -28,7 +28,7 @@ import {
   PRESET_3D_VIDEOS 
 } from "./Hero3DVideoModal";
 import { SportsHero3DCanvas } from "./SportsHero3DCanvas";
-import { Hero3DSlotsGrid } from "./Hero3DSlotsGrid";
+import { Interactive3DGarmentsStage } from "./Interactive3DGarmentsStage";
 import { Hero3DSlot } from "../types";
 
 export interface HeroSlide {
@@ -189,20 +189,10 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     <section
       id="hero-slider"
       ref={heroRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative min-h-[740px] sm:min-h-[820px] bg-neutral-950 overflow-hidden border-b border-neutral-900 select-none perspective-[1200px]"
+      className="relative min-h-[740px] sm:min-h-[820px] bg-neutral-950 overflow-hidden border-b border-neutral-900 select-none"
     >
-      {/* 3D TILT CONTAINER FOR FULL STAGE DEPTH */}
-      <div
-        className="w-full h-full min-h-[740px] sm:min-h-[820px] transition-transform duration-200 ease-out relative flex flex-col justify-between py-10"
-        style={{
-          transform: videoSettings.enable3DTilt
-            ? `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale3d(1.02, 1.02, 1.02)`
-            : "none",
-          transformStyle: "preserve-3d"
-        }}
-      >
+      {/* STRAIGHT, STABLE HERO CONTAINER (NO CROOKED 3D TILT ON MAIN SLIDE) */}
+      <div className="w-full h-full min-h-[740px] sm:min-h-[820px] relative flex flex-col justify-between py-10">
         {/* ================= BACKGROUND LAYER (3D VIDEO / HOLOGRAPHIC / SLIDES) ================= */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           
@@ -326,40 +316,8 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
               </div>
             </div>
 
-            {/* Right: Media Folders, 3D Video Manager Trigger & Media Controls */}
+            {/* Right: Audio Controls & Slide Counter (Pure International Storefront) */}
             <div className="flex items-center gap-2.5">
-              
-              {/* MEDIA FOLDERS EXPLORER BUTTON */}
-              <button
-                id="open-hero-media-folder-btn"
-                onClick={() => {
-                  if (onOpenMediaFolder) {
-                    onOpenMediaFolder("home-page/hero-section");
-                  } else {
-                    setIsModalOpen(true);
-                  }
-                }}
-                className="bg-neutral-900/90 hover:bg-neutral-800 text-white font-mono text-xs font-bold uppercase px-3.5 py-2 rounded-full shadow-lg border border-white/20 flex items-center gap-2 transition-all cursor-pointer group"
-                title="Open Hero Section Media Folder"
-              >
-                <FolderOpen className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform" />
-                <span className="hidden sm:inline">MEDIA FOLDERS</span>
-              </button>
-
-              {/* PRIMARY 3D VIDEO UPLOAD BUTTON */}
-              <button
-                id="upload-3d-video-btn"
-                onClick={() => setIsModalOpen(true)}
-                className="bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase px-4 py-2 rounded-full shadow-lg shadow-[#E21D1D]/30 border border-white/20 flex items-center gap-2 transition-all scale-100 hover:scale-105 cursor-pointer group"
-                title="Upload or manage 3D background videos"
-              >
-                <Upload className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
-                <span>3D VIDEO</span>
-                {videoSettings.isCustomUploaded && (
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse ml-0.5" />
-                )}
-              </button>
-
               {/* Video Audio Mute/Unmute quick toggle */}
               {videoSettings.activeMode === "3d-video" && (
                 <button
@@ -371,7 +329,7 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
                     }
                   }}
                   className="p-2 rounded-full bg-black/70 hover:bg-black/90 border border-white/15 text-neutral-300 hover:text-white transition-all cursor-pointer"
-                  title={videoSettings.isMuted ? "Unmute 3D Video Sound" : "Mute Video Sound"}
+                  title={videoSettings.isMuted ? "Unmute Sound" : "Mute Sound"}
                 >
                   {videoSettings.isMuted ? (
                     <VolumeX className="w-4 h-4 text-neutral-400" />
@@ -401,182 +359,16 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
             </div>
           </div>
 
-          {/* CENTER: 2-COLUMN 3D STAGE (LEFT: HEADLINE & CTAs, RIGHT: 4 3D VIDEO / GARMENT SHOWCASE BOXES) */}
-          <div 
-            className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center my-auto pt-4 pb-6"
-            style={{
-              transform: "translateZ(45px)",
-              transformStyle: "preserve-3d"
-            }}
-          >
-            {/* LEFT COLUMN: CATEGORY HEADLINE, DETAILS & CTAs */}
-            <div className="lg:col-span-7 space-y-4">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeSlideData.id}
-                  initial={{ opacity: 0, y: 25 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="space-y-4"
-                >
-                  {/* Category Badge Tag */}
-                  <div className="inline-flex items-center gap-2 bg-[#E21D1D] text-white text-[11px] font-mono font-black uppercase px-3.5 py-1 rounded-md tracking-wider sports-skew shadow-lg shadow-[#E21D1D]/30">
-                    <span className="sports-skew-reverse flex items-center gap-1.5">
-                      <Flame className="w-3.5 h-3.5" />
-                      {activeSlideData.category || activeSlideData.tag}
-                    </span>
-                  </div>
-
-                  {/* Subtitle */}
-                  <h3 className="text-xs sm:text-sm font-mono tracking-[0.2em] text-[#E21D1D] uppercase font-black drop-shadow-md">
-                    {activeSlideData.subtitle}
-                  </h3>
-
-                  {/* Main Headline */}
-                  <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-white tracking-tight leading-[0.95] uppercase drop-shadow-2xl">
-                    {activeSlideData.title}
-                  </h1>
-
-                  {/* Description */}
-                  <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed max-w-2xl drop-shadow-md">
-                    {activeSlideData.description}
-                  </p>
-
-                  {/* Action Buttons */}
-                  <div className="flex flex-wrap items-center gap-3 pt-2">
-                    <a
-                      href={activeSlideData.buttonLink}
-                      className="bg-[#E21D1D] hover:bg-red-700 text-white font-display font-black px-7 py-3.5 rounded-xl text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl shadow-[#E21D1D]/30 flex items-center gap-2 cursor-pointer group"
-                    >
-                      <span>{activeSlideData.buttonText}</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-                    </a>
-
-                    <a
-                      href="#factory-capabilities"
-                      className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-display font-bold px-5 py-3.5 rounded-xl text-xs sm:text-sm tracking-wider uppercase transition-all flex items-center gap-2 cursor-pointer backdrop-blur-md shadow-lg"
-                    >
-                      <Factory className="w-4 h-4 text-neutral-400" />
-                      <span>FACTORY TOUR</span>
-                    </a>
-
-                    <button
-                      onClick={() => setIsModalOpen(true)}
-                      className="bg-neutral-900/90 hover:bg-black text-neutral-300 hover:text-white border border-white/15 font-mono font-bold px-4 py-3.5 rounded-xl text-xs tracking-wider uppercase transition-all flex items-center gap-2 cursor-pointer backdrop-blur-md"
-                    >
-                      <Video className="w-4 h-4 text-[#E21D1D]" />
-                      <span>CUSTOMIZE 3D VIDEO</span>
-                    </button>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* RIGHT COLUMN: 4 3D VIDEO & GARMENT SHOWCASE BOXES */}
-            <div className="lg:col-span-5 w-full">
-              <Hero3DSlotsGrid
-                slots={activeSlideData.slots3D || []}
-                categoryName={activeSlideData.category || activeSlideData.tag}
-                slideId={activeSlideData.id}
-                onSlotVideoActivate={(videoUrl, title) => {
-                  handleSaveVideoSettings({
-                    ...videoSettings,
-                    videoUrl,
-                    videoTitle: title,
-                    isCustomUploaded: true,
-                    activeMode: "3d-video"
-                  });
-                }}
-              />
-            </div>
+          {/* CENTER: INTERACTIVE 3D MOVING GARMENTS STAGE (CURSOR-TRACKING 3D SHOWCASE - ZERO HERO TEXT) */}
+          <div className="w-full my-auto py-1">
+            <Interactive3DGarmentsStage 
+              currentCategoryIndex={currentSlide} 
+              onCategoryChange={(idx) => setCurrentSlide(idx)}
+            />
           </div>
 
-          {/* BOTTOM NAVIGATION CONTROLS & SLIDE THUMBNAILS (HERO SLIDESHOW) */}
-          <div 
-            className="space-y-4 pt-4"
-            style={{
-              transform: "translateZ(30px)"
-            }}
-          >
-            {/* Active Slide Timer Line */}
-            <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden">
-              <div
-                className="bg-[#E21D1D] h-full transition-all duration-75 ease-linear glow-red-sm"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-
-            {/* Interactive Slide Tabs & Controls */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              
-              {/* Slide Selector Cards */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full sm:w-auto">
-                {slides.map((slide, idx) => {
-                  const isActive = currentSlide === idx;
-                  return (
-                    <button
-                      key={slide.id}
-                      onClick={() => setCurrentSlide(idx)}
-                      className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer flex items-center gap-3 ${
-                        isActive
-                          ? "border-[#E21D1D] bg-black/85 shadow-md glow-red-sm"
-                          : "border-white/10 bg-black/40 hover:bg-black/60 opacity-60 hover:opacity-100"
-                      }`}
-                    >
-                      <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-neutral-900">
-                        <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="font-mono text-[9px] text-[#E21D1D] font-bold block leading-none">
-                          0{idx + 1}
-                        </span>
-                        <span className="font-display font-bold text-white text-[11px] truncate block leading-tight uppercase mt-0.5">
-                          {slide.category || slide.tag || slide.title}
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Manual Left/Right Arrow Controls & 3D Mode Shortcuts */}
-              <div className="hidden sm:flex items-center gap-2">
-                <div className="bg-black/60 border border-white/10 rounded-xl p-1 flex items-center gap-1 mr-2">
-                  <button
-                    onClick={() => {
-                      const nextMode = videoSettings.activeMode === "3d-video" ? "hologram" : videoSettings.activeMode === "hologram" ? "slides" : "3d-video";
-                      handleSaveVideoSettings({ ...videoSettings, activeMode: nextMode });
-                    }}
-                    className="px-2.5 py-1.5 rounded-lg text-[9px] font-mono text-neutral-300 hover:text-white uppercase transition-colors flex items-center gap-1 cursor-pointer"
-                    title="Cycle 3D Modes"
-                  >
-                    <Rotate3d className="w-3 h-3 text-[#E21D1D]" />
-                    <span>MODE: {videoSettings.activeMode}</span>
-                  </button>
-                </div>
-
-                <button
-                  onClick={handlePrev}
-                  className="p-3 rounded-xl border border-white/15 bg-black/60 text-neutral-300 hover:text-white hover:border-[#E21D1D] hover:bg-black/90 transition-all cursor-pointer"
-                  title="Previous Slide"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={handleNext}
-                  className="p-3 rounded-xl border border-white/15 bg-black/60 text-neutral-300 hover:text-white hover:border-[#E21D1D] hover:bg-black/90 transition-all cursor-pointer"
-                  title="Next Slide"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-
-            </div>
-          </div>
-
-          </div>
         </div>
+      </div>
 
       {/* ================= 3D VIDEO UPLOADER & MEDIA LAB MODAL ================= */}
       <Hero3DVideoModal

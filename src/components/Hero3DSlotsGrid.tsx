@@ -169,20 +169,19 @@ export const Hero3DSlotsGrid: React.FC<Hero3DSlotsGridProps> = ({
                   />
                 )}
 
-                {/* Hover Action Overlay: Sleek Upload & Expand Trigger */}
+                {/* Hover Action Overlay: Sleek Expand & Inspect Trigger */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-3 z-20 backdrop-blur-xs">
-                  
-                  {/* Upload 3D Video Button */}
+                  {/* View 3D Simulation Button */}
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      fileInputRefs.current[slot.id]?.click();
+                      setActiveSlotModal(slot);
                     }}
                     className="bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-[10px] font-black py-2.5 px-3.5 rounded-xl uppercase flex items-center justify-center gap-1.5 shadow-xl transition-transform active:scale-95 cursor-pointer"
-                    title="Upload 3D video or render"
+                    title="Inspect 3D Garment & Tech Specs"
                   >
-                    <Upload className="w-3.5 h-3.5" />
-                    <span>UPLOAD 3D VIDEO</span>
+                    <Eye className="w-3.5 h-3.5" />
+                    <span>VIEW 3D SIMULATION</span>
                   </button>
 
                   {/* Play in Hero Background */}
@@ -200,21 +199,6 @@ export const Hero3DSlotsGrid: React.FC<Hero3DSlotsGridProps> = ({
                       <span>PLAY HERO</span>
                     </button>
                   )}
-
-                  {/* Hidden File Input for this slot */}
-                  <input
-                    ref={(el) => {
-                      fileInputRefs.current[slot.id] = el;
-                    }}
-                    type="file"
-                    accept="video/mp4,video/webm,video/quicktime,image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        handleSlotFileUpload(slot, e.target.files[0]);
-                      }
-                    }}
-                  />
                 </div>
 
                 {/* Uploading progress spinner overlay */}
@@ -306,18 +290,15 @@ export const Hero3DSlotsGrid: React.FC<Hero3DSlotsGridProps> = ({
                   </p>
                 </div>
 
-                {/* Upload New Video for this Slot */}
+                {/* Professional B2B Buyer Action */}
                 <div className="flex gap-3">
-                  <button
-                    onClick={() => {
-                      fileInputRefs.current[activeSlotModal.id]?.click();
-                      setActiveSlotModal(null);
-                    }}
+                  <a
+                    href="#b2b-calculator"
+                    onClick={() => setActiveSlotModal(null)}
                     className="flex-1 bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black py-3 rounded-xl uppercase flex items-center justify-center gap-2 shadow-lg cursor-pointer transition-colors"
                   >
-                    <Upload className="w-4 h-4" />
-                    <span>Upload New 3D Video (.mp4 / .webm)</span>
-                  </button>
+                    <span>REQUEST B2B SAMPLE / TECH PACK</span>
+                  </a>
 
                   <button
                     onClick={() => setActiveSlotModal(null)}

@@ -325,30 +325,21 @@ app.get("/api/config", (req, res) => {
     // Auto-sync media from the structured folders
     const media = scanMediaFolders();
 
-    // 1. Home Page Hero Section: Auto-sync slides & video
+    // 1. Home Page Hero Section: Strictly 4 Core Category Slides
     const heroMedia = media["home-page/hero-section"] || [];
     const heroImages = heroMedia.filter((m) => m.type === "image");
     const heroVideos = heroMedia.filter((m) => m.type === "video");
     const globalVideos = (media["videos"] || []).filter((m) => m.type === "video");
 
-    // If hero section has image files, ensure they are in slides
-    if (heroImages.length > 0 && config.hero && config.hero.slides) {
-      const updatedSlides = heroImages.map((img, idx) => {
-        const existing = config.hero.slides[idx] || {};
-        return {
-          id: existing.id || `slide-${idx + 1}`,
-          category: existing.category || "COMBAT SPORTS APPAREL",
-          title: existing.title || `TRY WEARS COLLECTION 0${idx + 1}`,
-          subtitle: existing.subtitle || "OEM / ODM HIGH-PERFORMANCE PRODUCTION",
-          description: existing.description || "Handcrafted combat apparel, championship gloves, and custom athletic uniforms.",
-          image: img.relativePath,
-          buttonText: existing.buttonText || "EXPLORE COLLECTION",
-          buttonLink: existing.buttonLink || "#b2b-calculator",
-          tag: existing.tag || "PREMIUM PRODUCTION",
-          slots3D: existing.slots3D || []
-        };
+    // Strictly limit hero slides to the 4 main categories
+    if (config.hero && config.hero.slides) {
+      config.hero.slides = config.hero.slides.slice(0, 4);
+      // Map folder images to the 4 slides if available
+      heroImages.slice(0, 4).forEach((img, idx) => {
+        if (config.hero.slides[idx]) {
+          config.hero.slides[idx].image = img.relativePath;
+        }
       });
-      config.hero.slides = updatedSlides;
     }
 
     // If hero or global video exists, auto set active video

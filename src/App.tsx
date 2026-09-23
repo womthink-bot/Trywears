@@ -86,6 +86,27 @@ export default function App() {
 
   useEffect(() => {
     fetchConfig();
+
+    // Check if ?admin=true or ?media=true is in URL
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("admin") === "true" || params.get("media") === "true") {
+        setIsMediaManagerOpen(true);
+      }
+    } catch (e) {
+      // Non-blocking
+    }
+
+    // Background admin shortcut: Ctrl+Shift+A / Cmd+Shift+A
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "A" || e.key === "a")) {
+        e.preventDefault();
+        setIsMediaManagerOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   // Sync theme to root element
@@ -282,21 +303,6 @@ export default function App() {
 
           {/* Header Controls */}
           <div className="flex items-center gap-3 sm:gap-4">
-            
-            {/* Media Folders Quick Explorer Button */}
-            <button
-              id="media-manager-header-btn"
-              onClick={() => {
-                setMediaManagerFolder("home-page/hero-section");
-                setIsMediaManagerOpen(true);
-              }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-neutral-300 dark:border-white/15 bg-white/60 dark:bg-neutral-900 text-[10px] sm:text-xs font-mono font-bold text-neutral-800 dark:text-neutral-200 hover:border-[#E21D1D] hover:text-[#E21D1D] transition-all cursor-pointer shadow-sm"
-              title="Explore and manage website images & videos by section folders"
-            >
-              <FolderOpen className="w-3.5 h-3.5 text-amber-500" />
-              <span className="hidden sm:inline">MEDIA FOLDERS</span>
-            </button>
-
             {/* Elegant Theme Toggle Switcher */}
             <ThemeToggle theme={theme} onToggle={toggleTheme} />
 
