@@ -81,28 +81,20 @@ export const SportsMotionFX: React.FC = () => {
         />
       )}
 
-      {/* 4. FLOATING QUICK B2B RFQ TRIGGER */}
+      {/* 4. FLOATING QUICK SCROLL TO TOP */}
       {showScrollTop && (
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          className="fixed bottom-6 right-6 z-40 flex flex-col gap-2.5"
+          className="fixed bottom-6 right-6 z-40"
         >
-          <a
-            href="#b2b-calculator"
-            className="flex items-center gap-2 bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black py-3 px-4 rounded-2xl shadow-2xl shadow-[#E21D1D]/40 cursor-pointer group"
-          >
-            <Calculator className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-            <span className="hidden sm:inline uppercase">B2B RFQ CALCULATOR</span>
-          </a>
-
           <button
             onClick={scrollToTop}
-            className="self-end p-2.5 bg-neutral-900/90 border border-white/15 text-neutral-300 hover:text-white rounded-xl shadow-lg hover:border-white/30 transition-all cursor-pointer backdrop-blur-md"
+            className="p-3 bg-neutral-900/90 border border-white/15 text-neutral-300 hover:text-white rounded-xl shadow-lg hover:border-white/30 transition-all cursor-pointer backdrop-blur-md hover:bg-neutral-800"
             title="Scroll to Top"
           >
-            <ArrowUp className="w-4 h-4" />
+            <ArrowUp className="w-5 h-5" />
           </button>
         </motion.div>
       )}
