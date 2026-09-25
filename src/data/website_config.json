@@ -34,7 +34,7 @@
             "id": "sports-slot-1",
             "title": "Sublimated Pro Match Jersey",
             "subtitle": "Purple & Gold V-Neck",
-            "image": "/images/hero-3d/01_purple_jersey.jpg",
+            "image": "/images/sports-wears/01_purple_jersey.png",
             "badge": "CLO 3D MATCH GRADE",
             "specs": "180GSM Micro-Interlock Poly • Italian Zero-Fade Sublimation"
           },
@@ -42,7 +42,7 @@
             "id": "sports-slot-2",
             "title": "Classic Striped Football Kit",
             "subtitle": "White & Blue Striped Match Fit",
-            "image": "/images/hero-3d/02_white_blue_jersey.jpg",
+            "image": "/images/sports-wears/02_white_blue_jersey.png",
             "badge": "PRO ATHLETIC KIT",
             "specs": "Anti-Bacterial Dri-Fit • Laser-Cut Ventilation Panels"
           },
@@ -50,7 +50,7 @@
             "id": "sports-slot-3",
             "title": "Vanguard Squad Match Jersey",
             "subtitle": "Deep Navy & Royal Blue",
-            "image": "/images/hero-3d/05_navy_jersey.jpg",
+            "image": "/images/sports-wears/05_navy_jersey.png",
             "badge": "MATCH LEVEL UNIFORM",
             "specs": "Ergonomic Raglan Seaming • High-Flex Poly • Match Level"
           },
@@ -58,7 +58,7 @@
             "id": "sports-slot-4",
             "title": "Sublimated Championship Team Kit",
             "subtitle": "Crimson & Midnight Technical Jersey",
-            "image": "/images/hero-3d/sports_red_match_jersey.jpg",
+            "image": "/images/sports-wears/sports_red_match_jersey.png",
             "badge": "PRO ATHLETIC JERSEY",
             "specs": "Rapid Moisture Dry • High-Tensile Microfiber"
           }
@@ -79,7 +79,7 @@
             "id": "gym-slot-1",
             "title": "Seamless Ergonomic 3D Compression Top",
             "subtitle": "3D High-Flex Athletic Knit",
-            "image": "/images/hero-3d/gym_seamless.jpg",
+            "image": "/images/gym-fitness/gym_seamless.png",
             "badge": "3D SEAMLESS KNIT",
             "specs": "320GSM Ribbed Compression • Ergonomic Muscle Mapping"
           },
@@ -87,7 +87,7 @@
             "id": "gym-slot-2",
             "title": "Sculpted Hexagonal Impact Armor Top",
             "subtitle": "High-Impact Training Top",
-            "image": "/images/hero-3d/06_padded_armor.jpg",
+            "image": "/images/gym-fitness/06_padded_armor.png",
             "badge": "HEX IMPACT FOAM ARMOR",
             "specs": "Sculpted Abdominal & Shoulder Protection • 4-Way Stretch"
           },
@@ -95,7 +95,7 @@
             "id": "gym-slot-3",
             "title": "Pro Bodybuilding Stringer Tank",
             "subtitle": "Deep-Cut Athletic Armholes",
-            "image": "/images/hero-3d/gym_stringer_tank.jpg",
+            "image": "/images/gym-fitness/gym_stringer_tank.png",
             "badge": "PERFORMANCE STRINGER",
             "specs": "Quick-Dry 160GSM Microfiber • Raw Edge Reinforced Stitch"
           },
@@ -103,7 +103,7 @@
             "id": "gym-slot-4",
             "title": "4-Way Muscle Fit Compression Top",
             "subtitle": "Ergonomic Training Shield",
-            "image": "/images/hero-3d/gym_compression_top.jpg",
+            "image": "/images/gym-fitness/gym_compression_top.png",
             "badge": "ERGONOMIC RASHGUARD",
             "specs": "Honeycomb Breathable Panels • UV50+ Anti-Chafing Spandex"
           }
@@ -124,7 +124,7 @@
             "id": "street-slot-1",
             "title": "Luxury 450GSM French Terry Boxy Hoodie",
             "subtitle": "Oversized Streetwear Silhouette",
-            "image": "/images/hero-3d/street_hoodie.jpg",
+            "image": "/images/street-wears/street_hoodie.png",
             "badge": "450GSM FRENCH TERRY",
             "specs": "100% Pre-Shrunk Organic Cotton • Double Layer Hood • Dropped Seams"
           },
@@ -132,7 +132,7 @@
             "id": "street-slot-2",
             "title": "Heavyweight Raglan Zip Street Hoodie",
             "subtitle": "Red/White Contrast Raglan",
-            "image": "/images/hero-3d/03_red_white_hoodie.jpg",
+            "image": "/images/street-wears/03_red_white_hoodie.png",
             "badge": "HEAVYWEIGHT RAGLAN",
             "specs": "Heavy Antique Silver YKK Hardware • Boxy Urban Fit"
           },
@@ -140,7 +140,7 @@
             "id": "street-slot-3",
             "title": "Washed Heavyweight Oversized Street Tee",
             "subtitle": "260GSM Vintage Mineral Wash",
-            "image": "/images/hero-3d/street_oversized_tee.jpg",
+            "image": "/images/street-wears/street_oversized_tee.png",
             "badge": "300GSM OVERSIZED TEE",
             "specs": "Pre-Shrunk Organic Cotton • Thick Ribbed Collar"
           },
@@ -148,7 +148,7 @@
             "id": "street-slot-4",
             "title": "Urban Techwear Streetwear Jacket",
             "subtitle": "Modern Street Silhouette",
-            "image": "/images/hero-3d/street_tech_jacket.jpg",
+            "image": "/images/street-wears/street_tech_jacket.png",
             "badge": "URBAN TECHWEAR",
             "specs": "Matte Black Weatherproof Shell • Dual Tactical Zips"
           }
@@ -169,7 +169,7 @@
             "id": "leather-slot-1",
             "title": "Full-Grain Cowhide Biker Moto Jacket",
             "subtitle": "Asymmetric Heavy Moto Outerwear",
-            "image": "/images/hero-3d/leather_biker.jpg",
+            "image": "/images/leather-jackets/leather_biker.png",
             "badge": "1.2MM COWHIDE LEATHER",
             "specs": "1.2mm Drum-Dyed Cowhide • Heavy YKK Antique Silver Zips"
           },
@@ -177,7 +177,7 @@
             "id": "leather-slot-2",
             "title": "Heritage Wool & Leather Varsity",
             "subtitle": "Custom Chenille Squad Jacket",
-            "image": "/images/hero-3d/leather_varsity.jpg",
+            "image": "/images/leather-jackets/leather_varsity.png",
             "badge": "MELTON WOOL & COWHIDE",
             "specs": "24oz Melton Wool Body • Genuine Top-Grain Leather Sleeves"
           },
@@ -185,7 +185,7 @@
             "id": "leather-slot-3",
             "title": "Waxed Cafe Racer Moto Leather Jacket",
             "subtitle": "Mandarin Snap Collar Silhouette",
-            "image": "/images/hero-3d/leather_cafe_racer.jpg",
+            "image": "/images/leather-jackets/leather_cafe_racer.png",
             "badge": "MANDARIN SNAP MOTO",
             "specs": "Distressed Top-Grain Waxed Leather • Quilted Shoulders"
           },
@@ -193,7 +193,7 @@
             "id": "leather-slot-4",
             "title": "Aviator Shearling Bomber Leather Jacket",
             "subtitle": "Authentic Shearling Flight Coat",
-            "image": "/images/hero-3d/leather_aviator_jacket.jpg",
+            "image": "/images/leather-jackets/leather_aviator_jacket.png",
             "badge": "SHEARLING AVIATOR BOMBER",
             "specs": "Rich Espresso Full-Grain Leather • Heavy Shearling Wool Collar"
           }

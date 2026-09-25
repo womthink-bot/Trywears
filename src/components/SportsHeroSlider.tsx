@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "motion/react";
 import { 
   ArrowRight, 
   ChevronLeft, 
@@ -89,6 +89,39 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
   const videoRef = useRef<HTMLVideoElement>(null);
   const [tilt, setTilt] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const timerRef = useRef<any>(null);
+
+  // Scroll-Driven 3D Cinematic Motion
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  const smoothHeroScroll = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 24,
+    restDelta: 0.001
+  });
+
+  // 3D Parallax & Depth transforms
+  const heroScale = useTransform(smoothHeroScroll, [0, 1], [1, 0.92]);
+  const heroY = useTransform(smoothHeroScroll, [0, 1], [0, 140]);
+  const heroRotateX = useTransform(smoothHeroScroll, [0, 1], [0, 15]);
+  const heroOpacity = useTransform(smoothHeroScroll, [0, 0.85], [1, 0.25]);
+
+  // Video Background 3D Zoom & Recede
+  const bgScale = useTransform(smoothHeroScroll, [0, 1], [1.05, 1.25]);
+  const bgY = useTransform(smoothHeroScroll, [0, 1], [0, 80]);
+
+  // Floating Cyber Grid Parallax
+  const gridY = useTransform(smoothHeroScroll, [0, 1], [120, -40]);
+  const gridOpacity = useTransform(smoothHeroScroll, [0, 0.7], [0.25, 0.05]);
+
+  // HUD Top Bar Parallax
+  const hudY = useTransform(smoothHeroScroll, [0, 0.4], [0, -50]);
+  const hudOpacity = useTransform(smoothHeroScroll, [0, 0.35], [1, 0]);
+
+  // Floating Embers / Particles Parallax
+  const particlesY = useTransform(smoothHeroScroll, [0, 1], [0, -260]);
 
   const SLIDE_DURATION = 6000;
   const TICK_INTERVAL = 50;
@@ -191,10 +224,16 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
       ref={heroRef}
       className="relative min-h-[740px] sm:min-h-[820px] bg-neutral-950 overflow-hidden border-b border-neutral-900 select-none"
     >
-      {/* STRAIGHT, STABLE HERO CONTAINER (NO CROOKED 3D TILT ON MAIN SLIDE) */}
-      <div className="w-full h-full min-h-[740px] sm:min-h-[820px] relative flex flex-col justify-between py-10">
+      {/* STRAIGHT, STABLE HERO CONTAINER WITH 3D PERSPECTIVE SCROLL DYNAMICS */}
+      <div 
+        className="w-full h-full min-h-[740px] sm:min-h-[820px] relative flex flex-col justify-between py-10"
+        style={{ perspective: "1200px" }}
+      >
         {/* ================= BACKGROUND LAYER (3D VIDEO / HOLOGRAPHIC / SLIDES) ================= */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+          style={{ scale: bgScale, y: bgY }}
+        >
           
           {/* MODE 1: 3D VIDEO BACKGROUND */}
           {videoSettings.activeMode === "3d-video" && (
@@ -267,29 +306,62 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
 
           {/* 3D HOLOGRAPHIC CYBER FLOOR GRID */}
           {videoSettings.showHoloGrid && (
-            <div 
-              className="absolute inset-0 opacity-20 pointer-events-none"
+            <motion.div 
+              className="absolute inset-0 pointer-events-none"
               style={{
+                y: gridY,
+                opacity: gridOpacity,
                 backgroundImage: `
-                  linear-gradient(to right, rgba(226, 29, 29, 0.25) 1px, transparent 1px),
-                  linear-gradient(to bottom, rgba(226, 29, 29, 0.25) 1px, transparent 1px)
+                  linear-gradient(to right, rgba(226, 29, 29, 0.3) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgba(226, 29, 29, 0.3) 1px, transparent 1px)
                 `,
                 backgroundSize: "60px 60px",
-                transform: "perspective(600px) rotateX(65deg) scale(1.6) translateY(120px)",
+                transform: "perspective(600px) rotateX(65deg) scale(1.6)",
                 transformOrigin: "bottom center"
               }}
             />
           )}
 
+          {/* Atmospheric Floating 3D Spark Particles */}
+          <motion.div 
+            className="absolute inset-0 pointer-events-none overflow-hidden"
+            style={{ y: particlesY }}
+          >
+            {[
+              { top: "20%", left: "15%", size: 4, delay: 0 },
+              { top: "45%", left: "25%", size: 3, delay: 0.5 },
+              { top: "30%", left: "75%", size: 5, delay: 1 },
+              { top: "65%", left: "85%", size: 3, delay: 1.5 },
+              { top: "15%", left: "60%", size: 4, delay: 2 },
+              { top: "80%", left: "40%", size: 3, delay: 2.5 }
+            ].map((p, idx) => (
+              <div
+                key={idx}
+                className="absolute rounded-full bg-[#E21D1D] shadow-[0_0_12px_#E21D1D] animate-pulse"
+                style={{
+                  top: p.top,
+                  left: p.left,
+                  width: p.size,
+                  height: p.size,
+                  animationDelay: `${p.delay}s`,
+                  opacity: 0.7
+                }}
+              />
+            ))}
+          </motion.div>
+
           {/* Athletic Texture Hatch overlay */}
           <div className="absolute inset-0 athletic-hatch opacity-20 pointer-events-none" />
-        </div>
+        </motion.div>
 
         {/* ================= FOREGROUND CONTENT LAYER (HERO STAGE + 4 3D VIDEO BOXES) ================= */}
         <div className="relative z-20 max-w-7xl mx-auto px-6 w-full flex flex-col justify-between flex-1 pointer-events-auto">
           
-          {/* TOP 3D HUD CONTROLS BAR */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+          {/* TOP 3D HUD CONTROLS BAR (PARALLAX ON SCROLL) */}
+          <motion.div 
+            className="flex flex-wrap items-center justify-between gap-4 pt-2"
+            style={{ y: hudY, opacity: hudOpacity }}
+          >
             
             {/* Left Status Badges */}
             <div className="flex flex-wrap items-center gap-2.5">
@@ -357,15 +429,24 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
               </div>
 
             </div>
-          </div>
+          </motion.div>
 
-          {/* CENTER: INTERACTIVE 3D MOVING GARMENTS STAGE (CURSOR-TRACKING 3D SHOWCASE - ZERO HERO TEXT) */}
-          <div className="w-full my-auto py-1">
+          {/* CENTER: INTERACTIVE 3D MOVING GARMENTS STAGE WITH CONTINUOUS SCROLL DEPTH TRANSFORM */}
+          <motion.div 
+            className="w-full my-auto py-1"
+            style={{
+              scale: heroScale,
+              y: heroY,
+              rotateX: heroRotateX,
+              opacity: heroOpacity,
+              transformStyle: "preserve-3d"
+            }}
+          >
             <Interactive3DGarmentsStage 
               currentCategoryIndex={currentSlide} 
               onCategoryChange={(idx) => setCurrentSlide(idx)}
             />
-          </div>
+          </motion.div>
 
         </div>
       </div>

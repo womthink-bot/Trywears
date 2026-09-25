@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { MoveHorizontal, Eye, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pause, Play, Sparkles, ZoomIn, Eye, ArrowUpRight, X } from "lucide-react";
 
 export interface Garment3DProduct {
   id: string;
@@ -33,7 +33,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "sports-1",
         name: "Sublimated Pro Match Jersey",
         category: "SPORTS WEARS",
-        image: "/images/hero-3d/01_purple_jersey.jpg",
+        image: "/images/sports-wears/01_purple_jersey.png",
         badge: "CLO 3D MATCH GRADE",
         specs: "Purple & Gold V-Neck • 180GSM Micro-Interlock • Zero-Fade Italian Sublimation",
         accentColor: "#9333EA"
@@ -42,16 +42,16 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "sports-2",
         name: "Classic Striped Football Kit",
         category: "SPORTS WEARS",
-        image: "/images/hero-3d/02_white_blue_jersey.jpg",
+        image: "/images/sports-wears/02_white_blue_jersey.png",
         badge: "PRO ATHLETIC KIT",
-        specs: "White/Blue Striped • Anti-Bacterial Dri-Fit • Laser-Cut Ventilation",
+        specs: "White/Blue Striped • Anti-Bacterial Dri-Fit • Laser-Cut Ventilation Panels",
         accentColor: "#3B82F6"
       },
       {
         id: "sports-3",
         name: "Vanguard Squad Match Jersey",
         category: "SPORTS WEARS",
-        image: "/images/hero-3d/05_navy_jersey.jpg",
+        image: "/images/sports-wears/05_navy_jersey.png",
         badge: "MATCH LEVEL UNIFORM",
         specs: "Deep Navy & Royal Blue • Ergonomic Raglan Seaming • High-Flex Poly",
         accentColor: "#2563EB"
@@ -60,7 +60,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "sports-4",
         name: "Sublimated Championship Team Kit",
         category: "SPORTS WEARS",
-        image: "/images/hero-3d/sports_red_match_jersey.jpg",
+        image: "/images/sports-wears/sports_red_match_jersey.png",
         badge: "PRO ATHLETIC JERSEY",
         specs: "Crimson & Midnight Technical Mesh • Rapid Moisture Dry • Reinforced Seams",
         accentColor: "#E21D1D"
@@ -78,7 +78,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "gym-1",
         name: "Seamless Ergonomic 3D Compression Top",
         category: "GYM AND FITNESS WEARS",
-        image: "/images/hero-3d/gym_seamless.jpg",
+        image: "/images/gym-fitness/gym_seamless.png",
         badge: "3D SEAMLESS KNIT",
         specs: "320GSM Ribbed Compression • Ergonomic Muscle Mapping • Anti-Odor Spandex",
         accentColor: "#3B82F6"
@@ -87,7 +87,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "gym-2",
         name: "Sculpted Hexagonal Impact Armor Top",
         category: "GYM AND FITNESS WEARS",
-        image: "/images/hero-3d/06_padded_armor.jpg",
+        image: "/images/gym-fitness/06_padded_armor.png",
         badge: "HEX IMPACT FOAM ARMOR",
         specs: "Sculpted Abdominal & Shoulder Protection • 4-Way Stretch Compression",
         accentColor: "#06B6D4"
@@ -96,7 +96,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "gym-3",
         name: "Pro Bodybuilding Stringer Tank",
         category: "GYM AND FITNESS WEARS",
-        image: "/images/hero-3d/gym_stringer_tank.jpg",
+        image: "/images/gym-fitness/gym_stringer_tank.png",
         badge: "PERFORMANCE STRINGER",
         specs: "Deep Athletic Armholes • Quick-Dry 160GSM Microfiber • Raw Edge Stitch",
         accentColor: "#E21D1D"
@@ -105,7 +105,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "gym-4",
         name: "4-Way Muscle Fit Compression Top",
         category: "GYM AND FITNESS WEARS",
-        image: "/images/hero-3d/gym_compression_top.jpg",
+        image: "/images/gym-fitness/gym_compression_top.png",
         badge: "ERGONOMIC RASHGUARD",
         specs: "Muscle-Mapped Contouring • Honeycomb Breathable Panels • UV50+ Anti-Chafing",
         accentColor: "#10B981"
@@ -123,7 +123,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "street-1",
         name: "Luxury 450GSM French Terry Boxy Hoodie",
         category: "STREET WEARS",
-        image: "/images/hero-3d/street_hoodie.jpg",
+        image: "/images/street-wears/street_hoodie.png",
         badge: "450GSM FRENCH TERRY",
         specs: "100% Pre-Shrunk Organic Cotton • Double Layer Hood • Dropped Seams",
         accentColor: "#F59E0B"
@@ -132,7 +132,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "street-2",
         name: "Heavyweight Raglan Zip Street Hoodie",
         category: "STREET WEARS",
-        image: "/images/hero-3d/03_red_white_hoodie.jpg",
+        image: "/images/street-wears/03_red_white_hoodie.png",
         badge: "HEAVYWEIGHT RAGLAN",
         specs: "Red/White Contrast Raglan • Heavy Antique Silver YKK Hardware • Boxy Fit",
         accentColor: "#EF4444"
@@ -141,7 +141,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "street-3",
         name: "Washed Heavyweight Oversized Street Tee",
         category: "STREET WEARS",
-        image: "/images/hero-3d/street_oversized_tee.jpg",
+        image: "/images/street-wears/street_oversized_tee.png",
         badge: "300GSM OVERSIZED TEE",
         specs: "Washed Vintage Charcoal • Dropped Shoulders • Heavy Ribbed Crewneck",
         accentColor: "#A855F7"
@@ -150,7 +150,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "street-4",
         name: "Urban Techwear Streetwear Jacket",
         category: "STREET WEARS",
-        image: "/images/hero-3d/street_tech_jacket.jpg",
+        image: "/images/street-wears/street_tech_jacket.png",
         badge: "URBAN TECHWEAR",
         specs: "Matte Black Weatherproof Shell • Dual Tactical Zips • Modern Street Silhouette",
         accentColor: "#E21D1D"
@@ -168,7 +168,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "leather-1",
         name: "Full-Grain Cowhide Biker Moto Jacket",
         category: "LEATHER JACKETS",
-        image: "/images/hero-3d/leather_biker.jpg",
+        image: "/images/leather-jackets/leather_biker.png",
         badge: "1.2MM COWHIDE LEATHER",
         specs: "Drum-Dyed Top-Grain Cowhide • Heavy YKK Asymmetric Zips • Quilted Lining",
         accentColor: "#E21D1D"
@@ -177,7 +177,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "leather-2",
         name: "Heritage Wool & Leather Varsity",
         category: "LEATHER JACKETS",
-        image: "/images/hero-3d/leather_varsity.jpg",
+        image: "/images/leather-jackets/leather_varsity.png",
         badge: "MELTON WOOL & COWHIDE",
         specs: "Heavy 24oz Melton Wool Body • Genuine Cowhide Sleeves • Snap Hardware",
         accentColor: "#D97706"
@@ -186,7 +186,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "leather-3",
         name: "Waxed Cafe Racer Moto Leather Jacket",
         category: "LEATHER JACKETS",
-        image: "/images/hero-3d/leather_cafe_racer.jpg",
+        image: "/images/leather-jackets/leather_cafe_racer.png",
         badge: "MANDARIN SNAP MOTO",
         specs: "Distressed Top-Grain Waxed Leather • Quilted Shoulders • Antique Brass Hardware",
         accentColor: "#B45309"
@@ -195,7 +195,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         id: "leather-4",
         name: "Aviator Shearling Bomber Leather Jacket",
         category: "LEATHER JACKETS",
-        image: "/images/hero-3d/leather_aviator_jacket.jpg",
+        image: "/images/leather-jackets/leather_aviator_jacket.png",
         badge: "SHEARLING AVIATOR BOMBER",
         specs: "Rich Espresso Full-Grain Leather • Heavy Shearling Wool Collar • Brass Buckle Straps",
         accentColor: "#854D0E"
@@ -217,10 +217,13 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Active category state
+  // Active category & product states
   const [activeCategory, setActiveCategory] = useState<number>(currentCategoryIndex);
+  const [activeFocusCard, setActiveFocusCard] = useState<number>(0);
+  const [hoveredCardIdx, setHoveredCardIdx] = useState<number | null>(null);
+  const [localTilt, setLocalTilt] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
-  const [progress, setProgress] = useState<number>(0);
+  const [selectedProduct, setSelectedProduct] = useState<Garment3DProduct | null>(null);
 
   // Sync with prop if changed from outside
   useEffect(() => {
@@ -231,266 +234,58 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
   const changeCategory = useCallback((index: number) => {
     const clamped = Math.max(0, Math.min(CATEGORIES_3D_DATA.length - 1, index));
     setActiveCategory(clamped);
-    setProgress(0);
+    setActiveFocusCard(0);
+    setHoveredCardIdx(null);
     if (onCategoryChange) {
       onCategoryChange(clamped);
     }
   }, [onCategoryChange]);
 
-  // ================= 1. AUTO-CHANGE FUNCTIONALITY ("khod sy change bhi hon") =================
-  const AUTO_DURATION = 5500; // 5.5 seconds per category
-  const TICK_INTERVAL = 50;
-  const timerRef = useRef<any>(null);
-  const startTimeRef = useRef<number>(Date.now());
+  // Handle local micro-tilt on hovered product
+  const handleProductMouseMove = (e: React.MouseEvent<HTMLDivElement>, idx: number) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1; // -1 to 1
+    const y = ((e.clientY - rect.top) / rect.height) * 2 - 1; // -1 to 1
+    setLocalTilt({ x: x * 14, y: -y * 10 });
+  };
 
+  const handleProductMouseLeave = () => {
+    setHoveredCardIdx(null);
+    setLocalTilt({ x: 0, y: 0 });
+  };
+
+  // Auto-play cycle for slides
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (!isAutoPlaying || hoveredCardIdx !== null) return;
 
-    startTimeRef.current = Date.now();
-    setProgress(0);
+    const timer = setInterval(() => {
+      setActiveFocusCard((prev) => (prev + 1) % 4);
+    }, 4500);
 
-    timerRef.current = setInterval(() => {
-      const elapsed = Date.now() - startTimeRef.current;
-      const pct = Math.min((elapsed / AUTO_DURATION) * 100, 100);
-      setProgress(pct);
-
-      if (elapsed >= AUTO_DURATION) {
-        setActiveCategory((prev) => {
-          const next = (prev + 1) % CATEGORIES_3D_DATA.length;
-          if (onCategoryChange) onCategoryChange(next);
-          return next;
-        });
-        startTimeRef.current = Date.now();
-        setProgress(0);
-      }
-    }, TICK_INTERVAL);
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [activeCategory, isAutoPlaying, onCategoryChange]);
-
-  // ================= 2. MOUSE MOVEMENT FUNCTIONALITY ("sath mouse movement sy bhi change hon") =================
-  const targetPos = useRef({ x: 0, y: 0 });
-  const currentPos = useRef({ x: 0, y: 0 });
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-
-  // Drag interaction state
-  const isDragging = useRef(false);
-  const startDragX = useRef(0);
-  const dragOffset = useRef(0);
-  const currentDragOffset = useRef(0);
-  const [panX, setPanX] = useState(0);
-
-  // Active / Hovered product
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<Garment3DProduct | null>(null);
-
-  // Smooth lerp animation loop for butter-smooth momentum
-  useEffect(() => {
-    let animId: number;
-
-    const updatePhysics = () => {
-      // Interpolate cursor coords
-      currentPos.current.x += (targetPos.current.x - currentPos.current.x) * 0.08;
-      currentPos.current.y += (targetPos.current.y - currentPos.current.y) * 0.08;
-
-      // Interpolate drag / pan offset
-      currentDragOffset.current += (dragOffset.current - currentDragOffset.current) * 0.1;
-
-      // Base pan from cursor position (-1 to 1) -> moves items horizontally
-      const cursorPan = -currentPos.current.x * 200;
-      const totalPan = cursorPan + currentDragOffset.current;
-
-      setCoords({
-        x: currentPos.current.x,
-        y: currentPos.current.y
-      });
-      setPanX(totalPan);
-
-      animId = requestAnimationFrame(updatePhysics);
-    };
-
-    animId = requestAnimationFrame(updatePhysics);
-    return () => cancelAnimationFrame(animId);
-  }, []);
-
-  // Last mouse zone to avoid rapid jitter
-  const lastZoneRef = useRef<number>(activeCategory);
-
-  // Handle mouse move across container:
-  // - Computes normalized coordinates for 3D tilt & pan
-  // - Divides screen into 4 interactive zones to change categories with horizontal cursor movement!
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-
-    // Normalized from -1 (left) to +1 (right), -1 (top) to +1 (bottom)
-    const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    const normY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-
-    targetPos.current = {
-      x: Math.max(-1, Math.min(1, normX)),
-      y: Math.max(-1, Math.min(1, normY))
-    };
-
-    // Calculate mouse position zone across 4 categories (0 to 1 across width)
-    const ratio = Math.max(0, Math.min(0.999, (e.clientX - rect.left) / rect.width));
-    const detectedZone = Math.floor(ratio * 4); // 0, 1, 2, 3
-
-    // Change category when moving mouse across zones (with slight hysteresis)
-    if (detectedZone !== lastZoneRef.current && Math.abs(ratio - (detectedZone * 0.25 + 0.125)) < 0.15) {
-      lastZoneRef.current = detectedZone;
-      changeCategory(detectedZone);
-    }
-
-    // Drag handling
-    if (isDragging.current) {
-      const deltaX = e.clientX - startDragX.current;
-      dragOffset.current += deltaX * 0.4;
-      startDragX.current = e.clientX;
-
-      // Drag threshold to change category
-      if (dragOffset.current > 160) {
-        changeCategory((activeCategory - 1 + 4) % 4);
-        dragOffset.current = 0;
-      } else if (dragOffset.current < -160) {
-        changeCategory((activeCategory + 1) % 4);
-        dragOffset.current = 0;
-      }
-    }
-  }, [activeCategory, changeCategory]);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    isDragging.current = true;
-    startDragX.current = e.clientX;
-    setIsAutoPlaying(false);
-  };
-
-  const handleMouseUp = () => {
-    isDragging.current = false;
-    dragOffset.current = 0;
-  };
-
-  const handleMouseLeave = () => {
-    isDragging.current = false;
-    dragOffset.current = 0;
-    targetPos.current = { x: 0, y: 0 };
-    setIsAutoPlaying(true);
-  };
-
-  // Wheel scroll to change category
-  const handleWheel = (e: React.WheelEvent) => {
-    if (Math.abs(e.deltaX) > 30 || Math.abs(e.deltaY) > 40) {
-      if (e.deltaX > 0 || e.deltaY > 0) {
-        changeCategory((activeCategory + 1) % 4);
-      } else {
-        changeCategory((activeCategory - 1 + 4) % 4);
-      }
-    }
-  };
-
-  // Touch handling for mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      isDragging.current = true;
-      startDragX.current = e.touches[0].clientX;
-      setIsAutoPlaying(false);
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!containerRef.current || e.touches.length === 0) return;
-    const touch = e.touches[0];
-    const rect = containerRef.current.getBoundingClientRect();
-
-    const normX = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
-    const normY = ((touch.clientY - rect.top) / rect.height) * 2 - 1;
-
-    targetPos.current = {
-      x: Math.max(-1, Math.min(1, normX)),
-      y: Math.max(-1, Math.min(1, normY))
-    };
-
-    if (isDragging.current) {
-      const deltaX = touch.clientX - startDragX.current;
-      dragOffset.current += deltaX * 0.7;
-      startDragX.current = touch.clientX;
-
-      if (dragOffset.current > 120) {
-        changeCategory((activeCategory - 1 + 4) % 4);
-        dragOffset.current = 0;
-      } else if (dragOffset.current < -120) {
-        changeCategory((activeCategory + 1) % 4);
-        dragOffset.current = 0;
-      }
-    }
-  };
-
-  const handleTouchEnd = () => {
-    isDragging.current = false;
-    dragOffset.current = 0;
-    setIsAutoPlaying(true);
-  };
-
-  // 3D tilt values
-  const rotateY = coords.x * 14;
-  const rotateX = -coords.y * 8;
+    return () => clearInterval(timer);
+  }, [isAutoPlaying, hoveredCardIdx]);
 
   const currentCollection = CATEGORIES_3D_DATA[activeCategory] || CATEGORIES_3D_DATA[0];
 
   return (
     <div
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseLeave}
-      onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      className="relative w-full min-h-[560px] sm:min-h-[620px] lg:min-h-[660px] flex flex-col items-center justify-between overflow-hidden cursor-grab active:cursor-grabbing select-none"
-      style={{
-        perspective: "1200px"
-      }}
+      className="relative w-full flex flex-col items-center justify-between select-none py-2"
+      style={{ perspective: "1500px" }}
     >
-      {/* Dynamic Overhead Spotlight that tracks cursor */}
-      <div
-        className="absolute top-0 w-[640px] h-[360px] rounded-full blur-[110px] pointer-events-none opacity-45 transition-transform duration-300"
-        style={{
-          background: `radial-gradient(circle, ${currentCollection.accentColor}40 0%, rgba(255, 255, 255, 0.15) 35%, transparent 70%)`,
-          transform: `translateX(${coords.x * 220}px) translateY(-40px)`
-        }}
-      />
-
-      {/* Luxury Charcoal Studio Background Vignette */}
-      <div className="absolute inset-0 bg-radial from-transparent via-neutral-950/70 to-neutral-950 pointer-events-none" />
-
-      {/* Studio Floor Reflection & Shadow Plane */}
-      <div 
-        className="absolute bottom-16 left-0 right-0 h-44 pointer-events-none"
-        style={{
-          background: "linear-gradient(to top, rgba(0,0,0,0.95), transparent)",
-          transform: "rotateX(75deg)"
-        }}
-      />
-
-      {/* TOP: MINIMALIST CATEGORY HUD (NO CLUTTERED TEXT, CLEAN STATUS & CATEGORY PILLS) */}
-      <div className="relative z-30 w-full px-4 pt-2 flex flex-wrap items-center justify-between gap-3 pointer-events-auto">
-        {/* Left: Active 4 Categories Selector Pills (Click or hover to switch) */}
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 bg-black/80 backdrop-blur-md border border-white/10 p-1.5 rounded-2xl shadow-xl">
+      {/* 1. TOP CATEGORY SELECTOR (SIMPLE, SLEEK PILLS) */}
+      <div className="relative z-20 w-full max-w-5xl mx-auto px-4 mb-4 flex flex-col items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {CATEGORIES_3D_DATA.map((cat, idx) => {
             const isActive = activeCategory === idx;
             return (
               <button
                 key={cat.id}
                 onClick={() => changeCategory(idx)}
-                onMouseEnter={() => changeCategory(idx)}
-                className={`px-3 sm:px-4 py-1.5 rounded-xl font-mono text-[10px] sm:text-xs font-bold uppercase transition-all cursor-pointer flex items-center gap-2 ${
+                className={`px-4 sm:px-5 py-2 rounded-full font-mono text-xs sm:text-sm font-bold uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                   isActive
-                    ? "bg-[#E21D1D] text-white shadow-lg shadow-[#E21D1D]/40 font-black scale-105"
-                    : "text-neutral-400 hover:text-white hover:bg-neutral-900"
+                    ? "bg-[#E21D1D] text-white shadow-[0_0_25px_rgba(226,29,29,0.55)] font-black scale-105"
+                    : "text-neutral-400 hover:text-white bg-black/60 hover:bg-neutral-900 border border-white/10"
                 }`}
               >
                 <span className={isActive ? "text-white/80" : "text-[#E21D1D]"}>{cat.code}</span>
@@ -500,243 +295,229 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
           })}
         </div>
 
-        {/* Right: Auto-Change Play/Pause & Left/Right Arrows */}
-        <div className="flex items-center gap-2 bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-2xl font-mono text-xs">
-          <button
-            onClick={() => changeCategory((activeCategory - 1 + 4) % 4)}
-            className="p-1 text-neutral-400 hover:text-white transition-colors cursor-pointer"
-            title="Previous Category"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-
-          <span className="text-[#E21D1D] font-black">{currentCollection.code}</span>
-          <span className="text-neutral-600">/</span>
-          <span className="text-neutral-400">04</span>
-
-          <button
-            onClick={() => changeCategory((activeCategory + 1) % 4)}
-            className="p-1 text-neutral-400 hover:text-white transition-colors cursor-pointer"
-            title="Next Category"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-
-          <span className="text-neutral-700">|</span>
-
-          <button
-            onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-            className="p-1 text-neutral-400 hover:text-white transition-colors cursor-pointer"
-            title={isAutoPlaying ? "Pause Auto-Change" : "Resume Auto-Change"}
-          >
-            {isAutoPlaying ? <Pause className="w-3.5 h-3.5 text-emerald-400" /> : <Play className="w-3.5 h-3.5" />}
-          </button>
-        </div>
+        {/* Minimal Category Tagline */}
+        <p className="text-[10px] sm:text-xs font-mono text-neutral-400 tracking-widest uppercase text-center mt-1">
+          {currentCollection.tagline}
+        </p>
       </div>
 
-      {/* CENTER: INTERACTIVE 3D MOVING STAGE (DYNAMIC CATEGORY PRODUCTS WITH 3D CURSOR PARALLAX) */}
-      <div className="relative z-20 w-full flex-1 flex items-center justify-center my-auto py-4">
+      {/* 2. FREESTANDING 3D GARMENTS SHOWCASE (NO BOXES, INSTANT CURSOR HOVER ZOOM) */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-2 sm:px-6 my-auto min-h-[440px] sm:min-h-[500px] lg:min-h-[560px] flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentCollection.id}
-            initial={{ opacity: 0, scale: 0.97, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: -15 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="relative flex items-center justify-center gap-5 sm:gap-8 lg:gap-12 transition-transform duration-75 ease-out w-full px-4"
-            style={{
-              transform: `translateX(${panX}px)`,
-              transformStyle: "preserve-3d"
-            }}
+            className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 items-center justify-center"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            {(() => {
-              const activeCursorIdx = hoveredIdx !== null 
-                ? hoveredIdx 
-                : Math.max(0, Math.min(3, Math.floor(((coords.x + 1) / 2) * 4)));
+            {currentCollection.products.map((product, idx) => {
+              const isHovered = hoveredCardIdx === idx;
+              const isAnotherHovered = hoveredCardIdx !== null && hoveredCardIdx !== idx;
+              const isAutoActive = hoveredCardIdx === null && activeFocusCard === idx;
 
-              return currentCollection.products.map((product, idx) => {
-                const itemOffsetX = (idx - 1.5) * 230 + panX;
-                const normalizedDist = Math.abs(itemOffsetX) / 320;
-                const isCenter = normalizedDist < 0.6;
-                const isHovered = activeCursorIdx === idx;
+              // 3D Transform values
+              let scale = 1;
+              let zDepth = 0;
+              let translateY = 0;
+              let rotY = 0;
+              let rotX = 0;
+              let opacity = 1;
 
-                const zDepth = isHovered ? 65 : isCenter ? 35 : Math.max(0, 20 - normalizedDist * 12);
-                const scale = isHovered ? 1.07 : isCenter ? 1.02 : 0.94;
-                const brightness = isHovered ? 1.1 : isCenter ? 1.0 : 0.88;
-
-                // Individual 3D card tilt towards cursor
-                const cardRotateY = rotateY * (isHovered ? 1.1 : 0.7);
-                const cardRotateX = rotateX * (isHovered ? 1.1 : 0.7);
-
-                return (
-                  <motion.div
-                    key={product.id}
-                    onMouseEnter={() => setHoveredIdx(idx)}
-                    onMouseLeave={() => setHoveredIdx(null)}
-                    onClick={() => {
-                      setSelectedProduct(product);
-                      if (onSelectProduct) onSelectProduct(product);
-                    }}
-                    animate={{
-                      y: [0, -10, 0]
-                    }}
-                    transition={{
-                      duration: 4 + (idx % 2) * 0.6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: idx * 0.35
-                    }}
-                    className="relative shrink-0 w-[200px] sm:w-[240px] lg:w-[270px] aspect-3/4 flex flex-col items-center justify-end group transition-all duration-300 cursor-pointer"
-                    style={{
-                      transform: `translateZ(${zDepth}px) rotateY(${cardRotateY}deg) rotateX(${cardRotateX}deg) scale(${scale})`,
-                      transformStyle: "preserve-3d"
-                    }}
-                  >
-                    {/* Garment Studio Card */}
-                    <div 
-                      className={`relative w-full h-full rounded-3xl overflow-hidden transition-all duration-300 border ${
-                        isHovered
-                          ? "border-[#E21D1D] shadow-2xl shadow-[#E21D1D]/35 scale-[1.02]"
-                          : isCenter
-                          ? "border-white/25 shadow-xl shadow-black/85"
-                          : "border-white/10 opacity-90 shadow-lg shadow-black/90"
-                      }`}
-                      style={{
-                        filter: `brightness(${brightness})`,
-                        background: "radial-gradient(circle at 50% 30%, #222226 0%, #121215 65%, #09090b 100%)"
-                      }}
-                    >
-                      {/* Garment Image */}
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                        loading="eager"
-                        referrerPolicy="no-referrer"
-                      />
-
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-white/10 pointer-events-none" />
-
-                      {/* Top Micro Badges */}
-                      <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-                        <span className="bg-black/80 backdrop-blur-md border border-white/15 text-white font-mono text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">
-                          {product.badge}
-                        </span>
-                        
-                        <div className="w-6 h-6 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white/80 group-hover:text-white group-hover:border-[#E21D1D] transition-colors">
-                          <Eye className="w-3 h-3" />
-                        </div>
-                      </div>
-
-                      {/* Bottom Title Bar on Card */}
-                      <div className="absolute bottom-0 inset-x-0 p-3.5 bg-gradient-to-t from-black via-black/80 to-transparent flex flex-col gap-0.5">
-                        <span className="text-[9px] font-mono text-[#E21D1D] uppercase font-bold tracking-widest">
-                          {product.category}
-                        </span>
-                        <span className="text-xs sm:text-sm font-display font-black text-white uppercase tracking-wide truncate">
-                          {product.name}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* REALISTIC 3D CONTACT FLOOR SHADOW UNDERNEATH GARMENT */}
-                    <div
-                      className="w-3/4 h-7 rounded-[100%] blur-[12px] bg-black/90 transition-all duration-300 mt-2.5"
-                      style={{
-                        transform: `translateX(${-coords.x * 12}px) scale(${isHovered ? 0.85 : 1})`,
-                        opacity: isHovered ? 0.5 : 0.85
-                      }}
-                    />
-                  </motion.div>
-                );
-              });
-            })()}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* BOTTOM: 4 MINI GARMENT CARDS (CHOTA SIZE OF UPPER IMAGES TO FILL SPACE & MENTION HOVERED PRODUCT) */}
-      <div className="relative z-30 w-full max-w-6xl mx-auto px-4 pb-3 pt-2 pointer-events-auto">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
-          {(() => {
-            const activeCursorIdx = hoveredIdx !== null 
-              ? hoveredIdx 
-              : Math.max(0, Math.min(3, Math.floor(((coords.x + 1) / 2) * 4)));
-
-            return currentCollection.products.map((product, idx) => {
-              const isMentioned = activeCursorIdx === idx;
+              if (isHovered) {
+                scale = 1.32; // PROMINENT ZOOM ON HOVER
+                zDepth = 120; // Glides forward in 3D perspective
+                translateY = -28; // Lifts upward
+                rotY = localTilt.x; // Responsive micro-tilt
+                rotX = localTilt.y;
+                opacity = 1;
+              } else if (isAnotherHovered) {
+                scale = 0.88; // Recedes smoothly when another product is zoomed
+                zDepth = -30;
+                translateY = 6;
+                opacity = 0.38;
+              } else if (isAutoActive) {
+                scale = 1.05;
+                zDepth = 30;
+                translateY = -6;
+                opacity = 1;
+              }
 
               return (
-                <button
-                  key={`mini-shelf-${product.id}`}
+                <div
+                  key={product.id}
+                  onMouseEnter={() => {
+                    setHoveredCardIdx(idx);
+                    setActiveFocusCard(idx);
+                    setIsAutoPlaying(false);
+                  }}
+                  onMouseMove={(e) => handleProductMouseMove(e, idx)}
+                  onMouseLeave={handleProductMouseLeave}
                   onClick={() => {
                     setSelectedProduct(product);
                     if (onSelectProduct) onSelectProduct(product);
                   }}
-                  onMouseEnter={() => setHoveredIdx(idx)}
-                  onMouseLeave={() => setHoveredIdx(null)}
-                  className={`relative p-2 sm:p-2.5 rounded-2xl border text-left transition-all duration-300 cursor-pointer flex items-center gap-2.5 sm:gap-3 group backdrop-blur-md ${
-                    isMentioned
-                      ? "border-[#E21D1D] bg-neutral-900/95 shadow-xl shadow-[#E21D1D]/35 scale-[1.03] ring-1 ring-[#E21D1D]/50"
-                      : "border-white/10 bg-black/60 hover:bg-black/85 hover:border-white/20 opacity-75 hover:opacity-100"
+                  className={`relative flex flex-col items-center justify-end cursor-pointer group transition-all duration-500 ease-out ${
+                    isHovered ? "z-40" : "z-10"
                   }`}
+                  style={{
+                    transform: `translateZ(${zDepth}px) translateY(${translateY}px) scale(${scale}) rotateY(${rotY}deg) rotateX(${rotX}deg)`,
+                    transformStyle: "preserve-3d"
+                  }}
                 >
-                  {/* Mini Image (Chota Size) */}
-                  <div className="w-11 h-14 sm:w-13 sm:h-16 rounded-xl overflow-hidden shrink-0 bg-neutral-900 border border-white/10 relative">
+                  {/* Atmospheric Glow Spotlight Behind Freestanding Garment */}
+                  <div
+                    className={`absolute inset-0 rounded-full blur-[45px] transition-all duration-500 pointer-events-none ${
+                      isHovered
+                        ? "opacity-90 scale-125"
+                        : isAutoActive
+                        ? "opacity-40 scale-100"
+                        : "opacity-0 scale-75"
+                    }`}
+                    style={{
+                      background: `radial-gradient(circle, ${product.accentColor} 0%, rgba(226, 29, 29, 0.25) 45%, transparent 70%)`
+                    }}
+                  />
+
+                  {/* FREESTANDING PRODUCT IMAGE (100% TRANSPARENT PNG CUTOUT - NO BOX, NO FRAME) */}
+                  <div className="relative w-full h-[280px] sm:h-[340px] md:h-[390px] lg:h-[430px] flex items-center justify-center">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className={`w-full h-full object-contain filter transition-all duration-500 drop-shadow-[0_22px_32px_rgba(0,0,0,0.85)] ${
+                        isHovered
+                          ? "scale-105 drop-shadow-[0_32px_45px_rgba(0,0,0,0.95)]"
+                          : isAnotherHovered
+                          ? "grayscale-[20%] opacity-40 scale-95"
+                          : ""
+                      }`}
                       loading="eager"
+                      referrerPolicy="no-referrer"
                     />
-                    {isMentioned && (
-                      <div className="absolute inset-0 bg-[#E21D1D]/20 pointer-events-none" />
+
+                    {/* Subtle Zoom Badge On Hover */}
+                    {isHovered && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8, y: -4 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        className="absolute top-2 right-2 bg-black/85 backdrop-blur-md border border-[#E21D1D]/70 text-white font-mono text-[9px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-xl pointer-events-none"
+                      >
+                        <ZoomIn className="w-3.5 h-3.5 text-[#E21D1D] animate-pulse" />
+                        <span>ZOOMED 3D</span>
+                      </motion.div>
                     )}
                   </div>
 
-                  {/* Info & Active Mention */}
-                  <div className="min-w-0 flex-1 flex flex-col justify-center">
-                    <div className="flex items-center justify-between gap-1">
-                      <span className={`font-mono text-[9px] font-black uppercase tracking-wider ${
-                        isMentioned ? "text-[#E21D1D]" : "text-neutral-500"
-                      }`}>
-                        0{idx + 1}
-                      </span>
-                      {isMentioned && (
-                        <span className="inline-flex items-center gap-1 bg-[#E21D1D]/20 border border-[#E21D1D]/40 text-[#E21D1D] text-[8px] font-mono font-bold px-1.5 py-0.5 rounded-full uppercase animate-pulse">
-                          <span className="w-1 h-1 rounded-full bg-[#E21D1D]" />
-                          CURSOR FOCUS
+                  {/* 3D Soft Floor Contact Shadow */}
+                  <div
+                    className="w-3/4 h-5 rounded-[100%] blur-[12px] bg-black/95 transition-all duration-500 pointer-events-none -mt-2"
+                    style={{
+                      transform: `scale(${isHovered ? 1.4 : isAutoActive ? 1.1 : 0.95})`,
+                      opacity: isHovered ? 0.95 : isAnotherHovered ? 0.25 : 0.65
+                    }}
+                  />
+
+                  {/* CLEAN PRODUCT TYPOGRAPHY (NO BOX CONTAINER) */}
+                  <div
+                    className={`mt-2 flex flex-col items-center text-center transition-all duration-400 ${
+                      isHovered
+                        ? "opacity-100 translate-y-0"
+                        : isAnotherHovered
+                        ? "opacity-25 translate-y-1"
+                        : "opacity-80 translate-y-0"
+                    }`}
+                  >
+                    <span className="text-[9px] font-mono font-black text-[#E21D1D] tracking-widest uppercase">
+                      {product.badge}
+                    </span>
+                    <h4 className="text-xs sm:text-sm lg:text-base font-display font-black text-white uppercase tracking-wider mt-0.5 line-clamp-1 group-hover:text-red-400 transition-colors">
+                      {product.name}
+                    </h4>
+
+                    {/* Quick Specs Revealed on Hover */}
+                    <div className="h-5 flex items-center justify-center mt-1">
+                      {isHovered ? (
+                        <motion.span
+                          initial={{ opacity: 0, y: 4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="text-[9px] font-mono text-neutral-300 line-clamp-1 max-w-[200px]"
+                        >
+                          {product.specs}
+                        </motion.span>
+                      ) : (
+                        <span className="text-[9px] font-mono text-neutral-500 uppercase tracking-widest">
+                          0{idx + 1} / 04 • HOVER TO ZOOM
                         </span>
                       )}
                     </div>
-
-                    <span className={`font-display font-bold text-[11px] sm:text-xs truncate uppercase mt-0.5 block leading-tight ${
-                      isMentioned ? "text-white font-black" : "text-neutral-300"
-                    }`}>
-                      {product.name}
-                    </span>
-
-                    <span className="text-[9px] font-mono text-neutral-400 truncate uppercase mt-0.5 block">
-                      {product.badge}
-                    </span>
                   </div>
-                </button>
+                </div>
               );
-            });
-          })()}
+            })}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* 3. SLEEK MINIMALIST CONTROLS BAR (CLEAN SLOTS & TOUR PLAY/PAUSE) */}
+      <div className="relative z-20 w-full max-w-4xl mx-auto px-4 pt-3 mt-2 border-t border-white/5 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+        <div className="flex items-center gap-2 text-neutral-400">
+          <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />
+          <span className="text-white font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
+            HOVER ANY PRODUCT TO ZOOM • CLICK FOR B2B TECH PACK
+          </span>
         </div>
 
-        {/* Progress Bar for Auto-Change */}
-        <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden mt-3">
-          <div
-            className="bg-[#E21D1D] h-full transition-all duration-75 ease-linear glow-red-sm"
-            style={{ width: `${progress}%` }}
-          />
+        <div className="flex items-center gap-3">
+          {/* Minimal 4-Slot Dot Selectors */}
+          <div className="flex items-center gap-1.5">
+            {currentCollection.products.map((p, idx) => {
+              const isSelected = activeFocusCard === idx || hoveredCardIdx === idx;
+              return (
+                <button
+                  key={`dot-${p.id}`}
+                  onClick={() => {
+                    setActiveFocusCard(idx);
+                    setIsAutoPlaying(false);
+                  }}
+                  onMouseEnter={() => setHoveredCardIdx(idx)}
+                  onMouseLeave={handleProductMouseLeave}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    isSelected
+                      ? "w-7 bg-[#E21D1D] shadow-[0_0_10px_#E21D1D]"
+                      : "w-2 bg-white/20 hover:bg-white/50"
+                  }`}
+                  title={p.name}
+                />
+              );
+            })}
+          </div>
+
+          <div className="h-4 w-px bg-white/10" />
+
+          {/* Auto-Play Toggle */}
+          <button
+            onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white font-mono text-[10px] uppercase transition-colors cursor-pointer"
+            title={isAutoPlaying ? "Pause Auto-Tour" : "Start Auto-Tour"}
+          >
+            {isAutoPlaying ? (
+              <>
+                <Pause className="w-3 h-3 text-emerald-400" />
+                <span className="hidden sm:inline">TOUR ON</span>
+              </>
+            ) : (
+              <>
+                <Play className="w-3 h-3" />
+                <span className="hidden sm:inline">PAUSED</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
 
-      {/* INSPECT 3D GARMENT MODAL */}
+      {/* 4. FULLSCREEN 3D PRODUCT INSPECTOR MODAL (OPENED ON CLICK) */}
       <AnimatePresence>
         {selectedProduct && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -745,7 +526,7 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedProduct(null)}
-              className="fixed inset-0 bg-black/85 backdrop-blur-md cursor-pointer"
+              className="fixed inset-0 bg-black/90 backdrop-blur-md cursor-pointer"
             />
 
             <motion.div
@@ -754,14 +535,14 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="relative w-full max-w-xl bg-neutral-950 border border-neutral-800 rounded-3xl overflow-hidden z-10 shadow-2xl"
             >
-              <div className="relative aspect-4/3 w-full bg-neutral-900 overflow-hidden">
+              <div className="relative aspect-4/3 w-full bg-neutral-900 overflow-hidden flex items-center justify-center p-6">
                 <img
                   src={selectedProduct.image}
                   alt={selectedProduct.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.9)]"
                 />
-                
-                {/* Floating Authentic TRY WEARS Crest in Modal */}
+
+                {/* Floating Authentic TRY WEARS Crest */}
                 <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/85 backdrop-blur-md border border-[#E21D1D]/50 px-3 py-1.5 rounded-full shadow-xl">
                   <div className="w-6 h-6 rounded-full bg-black p-0.5 border border-[#E21D1D] flex items-center justify-center">
                     <img src="/images/trylogo_transparent.png" alt="TRY WEARS" className="w-full h-full object-contain" />
@@ -775,7 +556,7 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                   onClick={() => setSelectedProduct(null)}
                   className="absolute top-4 right-4 p-2 rounded-full bg-black/80 border border-white/20 text-white hover:bg-neutral-800 transition-colors cursor-pointer"
                 >
-                  ✕
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
@@ -813,7 +594,7 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                   </a>
                   <button
                     onClick={() => setSelectedProduct(null)}
-                    className="px-5 py-3.5 rounded-xl border border-neutral-800 text-neutral-300 font-mono text-xs font-bold uppercase hover:bg-neutral-900 transition-colors cursor-pointer"
+                    className="px-5 py-3.5 rounded-xl border border-white/20 text-neutral-300 hover:text-white font-mono text-xs uppercase tracking-wider transition-colors cursor-pointer"
                   >
                     CLOSE
                   </button>

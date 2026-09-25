@@ -36,7 +36,37 @@ import { SportsMotionFX } from "./components/SportsMotionFX";
 import { B2BWholesaleCalculator } from "./components/B2BWholesaleCalculator";
 import { B2BFactoryCapabilities } from "./components/B2BFactoryCapabilities";
 import { MediaManagerModal } from "./components/MediaManagerModal";
+import { ScrollDeconstructed3DGarment } from "./components/ScrollDeconstructed3DGarment";
 import fallbackConfig from "./data/website_config.json";
+
+// Staggered entrance animation variants for collections product grid
+const productGridContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.08
+    }
+  }
+};
+
+const productCardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+    scale: 0.95
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
 
 export default function App() {
   const [config, setConfig] = useState<WebsiteConfig | null>(null);
@@ -289,16 +319,18 @@ export default function App() {
           </a>
 
           {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-[11px] font-mono font-bold uppercase tracking-widest">
-            <a href="#collections" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Collections</a>
-            <a href="#b2b-calculator" className="text-[#E21D1D] hover:underline transition-colors flex items-center gap-1.5">
+          <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-[11px] font-mono font-bold uppercase tracking-widest">
+            <a href="#3d-deconstruction" className="text-[#E21D1D] hover:underline transition-colors flex items-center gap-1 font-black">
               <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping" />
+              3D Deconstruct
+            </a>
+            <a href="#collections" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Collections</a>
+            <a href="#b2b-calculator" className="text-neutral-700 dark:text-neutral-300 hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">
               B2B Wholesale RFQ
             </a>
             <a href="#factory-capabilities" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Factory & OEM</a>
             <a href="#customizer" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Bespoke 3D Lab</a>
             <a href="#technology" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Tech Specs</a>
-            <a href="#collaborations" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Enlist</a>
           </nav>
 
           {/* Header Controls */}
@@ -336,17 +368,45 @@ export default function App() {
       {/* 4. INFINITE SPORTS B2B MANUFACTURING MARQUEE */}
       <SportsB2BMarquee />
 
-      {/* 4. ASYMMETRICAL BENTO GRID PRODUCTS SECTION */}
-      <section id="collections" className="py-24 px-6 bg-neutral-50 dark:bg-[#050505] border-b border-neutral-200/60 dark:border-neutral-900 transition-colors">
-        <div className="max-w-7xl mx-auto space-y-16">
+      {/* 5. $20K IMMERSIVE SCROLL-DRIVEN 3D GARMENT DECONSTRUCTION SECTION */}
+      <ScrollDeconstructed3DGarment />
+
+      {/* 6. ASYMMETRICAL BENTO GRID PRODUCTS SECTION WITH 3D CINEMATIC ATMOSPHERE */}
+      <section id="collections" className="relative py-28 px-6 bg-neutral-950 border-b border-neutral-800 transition-colors overflow-hidden select-none">
+        {/* Cinematic Background Floor Grid */}
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-20"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(226, 29, 29, 0.2) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px)
+            `,
+            backgroundSize: "60px 60px",
+            maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)"
+          }}
+        />
+
+        {/* Ambient Volumetric Red Light Glow */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-[#E21D1D]/15 rounded-full blur-[160px] pointer-events-none" />
+
+        <div className="relative z-10 max-w-7xl mx-auto space-y-16">
           
           {/* Section Heading & Category Filter Tabs */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-6"
+          >
             <div>
-              <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block mb-1 uppercase">
-                BRAND ARMORY & OEM CATALOG
-              </span>
-              <h2 className="text-4xl font-display font-black tracking-tight dark:text-white uppercase leading-none">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />
+                <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block uppercase">
+                  BRAND ARMORY & OEM CATALOG • 3D VALIDATED
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-white uppercase leading-none">
                 CHAMPIONSHIP APPAREL & GEAR
               </h2>
             </div>
@@ -365,10 +425,10 @@ export default function App() {
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCatalogCategory(cat.id)}
-                    className={`px-3 py-1.5 rounded-full font-mono text-[10px] font-bold uppercase transition-all cursor-pointer ${
+                    className={`px-4 py-2 rounded-full font-mono text-[10px] font-black uppercase transition-all cursor-pointer ${
                       isActive
-                        ? "bg-[#E21D1D] text-white shadow-md shadow-[#E21D1D]/30"
-                        : "bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:text-white hover:bg-neutral-800"
+                        ? "bg-[#E21D1D] text-white shadow-lg shadow-[#E21D1D]/40 scale-105"
+                        : "bg-neutral-900 border border-white/10 text-neutral-400 hover:text-white hover:bg-neutral-800"
                     }`}
                   >
                     {cat.label}
@@ -376,10 +436,18 @@ export default function App() {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Bento Product Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          {/* Bento Product Grid with Staggered 3D Motion */}
+          <motion.div
+            key={selectedCatalogCategory}
+            variants={productGridContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.08 }}
+            className="grid grid-cols-1 md:grid-cols-12 gap-8"
+            style={{ perspective: "1200px" }}
+          >
             {config.products
               .filter((p) =>
                 selectedCatalogCategory === "ALL"
@@ -394,29 +462,50 @@ export default function App() {
                 : "md:col-span-4 flex flex-col justify-between";
 
               return (
-                <div
+                <motion.div
                   key={prod.id}
-                  className={`bg-white dark:bg-[#0c0c0c] rounded-3xl border border-neutral-200/60 dark:border-white/5 overflow-hidden group hover:shadow-2xl hover:border-[#E21D1D]/40 dark:hover:border-[#E21D1D]/25 transition-all duration-300 relative ${gridClass}`}
+                  variants={productCardVariants}
+                  whileHover={{ 
+                    y: -10, 
+                    rotateX: 3, 
+                    rotateY: -2, 
+                    scale: 1.015,
+                    transition: { duration: 0.3, ease: "easeOut" } 
+                  }}
+                  className={`bg-[#0d0d12] rounded-3xl border border-white/10 overflow-hidden group hover:shadow-[0_25px_60px_rgba(226,29,29,0.25)] hover:border-[#E21D1D]/60 transition-all duration-300 relative ${gridClass}`}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
+                  {/* Cyber Corner Accent */}
+                  <div className="absolute top-0 right-0 w-8 h-8 pointer-events-none overflow-hidden z-20">
+                    <div className="absolute top-0 right-0 w-12 h-1 bg-[#E21D1D] -rotate-45 translate-x-3 -translate-y-2 opacity-60 group-hover:opacity-100 transition-opacity" />
+                  </div>
+
                   {/* Security transparent protection layer */}
                   <div className="absolute inset-0 z-20 bg-transparent select-none pointer-events-none" />
 
                   {/* Left Column or Upper Column: Image container with overlay protection */}
-                  <div className={`relative bg-neutral-50 dark:bg-neutral-950 overflow-hidden ${
-                    isLargeCard ? "md:w-1/2 min-h-[300px]" : "h-64"
+                  <div className={`relative bg-neutral-950 overflow-hidden ${
+                    isLargeCard ? "md:w-1/2 min-h-[320px]" : "h-68"
                   }`}>
                     <img
                       src={prod.image}
                       alt={prod.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out filter brightness-105"
                       referrerPolicy="no-referrer"
                     />
                     
+                    {/* Hover Hologram Lighting Sweep */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-[#E21D1D]/20 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
                     {/* Absolute Overlay blocks direct save */}
                     <div className="absolute inset-0 z-20 bg-transparent select-none pointer-events-auto" />
 
-                    <div className="absolute top-4 right-4 z-10 bg-black/75 backdrop-blur-xs px-3 py-1 rounded-full text-[9px] font-mono text-[#E21D1D] font-bold border border-[#E21D1D]/20">
+                    <div className="absolute top-4 right-4 z-10 bg-black/85 backdrop-blur-md px-3.5 py-1 rounded-full text-[9px] font-mono text-[#E21D1D] font-black border border-[#E21D1D]/40 shadow-lg">
                       {prod.category}
+                    </div>
+
+                    <div className="absolute bottom-3 left-4 z-10 bg-black/75 backdrop-blur-md px-2.5 py-0.5 rounded-md text-[8px] font-mono text-neutral-300 border border-white/10">
+                      ★ 3D SPEC VERIFIED
                     </div>
                   </div>
 
@@ -430,7 +519,7 @@ export default function App() {
                           <h3
                             data-editable-path={`products[${idx}].name`}
                             data-editable-label={`Product ${idx + 1} Name`}
-                            className="text-lg font-display font-bold dark:text-white uppercase leading-tight"
+                            className="text-lg font-display font-black text-white uppercase leading-tight group-hover:text-[#E21D1D] transition-colors"
                           >
                             {prod.name}
                           </h3>
@@ -438,7 +527,7 @@ export default function App() {
                         <span
                           data-editable-path={`products[${idx}].price`}
                           data-editable-label={`Product ${idx + 1} Price`}
-                          className="font-mono font-black text-[#E21D1D] shrink-0 text-sm"
+                          className="font-mono font-black text-[#E21D1D] shrink-0 text-base"
                         >
                           {prod.price}
                         </span>
@@ -447,16 +536,16 @@ export default function App() {
                       <p
                         data-editable-path={`products[${idx}].description`}
                         data-editable-label={`Product ${idx + 1} Description`}
-                        className="text-xs text-neutral-500 dark:text-neutral-400 font-sans leading-relaxed"
+                        className="text-xs text-neutral-400 font-sans leading-relaxed"
                       >
                         {prod.description}
                       </p>
 
                       {/* Specs Bullet Points */}
-                      <ul className="space-y-1.5 pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                      <ul className="space-y-1.5 pt-3 border-t border-white/10">
                         {prod.specs.map((spec, sIdx) => (
-                          <li key={sIdx} className="flex items-center gap-2 text-[10px] font-mono text-neutral-400">
-                            <span className="h-1 w-1 bg-[#E21D1D] rounded-full" />
+                          <li key={sIdx} className="flex items-center gap-2 text-[10px] font-mono text-neutral-300">
+                            <span className="h-1.5 w-1.5 bg-[#E21D1D] rounded-full shadow-[0_0_6px_#E21D1D]" />
                             <span
                               data-editable-path={`products[${idx}].specs[${sIdx}]`}
                               data-editable-label={`Product ${idx + 1} Spec ${sIdx + 1}`}
@@ -473,7 +562,7 @@ export default function App() {
                       {prod.customizable ? (
                         <a
                           href="#customizer"
-                          className="flex-1 bg-[#E21D1D] hover:bg-red-700 text-white text-center font-display font-bold py-2.5 rounded-xl text-[10px] uppercase tracking-widest transition-colors flex items-center justify-center gap-1.5 shadow-md"
+                          className="flex-1 bg-[#E21D1D] hover:bg-red-700 text-white text-center font-display font-black py-3 rounded-2xl text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-[#E21D1D]/30"
                         >
                           <span>CUSTOMIZE BIOMETRICS</span>
                           <Plus className="w-3.5 h-3.5" />
@@ -487,7 +576,7 @@ export default function App() {
                               selectedSize: "Standard"
                             })
                           }
-                          className="flex-1 bg-neutral-950 dark:bg-neutral-800 hover:bg-neutral-900 dark:hover:bg-neutral-700 text-white text-center font-display font-bold py-2.5 rounded-xl text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                          className="flex-1 bg-neutral-900 hover:bg-[#E21D1D] text-white text-center font-display font-black py-3 rounded-2xl text-[10px] uppercase tracking-widest transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md border border-white/10 hover:border-[#E21D1D]"
                         >
                           <span>SECURE DIRECT ORDER</span>
                           <ArrowUpRight className="w-3.5 h-3.5" />
@@ -495,18 +584,32 @@ export default function App() {
                       )}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* 5. B2B WHOLESALE FOB PRICING & RFQ CALCULATOR */}
-      <B2BWholesaleCalculator />
+      {/* 5. B2B WHOLESALE FOB PRICING & RFQ CALCULATOR (SCROLL-DRIVEN MOTION) */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <B2BWholesaleCalculator />
+      </motion.div>
 
-      {/* 6. FACTORY OEM & PRODUCTION INFRASTRUCTURE */}
-      <B2BFactoryCapabilities />
+      {/* 6. FACTORY OEM & PRODUCTION INFRASTRUCTURE (SCROLL-DRIVEN MOTION) */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <B2BFactoryCapabilities />
+      </motion.div>
 
       {/* 7. INTERACTIVE CUSTOMIZER SECTION */}
       <section id="customizer" className="py-24 border-b border-neutral-200/60 dark:border-neutral-900 bg-white dark:bg-[#050505] transition-colors">
