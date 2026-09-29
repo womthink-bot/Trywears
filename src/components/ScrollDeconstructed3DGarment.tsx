@@ -230,7 +230,7 @@ const CATEGORY_BACKGROUND_THEMES: Record<
 
 // ==============================================================
 // ✦ HIGH-PERFORMANCE HARDWARE-ACCELERATED SEAMLESS VIDEO PLAYER
-// Always starts from beginning (0:00), plays instantly & smoothly
+// Always starts from beginning (0:00), plays instantly & seamlessly in endless smooth loop
 // ==============================================================
 const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React.memo(({ src, className }) => {
   const vidRef = useRef<HTMLVideoElement>(null);
@@ -244,30 +244,56 @@ const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React
     video.playsInline = true;
     video.autoplay = true;
     video.loop = true;
-    video.currentTime = 0;
+    video.playbackRate = 1.0;
 
-    const playVideo = () => {
-      const p = video.play();
-      if (p !== undefined) {
-        p.catch(() => {});
+    const playSafe = () => {
+      if (video.paused) {
+        const p = video.play();
+        if (p !== undefined) {
+          p.catch(() => {});
+        }
       }
     };
 
-    playVideo();
+    playSafe();
 
-    // Browser Autoplay Policy Fallback: Immediately start playing on first user interaction
-    const handleUserGesture = () => {
-      playVideo();
+    // Auto-resume if browser stutters or buffers
+    const handleStall = () => {
+      playSafe();
     };
 
-    window.addEventListener("click", handleUserGesture, { once: true });
-    window.addEventListener("touchstart", handleUserGesture, { once: true });
+    // Instant seamless loop rewind before micro-freeze gap
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.08) {
+        video.currentTime = 0;
+        playSafe();
+      }
+    };
+
+    const handleEnded = () => {
+      video.currentTime = 0;
+      playSafe();
+    };
+
+    video.addEventListener("waiting", handleStall);
+    video.addEventListener("stalled", handleStall);
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    video.addEventListener("ended", handleEnded);
+
+    // Global interaction triggers guarantee instant playback without user action required
+    const handleUserGesture = () => playSafe();
+    window.addEventListener("click", handleUserGesture, { passive: true });
     window.addEventListener("scroll", handleUserGesture, { passive: true });
+    window.addEventListener("touchstart", handleUserGesture, { passive: true });
 
     return () => {
+      video.removeEventListener("waiting", handleStall);
+      video.removeEventListener("stalled", handleStall);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+      video.removeEventListener("ended", handleEnded);
       window.removeEventListener("click", handleUserGesture);
-      window.removeEventListener("touchstart", handleUserGesture);
       window.removeEventListener("scroll", handleUserGesture);
+      window.removeEventListener("touchstart", handleUserGesture);
     };
   }, [src]);
 
@@ -283,7 +309,7 @@ const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React
       disablePictureInPicture
       disableRemotePlayback
       tabIndex={-1}
-      className={className || "w-full h-full object-cover object-center filter brightness-[0.92] contrast-105 pointer-events-none"}
+      className={className || "w-full h-full object-cover object-center filter brightness-[0.95] contrast-105 pointer-events-none"}
       style={{
         transform: "translate3d(0, 0, 0)",
         willChange: "transform",
@@ -535,35 +561,8 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
           }}
         />
 
-        {/* Live Ambient Floating Particles & Embers (12 Dynamic motes) */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[3]">
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                backgroundColor: i % 2 === 0 ? category.themeColor : themeDetails.ambientSecondary,
-                width: `${2 + (i % 3) * 2}px`,
-                height: `${2 + (i % 3) * 2}px`,
-                left: `${8 + (i * 7.5)}%`,
-                top: `${15 + (i % 5) * 16}%`,
-                filter: "blur(0.5px)"
-              }}
-              animate={{
-                y: [-35 - (i * 4), 35 + (i * 4), -35 - (i * 4)],
-                x: [-18 + (i % 4) * 8, 18 - (i % 4) * 8, -18 + (i % 4) * 8],
-                opacity: [0.15, 0.75, 0.15],
-                scale: [0.8, 1.4, 0.8]
-              }}
-              transition={{
-                duration: 4.8 + (i % 4) * 1.2,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 0.28
-              }}
-            />
-          ))}
-        </div>
+        {/* Subtle Ambient Vignette & Texture */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none z-[3]" />
 
         {/* Background Environment Live Status Tag in Top Right Corner */}
         <div className="absolute top-4 right-6 z-[3] hidden md:flex items-center gap-2 font-mono text-[9px] text-neutral-400 bg-black/60 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md">
