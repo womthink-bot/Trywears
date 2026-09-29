@@ -31,39 +31,39 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
     products: [
       {
         id: "sports-1",
-        name: "Sublimated Pro Match Jersey",
+        name: "Sublimated Wildcats #24 Basketball Kit",
         category: "SPORTS WEARS",
-        image: "/images/sports-wears/01_purple_jersey.png",
-        badge: "CLO 3D MATCH GRADE",
-        specs: "Purple & Gold V-Neck • 180GSM Micro-Interlock • Zero-Fade Italian Sublimation",
-        accentColor: "#9333EA"
+        image: "/images/sports-wears/sportswearsP1.png",
+        badge: "PRO BASKETBALL MATCH KIT",
+        specs: "Crimson & Midnight Black Set • 220GSM Birdseye Mesh • Zero-Fade Italian Sublimation",
+        accentColor: "#E21D1D"
       },
       {
         id: "sports-2",
-        name: "Classic Striped Football Kit",
+        name: "Classic Black & Gold Football Kit",
         category: "SPORTS WEARS",
-        image: "/images/sports-wears/02_white_blue_jersey.png",
-        badge: "PRO ATHLETIC KIT",
-        specs: "White/Blue Striped • Anti-Bacterial Dri-Fit • Laser-Cut Ventilation Panels",
-        accentColor: "#3B82F6"
+        image: "/images/sports-wears/sportswearsP2.png",
+        badge: "CHAMPIONSHIP MATCH GRADE",
+        specs: "Matte Black & Metallic Gold V-Neck • 200GSM Micro-Interlock • Anti-Bacterial Dri-Fit",
+        accentColor: "#F59E0B"
       },
       {
         id: "sports-3",
-        name: "Vanguard Squad Match Jersey",
+        name: "Vanguard Speed Stripe Soccer Kit",
         category: "SPORTS WEARS",
-        image: "/images/sports-wears/05_navy_jersey.png",
-        badge: "MATCH LEVEL UNIFORM",
-        specs: "Deep Navy & Royal Blue • Ergonomic Raglan Seaming • High-Flex Poly",
-        accentColor: "#2563EB"
+        image: "/images/sports-wears/sportswearsP3.png",
+        badge: "PRO ATHLETIC SOCCER KIT",
+        specs: "Crisp White & Dynamic Red/Blue Stripes • High-Flex Poly • Laser-Cut Ventilation",
+        accentColor: "#3B82F6"
       },
       {
         id: "sports-4",
-        name: "Sublimated Championship Team Kit",
+        name: "Sublimated Teal & Orange Match Kit",
         category: "SPORTS WEARS",
-        image: "/images/sports-wears/sports_red_match_jersey.png",
-        badge: "PRO ATHLETIC JERSEY",
-        specs: "Crimson & Midnight Technical Mesh • Rapid Moisture Dry • Reinforced Seams",
-        accentColor: "#E21D1D"
+        image: "/images/sports-wears/sportswearsP4.png",
+        badge: "PRO SQUAD UNIFORM SET",
+        specs: "Teal Cyan & Neon Orange Panels • Rapid Capillary Moisture Dry • Reinforced Seams",
+        accentColor: "#06B6D4"
       }
     ]
   },
@@ -159,45 +159,45 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
   },
   {
     id: "cat-leather",
-    categoryName: "LEATHER JACKETS",
+    categoryName: "JACKETS",
     code: "04",
-    tagline: "100% FULL-GRAIN COWHIDE • YKK HARDWARE • BESPOKE CRAFTSMANSHIP",
+    tagline: "LEATHER • PUFFER • VARSITY • BOMBER & WINDBREAKER JACKETS",
     accentColor: "#E21D1D",
     products: [
       {
-        id: "leather-1",
-        name: "Full-Grain Cowhide Biker Moto Jacket",
-        category: "LEATHER JACKETS",
-        image: "/images/leather-jackets/leather_biker.png",
-        badge: "1.2MM COWHIDE LEATHER",
-        specs: "Drum-Dyed Top-Grain Cowhide • Heavy YKK Asymmetric Zips • Quilted Lining",
+        id: "jacket-1",
+        name: "Full-Grain Cowhide Biker Leather Jacket",
+        category: "JACKETS",
+        image: "/images/jackets/leather_biker.png",
+        badge: "LEATHER BIKER JACKET",
+        specs: "100% Genuine Full-Grain Leather • Asymmetric YKK Zippers • Heavy Quilted Silk Lining",
         accentColor: "#E21D1D"
       },
       {
-        id: "leather-2",
-        name: "Heritage Wool & Leather Varsity",
-        category: "LEATHER JACKETS",
-        image: "/images/leather-jackets/leather_varsity.png",
-        badge: "MELTON WOOL & COWHIDE",
-        specs: "Heavy 24oz Melton Wool Body • Genuine Cowhide Sleeves • Snap Hardware",
+        id: "jacket-2",
+        name: "High-Insulation Quilted Winter Puffer Jacket",
+        category: "JACKETS",
+        image: "/images/jackets/leather_aviator_jacket.png",
+        badge: "PUFFER DOWN JACKET",
+        specs: "Heavy Down Fill Insulation • Water-Resistant Ripstop Shell • Storm Hood & Thermal Cuffs",
         accentColor: "#D97706"
       },
       {
-        id: "leather-3",
-        name: "Waxed Cafe Racer Moto Leather Jacket",
-        category: "LEATHER JACKETS",
-        image: "/images/leather-jackets/leather_cafe_racer.png",
-        badge: "MANDARIN SNAP MOTO",
-        specs: "Distressed Top-Grain Waxed Leather • Quilted Shoulders • Antique Brass Hardware",
+        id: "jacket-3",
+        name: "Heritage Wool & Leather Varsity Letterman Jacket",
+        category: "JACKETS",
+        image: "/images/jackets/leather_varsity.png",
+        badge: "VARSITY BOMBER JACKET",
+        specs: "24oz Heavy Melton Wool Body • Genuine Leather Sleeves • Striped Rib Knit Collar & Cuffs",
         accentColor: "#B45309"
       },
       {
-        id: "leather-4",
-        name: "Aviator Shearling Bomber Leather Jacket",
-        category: "LEATHER JACKETS",
-        image: "/images/leather-jackets/leather_aviator_jacket.png",
-        badge: "SHEARLING AVIATOR BOMBER",
-        specs: "Rich Espresso Full-Grain Leather • Heavy Shearling Wool Collar • Brass Buckle Straps",
+        id: "jacket-4",
+        name: "Modern Urban Technical Bomber & Windbreaker Jacket",
+        category: "JACKETS",
+        image: "/images/jackets/leather_cafe_racer.png",
+        badge: "TACTICAL BOMBER JACKET",
+        specs: "Weatherproof Matte Shell • Utility Sleeve Pockets • Military Heavy-Duty Ribbed Hem",
         accentColor: "#854D0E"
       }
     ]

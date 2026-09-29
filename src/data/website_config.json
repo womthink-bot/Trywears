@@ -35,7 +35,7 @@
             "id": "sports-slot-1",
             "title": "Sublimated Pro Match Jersey",
             "subtitle": "Purple & Gold V-Neck",
-            "image": "/images/sports-wears/01_purple_jersey.png",
+            "image": "/images/sports-wears/sportswearsP1.webp",
             "badge": "CLO 3D MATCH GRADE",
             "specs": "180GSM Micro-Interlock Poly • Italian Zero-Fade Sublimation"
           },
@@ -43,7 +43,7 @@
             "id": "sports-slot-2",
             "title": "Classic Striped Football Kit",
             "subtitle": "White & Blue Striped Match Fit",
-            "image": "/images/sports-wears/02_white_blue_jersey.png",
+            "image": "/images/sports-wears/sportswearsP2.webp",
             "badge": "PRO ATHLETIC KIT",
             "specs": "Anti-Bacterial Dri-Fit • Laser-Cut Ventilation Panels"
           },
@@ -51,7 +51,7 @@
             "id": "sports-slot-3",
             "title": "Vanguard Squad Match Jersey",
             "subtitle": "Deep Navy & Royal Blue",
-            "image": "/images/sports-wears/05_navy_jersey.png",
+            "image": "/images/sports-wears/sportswearsP3.webp",
             "badge": "MATCH LEVEL UNIFORM",
             "specs": "Ergonomic Raglan Seaming • High-Flex Poly • Match Level"
           },
@@ -59,7 +59,7 @@
             "id": "sports-slot-4",
             "title": "Sublimated Championship Team Kit",
             "subtitle": "Crimson & Midnight Technical Jersey",
-            "image": "/images/sports-wears/sports_red_match_jersey.png",
+            "image": "/images/sports-wears/sportswearsP4.webp",
             "badge": "PRO ATHLETIC JERSEY",
             "specs": "Rapid Moisture Dry • High-Tensile Microfiber"
           }
