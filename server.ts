@@ -48,13 +48,19 @@ mediaSubfolders.forEach((sub) => {
   }
 });
 
-// Serve public uploads and media directories statically
+// Serve public uploads, media, products, images, and videos statically
 app.use("/uploads", express.static(UPLOADS_DIR));
 app.use("/media", express.static(MEDIA_DIR));
-// Serve public/images statically so they are always guaranteed to load regardless of production build
+const PRODUCTS_DIR = path.join(process.cwd(), "public", "products");
+const VIDEOS_DIR = path.join(process.cwd(), "public", "videos");
+if (!fs.existsSync(VIDEOS_DIR)) {
+  fs.mkdirSync(VIDEOS_DIR, { recursive: true });
+}
+app.use("/products", express.static(PRODUCTS_DIR));
+app.use("/images", express.static(PRODUCTS_DIR));
 app.use("/images", express.static(path.join(process.cwd(), "public", "images")));
-// Also serve src/assets/images statically so our generated images load flawlessly
-app.use("/src/assets/images", express.static(path.join(process.cwd(), "src", "assets", "images")));
+app.use("/videos", express.static(VIDEOS_DIR));
+app.use("/videos", express.static(path.join(MEDIA_DIR, "videos")));
 
 // Helper function to scan all media folders dynamically
 function scanMediaFolders() {
@@ -343,10 +349,12 @@ app.get("/api/config", (req, res) => {
     }
 
     // If hero or global video exists, auto set active video
-    if (heroVideos.length > 0) {
+    if (globalVideos.length > 0) {
+      config.hero.active3DVideoUrl = "/videos/sportswearsBG.mp4";
+    } else if (heroVideos.length > 0) {
       config.hero.active3DVideoUrl = heroVideos[0].relativePath;
-    } else if (globalVideos.length > 0 && !config.hero.active3DVideoUrl) {
-      config.hero.active3DVideoUrl = globalVideos[0].relativePath;
+    } else {
+      config.hero.active3DVideoUrl = "/videos/sportswearsBG.mp4";
     }
 
     // 2. Catalog Section: Auto-sync product card images
@@ -382,6 +390,72 @@ app.post("/api/config", (req, res) => {
   } catch (error) {
     console.error("Error writing website configuration:", error);
     return res.status(500).json({ error: "Failed to save configuration." });
+  }
+});
+
+// Helper function to scan a directory recursively for images & media
+function scanDirRecursive(dirPath: string, urlPrefix: string): Record<string, string[]> {
+  const imageExts = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".mp4", ".webm"];
+  const result: Record<string, string[]> = {};
+
+  if (!fs.existsSync(dirPath)) return result;
+
+  function walk(currentDir: string, relativePath: string) {
+    try {
+      const items = fs.readdirSync(currentDir, { withFileTypes: true });
+      for (const item of items) {
+        if (item.name.startsWith(".") || item.name === "node_modules") continue;
+        const fullPath = path.join(currentDir, item.name);
+        const rel = relativePath ? `${relativePath}/${item.name}` : item.name;
+
+        if (item.isDirectory()) {
+          walk(fullPath, rel);
+        } else if (item.isFile()) {
+          const ext = path.extname(item.name).toLowerCase();
+          if (imageExts.includes(ext)) {
+            const folderKey = relativePath || "root";
+            if (!result[folderKey]) result[folderKey] = [];
+            result[folderKey].push(`${urlPrefix}/${rel}`);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("Error scanning directory:", dirPath, e);
+    }
+  }
+
+  walk(dirPath, "");
+  return result;
+}
+
+// GET /api/folders/scan: Recursively scan media and products folders for instant auto-display
+app.get("/api/folders/scan", (req, res) => {
+  try {
+    const mediaTree = scanDirRecursive(MEDIA_DIR, "/media");
+    const productsTree = scanDirRecursive(PRODUCTS_DIR, "/products");
+    return res.json({
+      success: true,
+      media: mediaTree,
+      products: productsTree,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error("Error scanning dynamic folders:", error);
+    return res.status(500).json({ error: "Failed to scan folders." });
+  }
+});
+
+// GET /api/products/dynamic: Get all product category image lists dynamically
+app.get("/api/products/dynamic", (req, res) => {
+  try {
+    const productsTree = scanDirRecursive(PRODUCTS_DIR, "/products");
+    return res.json({
+      success: true,
+      categories: productsTree
+    });
+  } catch (error) {
+    console.error("Error getting dynamic products:", error);
+    return res.status(500).json({ error: "Failed to get dynamic products." });
   }
 });
 

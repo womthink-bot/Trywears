@@ -29,10 +29,10 @@ import {
 } from "lucide-react";
 
 // ============================================================================
-// ✦ TRY WEARS CUSTOM PRODUCTS GALLERY DATA
-// Every product has a transparent background (PNG without background),
-// displaying custom designs and brand logos ready for wholesale clients.
-// Auto-cycles every 2 seconds as requested by the user.
+// ✦ TRY WEARS BESPOKE WHOLESALE PRODUCTS
+// High-definition transparent PNG cutouts without background.
+// Displays ready custom-designed apparel with client brand logos.
+// Auto-cycles every 2 seconds.
 // ============================================================================
 
 export interface CustomClientProduct {
@@ -41,18 +41,11 @@ export interface CustomClientProduct {
   clientBrand: string;
   country: string;
   orderVolume: string;
-  image: string; // Transparent PNG with no background!
+  image: string; // Transparent PNG with no background
   alt: string;
   badge: string;
   customizationDetails: string;
   fabricSpecs: string;
-}
-
-interface Hotspot {
-  x: number;
-  y: number;
-  title: string;
-  desc: string;
 }
 
 interface CustomDivision {
@@ -66,7 +59,6 @@ interface CustomDivision {
   description: string;
   features: string[];
   specs: { label: string; val: string }[];
-  hotspots: Hotspot[];
   clientProducts: CustomClientProduct[];
 }
 
@@ -94,27 +86,6 @@ const CUSTOM_DIVISIONS: CustomDivision[] = [
       { label: "FABRIC TECH", val: "180 GSM MICRO-DRY INTERLOCK" },
       { label: "STITCHING", val: "REINFORCED 4-NEEDLE FLATLOCK" }
     ],
-    hotspots: [
-      {
-        x: 48,
-        y: 28,
-        title: "Custom Club Crest",
-        desc: "High-density 3D silicone or metallic heat-sealed team badge"
-      },
-      {
-        x: 30,
-        y: 52,
-        title: "Italian Sublimation",
-        desc: "Zero-fade digital sublimation ink deeply infused in yarn"
-      },
-      {
-        x: 70,
-        y: 65,
-        title: "Ergonomic Side Panels",
-        desc: "Laser-cut hexagonal mesh zones for ultra ventilation"
-      }
-    ],
-    // ✦ 4 Ready Custom Products with Transparent Backgrounds (Auto-rotate every 2s)
     clientProducts: [
       {
         id: "sports-prod-1",
@@ -189,27 +160,6 @@ const CUSTOM_DIVISIONS: CustomDivision[] = [
       { label: "FABRIC TECH", val: "NYLON-SPANDEX COMPOSITE 320 GSM" },
       { label: "FINISH", val: "SWEAT-WICKING ANTIMICROBIAL" }
     ],
-    hotspots: [
-      {
-        x: 50,
-        y: 35,
-        title: "3D Muscle Mapping",
-        desc: "Contoured compression ribs that enhance pectoral definition"
-      },
-      {
-        x: 25,
-        y: 58,
-        title: "4-Way Power Flex",
-        desc: "Adaptive stretch retains shape through heavy lifting cycles"
-      },
-      {
-        x: 75,
-        y: 42,
-        title: "Anti-Chafing Flatlock",
-        desc: "Seamless circular knit prevents skin irritation during workouts"
-      }
-    ],
-    // ✦ 4 Ready Custom Gym Products with Transparent Backgrounds
     clientProducts: [
       {
         id: "gym-prod-1",
@@ -284,27 +234,6 @@ const CUSTOM_DIVISIONS: CustomDivision[] = [
       { label: "FABRIC TECH", val: "PRE-SHRUNK LUXURY COMBED COTTON" },
       { label: "LABELING", val: "BESPOKE WOVEN NECK & WASH LABELS" }
     ],
-    hotspots: [
-      {
-        x: 50,
-        y: 38,
-        title: "High-Density Puff Print",
-        desc: "Raised 3D tactile screen printing with razor-sharp edges"
-      },
-      {
-        x: 28,
-        y: 22,
-        title: "Drop Shoulder Cut",
-        desc: "Relaxed street silhouette with reinforced twin-needle neck rib"
-      },
-      {
-        x: 72,
-        y: 70,
-        title: "Vintage Acid Wash",
-        desc: "Handcrafted stone & enzyme washing for authentic patina"
-      }
-    ],
-    // ✦ 4 Ready Custom Streetwear Products with Transparent Backgrounds
     clientProducts: [
       {
         id: "street-prod-1",
@@ -379,27 +308,6 @@ const CUSTOM_DIVISIONS: CustomDivision[] = [
       { label: "LEATHER GRADE", val: "1.2MM TOP-GRAIN MOTO SPEC" },
       { label: "HARDWARE", val: "CORROSION-RESISTANT YKK BRASS" }
     ],
-    hotspots: [
-      {
-        x: 45,
-        y: 32,
-        title: "Drum-Dyed Cowhide",
-        desc: "Supple 1.2mm leather treated for scratch resistance"
-      },
-      {
-        x: 25,
-        y: 55,
-        title: "Asymmetric YKK Zip",
-        desc: "Heavy-duty #10 antique brass zippers built for longevity"
-      },
-      {
-        x: 68,
-        y: 68,
-        title: "Diamond Quilted Panels",
-        desc: "Reinforced shoulder and elbow articulation padding"
-      }
-    ],
-    // ✦ 4 Ready Custom Leather Products with Transparent Backgrounds
     clientProducts: [
       {
         id: "leather-prod-1",
@@ -454,39 +362,101 @@ const CUSTOM_DIVISIONS: CustomDivision[] = [
 ];
 
 export function CustomProductsShowcase() {
+  const [divisions, setDivisions] = useState<CustomDivision[]>(CUSTOM_DIVISIONS);
   const [activeIdx, setActiveIdx] = useState(0);
-  const current = CUSTOM_DIVISIONS[activeIdx];
+  const current = divisions[activeIdx] || CUSTOM_DIVISIONS[0];
 
-  // ✦ AUTO-CYCLE STATE: Changes product image every 2 seconds (2000ms)
+  // Auto-fetch dynamically any newly added images from public/products folders
+  useEffect(() => {
+    fetch("/api/products/dynamic")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.categories) {
+          setDivisions((prev) =>
+            prev.map((div) => {
+              const catKey =
+                div.id === "leather-combat"
+                  ? "leather-jackets"
+                  : div.id === "sports-wears"
+                  ? "sports-wears"
+                  : div.id;
+
+              const matchingKeys = Object.keys(data.categories).filter((k) =>
+                k.startsWith(catKey)
+              );
+
+              let allFoundImages: string[] = [];
+              matchingKeys.forEach((k) => {
+                allFoundImages.push(...data.categories[k]);
+              });
+
+              // Keep images that are transparent pngs or jpgs
+              if (allFoundImages.length > 0) {
+                const dynamicList: CustomClientProduct[] = allFoundImages.map((imgUrl, i) => {
+                  const fileName = imgUrl.split("/").pop() || `Product ${i + 1}`;
+                  const cleanName = fileName
+                    .replace(/\.[^/.]+$/, "")
+                    .replace(/^[0-9]+_/, "")
+                    .replace(/_/g, " ")
+                    .toUpperCase();
+
+                  const existing = div.clientProducts.find(
+                    (p) => p.image === imgUrl || p.image.endsWith(fileName)
+                  );
+                  if (existing) return existing;
+
+                  return {
+                    id: `dyn-${div.id}-${i}`,
+                    name: `${cleanName} (Custom Client Batch)`,
+                    clientBrand: `TRY WEARS BESPOKE ORDER #${i + 1}`,
+                    country: "EXPORT CLIENT",
+                    orderVolume: "250+ PCS BATCH DELIVERED",
+                    image: imgUrl,
+                    alt: cleanName,
+                    badge: "100% FACTORY DIRECT",
+                    customizationDetails: "Bespoke Cut & Sew, Sublimation and Client Logo",
+                    fabricSpecs: div.specs[2]?.val || "Custom Technical Performance Fabric"
+                  };
+                });
+
+                return {
+                  ...div,
+                  clientProducts: dynamicList
+                };
+              }
+              return div;
+            })
+          );
+        }
+      })
+      .catch((err) => {
+        console.warn("Dynamic products sync fallback to defaults:", err);
+      });
+  }, []);
+
+  // Auto-Cycle: Changes product every 2 seconds
   const [currentProductIdx, setCurrentProductIdx] = useState(0);
   const [isAutoCycling, setIsAutoCycling] = useState(true);
   const currentProduct = current.clientProducts[currentProductIdx] || current.clientProducts[0];
 
-  // 3D Turntable and Tilt States
-  const [isAutoRotating, setIsAutoRotating] = useState(true);
-  const [manualRotationY, setManualRotationY] = useState(0);
-  const [activeHotspot, setActiveHotspot] = useState<Hotspot | null>(null);
-  const [viewPreset, setViewPreset] = useState<"iso" | "front" | "detail">("iso");
+  const [viewPreset, setViewPreset] = useState<"standard" | "zoom">("standard");
   const [isHovered, setIsHovered] = useState(false);
 
-  // Background 3D Canvas
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  // Mouse tilt physics for 3D stage card
+  // Subtle interactive mouse tilt
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), {
-    damping: 24,
-    stiffness: 220
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), {
+    damping: 26,
+    stiffness: 200
   });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), {
-    damping: 24,
-    stiffness: 220
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), {
+    damping: 26,
+    stiffness: 200
   });
 
-  // ✦ AUTO-CYCLE TIMER: Exactly 2 Seconds (2000ms)
+  // Auto-cycle timer: exactly 2 seconds
   useEffect(() => {
     if (!isAutoCycling || isHovered) return;
 
@@ -500,7 +470,6 @@ export function CustomProductsShowcase() {
   // Reset product index when category changes
   useEffect(() => {
     setCurrentProductIdx(0);
-    setActiveHotspot(null);
   }, [activeIdx]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -518,27 +487,6 @@ export function CustomProductsShowcase() {
     setIsHovered(false);
   };
 
-  // Drag to rotate turntable manually
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    isDragging.current = true;
-    startX.current = e.clientX;
-    setIsAutoRotating(false);
-  };
-
-  const handleDragMove = (e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    const delta = e.clientX - startX.current;
-    startX.current = e.clientX;
-    setManualRotationY((prev) => prev + delta * 0.7);
-  };
-
-  const handleMouseUp = () => {
-    isDragging.current = false;
-  };
-
   // RFQ Quote Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -550,143 +498,16 @@ export function CustomProductsShowcase() {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  // Auto-rotate 3D continuous loop
-  useEffect(() => {
-    let animId: number;
-    let lastTime = performance.now();
-
-    const loop = (time: number) => {
-      const dt = (time - lastTime) / 1000;
-      lastTime = time;
-
-      if (isAutoRotating && !isHovered) {
-        setManualRotationY((prev) => (prev + dt * 25) % 360);
-      }
-      animId = requestAnimationFrame(loop);
-    };
-
-    animId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animId);
-  }, [isAutoRotating, isHovered]);
-
-  // Background 3D Wireframe Canvas Animation (Deep Red #E21D1D)
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animId: number;
-    let angle = 0;
-
-    const resize = () => {
-      if (!canvas.parentElement) return;
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    // 3D Icosahedron Vertices
-    const phi = (1 + Math.sqrt(5)) / 2;
-    const rawVertices: [number, number, number][] = [
-      [-1, phi, 0],
-      [1, phi, 0],
-      [-1, -phi, 0],
-      [1, -phi, 0],
-      [0, -1, phi],
-      [0, 1, phi],
-      [0, -1, -phi],
-      [0, 1, -phi],
-      [phi, 0, -1],
-      [phi, 0, 1],
-      [-phi, 0, -1],
-      [-phi, 0, 1]
-    ];
-
-    const edges: [number, number][] = [
-      [0, 11], [0, 5], [0, 1], [0, 7], [0, 10],
-      [1, 5], [1, 9], [1, 8], [1, 7],
-      [2, 11], [2, 10], [2, 6], [2, 3], [2, 4],
-      [3, 4], [3, 9], [3, 8], [3, 6],
-      [4, 5], [4, 9], [4, 11],
-      [5, 9],
-      [6, 7], [6, 8], [6, 10],
-      [7, 8], [7, 10],
-      [8, 9],
-      [10, 11]
-    ];
-
-    const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      angle += 0.008;
-
-      const cx = canvas.width * 0.4;
-      const cy = canvas.height * 0.5;
-      const scale = Math.min(canvas.width, canvas.height) * 0.38;
-
-      const cosY = Math.cos(angle);
-      const sinY = Math.sin(angle);
-      const cosX = Math.cos(angle * 0.6);
-      const sinX = Math.sin(angle * 0.6);
-
-      const projected = rawVertices.map(([x, y, z]) => {
-        let rx = x * cosY - z * sinY;
-        let rz = x * sinY + z * cosY;
-        let ry = y * cosX - rz * sinX;
-        rz = y * sinX + rz * cosX;
-
-        const distance = 4;
-        const pers = distance / (distance + rz * 0.5);
-        return {
-          x: cx + rx * scale * 0.35 * pers,
-          y: cy + ry * scale * 0.35 * pers,
-          z: rz
-        };
-      });
-
-      ctx.strokeStyle = "rgba(226, 29, 29, 0.18)";
-      ctx.lineWidth = 1.2;
-
-      edges.forEach(([i, j]) => {
-        const p1 = projected[i];
-        const p2 = projected[j];
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
-      });
-
-      projected.forEach((p) => {
-        ctx.fillStyle = "rgba(226, 29, 29, 0.4)";
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      animId = requestAnimationFrame(render);
-    };
-
-    animId = requestAnimationFrame(render);
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(animId);
-    };
-  }, []);
-
   const handlePrevProduct = () => {
     setCurrentProductIdx((prev) =>
       prev === 0 ? current.clientProducts.length - 1 : prev - 1
     );
-    setActiveHotspot(null);
   };
 
   const handleNextProduct = () => {
     setCurrentProductIdx((prev) =>
       (prev + 1) % current.clientProducts.length
     );
-    setActiveHotspot(null);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -704,14 +525,6 @@ export function CustomProductsShowcase() {
       });
     }, 2500);
   };
-
-  const getStageRotation = () => {
-    if (viewPreset === "front") return { rotateY: 0, scale: 1.05 };
-    if (viewPreset === "detail") return { rotateY: 15, scale: 1.35 };
-    return { rotateY: manualRotationY, scale: 1 };
-  };
-
-  const stageStyle = getStageRotation();
 
   return (
     <section
@@ -780,10 +593,7 @@ export function CustomProductsShowcase() {
           {CUSTOM_DIVISIONS.map((cat, idx) => (
             <button
               key={cat.id}
-              onClick={() => {
-                setActiveIdx(idx);
-                setActiveHotspot(null);
-              }}
+              onClick={() => setActiveIdx(idx)}
               className={`px-4 sm:px-5 py-2.5 rounded-xl font-mono text-xs uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer flex items-center gap-2.5 border ${
                 activeIdx === idx
                   ? "bg-[#E21D1D] text-white border-[#E21D1D] shadow-[0_0_20px_rgba(226,29,29,0.4)] font-black"
@@ -798,7 +608,7 @@ export function CustomProductsShowcase() {
           ))}
         </div>
 
-        {/* MAIN INTERACTIVE 3D PERSPECTIVE STAGE CONTAINER */}
+        {/* MAIN PRODUCT SHOWCASE CONTAINER */}
         <div
           ref={cardRef}
           onMouseMove={handleMouseMove}
@@ -817,7 +627,7 @@ export function CustomProductsShowcase() {
           >
             {/* Top Tactical Status Bar with 2-Second Auto-Change Progress Bar */}
             <div className="relative border-b border-neutral-800/80 bg-neutral-950/80 backdrop-blur-md">
-              {/* ✦ 2-SECOND ANIMATED PROGRESS INDICATOR (Auto-Cycles every 2s) */}
+              {/* ✦ 2-SECOND ANIMATED PROGRESS INDICATOR */}
               {isAutoCycling && (
                 <motion.div
                   key={`${activeIdx}-${currentProductIdx}`}
@@ -832,7 +642,7 @@ export function CustomProductsShowcase() {
                 <div className="flex items-center gap-3">
                   <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-pulse" />
                   <span className="text-white font-black uppercase">
-                    TRY WEARS • CUSTOM PRODUCTS SHOWCASE
+                    TRY WEARS • HIGH-DEFINITION PRODUCT SHOWCASE
                   </span>
                   <span className="hidden md:inline text-neutral-600">|</span>
                   <span className="hidden md:inline text-emerald-400 font-bold">
@@ -840,7 +650,7 @@ export function CustomProductsShowcase() {
                   </span>
                 </div>
 
-                {/* Auto-Cycle Control & 3D Views */}
+                {/* Auto-Cycle Control & Zoom View */}
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setIsAutoCycling(!isAutoCycling)}
@@ -855,58 +665,37 @@ export function CustomProductsShowcase() {
                     <span>{isAutoCycling ? "2S AUTO: ON" : "PAUSED"}</span>
                   </button>
 
-                  <div className="hidden sm:flex items-center gap-1">
-                    <button
-                      onClick={() => setViewPreset("iso")}
-                      className={`px-2 py-1 rounded text-[9px] font-bold uppercase transition-colors cursor-pointer ${
-                        viewPreset === "iso"
-                          ? "bg-[#E21D1D] text-white"
-                          : "bg-neutral-900 text-neutral-400 hover:text-white"
-                      }`}
-                    >
-                      3D ISO
-                    </button>
-                    <button
-                      onClick={() => setViewPreset("front")}
-                      className={`px-2 py-1 rounded text-[9px] font-bold uppercase transition-colors cursor-pointer ${
-                        viewPreset === "front"
-                          ? "bg-[#E21D1D] text-white"
-                          : "bg-neutral-900 text-neutral-400 hover:text-white"
-                      }`}
-                    >
-                      FRONT 0°
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => setViewPreset(viewPreset === "standard" ? "zoom" : "standard")}
+                    className={`px-2.5 py-1 rounded text-[9px] font-bold uppercase transition-colors cursor-pointer border ${
+                      viewPreset === "zoom"
+                        ? "bg-[#E21D1D] text-white border-[#E21D1D]"
+                        : "bg-neutral-900 text-neutral-400 border-neutral-800 hover:text-white"
+                    }`}
+                  >
+                    {viewPreset === "zoom" ? "FIT" : "MAX ZOOM"}
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* TWO-COLUMN GRID: Left Live 3D Garment Stage | Right Custom Technical Details */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[600px]">
+            {/* TWO-COLUMN GRID: Left Large Product Stage | Right Custom Technical Details */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[640px] lg:min-h-[720px]">
               
-              {/* LEFT 3D STAGE (7 COLS): Auto-Changing Transparent PNGs Every 2s, Hotspots, Turntable */}
-              <div
-                className="lg:col-span-7 relative bg-[#070709] border-b lg:border-b-0 lg:border-r border-neutral-800/80 overflow-hidden flex flex-col justify-between p-4 sm:p-6 cursor-grab active:cursor-grabbing"
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleDragMove}
-                onMouseUp={handleMouseUp}
-              >
-                {/* 1. Live 3D Wireframe Canvas in Background */}
-                <canvas
-                  ref={canvasRef}
-                  className="absolute inset-0 pointer-events-none opacity-60 z-0"
+              {/* LEFT STAGE (7 COLS): Clean Studio Backdrop + HUGE PRODUCT IMAGE FITTING THE BOX */}
+              <div className="lg:col-span-7 relative bg-[#070709] border-b lg:border-b-0 lg:border-r border-neutral-800/80 overflow-hidden flex flex-col justify-between p-3 sm:p-5">
+                
+                {/* ✦ Clean Studio Spotlight Backdrop (No 3D wireframe mesh or radar lines) */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse at 50% 50%, rgba(226, 29, 29, 0.08) 0%, rgba(18, 18, 24, 0.5) 50%, #070709 90%)"
+                  }}
                 />
-
-                {/* 2. Holographic Coordinate Radar Rings */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 select-none">
-                  <div className="w-[320px] sm:w-[420px] h-[320px] sm:h-[420px] rounded-full border border-dashed border-[#E21D1D]/40 animate-[spin_60s_linear_infinite]" />
-                  <div className="absolute w-[240px] sm:w-[320px] h-[240px] sm:h-[320px] rounded-full border border-[#E21D1D]/20 animate-[spin_40s_linear_infinite_reverse]" />
-                  <div className="absolute w-[160px] sm:w-[220px] h-[160px] sm:h-[220px] rounded-full border border-neutral-700/40" />
-                </div>
 
                 {/* Top Overlay: Client Brand Badge for Current Product */}
                 <div className="relative z-20 flex items-center justify-between gap-2">
-                  {/* Wholesaler / Client Brand Highlight Badge */}
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentProduct.id}
@@ -914,7 +703,7 @@ export function CustomProductsShowcase() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 15 }}
                       transition={{ duration: 0.3 }}
-                      className="bg-neutral-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-neutral-800 text-[10px] font-mono text-neutral-300 flex items-center gap-2 shadow-lg"
+                      className="bg-neutral-900/90 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-neutral-800 text-[10px] font-mono text-neutral-300 flex items-center gap-2 shadow-lg"
                     >
                       <Building2 className="w-3.5 h-3.5 text-[#E21D1D]" />
                       <span className="text-white font-bold">{currentProduct.clientBrand}</span>
@@ -923,154 +712,41 @@ export function CustomProductsShowcase() {
                     </motion.div>
                   </AnimatePresence>
 
-                  {/* 3D Spin and Manual Rotate Controls */}
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setIsAutoRotating(!isAutoRotating)}
-                      className={`p-2 rounded-xl backdrop-blur-md border text-xs font-mono transition-colors cursor-pointer flex items-center gap-1.5 ${
-                        isAutoRotating
-                          ? "bg-[#E21D1D]/20 border-[#E21D1D] text-[#E21D1D]"
-                          : "bg-neutral-900/80 border-neutral-800 text-neutral-400 hover:text-white"
-                      }`}
-                      title={isAutoRotating ? "Pause 3D Auto Spin" : "Play 3D Auto Spin"}
-                    >
-                      {isAutoRotating ? (
-                        <>
-                          <Pause className="w-3.5 h-3.5" />
-                          <span className="text-[9px] font-bold hidden sm:inline">3D SPIN</span>
-                        </>
-                      ) : (
-                        <>
-                          <Play className="w-3.5 h-3.5" />
-                          <span className="text-[9px] font-bold hidden sm:inline">SPIN 360°</span>
-                        </>
-                      )}
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setManualRotationY((prev) => prev + 45)}
-                      className="p-2 rounded-xl bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-white hover:border-[#E21D1D] transition-colors cursor-pointer"
-                      title="Rotate +45°"
-                    >
-                      <Rotate3d className="w-3.5 h-3.5" />
-                    </button>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-2.5 py-1 rounded-lg bg-neutral-900/90 border border-neutral-800 text-[9px] font-mono font-bold text-neutral-300 uppercase">
+                      {currentProduct.badge}
+                    </span>
                   </div>
                 </div>
 
-                {/* 3. CENTER FLOATING 3D GARMENT VIEWPORT WITH AUTO-CHANGE EVERY 2 SECONDS */}
-                <div className="relative z-10 flex-1 flex items-center justify-center min-h-[350px] sm:min-h-[430px] my-2">
+                {/* ✦ CENTER MAIN PRODUCT VIEWPORT: Product fills the entire box prominently in high quality */}
+                <div className="relative z-10 flex-1 flex items-center justify-center min-h-[460px] sm:min-h-[540px] lg:min-h-[580px] my-2 overflow-hidden">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={currentProduct.id}
-                      initial={{ opacity: 0, scale: 0.88, rotateY: stageStyle.rotateY - 20 }}
-                      animate={{ opacity: 1, scale: stageStyle.scale, rotateY: stageStyle.rotateY }}
-                      exit={{ opacity: 0, scale: 0.88, rotateY: stageStyle.rotateY + 20 }}
-                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                      style={{ transformStyle: "preserve-3d" }}
-                      className="relative flex items-center justify-center"
+                      initial={{ opacity: 0, scale: 0.94 }}
+                      animate={{ opacity: 1, scale: viewPreset === "zoom" ? 1.15 : 1.02 }}
+                      exit={{ opacity: 0, scale: 0.94 }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
+                      className="relative w-full h-full flex items-center justify-center"
                     >
-                      {/* Floating Dynamic Shadow underneath garment */}
-                      <motion.div
-                        animate={{
-                          scale: [0.9, 1.05, 0.9],
-                          opacity: [0.35, 0.55, 0.35]
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                        className="absolute -bottom-8 w-48 sm:w-64 h-8 bg-black/80 rounded-full blur-xl pointer-events-none"
-                      />
+                      {/* Realistic floor contact shadow underneath the product */}
+                      <div className="absolute -bottom-4 w-72 sm:w-96 lg:w-[480px] h-8 bg-black/90 rounded-[100%] blur-xl pointer-events-none" />
 
-                      {/* 3D Levitating Garment Cutout without background */}
-                      <motion.div
-                        animate={{ y: [-7, 7, -7] }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                        style={{
-                          transformStyle: "preserve-3d",
-                          transition: isDragging.current ? "none" : "transform 0.1s ease-out"
-                        }}
-                        className="relative z-10 group"
-                      >
+                      {/* HUGE HIGH-DEFINITION CLOTHING IMAGE FITTING THE BOX */}
+                      <div className="relative z-10 w-full h-full flex items-center justify-center p-1 sm:p-2">
                         <img
                           src={currentProduct.image}
                           alt={currentProduct.alt}
-                          className="max-h-[300px] sm:max-h-[390px] w-auto object-contain filter drop-shadow-[0_25px_35px_rgba(226,29,29,0.25)] select-none transition-transform duration-300 group-hover:scale-105"
+                          className="h-[440px] sm:h-[530px] lg:h-[570px] w-auto max-w-[96%] object-contain filter drop-shadow-[0_20px_45px_rgba(0,0,0,0.95)] select-none transition-transform duration-300 hover:scale-105"
                           draggable={false}
                         />
-
-                        {/* Interactive 3D Inspection Hotspots */}
-                        {current.hotspots.map((spot, hIdx) => {
-                          const isSpotActive = activeHotspot?.title === spot.title;
-                          return (
-                            <div
-                              key={hIdx}
-                              style={{
-                                left: `${spot.x}%`,
-                                top: `${spot.y}%`,
-                                transform: "translate(-50%, -50%) translateZ(40px)"
-                              }}
-                              className="absolute z-30"
-                            >
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setActiveHotspot(isSpotActive ? null : spot);
-                                }}
-                                className="relative p-1 rounded-full group/btn cursor-pointer"
-                              >
-                                <span className="absolute inset-0 rounded-full bg-[#E21D1D] animate-ping opacity-75" />
-                                <span className="relative flex items-center justify-center w-5 h-5 rounded-full bg-[#E21D1D] text-white text-[10px] font-bold shadow-lg border border-white">
-                                  +
-                                </span>
-                              </button>
-
-                              {/* Hotspot Floating Tooltip */}
-                              <AnimatePresence>
-                                {isSpotActive && (
-                                  <motion.div
-                                    initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                                    className="absolute left-1/2 -translate-x-1/2 bottom-8 w-48 sm:w-56 bg-neutral-950/95 backdrop-blur-md border border-[#E21D1D] p-3 rounded-xl shadow-2xl text-left z-40"
-                                  >
-                                    <div className="flex items-center justify-between pb-1 mb-1 border-b border-neutral-800">
-                                      <span className="text-[10px] font-mono font-bold text-[#E21D1D] uppercase">
-                                        SPEC INSPECTION
-                                      </span>
-                                      <button
-                                        onClick={() => setActiveHotspot(null)}
-                                        className="text-neutral-400 hover:text-white"
-                                      >
-                                        <X className="w-3 h-3" />
-                                      </button>
-                                    </div>
-                                    <h5 className="text-xs font-mono font-black text-white uppercase">
-                                      {spot.title}
-                                    </h5>
-                                    <p className="text-[10px] font-sans text-neutral-300 mt-0.5 leading-tight">
-                                      {spot.desc}
-                                    </p>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
-                            </div>
-                          );
-                        })}
-                      </motion.div>
+                      </div>
                     </motion.div>
                   </AnimatePresence>
                 </div>
 
-                {/* ✦ 4 MINI THUMBNAIL SELECTORS (User can view all 4 products & click or watch auto-cycle) */}
+                {/* ✦ 4 MINI THUMBNAIL SELECTORS (Shows all 4 ready custom products, auto-cycles every 2s) */}
                 <div className="relative z-20 space-y-2 pt-2 border-t border-neutral-800/70">
                   <div className="flex items-center justify-between text-[10px] font-mono text-neutral-400">
                     <span className="flex items-center gap-1.5">
@@ -1090,15 +766,15 @@ export function CustomProductsShowcase() {
                           key={prod.id}
                           onClick={() => {
                             setCurrentProductIdx(pIdx);
-                            setIsAutoCycling(false); // User clicked manually
+                            setIsAutoCycling(false);
                           }}
-                          className={`p-2 rounded-xl border text-left transition-all cursor-pointer relative overflow-hidden flex items-center gap-2 ${
+                          className={`p-1.5 sm:p-2 rounded-xl border text-left transition-all cursor-pointer relative overflow-hidden flex items-center gap-2 ${
                             isSelected
                               ? "bg-neutral-900 border-[#E21D1D] shadow-[0_0_15px_rgba(226,29,29,0.35)] ring-1 ring-[#E21D1D]"
                               : "bg-neutral-950/70 border-neutral-800/80 hover:border-neutral-700 opacity-60 hover:opacity-100"
                           }`}
                         >
-                          <div className="w-9 h-11 shrink-0 flex items-center justify-center">
+                          <div className="w-8 h-10 sm:w-10 sm:h-12 shrink-0 flex items-center justify-center">
                             <img
                               src={prod.image}
                               alt={prod.name}
@@ -1106,7 +782,7 @@ export function CustomProductsShowcase() {
                             />
                           </div>
                           <div className="hidden sm:block min-w-0">
-                            <span className="text-[8.5px] font-mono font-bold text-[#E21D1D] uppercase block truncate">
+                            <span className="text-[8px] font-mono font-bold text-[#E21D1D] uppercase block truncate">
                               {prod.badge}
                             </span>
                             <span className="text-[9px] font-mono text-white block truncate leading-tight">
@@ -1162,7 +838,7 @@ export function CustomProductsShowcase() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.3 }}
-                      className="p-3.5 rounded-2xl bg-neutral-900/90 border border-neutral-800 border-l-4 border-l-[#E21D1D] space-y-1.5"
+                      className="p-4 rounded-2xl bg-neutral-900/90 border border-neutral-800 border-l-4 border-l-[#E21D1D] space-y-1.5"
                     >
                       <div className="flex items-center justify-between text-xs font-mono font-black text-white uppercase">
                         <div className="flex items-center gap-1.5">
@@ -1183,7 +859,7 @@ export function CustomProductsShowcase() {
                   </AnimatePresence>
 
                   {/* Prominent Custom Capability Notice (Urdu + English) */}
-                  <div className="p-3 rounded-2xl bg-neutral-950 border border-neutral-800 text-[11px] font-sans text-neutral-300 space-y-1">
+                  <div className="p-3.5 rounded-2xl bg-neutral-950 border border-neutral-800 text-[11px] font-sans text-neutral-300 space-y-1">
                     <div className="flex items-center gap-1.5 font-mono font-bold text-white text-xs uppercase">
                       <Scissors className="w-3 h-3 text-[#E21D1D]" />
                       <span>WHOLESALER BESPOKE ORDER FACILITY</span>

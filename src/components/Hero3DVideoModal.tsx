@@ -36,6 +36,22 @@ export interface Hero3DVideoSettings {
 
 export const PRESET_3D_VIDEOS = [
   {
+    id: "preset-sportswears",
+    title: "Sports Wears & Pro Match Kits 10s Loop",
+    category: "Sports Wears",
+    url: "/videos/sportswearsBG.mp4",
+    poster: "/media/home-page/hero-section/01_sports_wears.jpg",
+    description: "10-second seamless muted looping background video for Sports Wears category."
+  },
+  {
+    id: "preset-gym-fitness",
+    title: "Gym & Fitness Performance 10s Loop",
+    category: "Gym & Fitness",
+    url: "/videos/gymandfitnessBG.mp4",
+    poster: "/media/home-page/hero-section/02_gym_fitness.jpg",
+    description: "10-second seamless muted looping background video for Gym & Fitness category."
+  },
+  {
     id: "preset-boxing",
     title: "Championship Boxing Gloves 3D Arena Loop",
     category: "Pro Combat",

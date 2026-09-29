@@ -123,7 +123,7 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
   // Floating Embers / Particles Parallax
   const particlesY = useTransform(smoothHeroScroll, [0, 1], [0, -260]);
 
-  const SLIDE_DURATION = 6000;
+  const SLIDE_DURATION = 5000; // 5 seconds interval between category slides
   const TICK_INTERVAL = 50;
 
   // Persist video settings
@@ -157,10 +157,10 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = videoSettings.playbackSpeed || 1;
-      videoRef.current.volume = videoSettings.volume ?? 0.5;
-      videoRef.current.muted = videoSettings.isMuted;
+      videoRef.current.volume = 0;
+      videoRef.current.muted = true;
     }
-  }, [videoSettings.playbackSpeed, videoSettings.volume, videoSettings.isMuted, videoSettings.videoUrl]);
+  }, [videoSettings.playbackSpeed, currentSlide]);
 
   // Handle Mouse 3D Gyro Tilt
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -184,7 +184,7 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     setTilt({ x: 0, y: 0 });
   };
 
-  // Slide advancement timer for multi-slide mode
+  // Slide advancement timer for multi-slide mode (5 seconds per slide)
   useEffect(() => {
     if (!isPlaying || slides.length === 0) return;
 
@@ -218,6 +218,13 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
 
   const activeSlideData = slides[currentSlide];
 
+  // Specific 10s video loop for category backgrounds
+  const activeVideoUrl = currentSlide === 0 
+    ? "/videos/sportswearsBG.mp4" 
+    : currentSlide === 1
+    ? "/videos/gymandfitnessBG.mp4"
+    : (videoSettings.videoUrl || "/videos/sportswearsBG.mp4");
+
   return (
     <section
       id="hero-slider"
@@ -235,17 +242,18 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
           style={{ scale: bgScale, y: bgY }}
         >
           
-          {/* MODE 1: 3D VIDEO BACKGROUND */}
+          {/* MODE 1: 3D VIDEO BACKGROUND (10-Second Muted Seamless Video Loop) */}
           {videoSettings.activeMode === "3d-video" && (
             <div className="relative w-full h-full">
               <video
                 ref={videoRef}
-                key={videoSettings.videoUrl}
-                src={videoSettings.videoUrl}
+                key={`hero-bg-vid-${currentSlide}-${activeVideoUrl}`}
+                src={activeVideoUrl}
                 autoPlay
                 loop
-                muted={videoSettings.isMuted}
+                muted
                 playsInline
+                preload="auto"
                 onLoadedData={() => {
                   setVideoLoaded(true);
                   setVideoError(false);

@@ -254,13 +254,13 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
     setLocalTilt({ x: 0, y: 0 });
   };
 
-  // Auto-play cycle for slides
+  // Auto-play cycle for slides (5 seconds)
   useEffect(() => {
     if (!isAutoPlaying || hoveredCardIdx !== null) return;
 
     const timer = setInterval(() => {
       setActiveFocusCard((prev) => (prev + 1) % 4);
-    }, 4500);
+    }, 5000);
 
     return () => clearInterval(timer);
   }, [isAutoPlaying, hoveredCardIdx]);

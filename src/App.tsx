@@ -33,7 +33,7 @@ import { SecurityAlerts } from "./components/SecurityAlerts";
 import { SportsHeroSlider } from "./components/SportsHeroSlider";
 import { SportsB2BMarquee } from "./components/SportsB2BMarquee";
 import { SportsMotionFX } from "./components/SportsMotionFX";
-import { B2BFactoryCapabilities } from "./components/B2BFactoryCapabilities";
+import { FactoryLiveVideoShowcase } from "./components/FactoryLiveVideoShowcase";
 import { MediaManagerModal } from "./components/MediaManagerModal";
 import { ScrollDeconstructed3DGarment } from "./components/ScrollDeconstructed3DGarment";
 import { CustomProductsShowcase } from "./components/CustomProductsShowcase";
@@ -136,12 +136,12 @@ export default function App() {
     }
   }, [config]);
 
-  // Slideshow interval timer
+  // Slideshow interval timer (5 seconds)
   useEffect(() => {
     if (!isSlidePlaying || !config) return;
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % config.hero.slides.length);
-    }, 6000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [isSlidePlaying, config]);
 
@@ -296,9 +296,11 @@ export default function App() {
             <a href="#collections" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">
               Custom Products
             </a>
-            <a href="#factory-capabilities" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Factory & OEM</a>
+            <a href="#factory-capabilities" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping" />
+              Factory Videos
+            </a>
             <a href="#customizer" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Bespoke 3D Lab</a>
-            <a href="#technology" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Tech Specs</a>
           </nav>
 
           {/* Header Controls */}
@@ -342,149 +344,17 @@ export default function App() {
       {/* 6. BESPOKE CUSTOM PRODUCT MANUFACTURING SHOWCASE (TRY WEARS CUSTOM DIVISION) */}
       <CustomProductsShowcase />
 
-      {/* 6. FACTORY OEM & PRODUCTION INFRASTRUCTURE (SCROLL-DRIVEN MOTION) */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <B2BFactoryCapabilities />
-      </motion.div>
+      {/* 6. FACTORY LIVE PRODUCTION & CRAFTSMANSHIP VIDEOS (3D SCROLLING MOTION) */}
+      <FactoryLiveVideoShowcase />
 
-      {/* 7. INTERACTIVE CUSTOMIZER SECTION */}
-      <section id="customizer" className="py-24 border-b border-neutral-200/60 dark:border-neutral-900 bg-white dark:bg-[#050505] transition-colors">
-        <div className="max-w-7xl mx-auto space-y-12">
-          {/* Heading */}
-          <div className="text-center space-y-3 px-6">
-            <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block uppercase">
-              TRY WEARS BESPOKE LAB • TEAM & SQUAD GEAR
-            </span>
-            <h2 className="text-4xl font-display font-black tracking-tight dark:text-white uppercase leading-none">
-              REAL TEAM GEAR & BESPOKE CUSTOMIZER
-            </h2>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono uppercase max-w-2xl mx-auto leading-relaxed">
-              Design authentic fight team jerseys, championship lace-up boxing gloves, and MMA trunks. Choose from real pro combat team presets or construct custom squad kits with personalized athlete numbers and club crests.
-            </p>
-          </div>
-
+      {/* 7. INTERACTIVE CUSTOMIZER SECTION (SINGLE-SCREEN COMPACT STUDIO) */}
+      <section id="customizer" className="py-4 sm:py-6 border-b border-neutral-200/60 dark:border-neutral-900 bg-white dark:bg-[#050505] transition-colors">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6">
           {customizerProduct ? (
             <TShirtCustomizer product={customizerProduct} onAddToCart={handleAddToCart} />
           ) : (
-            <div className="text-center py-12 font-mono text-neutral-500 text-xs">No customizable assets active.</div>
+            <div className="text-center py-8 font-mono text-neutral-500 text-xs">No customizable assets active.</div>
           )}
-        </div>
-      </section>
-
-      {/* 6. TECHNICAL INNOVATION OVERVIEW */}
-      <section id="technology" className="py-24 bg-neutral-950 text-white relative overflow-hidden border-b border-neutral-900">
-        
-        {/* Anti theft overlays */}
-        <div className="absolute inset-0 z-20 bg-transparent select-none pointer-events-none" />
-
-        {/* Ambient glows */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#E21D1D]/5 rounded-full filter blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-red-600/5 rounded-full filter blur-3xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-6 space-y-16 relative z-10">
-          
-          {/* Header */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
-            <div className="md:col-span-7">
-              <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block mb-1">
-                {config.technology.subtitle}
-              </span>
-              <h2
-                data-editable-path="technology.title"
-                data-editable-label="Tech Section Heading"
-                className="text-4xl font-display font-black tracking-tight uppercase"
-              >
-                {config.technology.title}
-              </h2>
-            </div>
-            <p className="md:col-span-5 text-xs text-neutral-400 font-mono leading-relaxed">
-              We completely discard old padded templates. Every gloving shield utilizes multi-layered matrices tested under 1200lbs of punch impact to safeguard bone structures.
-            </p>
-          </div>
-
-          {/* Features Column layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {config.technology.features.map((feat, idx) => (
-              <div
-                key={feat.id}
-                className="p-8 bg-[#0c0c0c] border border-white/5 rounded-3xl space-y-6 hover:border-[#E21D1D]/30 transition-colors group"
-              >
-                <div className="w-12 h-12 bg-[#E21D1D]/10 rounded-2xl flex items-center justify-center font-display font-black text-[#E21D1D] text-lg border border-[#E21D1D]/20 group-hover:scale-105 transition-transform">
-                  0{idx + 1}
-                </div>
-                <div className="space-y-2">
-                  <h3
-                    data-editable-path={`technology.features[${idx}].title`}
-                    data-editable-label={`Tech Feature ${idx + 1} Title`}
-                    className="text-lg font-display font-bold text-white uppercase tracking-tight"
-                  >
-                    {feat.title}
-                  </h3>
-                  <p
-                    data-editable-path={`technology.features[${idx}].desc`}
-                    data-editable-label={`Tech Feature ${idx + 1} Description`}
-                    className="text-xs text-neutral-400 leading-relaxed font-sans"
-                  >
-                    {feat.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Biomechanical Specs Matrix spreadsheet */}
-          <div className="bg-[#0c0c0c] border border-white/5 rounded-3xl p-6 md:p-8 overflow-hidden space-y-6">
-            <div className="flex items-center gap-2">
-              <Award className="w-5 h-5 text-[#E21D1D]" />
-              <h4 className="font-display font-black text-xs uppercase tracking-widest">
-                CERTIFIED TOURNAMENT METRICS COMPARISON
-              </h4>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left font-mono text-[11px] text-neutral-400 border-collapse">
-                <thead>
-                  <tr className="border-b border-neutral-800 text-white uppercase">
-                    <th className="py-3 px-4">Performance Vectors</th>
-                    <th className="py-3 px-4 text-[#E21D1D]">Try Wears Sovereign series</th>
-                    <th className="py-3 px-4">Cheap competitors</th>
-                    <th className="py-3 px-4">Verdict</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-neutral-850">
-                  <tr>
-                    <td className="py-4 px-4 text-white font-bold">Kinetic Shock Absorption</td>
-                    <td className="py-4 px-4 text-emerald-400 font-bold">98.2% Dissipation</td>
-                    <td className="py-4 px-4">42.1% (Standard Foam)</td>
-                    <td className="py-4 px-4 text-neutral-300">Absolute Wrist Safety</td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-4 text-white font-bold">Structural Chassis Skin</td>
-                    <td className="py-4 px-4 text-emerald-400 font-bold">Carbon Fiber + 24K Leather</td>
-                    <td className="py-4 px-4">Synthetic Vinyl Pleather</td>
-                    <td className="py-4 px-4 text-neutral-300">10x Grip Lifespan</td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-4 text-white font-bold">Wrist Anchorage Locking</td>
-                    <td className="py-4 px-4 text-emerald-400 font-bold">Triple-Cuff Alignment Bar</td>
-                    <td className="py-4 px-4">Single Thin Velcro Wrap</td>
-                    <td className="py-4 px-4 text-neutral-300">Prevents striking shifts</td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-4 text-white font-bold">Internal Air Exchange</td>
-                    <td className="py-4 px-4 text-emerald-400 font-bold">Aerospace Mesh Dry Vent</td>
-                    <td className="py-4 px-4">Unventilated Closed Shell</td>
-                    <td className="py-4 px-4 text-neutral-300">No mold or sweat retention</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
       </section>
 
