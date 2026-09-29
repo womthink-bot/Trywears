@@ -32,6 +32,7 @@ export interface CategoryData {
   themeColor: string;
   heroImage: string;
   heroImageAlt: string;
+  heroVideo?: string;
   bgImage: string;
   bgAlt: string;
   description: string;
@@ -50,8 +51,9 @@ export const CATEGORIES_DATA: CategoryData[] = [
     tagline: "CLO 3D MATCH GRADE • ZERO-FADE SUBLIMATION",
     badge: "MATCH GRADE ARMORY",
     themeColor: "#E21D1D",
-    heroImage: "/images/3d_jersey_clo.jpg",
-    heroImageAlt: "3D Clo match grade tournament jersey with anatomical construction",
+    heroImage: "/videos/sportswearsGP.mp4",
+    heroImageAlt: "3D match grade tournament jersey live video showcasing anatomical construction",
+    heroVideo: "/videos/sportswearsGP.mp4",
     bgImage: "/images/backgrounds/sports_bg.jpg",
     bgAlt: "Professional sports athletes on stadium field under floodlights",
     description: "TOURNAMENT-GRADE FOOTBALL KITS, BASKETBALL UNIFORMS, AND PRO RUGBY JERSEYS ENGINEERED FOR HIGH-AEROBIC BREATHABILITY AND EXTREME MATCH-PULL DURABILITY.",
@@ -444,8 +446,9 @@ export const CATEGORIES_DATA: CategoryData[] = [
     tagline: "4-WAY POWER COMPRESSION • ERGONOMIC MAPPING",
     badge: "3D POWER KNIT",
     themeColor: "#3B82F6",
-    heroImage: "/images/3d_gym_wear.jpg",
-    heroImageAlt: "High performance bodybuilding gym athlete wearing dedicated training apparel",
+    heroImage: "/videos/gymandfitnessGP.mp4",
+    heroImageAlt: "High performance gym and fitness training live video showcasing compression apparel",
+    heroVideo: "/videos/gymandfitnessGP.mp4",
     bgImage: "/images/backgrounds/gym_bg.jpg",
     bgAlt: "Intense athletic fitness workout and bodybuilders in moody gym",
     description: "HIGH PERFORMANCE DEDICATED APPAREL DESIGNED FOR INTENSE GYM TRAINING, POWERLIFTING, AND BODYBUILDING. SQUAT-PROOF, SWEAT-WICKING, MAXIMUM RANGE OF MOTION.",
@@ -838,8 +841,9 @@ export const CATEGORIES_DATA: CategoryData[] = [
     tagline: "450GSM HEAVYWEIGHT FLEECE • LUXURY SILHOUETTES",
     badge: "HEAVYWEIGHT URBAN",
     themeColor: "#F59E0B",
-    heroImage: "/images/3d_streetwear.jpg",
-    heroImageAlt: "Luxury heavyweight French terry streetwear hoodie and techwear street apparel",
+    heroImage: "/videos/streetwearsGP.mp4",
+    heroImageAlt: "Luxury heavyweight French terry streetwear live video showcasing bespoke silhouettes",
+    heroVideo: "/videos/streetwearsGP.mp4",
     bgImage: "/images/backgrounds/street_bg.jpg",
     bgAlt: "Cinematic night urban city street with glowing neon lights and street fashion atmosphere",
     description: "BESPOKE LUXURY STREETWEAR SILHOUETTES INCLUDING BOXY 450GSM FRENCH TERRY HOODIES, HEAVY VINTAGE WASH TEES, AND MODERN TECHWEAR OUTERWEAR BUILT FOR HIGH-END BOUTIQUE LABELS.",
@@ -1232,8 +1236,9 @@ export const CATEGORIES_DATA: CategoryData[] = [
     tagline: "1.2MM DRUM-DYED COWHIDE • HANDCRAFTED HEIRLOOM",
     badge: "1.2MM FULL GRAIN",
     themeColor: "#D97706",
-    heroImage: "/images/3d_leather_jacket.jpg",
-    heroImageAlt: "Handcrafted 1.2mm drum-dyed full-grain leather motorcycle jacket",
+    heroImage: "/videos/leatherGP.mp4",
+    heroImageAlt: "Handcrafted 1.2mm drum-dyed full-grain leather motorcycle jacket live showcase video",
+    heroVideo: "/videos/leatherGP.mp4",
     bgImage: "/images/backgrounds/leather_bg.jpg",
     bgAlt: "Vintage motorcycle cafe racer on highway at dusk with handcrafted leather ambiance",
     description: "GRADE-A DRUM-DYED FULL-GRAIN LEATHER OUTERWEAR, ASYMMETRIC MOTO JACKETS, GENUINE SHEARLING AVIATORS, AND WOOL/LEATHER VARSITY SQUAD COATS HANDCRAFTED BY GENERATIONAL MASTERS.",

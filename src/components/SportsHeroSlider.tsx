@@ -123,7 +123,7 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
   // Floating Embers / Particles Parallax
   const particlesY = useTransform(smoothHeroScroll, [0, 1], [0, -260]);
 
-  const SLIDE_DURATION = 5000; // 5 seconds interval between category slides
+  const SLIDE_DURATION = 8000; // 8 seconds interval between category slides
   const TICK_INTERVAL = 50;
 
   // Persist video settings
@@ -184,27 +184,28 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     setTilt({ x: 0, y: 0 });
   };
 
-  // Slide advancement timer for multi-slide mode (5 seconds per slide)
+  // Slide advancement timer for multi-slide mode (exact 8 seconds per category)
   useEffect(() => {
-    if (!isPlaying || slides.length === 0) return;
+    if (!isPlaying || !slides || slides.length <= 1) return;
 
     setProgress(0);
     const startTime = Date.now();
 
-    timerRef.current = setInterval(() => {
+    const progressTimer = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const currentPct = Math.min((elapsed / SLIDE_DURATION) * 100, 100);
       setProgress(currentPct);
-
-      if (elapsed >= SLIDE_DURATION) {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
-      }
     }, TICK_INTERVAL);
 
+    const slideTimer = setTimeout(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, SLIDE_DURATION);
+
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      clearInterval(progressTimer);
+      clearTimeout(slideTimer);
     };
-  }, [currentSlide, isPlaying, slides.length]);
+  }, [currentSlide, isPlaying, slides?.length]);
 
   const handleNext = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -223,6 +224,10 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     ? "/videos/sportswearsBG.mp4" 
     : currentSlide === 1
     ? "/videos/gymandfitnessBG.mp4"
+    : currentSlide === 2
+    ? "/videos/streetwearsBG.mp4"
+    : currentSlide === 3
+    ? "/videos/LeatherBG.mp4"
     : (videoSettings.videoUrl || "/videos/sportswearsBG.mp4");
 
   return (

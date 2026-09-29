@@ -52,6 +52,22 @@ export const PRESET_3D_VIDEOS = [
     description: "10-second seamless muted looping background video for Gym & Fitness category."
   },
   {
+    id: "preset-streetwears",
+    title: "Street Wears Urban Motion 10s Loop",
+    category: "Street Wears",
+    url: "/videos/streetwearsBG.mp4",
+    poster: "/media/home-page/hero-section/03_street_wears.jpg",
+    description: "10-second seamless muted looping background video for Street Wears category."
+  },
+  {
+    id: "preset-leather",
+    title: "Artisan Leather Jackets 10s Loop",
+    category: "Leather Jackets",
+    url: "/videos/LeatherBG.mp4",
+    poster: "/media/home-page/hero-section/04_leather_jackets.jpg",
+    description: "10-second seamless muted looping background video for Leather Jackets category."
+  },
+  {
     id: "preset-boxing",
     title: "Championship Boxing Gloves 3D Arena Loop",
     category: "Pro Combat",

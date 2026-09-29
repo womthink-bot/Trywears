@@ -346,12 +346,65 @@ const CATEGORY_BACKGROUND_THEMES: Record<
   }
 };
 
+// ==============================================================
+// ✦ HIGH-PERFORMANCE HARDWARE-ACCELERATED SEAMLESS VIDEO PLAYER
+// Never stutters, never pauses or restarts during scroll
+// ==============================================================
+const SmoothSeamlessVideo: React.FC<{ src: string }> = React.memo(({ src }) => {
+  const vidRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = vidRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [src]);
+
+  return (
+    <video
+      ref={vidRef}
+      src={src}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      disablePictureInPicture
+      disableRemotePlayback
+      className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-110"
+      style={{
+        transform: "translateZ(0)",
+        willChange: "transform",
+        backfaceVisibility: "hidden"
+      }}
+    />
+  );
+});
+
 interface CategoryShowcaseSectionProps {
   category: CategoryData;
   onInspect: (product: CategoryProduct) => void;
 }
 
-const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = ({
+const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.memo(({
   category,
   onInspect
 }) => {
@@ -663,23 +716,26 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = ({
             <motion.div
               style={{
                 y: heroY,
-                rotateY: heroRotateY,
-                rotateX: heroRotateX,
-                transformStyle: "preserve-3d"
+                transform: "translateZ(0)",
+                willChange: "transform"
               }}
-              className="relative rounded-3xl overflow-hidden border border-neutral-700/80 bg-neutral-950/95 flex-1 h-full flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[580px] backdrop-blur-md"
+              className="relative rounded-3xl overflow-hidden border border-neutral-700/80 bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[580px]"
             >
-              {/* Big High-Resolution 3D Model / Garment Image (3d_gym_wear.jpg, 3d_jersey_clo.jpg) */}
-              <div className="absolute inset-0 overflow-hidden">
-                <motion.img
-                  src={category.heroImage}
-                  alt={category.heroImageAlt || category.name}
-                  style={{ scale: heroBgScale }}
-                  className="w-full h-full object-cover object-top filter brightness-[0.88] contrast-110 transition-transform duration-700 ease-out"
-                />
+              {/* Big High-Resolution 3D Model / Garment Image or Seamless Video Loop */}
+              <div className="absolute inset-0 overflow-hidden" style={{ transform: "translateZ(0)" }}>
+                {category.heroVideo || category.heroImage.endsWith(".mp4") ? (
+                  <SmoothSeamlessVideo src={category.heroVideo || category.heroImage} />
+                ) : (
+                  <motion.img
+                    src={category.heroImage}
+                    alt={category.heroImageAlt || category.name}
+                    style={{ scale: heroBgScale }}
+                    className="w-full h-full object-cover object-top filter brightness-[0.88] contrast-110 transition-transform duration-700 ease-out"
+                  />
+                )}
                 {/* Vignette gradients for pristine text readability matching image.png */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 
               {/* Dynamic Sweeping Light Reflection Sheen as you scroll */}
@@ -1029,7 +1085,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = ({
       </div>
     </section>
   );
-};
+});
 
 // ==============================================================
 // 3. MAIN SCROLL-DECONSTRUCTED EXPORT ARMORY COMPONENT

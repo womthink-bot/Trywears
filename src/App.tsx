@@ -136,15 +136,6 @@ export default function App() {
     }
   }, [config]);
 
-  // Slideshow interval timer (5 seconds)
-  useEffect(() => {
-    if (!isSlidePlaying || !config) return;
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % config.hero.slides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [isSlidePlaying, config]);
-
   // Theme Toggler
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
