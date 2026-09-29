@@ -332,13 +332,7 @@ export default function App() {
       {/* 5. $20K IMMERSIVE SCROLL-DRIVEN 3D GARMENT DECONSTRUCTION SECTION */}
       <ScrollDeconstructed3DGarment />
 
-      {/* 6. BESPOKE CUSTOM PRODUCT MANUFACTURING SHOWCASE (TRY WEARS CUSTOM DIVISION) */}
-      <CustomProductsShowcase />
-
-      {/* 6. FACTORY LIVE PRODUCTION & CRAFTSMANSHIP VIDEOS (3D SCROLLING MOTION) */}
-      <FactoryLiveVideoShowcase />
-
-      {/* 7. INTERACTIVE CUSTOMIZER SECTION (SINGLE-SCREEN COMPACT STUDIO) */}
+      {/* 6. INTERACTIVE CUSTOMIZER SECTION (SINGLE-SCREEN COMPACT STUDIO - IMAGE 1) */}
       <section id="customizer" className="py-4 sm:py-6 border-b border-neutral-200/60 dark:border-neutral-900 bg-white dark:bg-[#050505] transition-colors">
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
           {customizerProduct ? (
@@ -348,6 +342,12 @@ export default function App() {
           )}
         </div>
       </section>
+
+      {/* 7. BESPOKE CUSTOM PRODUCT MANUFACTURING SHOWCASE (TRY WEARS CUSTOM DIVISION - IMAGE 2) */}
+      <CustomProductsShowcase />
+
+      {/* 8. FACTORY LIVE PRODUCTION & CRAFTSMANSHIP VIDEOS (3D SCROLLING MOTION) */}
+      <FactoryLiveVideoShowcase />
 
       {/* 7. STORIES & TESTIMONIALS SECTION */}
       <section id="stories" className="py-24 px-6 bg-neutral-50 dark:bg-[#050505] border-b border-neutral-200/60 dark:border-neutral-900 transition-colors">
