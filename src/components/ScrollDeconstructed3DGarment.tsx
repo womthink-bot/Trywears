@@ -47,29 +47,19 @@ export { CATEGORIES_DATA };
 interface ProductCardProps {
   product: CategoryProduct;
   index: number;
-  scrollYProgress: any;
   onInspect: (product: CategoryProduct) => void;
-  onHoverChange?: (hovered: boolean) => void;
 }
 
 const Interactive3DProductCard: React.FC<ProductCardProps> = ({
   product,
-  index,
-  onInspect,
-  onHoverChange
+  onInspect
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
-      onMouseEnter={() => {
-        setIsHovered(true);
-        onHoverChange?.(true);
-      }}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        onHoverChange?.(false);
-      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={() => onInspect(product)}
       className="relative h-full rounded-2xl border border-neutral-800 hover:border-[#E21D1D]/80 bg-neutral-950/85 hover:bg-neutral-900/95 p-3 sm:p-3.5 flex flex-col justify-between cursor-pointer group transition-all duration-300 ease-out hover:shadow-[0_20px_45px_rgba(0,0,0,0.95)] hover:-translate-y-1 select-none"
       style={{
@@ -232,59 +222,65 @@ const CATEGORY_BACKGROUND_THEMES: Record<
 // ✦ HIGH-PERFORMANCE HARDWARE-ACCELERATED SEAMLESS VIDEO PLAYER
 // Completely isolated, never interrupted during mouse scrolling or hover
 // ==============================================================
-const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React.memo(({ src, className }) => {
-  const vidRef = useRef<HTMLVideoElement>(null);
+const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React.memo(
+  ({ src, className }) => {
+    const vidRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    const video = vidRef.current;
-    if (!video) return;
+    useEffect(() => {
+      const video = vidRef.current;
+      if (!video) return;
 
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    video.autoplay = true;
-    video.loop = true;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.autoplay = true;
+      video.loop = true;
+      video.currentTime = 0;
 
-    // Direct hardware play without scroll locks
-    const play = () => {
-      if (video.paused) {
-        video.play().catch(() => {});
-      }
-    };
+      const tryPlay = () => {
+        if (video.paused) {
+          video.play().catch(() => {});
+        }
+      };
 
-    play();
+      tryPlay();
 
-    // Fallback on initial user interaction (fired only once)
-    window.addEventListener("click", play, { once: true });
-    window.addEventListener("touchstart", play, { once: true });
+      const onInteraction = () => tryPlay();
+      window.addEventListener("pointerdown", onInteraction, { once: true, passive: true });
+      window.addEventListener("touchstart", onInteraction, { once: true, passive: true });
+      window.addEventListener("keydown", onInteraction, { once: true, passive: true });
 
-    return () => {
-      window.removeEventListener("click", play);
-      window.removeEventListener("touchstart", play);
-    };
-  }, [src]);
+      return () => {
+        window.removeEventListener("pointerdown", onInteraction);
+        window.removeEventListener("touchstart", onInteraction);
+        window.removeEventListener("keydown", onInteraction);
+      };
+    }, [src]);
 
-  return (
-    <video
-      ref={vidRef}
-      src={src}
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="auto"
-      disablePictureInPicture
-      disableRemotePlayback
-      tabIndex={-1}
-      className={className || "w-full h-full object-cover object-center filter brightness-[0.95] contrast-105 pointer-events-none"}
-      style={{
-        transform: "translate3d(0, 0, 0)",
-        willChange: "transform",
-        backfaceVisibility: "hidden"
-      }}
-    />
-  );
-});
+    return (
+      <video
+        ref={vidRef}
+        key={src}
+        src={src}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        disablePictureInPicture
+        disableRemotePlayback
+        tabIndex={-1}
+        className={className || "w-full h-full object-cover object-center filter brightness-[0.95] contrast-105 pointer-events-none"}
+        style={{
+          transform: "translate3d(0, 0, 0)",
+          willChange: "transform",
+          backfaceVisibility: "hidden"
+        }}
+      />
+    );
+  },
+  (prev, next) => prev.src === next.src && prev.className === next.className
+);
 
 interface CategoryShowcaseSectionProps {
   category: CategoryData;
@@ -303,9 +299,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
   // Multi-page product sliding, subcategory filtering and auto-slide state
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(0);
-  const [isHoveredOnProducts, setIsHoveredOnProducts] = useState(false);
   const [slideDirection, setSlideDirection] = useState<"next" | "prev">("next");
-  const [autoSlideEnabled, setAutoSlideEnabled] = useState(true);
 
   const filteredProducts = selectedSubCategory === "all"
     ? category.products
@@ -323,9 +317,9 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
     setCurrentPage(0);
   };
 
-  // Calm, efficient 7s auto-slide timer (NO 50ms re-render loop!)
+  // Calm, efficient 7s auto-slide timer
   useEffect(() => {
-    if (isHoveredOnProducts || !autoSlideEnabled || totalPages <= 1) {
+    if (totalPages <= 1) {
       return;
     }
 
@@ -335,7 +329,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
     }, 7000);
 
     return () => clearInterval(timer);
-  }, [isHoveredOnProducts, autoSlideEnabled, totalPages]);
+  }, [totalPages]);
 
   const handlePrevPage = () => {
     setSlideDirection("prev");
@@ -353,34 +347,9 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
     offset: ["start end", "end start"]
   });
 
-  // Section-wide 3D Mouse Parallax Tracking
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const bgMouseX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-24, 24]), {
-    damping: 30,
-    stiffness: 180
-  });
-  const bgMouseY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-24, 24]), {
-    damping: 30,
-    stiffness: 180
-  });
-  const bgMouseRotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [1.8, -1.8]), {
-    damping: 30,
-    stiffness: 180
-  });
-  const bgMouseRotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-2, 2]), {
-    damping: 30,
-    stiffness: 180
-  });
-
   // Scroll Parallax for Section-Wide Living Background Image
-  const bgParallaxY = useTransform(scrollYProgress, [0, 1], [-130, 130]);
-  const bgParallaxScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.24, 1.07, 1.22]);
-  const bgParallaxRotate = useTransform(
-    scrollYProgress,
-    [0, 1],
-    isLeftImage ? [-1.8, 1.8] : [1.8, -1.8]
-  );
+  const bgParallaxY = useTransform(scrollYProgress, [0, 1], [-90, 90]);
+  const bgParallaxScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.18, 1.05, 1.16]);
 
   // Large Typographic Watermark Smooth Horizontal Parallax
   const watermarkX = useTransform(
@@ -398,39 +367,16 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
   );
 
   // Parallax calculations for the Big Contextual Hero Card
-  const heroY = useTransform(scrollYProgress, [0, 1], [-35, 35]);
-  const heroRotateY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    isLeftImage ? [3.5, -3.5] : [-3.5, 3.5]
-  );
-  const heroRotateX = useTransform(scrollYProgress, [0, 1], [2.5, -2.5]);
-  const heroBgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.14, 1.04, 1.1]);
+  const heroBgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.08, 1.02, 1.06]);
   const lightSheenX = useTransform(scrollYProgress, [0, 1], ["-120%", "220%"]);
 
   // Scanning Laser Line through Under-Grid Chamber
   const scanLineY = useTransform(scrollYProgress, [0, 1], ["-10%", "110%"]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!sectionRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(xPct);
-    mouseY.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
   return (
     <section
       ref={sectionRef}
       id={`cat-section-${category.id}`}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden min-h-[920px] select-none"
     >
       {/* ============================================================== */}
@@ -693,8 +639,6 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             className={`lg:col-span-7 flex flex-col justify-between h-full relative ${
               isLeftImage ? "lg:order-2" : "lg:order-1"
             }`}
-            onMouseEnter={() => setIsHoveredOnProducts(true)}
-            onMouseLeave={() => setIsHoveredOnProducts(false)}
           >
             {/* Ambient Under-Grid Chamber Backdrop Layer */}
             <div className="absolute inset-0 -m-3 sm:-m-4 pointer-events-none rounded-3xl overflow-hidden -z-10">
@@ -853,11 +797,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                       key={product.id}
                       product={product}
                       index={pIdx}
-                      scrollYProgress={scrollYProgress}
                       onInspect={onInspect}
-                      onHoverChange={(hovered) => {
-                        if (hovered) setIsHoveredOnProducts(true);
-                      }}
                     />
                   ))}
                 </motion.div>
@@ -885,7 +825,6 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                       onClick={() => {
                         setSlideDirection(i > currentPage ? "next" : "prev");
                         setCurrentPage(i);
-                        setSlideProgress(0);
                       }}
                       className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                         currentPage === i
@@ -898,7 +837,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                 </div>
 
                 <span className="hidden sm:inline text-neutral-500">
-                  {isHoveredOnProducts ? "HOVER PAUSED" : "AUTO-ADVANCING"}
+                  AUTO-ADVANCING
                 </span>
               </div>
             )}
