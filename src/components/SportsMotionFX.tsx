@@ -19,37 +19,30 @@ export const SportsMotionFX: React.FC = () => {
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
-    let timeoutId: any = null;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
+    let animFrame: number;
+    let isTicking = false;
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const velocity = Math.abs(currentScrollY - lastScrollY);
-      setScrollVelocity(Math.min(velocity, 40));
-      lastScrollY = currentScrollY;
-
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        setScrollVelocity(0);
-      }, 150);
-
-      if (currentScrollY > 400) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
+      if (!isTicking) {
+        animFrame = requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          if (currentScrollY > 400) {
+            setShowScrollTop(true);
+          } else {
+            setShowScrollTop(false);
+          }
+          lastScrollY = currentScrollY;
+          isTicking = false;
+        });
+        isTicking = true;
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timeoutId);
+      cancelAnimationFrame(animFrame);
     };
   }, []);
 

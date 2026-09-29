@@ -42,9 +42,7 @@ export { CATEGORIES_DATA };
 
 // ==============================================================
 // 1. INTERACTIVE 3D PRODUCT CARD COMPONENT
-// Features: True 3D perspective tilt with mouse tracking,
-// specular glass sheen, floating garment cutout (translateZ 45px),
-// column-based tiered scroll parallax, and idle breathing float.
+// Clean, ultra-smooth 60fps hardware-accelerated interaction
 // ==============================================================
 interface ProductCardProps {
   product: CategoryProduct;
@@ -57,245 +55,129 @@ interface ProductCardProps {
 const Interactive3DProductCard: React.FC<ProductCardProps> = ({
   product,
   index,
-  scrollYProgress,
   onInspect,
   onHoverChange
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  // Mouse tilt physics in 3D
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [12, -12]), {
-    damping: 22,
-    stiffness: 240
-  });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-14, 14]), {
-    damping: 22,
-    stiffness: 240
-  });
-
-  // Column calculation (0, 1, 2) for tiered 3D scroll depth separation
-  const col = index % 3;
-  const row = Math.floor(index / 3);
-
-  // Column-based parallax scroll separation (creates dynamic 3D depth between columns)
-  const columnParallaxY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    col === 0 ? [-20, 20] : col === 1 ? [0, 0] : [20, -20]
-  );
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(xPct);
-    mouseY.set(yPct);
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    onHoverChange?.(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    onHoverChange?.(false);
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  // Specular reflection gradient based on mouse position
-  const glossX = useTransform(mouseX, [-0.5, 0.5], ["0%", "100%"]);
-  const glossY = useTransform(mouseY, [-0.5, 0.5], ["0%", "100%"]);
 
   return (
-    <motion.div
-      ref={cardRef}
+    <div
+      onMouseEnter={() => {
+        setIsHovered(true);
+        onHoverChange?.(true);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        onHoverChange?.(false);
+      }}
+      onClick={() => onInspect(product)}
+      className="relative h-full rounded-2xl border border-neutral-800 hover:border-[#E21D1D]/80 bg-neutral-950/85 hover:bg-neutral-900/95 p-3 sm:p-3.5 flex flex-col justify-between cursor-pointer group transition-all duration-300 ease-out hover:shadow-[0_20px_45px_rgba(0,0,0,0.95)] hover:-translate-y-1 select-none"
       style={{
-        y: columnParallaxY,
-        perspective: "1100px"
+        transform: "translate3d(0, 0, 0)",
+        willChange: "transform, border-color, background-color"
       }}
-      initial={{ opacity: 0, y: 45, rotateX: 18, scale: 0.93 }}
-      whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{
-        duration: 0.75,
-        delay: (col * 0.07) + (row * 0.05),
-        ease: [0.22, 1, 0.36, 1]
-      }}
-      className={`h-full ${isHovered ? "z-50 relative" : "z-10 relative"}`}
     >
-      <motion.div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        onClick={() => onInspect(product)}
+      {/* Ambient Backlight Glow matching product accent */}
+      <div
+        className="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-[50px] pointer-events-none transition-opacity duration-300"
         style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d"
+          backgroundColor: product.accentColor,
+          opacity: isHovered ? 0.35 : 0.05
         }}
-        className={`relative h-full rounded-2xl border transition-all duration-300 p-3 sm:p-3.5 flex flex-col justify-between cursor-pointer group bg-neutral-950/85 backdrop-blur-md ${
-          isHovered
-            ? "border-[#E21D1D]/80 shadow-[0_28px_60px_rgba(0,0,0,0.98)] bg-neutral-900/95 ring-1 ring-[#E21D1D]/40"
-            : "border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60"
-        }`}
-      >
-        {/* Dynamic Specular Gloss Sheen follows cursor */}
-        {isHovered && (
-          <motion.div
-            className="absolute inset-0 pointer-events-none rounded-2xl z-20 opacity-30 overflow-hidden"
-            style={{
-              background: `radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.25) 0%, transparent 65%)`,
-              left: glossX,
-              top: glossY,
-              transform: "translate(-50%, -50%)",
-              width: "140%",
-              height: "140%"
-            }}
-          />
-        )}
+      />
 
-        {/* Ambient Backlight Glow matching product accent */}
-        <div
-          className="absolute -top-16 -right-16 w-32 h-32 rounded-full blur-[60px] pointer-events-none transition-opacity duration-300"
-          style={{
-            backgroundColor: product.accentColor,
-            opacity: isHovered ? 0.45 : 0.06
-          }}
-        />
-
-        {/* Top Card Info (elevated in 3D: translateZ 18px) */}
-        <div
-          className="z-10 flex items-start justify-between gap-1 mb-1"
-          style={{ transform: "translateZ(18px)" }}
-        >
-          <div className="truncate">
-            <div className="flex items-center gap-1.5 mb-0.5">
-              <span className="font-mono text-[8px] font-bold text-neutral-500 uppercase">
-                SAMPLE #{product.sampleNum < 10 ? `0${product.sampleNum}` : product.sampleNum}
-              </span>
-              {product.subCategory && (
-                <>
-                  <span className="text-neutral-600 font-mono text-[8px]">•</span>
-                  <span 
-                    className="font-mono text-[7.5px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded truncate max-w-[125px]"
-                    style={{
-                      backgroundColor: `${product.accentColor}20`,
-                      color: product.accentColor,
-                      border: `1px solid ${product.accentColor}40`
-                    }}
-                  >
-                    {product.subCategory}
-                  </span>
-                </>
-              )}
-            </div>
-            <h5 className="font-display font-black text-xs text-white uppercase tracking-tight line-clamp-1 group-hover:text-[#E21D1D] transition-colors">
-              {product.name}
-            </h5>
-            <span className="font-mono text-[8px] text-neutral-400 block truncate">
-              {product.subtitle}
+      {/* Top Card Info */}
+      <div className="z-10 flex items-start justify-between gap-1 mb-1">
+        <div className="truncate">
+          <div className="flex items-center gap-1.5 mb-0.5">
+            <span className="font-mono text-[8px] font-bold text-neutral-500 uppercase">
+              SAMPLE #{product.sampleNum < 10 ? `0${product.sampleNum}` : product.sampleNum}
             </span>
+            {product.subCategory && (
+              <>
+                <span className="text-neutral-600 font-mono text-[8px]">•</span>
+                <span 
+                  className="font-mono text-[7.5px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded truncate max-w-[125px]"
+                  style={{
+                    backgroundColor: `${product.accentColor}20`,
+                    color: product.accentColor,
+                    border: `1px solid ${product.accentColor}40`
+                  }}
+                >
+                  {product.subCategory}
+                </span>
+              </>
+            )}
           </div>
-
-          <span
-            className="font-mono text-[8px] font-black px-1.5 py-0.5 rounded border uppercase shrink-0"
-            style={{
-              borderColor: `${product.accentColor}66`,
-              color: product.accentColor,
-              backgroundColor: `${product.accentColor}15`
-            }}
-          >
-            {product.gsm}
+          <h5 className="font-display font-black text-xs text-white uppercase tracking-tight line-clamp-1 group-hover:text-[#E21D1D] transition-colors">
+            {product.name}
+          </h5>
+          <span className="font-mono text-[8px] text-neutral-400 block truncate">
+            {product.subtitle}
           </span>
         </div>
 
-        {/* 100% TRANSPARENT PNG GARMENT CUTOUT WITH SMOOTH HOVER ZOOM & 3D FLOAT */}
-        <div
-          className="relative w-full h-[155px] sm:h-[170px] flex items-center justify-center my-1.5"
-          style={{ transformStyle: "preserve-3d" }}
+        <span
+          className="font-mono text-[8px] font-black px-1.5 py-0.5 rounded border uppercase shrink-0"
+          style={{
+            borderColor: `${product.accentColor}66`,
+            color: product.accentColor,
+            backgroundColor: `${product.accentColor}15`
+          }}
         >
-          {/* Reactive 3D Ground Shadow */}
-          <motion.div
-            className="absolute bottom-1 w-3/4 h-3.5 rounded-full blur-[7px] pointer-events-none"
-            animate={{
-              scale: isHovered ? 1.25 : [0.92, 1.05, 0.92],
-              opacity: isHovered ? 0.95 : 0.75
-            }}
-            transition={{
-              scale: isHovered ? { duration: 0.25 } : { duration: 3.2 + (index % 3) * 0.4, repeat: Infinity, ease: "easeInOut" },
-              opacity: { duration: 0.25 }
-            }}
-            style={{
-              background: "rgba(0, 0, 0, 0.95)"
-            }}
-          />
+          {product.gsm}
+        </span>
+      </div>
 
-          {/* Transparent Product Cutout Image with Smooth, Clear Hover Zoom in 3D (Text does NOT zoom, ONLY product zooms) */}
-          <motion.div
-            className="relative z-40 max-w-full max-h-full flex items-center justify-center pointer-events-none"
-            style={{
-              transform: isHovered ? "translateZ(80px)" : "translateZ(20px)"
-            }}
-            animate={{
-              scale: isHovered ? 1.58 : 1,
-              y: isHovered ? -10 : [0, -5, 0]
-            }}
-            transition={{
-              scale: { type: "spring", stiffness: 340, damping: 22 },
-              y: isHovered
-                ? { duration: 0.22, ease: "easeOut" }
-                : { duration: 3.2 + (index % 3) * 0.4, repeat: Infinity, ease: "easeInOut" }
-            }}
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className={`max-w-full max-h-[145px] sm:max-h-[160px] object-contain filter transition-all duration-300 ${
-                isHovered
-                  ? "drop-shadow-[0_28px_45px_rgba(0,0,0,0.98)] brightness-110 contrast-105"
-                  : "drop-shadow-[0_14px_20px_rgba(0,0,0,0.8)] opacity-95"
-              }`}
-              loading="lazy"
-            />
-          </motion.div>
+      {/* 100% TRANSPARENT PNG GARMENT CUTOUT WITH SMOOTH HOVER ZOOM */}
+      <div className="relative w-full h-[155px] sm:h-[170px] flex items-center justify-center my-1.5 overflow-visible">
+        {/* Soft ground contact shadow */}
+        <div
+          className={`absolute bottom-1 w-3/4 h-3.5 rounded-full blur-[6px] bg-black/80 transition-all duration-300 pointer-events-none ${
+            isHovered ? "scale-110 opacity-90" : "scale-95 opacity-60"
+          }`}
+        />
 
-          {/* Subtle Hover Inspect Indicator in corner */}
-          <div
-            className={`absolute top-1 right-1 bg-black/80 border border-white/20 text-white p-1.5 rounded-full transition-all duration-200 z-30 ${
-              isHovered ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-75 -translate-y-1"
+        {/* Product Image with smooth 60fps CSS transform */}
+        <div className="relative z-20 max-w-full max-h-full flex items-center justify-center pointer-events-none">
+          <img
+            src={product.image}
+            alt={product.name}
+            className={`max-w-full max-h-[145px] sm:max-h-[160px] object-contain transition-transform duration-300 ease-out ${
+              isHovered
+                ? "scale-110 drop-shadow-[0_20px_35px_rgba(0,0,0,0.95)] brightness-105"
+                : "scale-100 drop-shadow-[0_10px_18px_rgba(0,0,0,0.75)] opacity-95"
             }`}
-            title="Click to Inspect 3D Fabric Details"
-          >
-            <ZoomIn className="w-3.5 h-3.5 text-[#E21D1D]" />
-          </div>
+            loading="lazy"
+          />
         </div>
 
-        {/* Bottom Card Meta (translateZ 18px in 3D) */}
+        {/* Inspect Indicator button */}
         <div
-          className="z-10 space-y-1 pt-1.5 border-t border-neutral-800"
-          style={{ transform: "translateZ(18px)" }}
+          className={`absolute top-1 right-1 bg-black/80 border border-white/20 text-white p-1.5 rounded-full transition-all duration-200 z-30 ${
+            isHovered ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          }`}
+          title="Click to Inspect 3D Fabric Details"
         >
-          <p className="font-mono text-[8px] text-neutral-400 line-clamp-1">
-            {product.fabric}
-          </p>
-
-          <div className="flex items-center justify-between font-mono text-[8px]">
-            <span className="text-neutral-500">MOQ: {product.moq}</span>
-            <span className="flex items-center gap-1 font-bold text-white group-hover:text-[#E21D1D] transition-colors">
-              <span>3D SPECS</span>
-              <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-            </span>
-          </div>
+          <ZoomIn className="w-3.5 h-3.5 text-[#E21D1D]" />
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+
+      {/* Bottom Card Meta */}
+      <div className="z-10 space-y-1 pt-1.5 border-t border-neutral-800">
+        <p className="font-mono text-[8px] text-neutral-400 line-clamp-1">
+          {product.fabric}
+        </p>
+
+        <div className="flex items-center justify-between font-mono text-[8px]">
+          <span className="text-neutral-500">MOQ: {product.moq}</span>
+          <span className="flex items-center gap-1 font-bold text-white group-hover:text-[#E21D1D] transition-colors">
+            <span>3D SPECS</span>
+            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -348,9 +230,9 @@ const CATEGORY_BACKGROUND_THEMES: Record<
 
 // ==============================================================
 // ✦ HIGH-PERFORMANCE HARDWARE-ACCELERATED SEAMLESS VIDEO PLAYER
-// Never stutters, never pauses or restarts during scroll
+// Always starts from beginning (0:00), plays instantly & smoothly
 // ==============================================================
-const SmoothSeamlessVideo: React.FC<{ src: string }> = React.memo(({ src }) => {
+const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React.memo(({ src, className }) => {
   const vidRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -360,21 +242,32 @@ const SmoothSeamlessVideo: React.FC<{ src: string }> = React.memo(({ src }) => {
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
+    video.autoplay = true;
+    video.loop = true;
+    video.currentTime = 0;
 
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {});
-    }
-
-    const handleVisibilityChange = () => {
-      if (!document.hidden && video.paused) {
-        video.play().catch(() => {});
+    const playVideo = () => {
+      const p = video.play();
+      if (p !== undefined) {
+        p.catch(() => {});
       }
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    playVideo();
+
+    // Browser Autoplay Policy Fallback: Immediately start playing on first user interaction
+    const handleUserGesture = () => {
+      playVideo();
+    };
+
+    window.addEventListener("click", handleUserGesture, { once: true });
+    window.addEventListener("touchstart", handleUserGesture, { once: true });
+    window.addEventListener("scroll", handleUserGesture, { passive: true });
+
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("click", handleUserGesture);
+      window.removeEventListener("touchstart", handleUserGesture);
+      window.removeEventListener("scroll", handleUserGesture);
     };
   }, [src]);
 
@@ -389,9 +282,10 @@ const SmoothSeamlessVideo: React.FC<{ src: string }> = React.memo(({ src }) => {
       preload="auto"
       disablePictureInPicture
       disableRemotePlayback
-      className="w-full h-full object-cover object-center filter brightness-[0.88] contrast-110"
+      tabIndex={-1}
+      className={className || "w-full h-full object-cover object-center filter brightness-[0.92] contrast-105 pointer-events-none"}
       style={{
-        transform: "translateZ(0)",
+        transform: "translate3d(0, 0, 0)",
         willChange: "transform",
         backfaceVisibility: "hidden"
       }}
@@ -572,33 +466,17 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
         <motion.div
           style={{
             y: bgParallaxY,
-            x: bgMouseX,
             scale: bgParallaxScale,
-            rotate: bgParallaxRotate,
-            rotateX: bgMouseRotateX,
-            rotateY: bgMouseRotateY,
-            transformStyle: "preserve-3d"
+            transform: "translate3d(0, 0, 0)",
+            willChange: "transform"
           }}
-          className="absolute inset-[-12%] w-[124%] h-[124%]"
+          className="absolute inset-[-8%] w-[116%] h-[116%]"
         >
           <img
             src={category.bgImage}
             alt={category.bgAlt}
+            loading="lazy"
             className="w-full h-full object-cover object-center filter brightness-[0.32] contrast-125 saturate-125"
-          />
-
-          {/* Continuous Subtle Camera Breathe Float */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            animate={{
-              scale: [1, 1.025, 1],
-              opacity: [0.95, 1, 0.95]
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
           />
         </motion.div>
 
@@ -713,12 +591,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             }`}
             style={{ perspective: "1200px" }}
           >
-            <motion.div
-              style={{
-                y: heroY,
-                transform: "translateZ(0)",
-                willChange: "transform"
-              }}
+            <div
               className="relative rounded-3xl overflow-hidden border border-neutral-700/80 bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[580px]"
             >
               {/* Big High-Resolution 3D Model / Garment Image or Seamless Video Loop */}
@@ -859,7 +732,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* ============================================================== */}

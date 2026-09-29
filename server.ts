@@ -15,10 +15,12 @@ const PORT = 3000;
 app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ limit: "100mb", extended: true }));
 
-// Define config and uploads directories using process.cwd() (safe for both tsx and bundled CJS)
+// Define config, media, uploads, and videos directories using process.cwd() (safe for both tsx and bundled CJS)
 const CONFIG_FILE_PATH = path.join(process.cwd(), "src", "data", "website_config.json");
 const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
 const MEDIA_DIR = path.join(process.cwd(), "public", "media");
+const PRODUCTS_DIR = path.join(process.cwd(), "public", "products");
+const VIDEOS_DIR = path.join(process.cwd(), "public", "videos");
 
 // Ensure directories exist
 if (!fs.existsSync(path.dirname(CONFIG_FILE_PATH))) {
@@ -26,6 +28,12 @@ if (!fs.existsSync(path.dirname(CONFIG_FILE_PATH))) {
 }
 if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
+if (!fs.existsSync(VIDEOS_DIR)) {
+  fs.mkdirSync(VIDEOS_DIR, { recursive: true });
+}
+if (!fs.existsSync(PRODUCTS_DIR)) {
+  fs.mkdirSync(PRODUCTS_DIR, { recursive: true });
 }
 
 // Ensure all media section directories exist
@@ -48,14 +56,47 @@ mediaSubfolders.forEach((sub) => {
   }
 });
 
+// Fast byte-range partial content video streaming for instant startup
+app.get("/videos/:filename", (req, res, next) => {
+  const filename = req.params.filename;
+  const filePath = path.join(VIDEOS_DIR, filename);
+  if (!fs.existsSync(filePath)) {
+    return next();
+  }
+  const stat = fs.statSync(filePath);
+  const fileSize = stat.size;
+  const range = req.headers.range;
+
+  if (range) {
+    const parts = range.replace(/bytes=/, "").split("-");
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+    const chunksize = end - start + 1;
+    const file = fs.createReadStream(filePath, { start, end });
+    const head = {
+      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+      "Accept-Ranges": "bytes",
+      "Content-Length": chunksize,
+      "Content-Type": "video/mp4",
+      "Cache-Control": "public, max-age=31536000, immutable"
+    };
+    res.writeHead(206, head);
+    file.pipe(res);
+  } else {
+    const head = {
+      "Content-Length": fileSize,
+      "Content-Type": "video/mp4",
+      "Accept-Ranges": "bytes",
+      "Cache-Control": "public, max-age=31536000, immutable"
+    };
+    res.writeHead(200, head);
+    fs.createReadStream(filePath).pipe(res);
+  }
+});
+
 // Serve public uploads, media, products, images, and videos statically
 app.use("/uploads", express.static(UPLOADS_DIR));
 app.use("/media", express.static(MEDIA_DIR));
-const PRODUCTS_DIR = path.join(process.cwd(), "public", "products");
-const VIDEOS_DIR = path.join(process.cwd(), "public", "videos");
-if (!fs.existsSync(VIDEOS_DIR)) {
-  fs.mkdirSync(VIDEOS_DIR, { recursive: true });
-}
 app.use("/products", express.static(PRODUCTS_DIR));
 app.use("/images", express.static(PRODUCTS_DIR));
 app.use("/images", express.static(path.join(process.cwd(), "public", "images")));

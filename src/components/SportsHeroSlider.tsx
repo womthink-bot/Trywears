@@ -51,6 +51,13 @@ interface SportsHeroSliderProps {
 
 const STORAGE_KEY = "trywears_3d_hero_settings_v1";
 
+const HERO_SLIDE_BG_VIDEOS = [
+  { id: 0, url: "/videos/sportswearsBG.mp4", title: "Sports Wears" },
+  { id: 1, url: "/videos/gymandfitnessBG.mp4", title: "Gym & Fitness" },
+  { id: 2, url: "/videos/streetwearsBG.mp4", title: "Street Wears" },
+  { id: 3, url: "/videos/LeatherBG.mp4", title: "Leather Jackets" }
+];
+
 export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOpenMediaFolder }) => {
   // 3D Video & Media Settings State
   const [videoSettings, setVideoSettings] = useState<Hero3DVideoSettings>(() => {
@@ -153,13 +160,33 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     }
   };
 
-  // Sync Video playback rate & volume
+  // Sync Video playback rate, volume & viewport visibility
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = videoSettings.playbackSpeed || 1;
-      videoRef.current.volume = 0;
-      videoRef.current.muted = true;
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.playbackRate = videoSettings.playbackSpeed || 1;
+    video.volume = 0;
+    video.muted = true;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+    };
   }, [videoSettings.playbackSpeed, currentSlide]);
 
   // Handle Mouse 3D Gyro Tilt
@@ -242,44 +269,55 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
         style={{ perspective: "1200px" }}
       >
         {/* ================= BACKGROUND LAYER (3D VIDEO / HOLOGRAPHIC / SLIDES) ================= */}
-        <motion.div 
+        <div 
           className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
-          style={{ scale: bgScale, y: bgY }}
+          style={{ transform: "translate3d(0, 0, 0)" }}
         >
           
-          {/* MODE 1: 3D VIDEO BACKGROUND (10-Second Muted Seamless Video Loop) */}
+          {/* MODE 1: 3D VIDEO BACKGROUND (Preloaded Instant Crossfade Video Stack) */}
           {videoSettings.activeMode === "3d-video" && (
-            <div className="relative w-full h-full">
-              <video
-                ref={videoRef}
-                key={`hero-bg-vid-${currentSlide}-${activeVideoUrl}`}
-                src={activeVideoUrl}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                onLoadedData={() => {
-                  setVideoLoaded(true);
-                  setVideoError(false);
-                }}
-                onError={() => {
-                  console.warn("Video failed to play, falling back to static poster slide.");
-                  setVideoError(true);
-                }}
-                className={`w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.15] scale-105 transition-opacity duration-700 ${
-                  videoLoaded ? "opacity-100" : "opacity-0"
-                }`}
-              />
-
-              {/* Fallback image if video is loading or failed */}
-              {(!videoLoaded || videoError) && (
-                <img
-                  src={activeSlideData.image}
-                  alt={activeSlideData.title}
-                  className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.1]"
-                  referrerPolicy="no-referrer"
+            <div className="relative w-full h-full" style={{ contain: "paint" }}>
+              {videoSettings.isCustomUploaded && videoSettings.videoUrl ? (
+                <video
+                  ref={videoRef}
+                  src={videoSettings.videoUrl}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  tabIndex={-1}
+                  className="w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.15] scale-105"
+                  style={{ transform: "translate3d(0, 0, 0)" }}
                 />
+              ) : (
+                HERO_SLIDE_BG_VIDEOS.map((item, idx) => {
+                  const isActive = (currentSlide % HERO_SLIDE_BG_VIDEOS.length) === idx;
+                  return (
+                    <video
+                      key={item.id}
+                      src={item.url}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="auto"
+                      disablePictureInPicture
+                      disableRemotePlayback
+                      tabIndex={-1}
+                      className={`absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.15] scale-105 transition-opacity duration-700 pointer-events-none ${
+                        isActive ? "opacity-100 z-10" : "opacity-0 z-0"
+                      }`}
+                      style={{
+                        transform: "translate3d(0, 0, 0)",
+                        willChange: "opacity",
+                        backfaceVisibility: "hidden"
+                      }}
+                    />
+                  );
+                })
               )}
             </div>
           )}
@@ -365,7 +403,7 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
 
           {/* Athletic Texture Hatch overlay */}
           <div className="absolute inset-0 athletic-hatch opacity-20 pointer-events-none" />
-        </motion.div>
+        </div>
 
         {/* ================= FOREGROUND CONTENT LAYER (HERO STAGE + 4 3D VIDEO BOXES) ================= */}
         <div className="relative z-20 max-w-7xl mx-auto px-6 w-full flex flex-col justify-between flex-1 pointer-events-auto">
