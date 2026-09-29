@@ -230,7 +230,7 @@ const CATEGORY_BACKGROUND_THEMES: Record<
 
 // ==============================================================
 // ✦ HIGH-PERFORMANCE HARDWARE-ACCELERATED SEAMLESS VIDEO PLAYER
-// Always starts from beginning (0:00), plays instantly & seamlessly in endless smooth loop
+// Completely isolated, never interrupted during mouse scrolling or hover
 // ==============================================================
 const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React.memo(({ src, className }) => {
   const vidRef = useRef<HTMLVideoElement>(null);
@@ -244,56 +244,23 @@ const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React
     video.playsInline = true;
     video.autoplay = true;
     video.loop = true;
-    video.playbackRate = 1.0;
 
-    const playSafe = () => {
+    // Direct hardware play without scroll locks
+    const play = () => {
       if (video.paused) {
-        const p = video.play();
-        if (p !== undefined) {
-          p.catch(() => {});
-        }
+        video.play().catch(() => {});
       }
     };
 
-    playSafe();
+    play();
 
-    // Auto-resume if browser stutters or buffers
-    const handleStall = () => {
-      playSafe();
-    };
-
-    // Instant seamless loop rewind before micro-freeze gap
-    const handleTimeUpdate = () => {
-      if (video.duration && video.currentTime >= video.duration - 0.08) {
-        video.currentTime = 0;
-        playSafe();
-      }
-    };
-
-    const handleEnded = () => {
-      video.currentTime = 0;
-      playSafe();
-    };
-
-    video.addEventListener("waiting", handleStall);
-    video.addEventListener("stalled", handleStall);
-    video.addEventListener("timeupdate", handleTimeUpdate);
-    video.addEventListener("ended", handleEnded);
-
-    // Global interaction triggers guarantee instant playback without user action required
-    const handleUserGesture = () => playSafe();
-    window.addEventListener("click", handleUserGesture, { passive: true });
-    window.addEventListener("scroll", handleUserGesture, { passive: true });
-    window.addEventListener("touchstart", handleUserGesture, { passive: true });
+    // Fallback on initial user interaction (fired only once)
+    window.addEventListener("click", play, { once: true });
+    window.addEventListener("touchstart", play, { once: true });
 
     return () => {
-      video.removeEventListener("waiting", handleStall);
-      video.removeEventListener("stalled", handleStall);
-      video.removeEventListener("timeupdate", handleTimeUpdate);
-      video.removeEventListener("ended", handleEnded);
-      window.removeEventListener("click", handleUserGesture);
-      window.removeEventListener("scroll", handleUserGesture);
-      window.removeEventListener("touchstart", handleUserGesture);
+      window.removeEventListener("click", play);
+      window.removeEventListener("touchstart", play);
     };
   }, [src]);
 
@@ -339,7 +306,6 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
   const [isHoveredOnProducts, setIsHoveredOnProducts] = useState(false);
   const [slideDirection, setSlideDirection] = useState<"next" | "prev">("next");
   const [autoSlideEnabled, setAutoSlideEnabled] = useState(true);
-  const [slideProgress, setSlideProgress] = useState(0);
 
   const filteredProducts = selectedSubCategory === "all"
     ? category.products
@@ -355,31 +321,18 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
   const handleSelectSubCategory = (subId: string) => {
     setSelectedSubCategory(subId);
     setCurrentPage(0);
-    setSlideProgress(0);
   };
 
-  // Auto-slide effect:
-  // If mouse is NOT hovering over products, it auto-slides down / to next batch every 3.8s!
-  // If mouse IS hovering over products, auto-slide halts/pauses ("agr mouse product pr ho to nechy slide nah ho")!
+  // Calm, efficient 7s auto-slide timer (NO 50ms re-render loop!)
   useEffect(() => {
     if (isHoveredOnProducts || !autoSlideEnabled || totalPages <= 1) {
       return;
     }
 
-    const intervalTime = 50;
-    const totalDuration = 7000; // 7s calm interval per slide
-    const step = (intervalTime / totalDuration) * 100;
-
     const timer = setInterval(() => {
-      setSlideProgress((prev) => {
-        if (prev >= 100) {
-          setSlideDirection("next");
-          setCurrentPage((p) => (p + 1) % totalPages);
-          return 0;
-        }
-        return prev + step;
-      });
-    }, intervalTime);
+      setSlideDirection("next");
+      setCurrentPage((p) => (p + 1) % totalPages);
+    }, 7000);
 
     return () => clearInterval(timer);
   }, [isHoveredOnProducts, autoSlideEnabled, totalPages]);
@@ -387,13 +340,11 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
   const handlePrevPage = () => {
     setSlideDirection("prev");
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
-    setSlideProgress(0);
   };
 
   const handleNextPage = () => {
     setSlideDirection("next");
     setCurrentPage((prev) => (prev + 1) % totalPages);
-    setSlideProgress(0);
   };
 
   // Scroll Progress across this specific category section
