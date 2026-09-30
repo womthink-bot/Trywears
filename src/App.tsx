@@ -37,6 +37,7 @@ import { FactoryLiveVideoShowcase } from "./components/FactoryLiveVideoShowcase"
 import { MediaManagerModal } from "./components/MediaManagerModal";
 import { ScrollDeconstructed3DGarment } from "./components/ScrollDeconstructed3DGarment";
 import { CustomProductsShowcase } from "./components/CustomProductsShowcase";
+import { FashionWearCustomVideoSection } from "./components/FashionWearCustomVideoSection";
 import fallbackConfig from "./data/website_config.json";
 
 export default function App() {
@@ -291,6 +292,10 @@ export default function App() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping" />
               Factory Videos
             </a>
+            <a href="#fashion-custom-video-studio" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors flex items-center gap-1 text-amber-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+              Fashion Atelier
+            </a>
             <a href="#customizer" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Bespoke 3D Lab</a>
           </nav>
 
@@ -348,6 +353,9 @@ export default function App() {
 
       {/* 8. FACTORY LIVE PRODUCTION & CRAFTSMANSHIP VIDEOS (3D SCROLLING MOTION) */}
       <FactoryLiveVideoShowcase />
+
+      {/* 9. HIGH-STATUS FASHION WEAR CUSTOMIZATION & BIG VIDEO ATELIER */}
+      <FashionWearCustomVideoSection />
 
       {/* 7. STORIES & TESTIMONIALS SECTION */}
       <section id="stories" className="py-24 px-6 bg-neutral-50 dark:bg-[#050505] border-b border-neutral-200/60 dark:border-neutral-900 transition-colors">
