@@ -94,14 +94,22 @@ app.get("/videos/:filename", (req, res, next) => {
   }
 });
 
-// Serve public uploads, media, products, images, and videos statically
-app.use("/uploads", express.static(UPLOADS_DIR));
-app.use("/media", express.static(MEDIA_DIR));
-app.use("/products", express.static(PRODUCTS_DIR));
-app.use("/images", express.static(PRODUCTS_DIR));
-app.use("/images", express.static(path.join(process.cwd(), "public", "images")));
-app.use("/videos", express.static(VIDEOS_DIR));
-app.use("/videos", express.static(path.join(MEDIA_DIR, "videos")));
+// High-performance static cache options (30 days browser cache + etag)
+const staticCacheOptions = {
+  maxAge: "30d",
+  immutable: true,
+  etag: true,
+  lastModified: true
+};
+
+// Serve public uploads, media, products, images, and videos statically with optimal caching
+app.use("/uploads", express.static(UPLOADS_DIR, staticCacheOptions));
+app.use("/media", express.static(MEDIA_DIR, staticCacheOptions));
+app.use("/products", express.static(PRODUCTS_DIR, staticCacheOptions));
+app.use("/images", express.static(PRODUCTS_DIR, staticCacheOptions));
+app.use("/images", express.static(path.join(process.cwd(), "public", "images"), staticCacheOptions));
+app.use("/videos", express.static(VIDEOS_DIR, staticCacheOptions));
+app.use("/videos", express.static(path.join(MEDIA_DIR, "videos"), staticCacheOptions));
 
 // Helper function to scan all media folders dynamically
 function scanMediaFolders() {

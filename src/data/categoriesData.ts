@@ -443,7 +443,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
     index: 1,
     code: "02",
     name: "GYM & FITNESS APPAREL",
-    tagline: "4-WAY POWER COMPRESSION • ERGONOMIC MAPPING",
+    tagline: "WOMEN'S ACTIVEWEAR SETS • MEN'S COMPRESSION SUITS",
     badge: "3D POWER KNIT",
     themeColor: "#3B82F6",
     heroImage: "/videos/gymandfitnessGP.mp4",
@@ -451,7 +451,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
     heroVideo: "/videos/gymandfitnessGP.mp4",
     bgImage: "/images/backgrounds/gym_bg.jpg",
     bgAlt: "Intense athletic fitness workout and bodybuilders in moody gym",
-    description: "HIGH PERFORMANCE DEDICATED APPAREL DESIGNED FOR INTENSE GYM TRAINING, POWERLIFTING, AND BODYBUILDING. SQUAT-PROOF, SWEAT-WICKING, MAXIMUM RANGE OF MOTION.",
+    description: "HIGH PERFORMANCE DEDICATED APPAREL DESIGNED FOR INTENSE GYM TRAINING, WOMEN'S SEAMLESS ACTIVEWEAR BRA & LEGGINGS SUITS, MEN'S 2-PIECE COMPRESSION SETS, AND SQUAT-PROOF PERFORMANCE GEAR.",
     alignImageLeft: false,
     stats: [
       { label: "120+ PRODUCTS", value: "OEM SAMPLES" },
@@ -459,97 +459,97 @@ export const CATEGORIES_DATA: CategoryData[] = [
       { label: "100% QUALITY OEM", value: "GUARANTEED" },
     ],
     highlights: [
-      "320GSM Ribbed Muscle Compression",
-      "Ergonomic Vascular Zone Mapping",
+      "Women's Seamless Sculpted Sports Bra & Leggings",
+      "Squat-Proof 4-Way Compression Spandex",
       "Silver-Ion Infused Anti-Odor Yarn",
-      "Zero-Chafe Tubular Seamless Build"
+      "Men's 2-Piece Rashguard & Base Layer Suits"
     ],
     subCategories: [
-      { id: "compression-rashguards", name: "Compression & Rashguards", tagline: "4-Way Muscle Contouring Shield" },
-      { id: "stringers-tanks", name: "Bodybuilding Stringers", tagline: "Deep-Cut Y-Back V-Taper Tanks" },
-      { id: "impact-armor", name: "Hex Impact Foam Armor", tagline: "Closed-Cell Impact Absorbing Tops" },
+      { id: "women-sets", name: "Women's Activewear Sets", tagline: "Seamless Sculpted Bras & High-Rise Leggings" },
+      { id: "compression-suits", name: "Compression Base Layer Suits", tagline: "Men's 2-Piece 4-Way Muscle Compression" },
+      { id: "training-sets", name: "Gym Training & Workout Suits", tagline: "Deep-Cut Hooded Tanks & Liner Shorts" },
       { id: "seamless-base-layers", name: "Seamless & Base Layers", tagline: "Tubular Micro-Ribbed Thermal Knit" }
     ],
     products: [
       {
         id: "gym-1",
         sampleNum: 1,
-        name: "Seamless Ergonomic Compression Top",
-        subtitle: "3D High-Flex Athletic Knit",
-        image: "/images/gym-fitness/gym_seamless.png",
-        badge: "3D SEAMLESS KNIT",
-        subCategory: "Seamless & Base Layers",
-        subCategoryId: "seamless-base-layers",
+        name: "Women's Seamless Sports Bra & Contour Leggings Set",
+        subtitle: "Aesthetic 2-Piece Activewear Suit",
+        image: "/images/gym-fitness/gym_women_seamless_set_v2.png",
+        badge: "WOMEN'S SEAMLESS 2-PIECE SET",
+        subCategory: "Women's Activewear Sets",
+        subCategoryId: "women-sets",
         gsm: "320-GSM",
-        fabric: "Ribbed Compression Spandex Blend",
-        accentColor: "#3B82F6",
+        fabric: "Seamless Micro-Ribbed Nylon & Spandex",
+        accentColor: "#EC4899",
         moq: "30 PCS",
         colorways: [
+          { name: "Dusty Mauve", hex: "#DB2777" },
           { name: "Stealth Black", hex: "#18181B" },
-          { name: "Cobalt Blue", hex: "#2563EB" },
-          { name: "Combat Charcoal", hex: "#3F3F46" }
+          { name: "Sage Olive", hex: "#4D7C0F" }
         ],
-        specs: ["320GSM Ribbed Muscle Compression", "Ergonomic Vascular Mapping", "Anti-Odor Silver-Ion Infused Yarn", "Zero-Chafe Seamless Tubular Construction"]
+        specs: ["Sculpted High-Support Ribbed Sports Bra", "High-Waisted Booty-Contour Ribbed Leggings", "100% Squat-Proof 4-Way Compression Knit", "Chafe-Free Seamless Tubular Construction"]
       },
       {
         id: "gym-2",
         sampleNum: 2,
-        name: "Sculpted Hexagonal Impact Armor Top",
-        subtitle: "High-Impact Training Protection Top",
-        image: "/images/gym-fitness/06_padded_armor.png",
-        badge: "HEX IMPACT FOAM ARMOR",
-        subCategory: "Hex Impact Foam Armor",
-        subCategoryId: "impact-armor",
+        name: "Women's High-Support Racerback Bra & Active Leggings Suit",
+        subtitle: "Forest Emerald Activewear Suit",
+        image: "/images/gym-fitness/gym_women_emerald_bra_set_v2.png",
+        badge: "HIGH-SUPPORT GYM SUIT",
+        subCategory: "Women's Activewear Sets",
+        subCategoryId: "women-sets",
         gsm: "340-GSM",
-        fabric: "Closed-Cell Hex Foam & Lycra",
-        accentColor: "#06B6D4",
+        fabric: "High-Tensile Spandex & Moisture-Wicking Mesh",
+        accentColor: "#10B981",
         moq: "30 PCS",
         colorways: [
-          { name: "Tactical Cyan", hex: "#06B6D4" },
-          { name: "Shadow Black", hex: "#09090B" },
-          { name: "Desert Camo", hex: "#78716C" }
+          { name: "Forest Emerald", hex: "#10B981" },
+          { name: "Midnight Navy", hex: "#1E3A8A" },
+          { name: "Shadow Obsidian", hex: "#09090B" }
         ],
-        specs: ["Sculpted Hex Foam Padding in Core/Shoulders", "Energy Absorption Impact Rating", "4-Way Dynamic Flex Range", "Reinforced Flatlock Double Seams"]
+        specs: ["Impact-Absorbing Racerback Sports Bra with Removable Pads", "High-Rise Contoured Performance Workout Leggings", "Reinforced Flatlock Double Seams", "Rapid Sweat-Evaporation Breathable Panels"]
       },
       {
         id: "gym-3",
         sampleNum: 3,
-        name: "Pro Bodybuilding Stringer Tank",
-        subtitle: "Deep-Cut Athletic Armholes",
-        image: "/images/gym-fitness/gym_stringer_tank.png",
-        badge: "PERFORMANCE STRINGER",
-        subCategory: "Bodybuilding Stringers",
-        subCategoryId: "stringers-tanks",
-        gsm: "180-GSM",
-        fabric: "Ultra-Lightweight Microfiber Poly",
-        accentColor: "#E21D1D",
-        moq: "50 PCS",
+        name: "Men's 2-Piece Compression Rashguard & Tights Base Layer Suit",
+        subtitle: "Ergonomic Muscle-Mapped Training Suit",
+        image: "/images/gym-fitness/gym_men_compression_suit_v2.png",
+        badge: "2-PIECE COMPRESSION SUIT",
+        subCategory: "Compression Base Layer Suits",
+        subCategoryId: "compression-suits",
+        gsm: "290-GSM",
+        fabric: "4-Way Muscle Compression Poly-Spandex",
+        accentColor: "#06B6D4",
+        moq: "30 PCS",
         colorways: [
-          { name: "Bloodline Red", hex: "#DC2626" },
-          { name: "Onyx Black", hex: "#18181B" },
-          { name: "Arctic Ice", hex: "#F8FAFC" }
+          { name: "Carbon & Cyan", hex: "#06B6D4" },
+          { name: "Stealth Blackout", hex: "#18181B" },
+          { name: "Crimson Strike", hex: "#DC2626" }
         ],
-        specs: ["Deep Athletic Y-Back Racer Silhouette", "Raw Edge Reinforced Anti-Fray Hem", "Quick-Dry Breathable Microfiber", "Drop Cut V-Taper Cutout Design"]
+        specs: ["Long-Sleeve Muscle Compression Rashguard Top", "Full-Length Athletic Base Layer Compression Tights", "Flatlock Anti-Chafing Seams", "Vascular Muscle Support & UV50+ Protection"]
       },
       {
         id: "gym-4",
         sampleNum: 4,
-        name: "4-Way Muscle Fit Compression Top",
-        subtitle: "Ergonomic Training Shield",
-        image: "/images/gym-fitness/gym_compression_top.png",
-        badge: "ERGONOMIC RASHGUARD",
-        subCategory: "Compression & Rashguards",
-        subCategoryId: "compression-rashguards",
-        gsm: "280-GSM",
-        fabric: "Muscle-Mapped Contouring Spandex",
-        accentColor: "#10B981",
+        name: "Pro Sleeveless Workout Hoodie & 2-in-1 Training Shorts Set",
+        subtitle: "Bodybuilding & Conditioning Gym Set",
+        image: "/images/gym-fitness/gym_men_training_set_v2.png",
+        badge: "MEN'S GYM TRAINING SET",
+        subCategory: "Gym Training & Workout Suits",
+        subCategoryId: "training-sets",
+        gsm: "260-GSM",
+        fabric: "French Terry Cotton & Compression Liner",
+        accentColor: "#E21D1D",
         moq: "30 PCS",
         colorways: [
-          { name: "Emerald Green", hex: "#059669" },
-          { name: "Obsidian", hex: "#18181B" },
-          { name: "Combat Silver", hex: "#64748B" }
+          { name: "Charcoal Heather", hex: "#374151" },
+          { name: "Onyx Black", hex: "#18181B" },
+          { name: "Volt Athletic", hex: "#84CC16" }
         ],
-        specs: ["Muscle-Mapped Contouring Fit", "Honeycomb Breathable Mesh Panels", "UV50+ Anti-Chafing Spandex Skin", "Full Range BJJ / MMA / Gym Durability"]
+        specs: ["Deep Athletic Cutout Sleeveless Gym Hoodie", "5-inch 2-in-1 Compression Liner Workout Shorts", "Zippered Phone Pocket on Compression Liner", "Reinforced Drawstrings & Metal Eyelets"]
       },
       {
         id: "gym-5",
@@ -860,91 +860,91 @@ export const CATEGORIES_DATA: CategoryData[] = [
       "Custom Engraved Gunmetal Metal Hardware"
     ],
     subCategories: [
-      { id: "heavy-hoodies", name: "Heavyweight Hoodies", tagline: "450GSM-500GSM Structured Loopback Pullovers" },
-      { id: "oversized-tees", name: "Vintage Oversized Tees", tagline: "280-320GSM Enzyme Mineral Washed Boxy Tees" },
-      { id: "techwear-jackets", name: "Techwear & Tactical Shells", tagline: "DWR Weatherproof Utility Modular Outerwear" },
-      { id: "track-zip-hoodies", name: "Track & Zip Hoodies", tagline: "Heavyweight Raglan Cut & Sew Colorblock Sweats" }
+      { id: "women-streetwear", name: "Women's Streetwear Sets", tagline: "Cropped Boxy Hoodies & Cargo Tracksuits" },
+      { id: "heavy-hoodies", name: "Heavyweight 450GSM Tracksuits", tagline: "450GSM-500GSM Structured Loopback Fleece Sets" },
+      { id: "oversized-cargo-sets", name: "Vintage Tees & Tactical Cargo Sets", tagline: "300GSM Mineral Washed Drop-Shoulder Sets" },
+      { id: "techwear-jackets", name: "Techwear & Tactical Shells", tagline: "DWR Weatherproof Utility Modular Outerwear" }
     ],
     products: [
       {
         id: "street-1",
         sampleNum: 1,
-        name: "Luxury 450GSM French Terry Hoodie",
-        subtitle: "Oversized Streetwear Silhouette",
-        image: "/images/street-wears/street_hoodie.png",
-        badge: "450GSM FRENCH TERRY",
-        subCategory: "Heavyweight Hoodies",
-        subCategoryId: "heavy-hoodies",
-        gsm: "450-GSM",
-        fabric: "100% Pre-Shrunk Combed Cotton",
+        name: "Women's Cropped Boxy Hoodie & Wide-Leg Sweatpants Set",
+        subtitle: "Luxury 420GSM 2-Piece Tracksuit",
+        image: "/images/street-wears/street_women_cropped_hoodie_set_v2.png",
+        badge: "WOMEN'S 420GSM TRACKSUIT",
+        subCategory: "Women's Streetwear Sets",
+        subCategoryId: "women-streetwear",
+        gsm: "420-GSM",
+        fabric: "100% Pre-Shrunk Organic Cotton Fleece",
         accentColor: "#F59E0B",
         moq: "30 PCS",
         colorways: [
-          { name: "Washed Obsidian", hex: "#1C1917" },
           { name: "Vintage Bone", hex: "#E7E5E4" },
+          { name: "Washed Obsidian", hex: "#1C1917" },
           { name: "Desert Sand", hex: "#D97706" }
         ],
-        specs: ["100% Pre-Shrunk Organic Cotton Fleece", "Double Layer Structured Heavyweight Hood", "Dropped Shoulder Boxy Relaxed Cut", "Custom Engraved Gunmetal Metal Eyelets"]
+        specs: ["Cropped Boxy Heavyweight Pullover Hoodie", "High-Waisted Wide-Leg Relaxed Street Sweatpants", "Double-Layer Rigid Structured Hood", "Custom Engraved Metal Drawcord Tips"]
       },
       {
         id: "street-2",
         sampleNum: 2,
-        name: "Heavyweight Raglan Zip Street Hoodie",
-        subtitle: "Red/White Contrast Raglan",
-        image: "/images/street-wears/03_red_white_hoodie.png",
-        badge: "HEAVYWEIGHT RAGLAN",
-        subCategory: "Track & Zip Hoodies",
-        subCategoryId: "track-zip-hoodies",
-        gsm: "420-GSM",
-        fabric: "Brushed Loopback Fleece Cotton",
-        accentColor: "#EF4444",
+        name: "Women's Washed Graphic Tee & Parachute Cargo Pants Set",
+        subtitle: "Drop-Shoulder Utility Street Set",
+        image: "/images/street-wears/street_women_boxy_tee_cargo_set_v2.png",
+        badge: "WOMEN'S CARGO STREET SET",
+        subCategory: "Women's Streetwear Sets",
+        subCategoryId: "women-streetwear",
+        gsm: "300-GSM",
+        fabric: "Vintage Washed Combed Cotton & Ripstop",
+        accentColor: "#10B981",
         moq: "30 PCS",
         colorways: [
-          { name: "Crimson & Bone", hex: "#DC2626" },
-          { name: "Charcoal Slate", hex: "#334155" },
-          { name: "Monochrome Black", hex: "#09090B" }
+          { name: "Washed Sage Olive", hex: "#4D7C0F" },
+          { name: "Vintage Charcoal", hex: "#262626" },
+          { name: "Bone White", hex: "#F5F5F4" }
         ],
-        specs: ["Heavy Antique Silver YKK #8 Metal Zipper", "Raglan Colorblock Sleeve Blueprint", "Reinforced 2x2 Thick Ribbed Cuffs", "Pouch Pocket with Bar-Tack Reinforcement"]
+        specs: ["Drop-Shoulder Boxy Relaxed Vintage Graphic Tee", "High-Waisted Parachute Cargo Pants with Drawcord Toggles", "Deep Utility 3D Bellows Pockets", "Reinforced Bar-Tack Seams & Double Stitched Hem"]
       },
       {
         id: "street-3",
         sampleNum: 3,
-        name: "Washed Heavyweight Oversized Tee",
-        subtitle: "300GSM Vintage Mineral Wash",
-        image: "/images/street-wears/street_oversized_tee.png",
-        badge: "300GSM OVERSIZED TEE",
-        subCategory: "Vintage Oversized Tees",
-        subCategoryId: "oversized-tees",
-        gsm: "300-GSM",
-        fabric: "Heavy Vintage Wash Combed Jersey",
-        accentColor: "#A855F7",
-        moq: "50 PCS",
+        name: "Men's Luxury 450GSM French Terry Boxy Hoodie & Sweats Set",
+        subtitle: "450GSM Heavyweight Street Tracksuit",
+        image: "/images/street-wears/street_men_heavy_hoodie_set_v2.png",
+        badge: "MEN'S 450GSM TRACKSUIT",
+        subCategory: "Heavyweight 450GSM Tracksuits",
+        subCategoryId: "heavy-hoodies",
+        gsm: "450-GSM",
+        fabric: "Heavy French Terry Loopback Cotton",
+        accentColor: "#E21D1D",
+        moq: "30 PCS",
         colorways: [
-          { name: "Vintage Charcoal", hex: "#262626" },
-          { name: "Washed Olive", hex: "#365314" },
-          { name: "Faded Mauve", hex: "#581C87" }
+          { name: "Washed Obsidian", hex: "#1C1917" },
+          { name: "Charcoal Slate", hex: "#334155" },
+          { name: "Faded Olive", hex: "#365314" }
         ],
-        specs: ["1.2\" Heavy Ribbed Crewneck Collar", "Enzyme Acid Vintage Wash Treatment", "Twin-Needle Reinforced Shoulder Taping", "Dropped Seam Relaxed Boxy Fit"]
+        specs: ["450GSM Structured Boxy Heavyweight Hoodie", "Heavy Ribbed Cuffed Relaxed Street Track Sweats", "Double-Layered Self-Fabric Hood (No Drawstring Cut)", "Heavy-Gauge 2x2 Cotton Ribbing"]
       },
       {
         id: "street-4",
         sampleNum: 4,
-        name: "Urban Techwear Streetwear Jacket",
-        subtitle: "Matte Black Tactical Shell",
-        image: "/images/street-wears/street_tech_jacket.png",
-        badge: "URBAN TECHWEAR",
-        subCategory: "Techwear & Tactical Shells",
-        subCategoryId: "techwear-jackets",
-        gsm: "360-GSM",
-        fabric: "Waterproof Matte Poly DWR Shell",
-        accentColor: "#E21D1D",
-        moq: "25 PCS",
+        name: "Men's Vintage Washed Heavy Tee & Tactical Cargo Pants Set",
+        subtitle: "Tactical Multi-Pocket Street Set",
+        image: "/images/street-wears/street_men_vintage_tee_cargo_set_v2.png",
+        badge: "MEN'S TACTICAL STREET SET",
+        subCategory: "Vintage Tees & Tactical Cargo Sets",
+        subCategoryId: "oversized-cargo-sets",
+        gsm: "300-GSM",
+        fabric: "Heavyweight Combed Jersey & Tactical Ripstop",
+        accentColor: "#8B5CF6",
+        moq: "30 PCS",
         colorways: [
-          { name: "Tactical Matte Black", hex: "#0F172A" },
-          { name: "Cyber Silver", hex: "#94A3B8" },
-          { name: "Military Olive", hex: "#3F6212" }
+          { name: "Charcoal Slate", hex: "#1E293B" },
+          { name: "Stealth Black", hex: "#09090B" },
+          { name: "Military Tan", hex: "#78716C" }
         ],
-        specs: ["Dual Waterproof Aquaguard Zips", "Multiple Modular Cargo Pockets", "Articulated Elbow Bending Seams", "Matte DWR Weatherproof Performance"]
+        specs: ["300GSM Heavy Drop-Shoulder Graphic Boxy Tee", "Multi-Pocket Tactical Cargo Pants with Modular Webbing Straps", "Twin-Needle Reinforced Shoulder Taping", "YKK Zippered Ankle Adjusters & Waist Drawcords"]
       },
       {
         id: "street-5",
@@ -1255,21 +1255,21 @@ export const CATEGORIES_DATA: CategoryData[] = [
       "Handcrafted Sialkot Artisanal Craftsmanship"
     ],
     subCategories: [
-      { id: "biker-moto", name: "Biker & Double-Rider Moto", tagline: "1.2-1.3mm Drum-Dyed Cowhide Asymmetric Jackets" },
-      { id: "cafe-racer", name: "Cafe Racer Moto", tagline: "Mandarin Snap Collar Distressed Waxed Cowhide" },
-      { id: "aviator-shearling", name: "Aviator Shearling Coats", tagline: "100% Natural Sheep Wool B-3 & Bomber Outerwear" },
-      { id: "varsity-jackets", name: "Melton Wool & Leather Varsity", tagline: "24oz Melton Wool with Top-Grain Leather Sleeves" }
+      { id: "biker-leather", name: "Leather Biker Jackets", tagline: "1.2mm Drum-Dyed Cowhide Asymmetric Moto" },
+      { id: "winter-puffer", name: "Quilted Puffer Jackets", tagline: "Down-Filled Weatherproof Ripstop Outerwear" },
+      { id: "varsity-jackets", name: "Melton Wool & Leather Varsity", tagline: "24oz Melton Wool with Top-Grain Leather Sleeves" },
+      { id: "bomber-flight", name: "MA-1 Bomber & Windbreakers", tagline: "Flight Satin Tactical Outerwear" }
     ],
     products: [
       {
-        id: "leather-1",
+        id: "jacket-1",
         sampleNum: 1,
-        name: "Full-Grain Cowhide Biker Moto Jacket",
+        name: "Full-Grain Cowhide Biker Leather Jacket",
         subtitle: "Asymmetric Heavy Moto Outerwear",
-        image: "/images/leather-jackets/leather_biker.png",
-        badge: "1.2MM COWHIDE LEATHER",
-        subCategory: "Biker & Double-Rider Moto",
-        subCategoryId: "biker-moto",
+        image: "/images/jackets/jacket_leather.png",
+        badge: "LEATHER BIKER JACKET",
+        subCategory: "Leather Biker Jackets",
+        subCategoryId: "biker-leather",
         gsm: "1.2MM LEATHER",
         fabric: "100% Grade-A Natural Cowhide",
         accentColor: "#E21D1D",
@@ -1282,64 +1282,64 @@ export const CATEGORIES_DATA: CategoryData[] = [
         specs: ["1.2mm Drum-Dyed Natural Cowhide", "Heavy Antique Silver YKK Asymmetrical Zips", "Diamond-Quilted Thermal Interior Lining", "Cast Solid Steel Roller Buckle Waist Belt"]
       },
       {
-        id: "leather-2",
+        id: "jacket-2",
         sampleNum: 2,
-        name: "Heritage Wool & Leather Varsity",
+        name: "High-Insulation Quilted Winter Puffer Jacket",
+        subtitle: "Heavy Down Fill Thermal Outerwear",
+        image: "/images/jackets/jacket_puffer.png",
+        badge: "PUFFER DOWN JACKET",
+        subCategory: "Quilted Puffer Jackets",
+        subCategoryId: "winter-puffer",
+        gsm: "700 FILL POWER",
+        fabric: "Ripstop Nylon & Duck Down Fill",
+        accentColor: "#D97706",
+        moq: "20 PCS",
+        colorways: [
+          { name: "Matte Black", hex: "#0F172A" },
+          { name: "Arctic Silver", hex: "#94A3B8" },
+          { name: "Midnight Navy", hex: "#1E3A8A" }
+        ],
+        specs: ["700 Fill-Power High-Loft Thermal Insulation", "Weatherproof DWR Coated Ripstop Shell", "Storm Hood & Heavy Duty Dual-Way Zip", "Elasticized Thermal Wind-Block Cuffs"]
+      },
+      {
+        id: "jacket-3",
+        sampleNum: 3,
+        name: "Heritage Wool & Leather Varsity Letterman Jacket",
         subtitle: "Custom Chenille Squad Jacket",
-        image: "/images/leather-jackets/leather_varsity.png",
-        badge: "MELTON WOOL & COWHIDE",
+        image: "/images/jackets/jacket_varsity.png",
+        badge: "VARSITY BOMBER JACKET",
         subCategory: "Melton Wool & Leather Varsity",
         subCategoryId: "varsity-jackets",
         gsm: "24OZ WOOL",
         fabric: "24oz Melton Wool & Cowhide Sleeves",
-        accentColor: "#D97706",
+        accentColor: "#B45309",
         moq: "20 PCS",
         colorways: [
+          { name: "Navy & Cream", hex: "#1E293B" },
           { name: "Burgundy & Ivory", hex: "#831843" },
-          { name: "Black & Cream", hex: "#1C1917" },
-          { name: "Forest & Gold", hex: "#14532D" }
+          { name: "Black & Gold", hex: "#1C1917" }
         ],
         specs: ["24oz Melton Wool Insulated Body", "Genuine Top-Grain Cowhide Leather Sleeves", "Custom Chainstitch & Chenille Embroidery Ready", "Heavy Brass Snap Closure Hardware"]
       },
       {
-        id: "leather-3",
-        sampleNum: 3,
-        name: "Waxed Cafe Racer Moto Leather Jacket",
-        subtitle: "Mandarin Snap Collar Silhouette",
-        image: "/images/leather-jackets/leather_cafe_racer.png",
-        badge: "MANDARIN SNAP MOTO",
-        subCategory: "Cafe Racer Moto",
-        subCategoryId: "cafe-racer",
-        gsm: "1.1MM LEATHER",
-        fabric: "Distressed Hand-Waxed Cowhide",
-        accentColor: "#B45309",
-        moq: "15 PCS",
-        colorways: [
-          { name: "Antique Cognac", hex: "#78350F" },
-          { name: "Espresso Brown", hex: "#38220F" },
-          { name: "Carbon Slate", hex: "#1E293B" }
-        ],
-        specs: ["Hand-Distressed Waxed Top-Grain Leather", "Padded Diamond Stitch Bicep & Shoulder Detail", "Bi-Swing Action Back for Riding Comfort", "Heavy Antique Brass Zippers & Snaps"]
-      },
-      {
-        id: "leather-4",
+        id: "jacket-4",
         sampleNum: 4,
-        name: "Aviator Shearling Bomber Jacket",
-        subtitle: "Authentic Shearling Flight Coat",
-        image: "/images/leather-jackets/leather_aviator_jacket.png",
-        badge: "SHEARLING AVIATOR BOMBER",
-        subCategory: "Aviator Shearling Coats",
-        subCategoryId: "aviator-shearling",
-        gsm: "1.3MM LEATHER",
-        fabric: "Full-Grain Leather with Shearling",
+        name: "Modern Urban Technical Bomber & Windbreaker",
+        subtitle: "MA-1 Tactical Flight Outerwear",
+        image: "/images/jackets/jacket_bomber.png",
+        badge: "TACTICAL BOMBER JACKET",
+        subCategory: "MA-1 Bomber & Windbreakers",
+        subCategoryId: "bomber-flight",
+        gsm: "280GSM NYLON",
+        fabric: "Flight Satin Weatherproof Shell",
         accentColor: "#854D0E",
         moq: "15 PCS",
         colorways: [
-          { name: "Bomber Espresso", hex: "#451A03" },
-          { name: "Dark Chocolate", hex: "#271206" },
-          { name: "Vintage Tan", hex: "#A16207" }
+          { name: "Military Olive", hex: "#3F6212" },
+          { name: "Stealth Black", hex: "#09090B" },
+          { name: "Gunmetal Gray", hex: "#334155" }
         ],
-        specs: ["Rich Espresso Full-Grain Waxed Cowhide", "Plush Natural Shearling Wool Lapel Collar", "Dual Brass Neck Buckle Throat Latches", "Heavy Ribbed Knit Storm Waist & Cuffs"]
+        specs: ["Water-Repellent Flight Satin Shell with Signature Orange Lining", "Heavy Antique Brass Utility Sleeve Zipper Pocket", "Heavy-Gauge Ribbed Collar, Cuffs and Waistband", "Interior Snap-Close Concealed Cargo Pockets"]
       },
       {
         id: "leather-5",

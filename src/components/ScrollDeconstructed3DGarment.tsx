@@ -133,12 +133,13 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
           <img
             src={product.image}
             alt={product.name}
-            className={`max-w-full max-h-[145px] sm:max-h-[160px] object-contain transition-transform duration-300 ease-out ${
+            className={`max-w-full max-h-[145px] sm:max-h-[160px] object-contain transition-transform duration-300 ease-out transform-gpu will-change-transform ${
               isHovered
                 ? "scale-110 drop-shadow-[0_20px_35px_rgba(0,0,0,0.95)] brightness-105"
                 : "scale-100 drop-shadow-[0_10px_18px_rgba(0,0,0,0.75)] opacity-95"
             }`}
             loading="lazy"
+            decoding="async"
           />
         </div>
 

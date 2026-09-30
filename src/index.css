@@ -16,6 +16,14 @@ html {
 body {
   font-family: var(--font-sans);
   overflow-x: hidden;
+  background-color: #0a0a0b;
+}
+
+/* GPU Acceleration & Performance Optimizations */
+.gpu-layer {
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 /* Security & Digital Rights Protection (Anti-Theft Layer) */

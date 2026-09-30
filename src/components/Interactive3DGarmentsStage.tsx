@@ -71,44 +71,44 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
     id: "cat-gym",
     categoryName: "GYM AND FITNESS WEARS",
     code: "02",
-    tagline: "SEAMLESS KNIT • 4-WAY COMPRESSION • HIGH-FLEX PERFORMANCE",
+    tagline: "WOMEN'S ACTIVEWEAR SETS • MEN'S COMPRESSION SUITS • 4-WAY STRETCH",
     accentColor: "#3B82F6",
     products: [
       {
         id: "gym-1",
-        name: "Seamless Ergonomic 3D Compression Top",
+        name: "Women's Seamless Sports Bra & Contour Leggings Set",
         category: "GYM AND FITNESS WEARS",
-        image: "/images/gym-fitness/gym_seamless.png",
-        badge: "3D SEAMLESS KNIT",
-        specs: "320GSM Ribbed Compression • Ergonomic Muscle Mapping • Anti-Odor Spandex",
-        accentColor: "#3B82F6"
+        image: "/images/gym-fitness/gym_women_seamless_set_v2.png",
+        badge: "WOMEN'S SEAMLESS 2-PIECE SET",
+        specs: "Sculpted Sports Bra • High-Waisted Ribbed Contour Leggings • 4-Way Spandex",
+        accentColor: "#EC4899"
       },
       {
         id: "gym-2",
-        name: "Sculpted Hexagonal Impact Armor Top",
+        name: "Women's High-Support Racerback Bra & Active Leggings Suit",
         category: "GYM AND FITNESS WEARS",
-        image: "/images/gym-fitness/06_padded_armor.png",
-        badge: "HEX IMPACT FOAM ARMOR",
-        specs: "Sculpted Abdominal & Shoulder Protection • 4-Way Stretch Compression",
-        accentColor: "#06B6D4"
+        image: "/images/gym-fitness/gym_women_emerald_bra_set_v2.png",
+        badge: "WOMEN'S ACTIVE GYM SUIT",
+        specs: "Impact-Absorbing Racerback Bra • Booty-Contour Compression Leggings • Moisture-Wicking",
+        accentColor: "#10B981"
       },
       {
         id: "gym-3",
-        name: "Pro Bodybuilding Stringer Tank",
+        name: "Men's 2-Piece Compression Rashguard & Tights Base Layer Suit",
         category: "GYM AND FITNESS WEARS",
-        image: "/images/gym-fitness/gym_stringer_tank.png",
-        badge: "PERFORMANCE STRINGER",
-        specs: "Deep Athletic Armholes • Quick-Dry 160GSM Microfiber • Raw Edge Stitch",
-        accentColor: "#E21D1D"
+        image: "/images/gym-fitness/gym_men_compression_suit_v2.png",
+        badge: "MEN'S 2-PIECE COMPRESSION SUIT",
+        specs: "Long-Sleeve Muscle Compression Top • Full-Length Base Layer Tights • Flatlock Stitch",
+        accentColor: "#06B6D4"
       },
       {
         id: "gym-4",
-        name: "4-Way Muscle Fit Compression Top",
+        name: "Men's Pro Sleeveless Workout Hoodie & 2-in-1 Training Shorts Set",
         category: "GYM AND FITNESS WEARS",
-        image: "/images/gym-fitness/gym_compression_top.png",
-        badge: "ERGONOMIC RASHGUARD",
-        specs: "Muscle-Mapped Contouring • Honeycomb Breathable Panels • UV50+ Anti-Chafing",
-        accentColor: "#10B981"
+        image: "/images/gym-fitness/gym_men_training_set_v2.png",
+        badge: "MEN'S GYM TRAINING SET",
+        specs: "Deep-Cut Athletic Hooded Tank • 5-inch 2-in-1 Compression Liner Shorts",
+        accentColor: "#E21D1D"
       }
     ]
   },
@@ -116,44 +116,44 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
     id: "cat-street",
     categoryName: "STREET WEARS",
     code: "03",
-    tagline: "450GSM FRENCH TERRY • DROPPED SHOULDERS • BOX-FIT SILHOUETTES",
+    tagline: "WOMEN'S & MEN'S HEAVYWEIGHT TRACKSUITS • VINTAGE CARGO SETS",
     accentColor: "#F59E0B",
     products: [
       {
         id: "street-1",
-        name: "Luxury 450GSM French Terry Boxy Hoodie",
+        name: "Women's Cropped Boxy Hoodie & Wide-Leg Street Sweatpants Set",
         category: "STREET WEARS",
-        image: "/images/street-wears/street_hoodie.png",
-        badge: "450GSM FRENCH TERRY",
-        specs: "100% Pre-Shrunk Organic Cotton • Double Layer Hood • Dropped Seams",
+        image: "/images/street-wears/street_women_cropped_hoodie_set_v2.png",
+        badge: "WOMEN'S 420GSM TRACKSUIT",
+        specs: "Cropped Boxy Heavy Hoodie • High-Waisted Wide-Leg Sweats • Vintage Bone Oat",
         accentColor: "#F59E0B"
       },
       {
         id: "street-2",
-        name: "Heavyweight Raglan Zip Street Hoodie",
+        name: "Women's Washed Oversized Graphic Tee & Parachute Cargo Pants Set",
         category: "STREET WEARS",
-        image: "/images/street-wears/03_red_white_hoodie.png",
-        badge: "HEAVYWEIGHT RAGLAN",
-        specs: "Red/White Contrast Raglan • Heavy Antique Silver YKK Hardware • Boxy Fit",
-        accentColor: "#EF4444"
+        image: "/images/street-wears/street_women_boxy_tee_cargo_set_v2.png",
+        badge: "WOMEN'S CARGO STREET SET",
+        specs: "Drop-Shoulder Vintage Tee • High-Waisted Toggle Parachute Cargo Pants • Sage Olive",
+        accentColor: "#10B981"
       },
       {
         id: "street-3",
-        name: "Washed Heavyweight Oversized Street Tee",
+        name: "Men's Luxury 450GSM French Terry Boxy Hoodie & Sweatpants Set",
         category: "STREET WEARS",
-        image: "/images/street-wears/street_oversized_tee.png",
-        badge: "300GSM OVERSIZED TEE",
-        specs: "Washed Vintage Charcoal • Dropped Shoulders • Heavy Ribbed Crewneck",
-        accentColor: "#A855F7"
+        image: "/images/street-wears/street_men_heavy_hoodie_set_v2.png",
+        badge: "MEN'S 450GSM TRACKSUIT",
+        specs: "450GSM Heavyweight French Terry • Dropped Shoulders • Heavy Cuffed Sweats",
+        accentColor: "#E21D1D"
       },
       {
         id: "street-4",
-        name: "Urban Techwear Streetwear Jacket",
+        name: "Men's Vintage Washed Heavy Oversized Tee & Tactical Cargo Pants Set",
         category: "STREET WEARS",
-        image: "/images/street-wears/street_tech_jacket.png",
-        badge: "URBAN TECHWEAR",
-        specs: "Matte Black Weatherproof Shell • Dual Tactical Zips • Modern Street Silhouette",
-        accentColor: "#E21D1D"
+        image: "/images/street-wears/street_men_vintage_tee_cargo_set_v2.png",
+        badge: "MEN'S TACTICAL STREET SET",
+        specs: "300GSM Enzyme Washed Heavy Tee • Multi-Pocket Utility Tactical Cargo Pants",
+        accentColor: "#8B5CF6"
       }
     ]
   },
@@ -221,7 +221,6 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
   const [activeCategory, setActiveCategory] = useState<number>(currentCategoryIndex);
   const [activeFocusCard, setActiveFocusCard] = useState<number>(0);
   const [hoveredCardIdx, setHoveredCardIdx] = useState<number | null>(null);
-  const [localTilt, setLocalTilt] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
   const [selectedProduct, setSelectedProduct] = useState<Garment3DProduct | null>(null);
 
@@ -241,39 +240,25 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
     }
   }, [onCategoryChange]);
 
-  // Handle local micro-tilt on hovered product
-  const handleProductMouseMove = (e: React.MouseEvent<HTMLDivElement>, idx: number) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1; // -1 to 1
-    const y = ((e.clientY - rect.top) / rect.height) * 2 - 1; // -1 to 1
-    setLocalTilt({ x: x * 14, y: -y * 10 });
-  };
-
-  const handleProductMouseLeave = () => {
-    setHoveredCardIdx(null);
-    setLocalTilt({ x: 0, y: 0 });
-  };
-
   const currentCollection = CATEGORIES_3D_DATA[activeCategory] || CATEGORIES_3D_DATA[0];
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full flex flex-col items-center justify-between select-none py-2"
-      style={{ perspective: "1500px" }}
+      className="relative w-full flex flex-col items-center justify-between select-none py-1"
     >
       {/* 1. TOP CATEGORY SELECTOR (SIMPLE, SLEEK PILLS) */}
-      <div className="relative z-20 w-full max-w-5xl mx-auto px-4 mb-4 flex flex-col items-center gap-2">
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+      <div className="relative z-20 w-full max-w-5xl mx-auto px-4 mb-2 flex flex-col items-center gap-1.5">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
           {CATEGORIES_3D_DATA.map((cat, idx) => {
             const isActive = activeCategory === idx;
             return (
               <button
                 key={cat.id}
                 onClick={() => changeCategory(idx)}
-                className={`px-4 sm:px-5 py-2 rounded-full font-mono text-xs sm:text-sm font-bold uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                className={`px-3.5 sm:px-4 py-1.5 rounded-full font-mono text-xs sm:text-xs font-bold uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                   isActive
-                    ? "bg-[#E21D1D] text-white shadow-[0_0_25px_rgba(226,29,29,0.55)] font-black scale-105"
+                    ? "bg-[#E21D1D] text-white shadow-[0_0_20px_rgba(226,29,29,0.5)] font-black scale-105"
                     : "text-neutral-400 hover:text-white bg-black/60 hover:bg-neutral-900 border border-white/10"
                 }`}
               >
@@ -285,164 +270,136 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
         </div>
 
         {/* Minimal Category Tagline */}
-        <p className="text-[10px] sm:text-xs font-mono text-neutral-400 tracking-widest uppercase text-center mt-1">
+        <p className="text-[10px] sm:text-[11px] font-mono text-neutral-400 tracking-widest uppercase text-center mt-0.5">
           {currentCollection.tagline}
         </p>
       </div>
 
-      {/* 2. FREESTANDING 3D GARMENTS SHOWCASE (NO BOXES, INSTANT CURSOR HOVER ZOOM) */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-2 sm:px-6 my-auto min-h-[440px] sm:min-h-[500px] lg:min-h-[560px] flex items-center justify-center">
+      {/* 2. FREESTANDING 3D GARMENTS SHOWCASE (COMPACT SIZE & BUTTERY-SMOOTH HOVER ZOOM) */}
+      <div className="relative z-20 w-full max-w-6xl mx-auto px-2 sm:px-4 my-auto min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[380px] flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentCollection.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 items-center justify-center"
-            style={{ transformStyle: "preserve-3d" }}
+            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 items-end justify-center"
           >
             {currentCollection.products.map((product, idx) => {
               const isHovered = hoveredCardIdx === idx;
               const isAnotherHovered = hoveredCardIdx !== null && hoveredCardIdx !== idx;
-              const isAutoActive = hoveredCardIdx === null && activeFocusCard === idx;
-
-              // 3D Transform values
-              let scale = 1;
-              let zDepth = 0;
-              let translateY = 0;
-              let rotY = 0;
-              let rotX = 0;
-              let opacity = 1;
-
-              if (isHovered) {
-                scale = 1.32; // PROMINENT ZOOM ON HOVER
-                zDepth = 120; // Glides forward in 3D perspective
-                translateY = -28; // Lifts upward
-                rotY = localTilt.x; // Responsive micro-tilt
-                rotX = localTilt.y;
-                opacity = 1;
-              } else if (isAnotherHovered) {
-                scale = 0.88; // Recedes smoothly when another product is zoomed
-                zDepth = -30;
-                translateY = 6;
-                opacity = 0.38;
-              } else if (isAutoActive) {
-                scale = 1.05;
-                zDepth = 30;
-                translateY = -6;
-                opacity = 1;
-              }
 
               return (
-                <div
+                <motion.div
                   key={product.id}
+                  animate={{
+                    scale: isHovered ? 1.16 : isAnotherHovered ? 0.93 : 1,
+                    y: isHovered ? -12 : isAnotherHovered ? 3 : 0,
+                    opacity: isAnotherHovered ? 0.42 : 1,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 320,
+                    damping: 28,
+                    mass: 0.6
+                  }}
                   onMouseEnter={() => {
                     setHoveredCardIdx(idx);
                     setActiveFocusCard(idx);
                     setIsAutoPlaying(false);
                   }}
-                  onMouseMove={(e) => handleProductMouseMove(e, idx)}
-                  onMouseLeave={handleProductMouseLeave}
+                  onMouseLeave={() => setHoveredCardIdx(null)}
                   onClick={() => {
                     setSelectedProduct(product);
                     if (onSelectProduct) onSelectProduct(product);
                   }}
-                  className={`relative flex flex-col items-center justify-end cursor-pointer group transition-all duration-500 ease-out ${
+                  className={`relative flex flex-col items-center justify-end cursor-pointer group transform-gpu will-change-transform ${
                     isHovered ? "z-40" : "z-10"
                   }`}
-                  style={{
-                    transform: `translateZ(${zDepth}px) translateY(${translateY}px) scale(${scale}) rotateY(${rotY}deg) rotateX(${rotX}deg)`,
-                    transformStyle: "preserve-3d"
-                  }}
+                  style={{ transformOrigin: "bottom center" }}
                 >
                   {/* Atmospheric Glow Spotlight Behind Freestanding Garment */}
                   <div
-                    className={`absolute inset-0 rounded-full blur-[45px] transition-all duration-500 pointer-events-none ${
-                      isHovered
-                        ? "opacity-90 scale-125"
-                        : isAutoActive
-                        ? "opacity-40 scale-100"
-                        : "opacity-0 scale-75"
+                    className={`absolute inset-0 rounded-full blur-[36px] transition-opacity duration-500 ease-out pointer-events-none ${
+                      isHovered ? "opacity-85 scale-110" : "opacity-0 scale-75"
                     }`}
                     style={{
-                      background: `radial-gradient(circle, ${product.accentColor} 0%, rgba(226, 29, 29, 0.25) 45%, transparent 70%)`
+                      background: `radial-gradient(circle, ${product.accentColor} 0%, rgba(226, 29, 29, 0.22) 50%, transparent 75%)`
                     }}
                   />
 
-                  {/* FREESTANDING PRODUCT IMAGE (100% TRANSPARENT PNG CUTOUT - NO BOX, NO FRAME) */}
-                  <div className="relative w-full h-[280px] sm:h-[340px] md:h-[390px] lg:h-[430px] flex items-center justify-center">
+                  {/* FREESTANDING PRODUCT IMAGE (COMPACT, SLEEK PROPORTIONS WITH CRISP RESOLUTION) */}
+                  <div className="relative w-full max-w-[190px] sm:max-w-[220px] md:max-w-[240px] h-[190px] sm:h-[230px] md:h-[260px] lg:h-[285px] flex items-center justify-center">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className={`w-full h-full object-contain filter transition-all duration-500 drop-shadow-[0_22px_32px_rgba(0,0,0,0.85)] ${
+                      className={`w-full h-full object-contain filter transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu will-change-transform drop-shadow-[0_16px_24px_rgba(0,0,0,0.85)] ${
                         isHovered
-                          ? "scale-105 drop-shadow-[0_32px_45px_rgba(0,0,0,0.95)]"
-                          : isAnotherHovered
-                          ? "grayscale-[20%] opacity-40 scale-95"
+                          ? "scale-105 drop-shadow-[0_26px_36px_rgba(0,0,0,0.95)]"
                           : ""
                       }`}
                       loading="eager"
+                      decoding="async"
                       referrerPolicy="no-referrer"
                     />
 
                     {/* Subtle Zoom Badge On Hover */}
                     {isHovered && (
                       <motion.div
-                        initial={{ opacity: 0, scale: 0.8, y: -4 }}
+                        initial={{ opacity: 0, scale: 0.85, y: -4 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                        className="absolute top-2 right-2 bg-black/85 backdrop-blur-md border border-[#E21D1D]/70 text-white font-mono text-[9px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 shadow-xl pointer-events-none"
+                        exit={{ opacity: 0, scale: 0.85 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-1.5 right-1.5 bg-black/85 backdrop-blur-md border border-[#E21D1D]/70 text-white font-mono text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg pointer-events-none"
                       >
-                        <ZoomIn className="w-3.5 h-3.5 text-[#E21D1D] animate-pulse" />
-                        <span>ZOOMED 3D</span>
+                        <ZoomIn className="w-3 h-3 text-[#E21D1D]" />
+                        <span>ZOOMED</span>
                       </motion.div>
                     )}
                   </div>
 
                   {/* 3D Soft Floor Contact Shadow */}
                   <div
-                    className="w-3/4 h-5 rounded-[100%] blur-[12px] bg-black/95 transition-all duration-500 pointer-events-none -mt-2"
+                    className="w-2/3 h-4 rounded-[100%] blur-[10px] bg-black/90 transition-all duration-400 ease-out pointer-events-none -mt-1"
                     style={{
-                      transform: `scale(${isHovered ? 1.4 : isAutoActive ? 1.1 : 0.95})`,
-                      opacity: isHovered ? 0.95 : isAnotherHovered ? 0.25 : 0.65
+                      transform: `scale(${isHovered ? 1.25 : 0.95})`,
+                      opacity: isHovered ? 0.9 : isAnotherHovered ? 0.25 : 0.6
                     }}
                   />
 
-                  {/* CLEAN PRODUCT TYPOGRAPHY (NO BOX CONTAINER) */}
+                  {/* CLEAN PRODUCT TYPOGRAPHY (SLEEK & REFINED) */}
                   <div
-                    className={`mt-2 flex flex-col items-center text-center transition-all duration-400 ${
-                      isHovered
-                        ? "opacity-100 translate-y-0"
-                        : isAnotherHovered
-                        ? "opacity-25 translate-y-1"
-                        : "opacity-80 translate-y-0"
+                    className={`mt-1.5 flex flex-col items-center text-center transition-opacity duration-300 ${
+                      isHovered ? "opacity-100" : isAnotherHovered ? "opacity-30" : "opacity-85"
                     }`}
                   >
-                    <span className="text-[9px] font-mono font-black text-[#E21D1D] tracking-widest uppercase">
+                    <span className="text-[8px] sm:text-[9px] font-mono font-black text-[#E21D1D] tracking-widest uppercase">
                       {product.badge}
                     </span>
-                    <h4 className="text-xs sm:text-sm lg:text-base font-display font-black text-white uppercase tracking-wider mt-0.5 line-clamp-1 group-hover:text-red-400 transition-colors">
+                    <h4 className="text-xs sm:text-xs lg:text-sm font-display font-black text-white uppercase tracking-wider mt-0.5 line-clamp-1 group-hover:text-red-400 transition-colors">
                       {product.name}
                     </h4>
 
                     {/* Quick Specs Revealed on Hover */}
-                    <div className="h-5 flex items-center justify-center mt-1">
+                    <div className="h-4 flex items-center justify-center mt-0.5">
                       {isHovered ? (
                         <motion.span
-                          initial={{ opacity: 0, y: 4 }}
+                          initial={{ opacity: 0, y: 2 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-[9px] font-mono text-neutral-300 line-clamp-1 max-w-[200px]"
+                          transition={{ duration: 0.2 }}
+                          className="text-[8px] sm:text-[9px] font-mono text-neutral-300 line-clamp-1 max-w-[190px]"
                         >
                           {product.specs}
                         </motion.span>
                       ) : (
-                        <span className="text-[9px] font-mono text-neutral-500 uppercase tracking-widest">
+                        <span className="text-[8px] sm:text-[9px] font-mono text-neutral-500 uppercase tracking-widest">
                           0{idx + 1} / 04 • HOVER TO ZOOM
                         </span>
                       )}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </motion.div>
@@ -471,7 +428,7 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                     setIsAutoPlaying(false);
                   }}
                   onMouseEnter={() => setHoveredCardIdx(idx)}
-                  onMouseLeave={handleProductMouseLeave}
+                  onMouseLeave={() => setHoveredCardIdx(null)}
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     isSelected
                       ? "w-7 bg-[#E21D1D] shadow-[0_0_10px_#E21D1D]"

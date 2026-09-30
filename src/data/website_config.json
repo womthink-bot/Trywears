@@ -79,35 +79,35 @@
         "slots3D": [
           {
             "id": "gym-slot-1",
-            "title": "Seamless Ergonomic 3D Compression Top",
-            "subtitle": "3D High-Flex Athletic Knit",
-            "image": "/images/gym-fitness/gym_seamless.png",
-            "badge": "3D SEAMLESS KNIT",
-            "specs": "320GSM Ribbed Compression • Ergonomic Muscle Mapping"
+            "title": "Women's Seamless Sports Bra & Contour Leggings Set",
+            "subtitle": "Sculpted Ribbed 2-Piece Activewear Suit",
+            "image": "/images/gym-fitness/gym_women_seamless_set_v2.png",
+            "badge": "WOMEN'S SEAMLESS 2-PIECE SET",
+            "specs": "Sculpted Sports Bra • High-Waisted Ribbed Contour Leggings"
           },
           {
             "id": "gym-slot-2",
-            "title": "Sculpted Hexagonal Impact Armor Top",
-            "subtitle": "High-Impact Training Top",
-            "image": "/images/gym-fitness/06_padded_armor.png",
-            "badge": "HEX IMPACT FOAM ARMOR",
-            "specs": "Sculpted Abdominal & Shoulder Protection • 4-Way Stretch"
+            "title": "Women's High-Support Racerback Bra & Active Leggings Suit",
+            "subtitle": "Forest Emerald Performance Activewear Suit",
+            "image": "/images/gym-fitness/gym_women_emerald_bra_set_v2.png",
+            "badge": "WOMEN'S ACTIVE GYM SUIT",
+            "specs": "Impact-Absorbing Racerback Bra • Booty-Contour Compression Leggings"
           },
           {
             "id": "gym-slot-3",
-            "title": "Pro Bodybuilding Stringer Tank",
-            "subtitle": "Deep-Cut Athletic Armholes",
-            "image": "/images/gym-fitness/gym_stringer_tank.png",
-            "badge": "PERFORMANCE STRINGER",
-            "specs": "Quick-Dry 160GSM Microfiber • Raw Edge Reinforced Stitch"
+            "title": "Men's 2-Piece Compression Rashguard & Tights Base Layer Suit",
+            "subtitle": "Ergonomic Muscle-Mapped Training Suit",
+            "image": "/images/gym-fitness/gym_men_compression_suit_v2.png",
+            "badge": "MEN'S 2-PIECE COMPRESSION SUIT",
+            "specs": "Long-Sleeve Compression Top • Full-Length Base Layer Tights"
           },
           {
             "id": "gym-slot-4",
-            "title": "4-Way Muscle Fit Compression Top",
-            "subtitle": "Ergonomic Training Shield",
-            "image": "/images/gym-fitness/gym_compression_top.png",
-            "badge": "ERGONOMIC RASHGUARD",
-            "specs": "Honeycomb Breathable Panels • UV50+ Anti-Chafing Spandex"
+            "title": "Men's Pro Sleeveless Workout Hoodie & 2-in-1 Training Shorts Set",
+            "subtitle": "Bodybuilding & Conditioning Gym Set",
+            "image": "/images/gym-fitness/gym_men_training_set_v2.png",
+            "badge": "MEN'S GYM TRAINING SET",
+            "specs": "Deep-Cut Athletic Hooded Tank • 5-inch 2-in-1 Compression Liner Shorts"
           }
         ]
       },
@@ -125,49 +125,49 @@
         "slots3D": [
           {
             "id": "street-slot-1",
-            "title": "Luxury 450GSM French Terry Boxy Hoodie",
-            "subtitle": "Oversized Streetwear Silhouette",
-            "image": "/images/street-wears/street_hoodie.png",
-            "badge": "450GSM FRENCH TERRY",
-            "specs": "100% Pre-Shrunk Organic Cotton • Double Layer Hood • Dropped Seams"
+            "title": "Women's Cropped Boxy Hoodie & Wide-Leg Street Sweatpants Set",
+            "subtitle": "Aesthetic 2-Piece Street Tracksuit",
+            "image": "/images/street-wears/street_women_cropped_hoodie_set_v2.png",
+            "badge": "WOMEN'S 420GSM TRACKSUIT",
+            "specs": "Cropped Boxy Heavy Hoodie • High-Waisted Wide-Leg Sweats"
           },
           {
             "id": "street-slot-2",
-            "title": "Heavyweight Raglan Zip Street Hoodie",
-            "subtitle": "Red/White Contrast Raglan",
-            "image": "/images/street-wears/03_red_white_hoodie.png",
-            "badge": "HEAVYWEIGHT RAGLAN",
-            "specs": "Heavy Antique Silver YKK Hardware • Boxy Urban Fit"
+            "title": "Women's Washed Oversized Graphic Tee & Parachute Cargo Pants Set",
+            "subtitle": "Sage Olive Utility Streetwear Set",
+            "image": "/images/street-wears/street_women_boxy_tee_cargo_set_v2.png",
+            "badge": "WOMEN'S CARGO STREET SET",
+            "specs": "Drop-Shoulder Vintage Tee • High-Waisted Toggle Parachute Cargo Pants"
           },
           {
             "id": "street-slot-3",
-            "title": "Washed Heavyweight Oversized Street Tee",
-            "subtitle": "260GSM Vintage Mineral Wash",
-            "image": "/images/street-wears/street_oversized_tee.png",
-            "badge": "300GSM OVERSIZED TEE",
-            "specs": "Pre-Shrunk Organic Cotton • Thick Ribbed Collar"
+            "title": "Men's Luxury 450GSM French Terry Boxy Hoodie & Sweatpants Set",
+            "subtitle": "Heavyweight Street Tracksuit Set",
+            "image": "/images/street-wears/street_men_heavy_hoodie_set_v2.png",
+            "badge": "MEN'S 450GSM TRACKSUIT",
+            "specs": "450GSM French Terry • Dropped Shoulders • Heavy Cuffed Sweats"
           },
           {
             "id": "street-slot-4",
-            "title": "Urban Techwear Streetwear Jacket",
-            "subtitle": "Modern Street Silhouette",
-            "image": "/images/street-wears/street_tech_jacket.png",
-            "badge": "URBAN TECHWEAR",
-            "specs": "Matte Black Weatherproof Shell • Dual Tactical Zips"
+            "title": "Men's Vintage Washed Heavy Oversized Tee & Tactical Cargo Pants Set",
+            "subtitle": "Urban Techwear Streetwear Set",
+            "image": "/images/street-wears/street_men_vintage_tee_cargo_set_v2.png",
+            "badge": "MEN'S TACTICAL STREET SET",
+            "specs": "300GSM Enzyme Washed Heavy Tee • Multi-Pocket Utility Cargo Pants"
           }
         ]
       },
       {
         "id": "slide-leather-jackets",
-        "category": "LEATHER JACKETS",
-        "title": "HANDCRAFTED GENUINE LEATHER JACKETS & VARSITY",
-        "subtitle": "100% FULL-GRAIN COWHIDE • YKK HARDWARE • BESPOKE EMBROIDERY",
-        "description": "Master artisanal leather outerwear production. Genuine top-grain cowhide, sheep nappa, and buffalo leather biker jackets, custom varsity wool-leather jackets, cafe racers, and vintage distressed bomber collections.",
+        "category": "JACKETS",
+        "title": "PREMIUM LEATHER, PUFFER, VARSITY & BOMBER JACKETS",
+        "subtitle": "GENUINE LEATHER • DOWN PUFFERS • VARSITY WOOL • FLIGHT BOMBERS",
+        "description": "Master artisanal outerwear production. Genuine top-grain cowhide biker jackets, quilted down winter puffers, classic American wool-leather varsity squad jackets, and tactical flight bombers.",
         "image": "/videos/LeatherBG.mp4",
         "video": "/videos/LeatherBG.mp4",
-        "buttonText": "BESPOKE LEATHER ORDERS",
+        "buttonText": "BESPOKE JACKET ORDERS",
         "buttonLink": "#b2b-calculator",
-        "tag": "LEATHER JACKETS • GENUINE GRAIN",
+        "tag": "JACKETS • LEATHER • PUFFER • VARSITY",
         "slots3D": [
           {
             "id": "leather-slot-1",
