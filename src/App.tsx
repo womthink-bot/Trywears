@@ -22,26 +22,47 @@ import {
   Award,
   Image,
   RefreshCw,
-  FolderOpen
+  FolderOpen,
+  Menu,
+  X,
+  Lock,
+  HelpCircle,
+  Scissors,
+  FileCheck,
+  Package
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { WebsiteConfig, CartItem, Product } from "./types";
 import { ThemeToggle } from "./components/ThemeToggle";
-import { TShirtCustomizer } from "./components/TShirtCustomizer";
 import { CartDrawer } from "./components/CartDrawer";
 import { SecurityAlerts } from "./components/SecurityAlerts";
-import { SportsHeroSlider } from "./components/SportsHeroSlider";
-import { SportsB2BMarquee } from "./components/SportsB2BMarquee";
 import { SportsMotionFX } from "./components/SportsMotionFX";
-import { FactoryLiveVideoShowcase } from "./components/FactoryLiveVideoShowcase";
 import { MediaManagerModal } from "./components/MediaManagerModal";
-import { ScrollDeconstructed3DGarment } from "./components/ScrollDeconstructed3DGarment";
-import { CustomProductsShowcase } from "./components/CustomProductsShowcase";
-import { FashionWearCustomVideoSection } from "./components/FashionWearCustomVideoSection";
+import { DeveloperProductUploadModal } from "./components/DeveloperProductUploadModal";
 import fallbackConfig from "./data/website_config.json";
+
+// Pages
+import { HomePage } from "./pages/HomePage";
+import { AboutUsPage } from "./pages/AboutUsPage";
+import { CustomizationPage } from "./pages/CustomizationPage";
+import { QualityProcessPage } from "./pages/QualityProcessPage";
+import { SamplingPoliciesPage } from "./pages/SamplingPoliciesPage";
+import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
+import { FAQPage } from "./pages/FAQPage";
+
+export type AppPage =
+  | "home"
+  | "about-us"
+  | "customization"
+  | "quality-process"
+  | "sampling-policies"
+  | "privacy-policy"
+  | "faq";
 
 export default function App() {
   const [config, setConfig] = useState<WebsiteConfig | null>(null);
+  const [activePage, setActivePage] = useState<AppPage>("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMediaManagerOpen, setIsMediaManagerOpen] = useState(false);
   const [mediaManagerFolder, setMediaManagerFolder] = useState("home-page/hero-section");
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -57,12 +78,63 @@ export default function App() {
   const [isSoundMuted, setIsSoundMuted] = useState(true);
 
   // Notification Banner
-  const [bannerText, setBannerText] = useState("FREE METROPOLITAN EXPRESS AIR DISPATCH ON ALL SIGNATURE ORDERS OVER $150");
+  const [bannerText, setBannerText] = useState("★ FACTORY DIRECT B2B COMBAT WEAR & SPORTS APPAREL • LOW MOQ 25 PCS • EXPRESS WORLDWIDE DDP AIR DISPATCH");
+
+  // Hidden Developer Mode Folder Upload Modal
+  const [isDevUploadOpen, setIsDevUploadOpen] = useState(false);
 
   // Contact Form Submission State
   const [contactSubmitting, setContactSubmitting] = useState(false);
   const [contactSuccess, setContactSuccess] = useState(false);
   const [contactName, setContactName] = useState("");
+
+  // Secret Developer Mode Keyboard Shortcut (Ctrl+Shift+D or Alt+D)
+  useEffect(() => {
+    const handleDevKeyDown = (e: KeyboardEvent) => {
+      if (
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "d") ||
+        (e.altKey && e.key.toLowerCase() === "d")
+      ) {
+        e.preventDefault();
+        setIsDevUploadOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("keydown", handleDevKeyDown);
+    return () => window.removeEventListener("keydown", handleDevKeyDown);
+  }, []);
+
+  // Hash Routing sync
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace("#", "").trim();
+      const validPages: AppPage[] = [
+        "home",
+        "about-us",
+        "customization",
+        "quality-process",
+        "sampling-policies",
+        "privacy-policy",
+        "faq"
+      ];
+      if (validPages.includes(hash as AppPage)) {
+        setActivePage(hash as AppPage);
+      } else if (!hash) {
+        setActivePage("home");
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  const navigateTo = (page: AppPage) => {
+    setActivePage(page);
+    setIsMobileMenuOpen(false);
+    window.location.hash = page === "home" ? "" : page;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // Load configuration from Express Backend API
   const fetchConfig = async () => {
@@ -71,15 +143,13 @@ export default function App() {
       if (response.ok) {
         const data = await response.json();
         setConfig(data);
-        // Find default customizable product for glove customizer
-        const customProduct = data.products.find((p: any) => p.customizable) || data.products[0];
+        const customProduct = data.products?.find((p: any) => p.customizable) || data.products?.[0] || (fallbackConfig.products as any)[0];
         setCustomizerProduct(customProduct);
       } else {
         throw new Error("Config endpoint returned non-OK status");
       }
     } catch (err) {
       console.warn("Failed to fetch website config from backend, using local fallback config:", err);
-      // Immediately load the local fallback so the user is never stuck on loading screen!
       setConfig(fallbackConfig as any);
       const customProduct = (fallbackConfig.products as any).find((p: any) => p.customizable) || fallbackConfig.products[0];
       setCustomizerProduct(customProduct as any);
@@ -89,17 +159,13 @@ export default function App() {
   useEffect(() => {
     fetchConfig();
 
-    // Check if ?admin=true or ?media=true is in URL
     try {
       const params = new URLSearchParams(window.location.search);
       if (params.get("admin") === "true" || params.get("media") === "true") {
         setIsMediaManagerOpen(true);
       }
-    } catch (e) {
-      // Non-blocking
-    }
+    } catch (e) {}
 
-    // Background admin shortcut: Ctrl+Shift+A / Cmd+Shift+A
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "A" || e.key === "a")) {
         e.preventDefault();
@@ -139,39 +205,35 @@ export default function App() {
 
   // Theme Toggler
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme(prev => (prev === "dark" ? "light" : "dark"));
   };
 
-  // Add Item to Shipment Cart
-  const handleAddToCart = (item: CartItem) => {
-    setCart((prev) => {
-      // If it's a non-customized product, stack quantity
-      if (!item.customization) {
-        const existingIdx = prev.findIndex(
-          (c) => c.product.id === item.product.id && c.selectedSize === item.selectedSize
+  // Cart Handlers
+  const handleAddToCart = (product: Product, size: string, color: string) => {
+    setCart(prev => {
+      const existing = prev.find(item => item.product.id === product.id && item.size === size && item.color === color);
+      if (existing) {
+        return prev.map(item =>
+          item.product.id === product.id && item.size === size && item.color === color
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
-        if (existingIdx > -1) {
-          const updated = [...prev];
-          updated[existingIdx].quantity += item.quantity;
-          return updated;
-        }
       }
-      return [...prev, item];
+      return [...prev, { product, quantity: 1, size, color }];
     });
     setIsCartOpen(true);
   };
 
-  // Cart actions
-  const handleUpdateCartQuantity = (index: number, qty: number) => {
-    setCart((prev) => {
-      const updated = [...prev];
-      updated[index].quantity = qty;
-      return updated;
-    });
+  const handleUpdateCartQuantity = (index: number, quantity: number) => {
+    if (quantity <= 0) {
+      handleRemoveCartItem(index);
+      return;
+    }
+    setCart(prev => prev.map((item, idx) => (idx === index ? { ...item, quantity } : item)));
   };
 
   const handleRemoveCartItem = (index: number) => {
-    setCart((prev) => prev.filter((_, idx) => idx !== index));
+    setCart(prev => prev.filter((_, idx) => idx !== index));
   };
 
   const handleClearCart = () => {
@@ -196,7 +258,7 @@ export default function App() {
   if (!config) {
     return (
       <div className="fixed inset-0 bg-neutral-950 flex flex-col items-center justify-center text-center p-6 select-none">
-        <div className="w-10 h-10 border-2 border-neutral-800 border-t-amber-500 rounded-full animate-spin mb-4" />
+        <div className="w-10 h-10 border-2 border-neutral-800 border-t-red-600 rounded-full animate-spin mb-4" />
         <h4 className="font-display font-black text-xs text-white uppercase tracking-widest">
           TRY WEARS LOGISTICS INTERFACE BOOTING...
         </h4>
@@ -207,23 +269,22 @@ export default function App() {
     );
   }
 
-  // Define global accent style object
-  const accentColor = config.global.accentColor || "#D4AF37";
+  // Header Nav Items: Home, About Us, Customization, Quality & Process, Sampling Policies
+  const NAV_ITEMS: { label: string; page: AppPage }[] = [
+    { label: "Home", page: "home" },
+    { label: "About Us", page: "about-us" },
+    { label: "Customization", page: "customization" },
+    { label: "Quality & Process", page: "quality-process" },
+    { label: "Sampling Policies", page: "sampling-policies" }
+  ];
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 selection:bg-[#E21D1D] selection:text-white relative">
       {/* Dynamic Mouse Motion Glow & Top Scroll Progress Bar */}
       <SportsMotionFX />
 
-      {/* Security Protection Layer (Global Right Click and ShortCuts blocker) */}
+      {/* Security Protection Layer */}
       <SecurityAlerts />
-
-      {/* SECURE WHITE-LABEL SEO HEADER INFORMATION (Hidden from visual stream but readable by bots) */}
-      <div className="sr-only select-none pointer-events-none">
-        <h1>{config.seo.title}</h1>
-        <h2>{config.seo.description}</h2>
-        <p>White-labeled, handcrafted combat sportwear and championship gear. Zero third party frameworks.</p>
-      </div>
 
       {/* 1. TOP NOTIFICATION RUNNER */}
       <div className="bg-neutral-950 text-white py-2 px-4 border-b border-neutral-900 overflow-hidden relative">
@@ -234,26 +295,32 @@ export default function App() {
               data-editable-path="bannerText"
               data-editable-label="Top Announcement Banner Text"
             >
-              ★ FACTORY DIRECT B2B COMBAT WEAR & FIGHT GEAR • LOW MOQ 25 PCS • EXPRESS WORLDWIDE AIR DISPATCH
+              {bannerText}
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-4">
-            <a href="#collections" className="hover:text-[#E21D1D] transition-colors text-emerald-400 font-bold">CUSTOM DIVISION</a>
+            <button
+              onClick={() => navigateTo("sampling-policies")}
+              className="hover:text-[#E21D1D] transition-colors text-emerald-400 font-bold cursor-pointer"
+            >
+              EXPRESS SAMPLE DESK
+            </button>
             <span>•</span>
-            <a href="#factory-capabilities" className="hover:text-[#E21D1D] transition-colors">SIALKOT & NY HUBS</a>
-            <span>•</span>
-            <span className="text-[#E21D1D] font-bold">ISO 9001 CERTIFIED</span>
+            <span className="text-[#E21D1D] font-bold">ISO 9001:2015 CERTIFIED</span>
           </div>
         </div>
       </div>
 
       {/* 2. PREMIUM NAVIGATION HEADER */}
-      <header className="sticky top-0 z-40 bg-white/80 dark:bg-[#050505]/80 backdrop-blur-md border-b border-neutral-200/80 dark:border-neutral-900/80 transition-colors">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <header className="sticky top-0 z-40 bg-white/90 dark:bg-[#050505]/90 backdrop-blur-md border-b border-neutral-200/80 dark:border-neutral-900/80 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
           
           {/* Branded Logo */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="h-12 w-12 sm:h-14 sm:w-14 flex items-center justify-center shrink-0">
+          <button
+            onClick={() => navigateTo("home")}
+            className="flex items-center gap-3 group text-left cursor-pointer"
+          >
+            <div className="h-11 w-11 sm:h-13 sm:w-13 flex items-center justify-center shrink-0">
               <img 
                 src={config.global.logo || "/images/trylogo.png"} 
                 alt="Try Wears Logo" 
@@ -262,45 +329,55 @@ export default function App() {
               />
             </div>
             <div>
-              <span
-                data-editable-path="global.brandName"
-                data-editable-label="Header Brand Name"
-                className="font-display font-black text-base sm:text-lg tracking-widest dark:text-white block uppercase leading-none"
-              >
+              <span className="font-display font-black text-base sm:text-lg tracking-widest dark:text-white block uppercase leading-none">
                 {config.global.brandName}
               </span>
-              <span
-                data-editable-path="global.tagline"
-                data-editable-label="Header Brand Tagline"
-                className="text-[9px] font-mono font-bold tracking-widest text-[#E21D1D] block uppercase mt-1.5"
-              >
+              <span className="text-[9px] font-mono font-bold tracking-widest text-[#E21D1D] block uppercase mt-1">
                 {config.global.tagline}
               </span>
             </div>
-          </a>
+          </button>
 
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-[11px] font-mono font-bold uppercase tracking-widest">
-            <a href="#3d-deconstruction" className="text-[#E21D1D] hover:underline transition-colors flex items-center gap-1 font-black">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping" />
-              3D Deconstruct
-            </a>
-            <a href="#collections" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">
-              Custom Products
-            </a>
-            <a href="#factory-capabilities" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping" />
-              Factory Videos
-            </a>
-            <a href="#fashion-custom-video-studio" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors flex items-center gap-1 text-amber-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-              Fashion Atelier
-            </a>
-            <a href="#customizer" className="hover:text-[#E21D1D] dark:hover:text-[#E21D1D] transition-colors">Bespoke 3D Lab</a>
+          {/* Clean 5-Item Navigation Menu as Specified */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-[11px] font-mono font-bold uppercase tracking-widest">
+            {NAV_ITEMS.map((item) => {
+              const isActive = activePage === item.page;
+              return (
+                <button
+                  key={item.page}
+                  onClick={() => navigateTo(item.page)}
+                  className={`flex items-center gap-1.5 transition-all py-1 cursor-pointer relative ${
+                    isActive
+                      ? "text-[#E21D1D] font-black"
+                      : "text-neutral-400 hover:text-white"
+                  }`}
+                >
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping" />
+                  )}
+                  <span>{item.label}</span>
+                  {isActive && (
+                    <motion.div
+                      layoutId="nav-underline"
+                      className="absolute -bottom-1 inset-x-0 h-0.5 bg-[#E21D1D]"
+                    />
+                  )}
+                </button>
+              );
+            })}
           </nav>
 
           {/* Header Controls */}
           <div className="flex items-center gap-3 sm:gap-4">
+            {/* Quick Action Button */}
+            <button
+              onClick={() => navigateTo("customization")}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-[10px] font-black uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(226,29,29,0.3)] cursor-pointer"
+            >
+              <Scissors className="w-3.5 h-3.5" />
+              <span>Get B2B Quote</span>
+            </button>
+
             {/* Elegant Theme Toggle Switcher */}
             <ThemeToggle theme={theme} onToggle={toggleTheme} />
 
@@ -318,285 +395,212 @@ export default function App() {
                 </span>
               )}
             </button>
+
+            {/* Mobile Menu Hamburger Toggle */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors cursor-pointer"
+              aria-label="Toggle navigation menu"
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden border-t border-neutral-800 bg-neutral-950 px-6 py-6 space-y-4"
+            >
+              <div className="flex flex-col space-y-2">
+                {NAV_ITEMS.map((item) => {
+                  const isActive = activePage === item.page;
+                  return (
+                    <button
+                      key={item.page}
+                      onClick={() => navigateTo(item.page)}
+                      className={`text-left py-3 px-4 rounded-xl text-xs font-mono font-bold uppercase transition-colors flex items-center justify-between cursor-pointer ${
+                        isActive
+                          ? "bg-[#E21D1D]/15 text-[#E21D1D] border border-[#E21D1D]/40 font-black"
+                          : "text-neutral-300 hover:bg-white/5"
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      {isActive && <span className="w-2 h-2 rounded-full bg-[#E21D1D]" />}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="pt-2 border-t border-neutral-900">
+                <button
+                  onClick={() => navigateTo("customization")}
+                  className="w-full py-3 rounded-xl bg-[#E21D1D] text-white font-mono text-xs font-black uppercase text-center cursor-pointer shadow-lg"
+                >
+                  Configure Custom Tech Pack
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      {/* 3. DYNAMIC SPORTS HERO SLIDER (ANIMATED HUD & CONTROLS - ZERO TEXT ON TOP) */}
-      <SportsHeroSlider 
-        slides={config.hero.slides} 
-        onOpenMediaFolder={(folder) => {
-          setMediaManagerFolder(folder);
-          setIsMediaManagerOpen(true);
-        }}
-      />
+      {/* 3. DYNAMIC MULTI-PAGE VIEW ROUTER */}
+      <main className="min-h-screen">
+        {activePage === "home" && (
+          <HomePage
+            config={config}
+            customizerProduct={customizerProduct}
+            onAddToCart={handleAddToCart}
+            contactName={contactName}
+            setContactName={setContactName}
+            contactSubmitting={contactSubmitting}
+            contactSuccess={contactSuccess}
+            handleContactSubmit={handleContactSubmit}
+            onNavigatePage={navigateTo}
+            onOpenMediaFolder={(folder) => {
+              setMediaManagerFolder(folder);
+              setIsMediaManagerOpen(true);
+            }}
+          />
+        )}
 
-      {/* 4. INFINITE SPORTS B2B MANUFACTURING MARQUEE */}
-      <SportsB2BMarquee />
+        {activePage === "about-us" && (
+          <AboutUsPage onNavigatePage={navigateTo} />
+        )}
 
-      {/* 5. $20K IMMERSIVE SCROLL-DRIVEN 3D GARMENT DECONSTRUCTION SECTION */}
-      <ScrollDeconstructed3DGarment />
+        {activePage === "customization" && (
+          <CustomizationPage
+            customizerProduct={customizerProduct}
+            onAddToCart={handleAddToCart}
+            onNavigatePage={navigateTo}
+          />
+        )}
 
-      {/* 6. INTERACTIVE CUSTOMIZER SECTION (SINGLE-SCREEN COMPACT STUDIO - IMAGE 1) */}
-      <section id="customizer" className="py-4 sm:py-6 border-b border-neutral-200/60 dark:border-neutral-900 bg-white dark:bg-[#050505] transition-colors">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6">
-          {customizerProduct ? (
-            <TShirtCustomizer product={customizerProduct} onAddToCart={handleAddToCart} />
-          ) : (
-            <div className="text-center py-8 font-mono text-neutral-500 text-xs">No customizable assets active.</div>
-          )}
-        </div>
-      </section>
+        {activePage === "quality-process" && (
+          <QualityProcessPage onNavigatePage={navigateTo} />
+        )}
 
-      {/* 7. BESPOKE CUSTOM PRODUCT MANUFACTURING SHOWCASE (TRY WEARS CUSTOM DIVISION - IMAGE 2) */}
-      <CustomProductsShowcase />
+        {activePage === "sampling-policies" && (
+          <SamplingPoliciesPage onNavigatePage={navigateTo} />
+        )}
 
-      {/* 8. FACTORY LIVE PRODUCTION & CRAFTSMANSHIP VIDEOS (3D SCROLLING MOTION) */}
-      <FactoryLiveVideoShowcase />
+        {activePage === "privacy-policy" && (
+          <PrivacyPolicyPage onNavigatePage={navigateTo} />
+        )}
 
-      {/* 9. HIGH-STATUS FASHION WEAR CUSTOMIZATION & BIG VIDEO ATELIER */}
-      <FashionWearCustomVideoSection />
+        {activePage === "faq" && (
+          <FAQPage onNavigatePage={navigateTo} />
+        )}
+      </main>
 
-      {/* 7. STORIES & TESTIMONIALS SECTION */}
-      <section id="stories" className="py-24 px-6 bg-neutral-50 dark:bg-[#050505] border-b border-neutral-200/60 dark:border-neutral-900 transition-colors">
-        <div className="max-w-7xl mx-auto space-y-16">
-          {/* Header */}
-          <div className="text-center space-y-3">
-            <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block uppercase">
-              GLOBAL ENLISTED REVIEWS
-            </span>
-            <h2 className="text-4xl font-display font-black tracking-tight dark:text-white uppercase leading-none">
-              CHAMPIONSHIP ANECDOTES
-            </h2>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono uppercase max-w-sm mx-auto">
-              Read feedback from certified world title belt holders and pro grappling masterminds.
-            </p>
-          </div>
-
-          {/* Testimonial Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {config.testimonials.map((test, idx) => (
-              <div
-                key={test.id}
-                className="bg-white dark:bg-[#0c0c0c] border border-neutral-200/60 dark:border-white/5 p-8 rounded-3xl relative overflow-hidden group space-y-6 flex flex-col justify-between"
-              >
-                {/* Security transparent protection layer */}
-                <div className="absolute inset-0 z-20 bg-transparent select-none pointer-events-none" />
-
-                <div className="space-y-4">
-                  {/* Rating Stars mock */}
-                  <div className="flex gap-1 text-[#E21D1D]">
-                    {Array.from({ length: 5 }).map((_, sIdx) => (
-                      <span key={sIdx} className="text-sm font-bold">★</span>
-                    ))}
-                  </div>
-
-                  <p
-                    data-editable-path={`testimonials[${idx}].quote`}
-                    data-editable-label={`Testimonial ${idx + 1} Quote`}
-                    className="text-sm dark:text-neutral-300 italic font-sans leading-relaxed text-neutral-700"
-                  >
-                    "{test.quote}"
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-4 pt-6 border-t border-neutral-100 dark:border-neutral-800">
-                  <div className="w-10 h-10 bg-[#E21D1D]/10 border border-[#E21D1D]/25 rounded-full flex items-center justify-center font-display font-black text-[#E21D1D] text-xs">
-                    {test.avatar}
-                  </div>
-                  <div>
-                    <h4
-                      data-editable-path={`testimonials[${idx}].author`}
-                      data-editable-label={`Testimonial ${idx + 1} Author`}
-                      className="text-xs font-display font-bold dark:text-white uppercase"
-                    >
-                      {test.author}
-                    </h4>
-                    <span
-                      data-editable-path={`testimonials[${idx}].role`}
-                      data-editable-label={`Testimonial ${idx + 1} Role`}
-                      className="text-[10px] font-mono text-neutral-400 uppercase"
-                    >
-                      {test.role}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 8. WHITE-LABEL SPONSORSHIP & COLLABORATION FORM */}
-      <section id="collaborations" className="py-24 bg-white dark:bg-[#050505] transition-colors border-b border-neutral-200/60 dark:border-neutral-900">
-        <div className="max-w-3xl mx-auto px-6 space-y-12">
-          
-          {/* Header */}
-          <div className="text-center space-y-3">
-            <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block uppercase">
-              ELITE DIVISION INGESTION
-            </span>
-            <h2 className="text-3xl font-display font-black tracking-tight dark:text-white uppercase leading-none">
-              INITIATE BRAND COLLABORATION
-            </h2>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono uppercase leading-relaxed max-w-md mx-auto">
-              Are you an active professional titleholder, sports club owner, or dedicated combat gear collector? Register your credentials to join our priority sponsorship program.
-            </p>
-          </div>
-
-          {/* Secure Form */}
-          <form onSubmit={handleContactSubmit} className="bg-neutral-50 dark:bg-[#0c0c0c]/60 p-8 rounded-3xl border border-neutral-200/60 dark:border-white/5 space-y-6 relative">
-            {/* Form Success overlay */}
-            <AnimatePresence>
-              {contactSuccess && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-white dark:bg-neutral-950 z-30 rounded-3xl flex flex-col items-center justify-center text-center p-6"
-                >
-                  <ShieldCheck className="w-12 h-12 text-emerald-500 animate-bounce mb-4" />
-                  <h4 className="font-display font-black text-md dark:text-white uppercase">
-                    CREDENTIAL ENVELOPE SECURED
-                  </h4>
-                  <p className="text-xs text-neutral-400 font-mono mt-2 max-w-sm leading-relaxed">
-                    Logistics record has been mapped successfully. Our sponsorship representative will contact you within 24 hours.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="space-y-1">
-                <label className="text-[9px] font-mono font-bold text-neutral-400 uppercase tracking-widest">
-                  Fighter / Representative Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. MARCUS 'SLEDGE' THOMPSON"
-                  value={contactName}
-                  onChange={(e) => setContactName(e.target.value.toUpperCase())}
-                  className="w-full bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-xs font-mono tracking-wide dark:text-white focus:outline-none focus:ring-1 focus:ring-[#E21D1D]"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-[9px] font-mono font-bold text-neutral-400 uppercase tracking-widest">
-                  Hotline / Secure Email
-                </label>
-                <input
-                  type="email"
-                  required
-                  placeholder="e.g. SLEDGE@TRYWEARS.COM"
-                  className="w-full bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-xs font-mono tracking-wide dark:text-white focus:outline-none focus:ring-1 focus:ring-[#E21D1D]"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="space-y-1">
-                <label className="text-[9px] font-mono font-bold text-neutral-400 uppercase tracking-widest">
-                  Athletic Rank or Corporate Role
-                </label>
-                <select className="w-full bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-xs font-mono tracking-wide dark:text-neutral-300 focus:outline-none focus:ring-1 focus:ring-[#E21D1D]">
-                  <option>PROFESSIONAL COMBAT CHAMPION</option>
-                  <option>SPORTS GYM OWNER / INSTRUCTOR</option>
-                  <option>ACTIVE TOURNAMENT ATHLETE</option>
-                  <option>FIGHT WEAR PREMIUM RETAILER</option>
-                  <option>COLLECTOR / VIP MEMBER</option>
-                </select>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-[9px] font-mono font-bold text-neutral-400 uppercase tracking-widest">
-                  Corporate Location Coordinates
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="CITY, STATE / COUNTRY"
-                  className="w-full bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-xs font-mono tracking-wide dark:text-white focus:outline-none focus:ring-1 focus:ring-[#E21D1D]"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-[9px] font-mono font-bold text-neutral-400 uppercase tracking-widest">
-                Enlistment Proposal Message
-              </label>
-              <textarea
-                required
-                rows={4}
-                placeholder="PROPOSE YOUR SPONSORSHIP TERMS..."
-                className="w-full bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-xl p-4 text-xs font-mono tracking-wide dark:text-white focus:outline-none focus:ring-1 focus:ring-[#E21D1D] leading-relaxed"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={contactSubmitting}
-              className="w-full bg-neutral-950 dark:bg-[#E21D1D] hover:bg-neutral-900 dark:hover:bg-red-750 text-white dark:text-white font-display font-black py-4 rounded-xl text-xs tracking-wider uppercase transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-            >
-              {contactSubmitting ? (
-                <RefreshCw className="w-4 h-4 animate-spin" />
-              ) : (
-                <ShieldCheck className="w-4 h-4" />
-              )}
-              <span>{contactSubmitting ? "ENCRYPTING TRANSMISSION..." : "SUBMIT SPONSORSHIP CREDENTIALS"}</span>
-            </button>
-          </form>
-        </div>
-      </section>
-
-      {/* 9. PREMIUM WHITE-LABEL FOOTER */}
+      {/* 4. PREMIUM WHITE-LABEL B2B FOOTER */}
       <footer className="bg-neutral-950 text-white py-16 px-6 border-t border-neutral-900 select-none">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 text-xs font-mono">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 text-xs font-mono">
           
           {/* Logo Brand column */}
           <div className="md:col-span-4 space-y-4">
-            <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigateTo("home")}
+              className="flex items-center gap-3 text-left cursor-pointer"
+            >
               <div className="w-12 h-12 flex items-center justify-center shrink-0">
-                <img src={config.global.logo || "/images/trylogo.png"} alt="Try Wears Logo" className="w-full h-full object-contain" referrerPolicy="no-referrer" />
+                <img
+                  src={config.global.logo || "/images/trylogo.png"}
+                  alt="Try Wears Logo"
+                  className="w-full h-full object-contain"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <span className="font-display font-black text-base tracking-widest uppercase">
                 {config.global.brandName}
               </span>
-            </div>
+            </button>
             <p className="text-[10px] text-neutral-500 max-w-xs leading-relaxed uppercase">
-              Elite handcrafted boxing gloves, custom combat gears, championship shin guards, and ultra-durability performance sports wears designed for professional combat sports champions.
+              Elite handcrafted boxing gloves, custom combat gears, championship shin guards, and ultra-durability performance sportswear designed for professional combat champions and luxury streetwear labels.
             </p>
           </div>
 
-          {/* Locations */}
+          {/* Quick Page Links */}
           <div className="md:col-span-3 space-y-3">
             <span className="text-[10px] font-bold text-[#E21D1D] uppercase tracking-widest block">
-              GLOBAL LOGISTICS
+              PRIMARY NAVIGATION
             </span>
-            <ul className="space-y-1.5 text-neutral-400 uppercase text-[10px]">
-              <li className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 shrink-0 text-[#E21D1D]" /> New York HQ Center</li>
-              <li className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 shrink-0 text-neutral-600" /> Tokyo Shibuya Ring</li>
-              <li className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 shrink-0 text-neutral-600" /> London Ring Facility</li>
+            <ul className="space-y-2 text-neutral-400 uppercase text-[10px]">
+              {NAV_ITEMS.map((item) => (
+                <li key={item.page}>
+                  <button
+                    onClick={() => navigateTo(item.page)}
+                    className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+                  >
+                    <span className="text-neutral-600">›</span>
+                    <span>{item.label}</span>
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact Details */}
+          {/* Legal & Help Links: Privacy Policy & FAQ */}
           <div className="md:col-span-3 space-y-3">
             <span className="text-[10px] font-bold text-[#E21D1D] uppercase tracking-widest block">
-              SECURE CONNECTS
+              LEGAL, NDA & SUPPORT
             </span>
-            <ul className="space-y-1.5 text-neutral-400 uppercase text-[10px]">
-              <li className="flex items-center gap-2"><Phone className="w-3.5 h-3.5 shrink-0 text-[#E21D1D]" /> {config.global.phone}</li>
-              <li className="flex items-center gap-2"><Mail className="w-3.5 h-3.5 shrink-0 text-[#E21D1D]" /> {config.global.email}</li>
+            <ul className="space-y-2 text-neutral-400 uppercase text-[10px]">
+              <li>
+                <button
+                  onClick={() => navigateTo("privacy-policy")}
+                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 text-neutral-300 font-bold"
+                >
+                  <Lock className="w-3 h-3 text-[#E21D1D]" />
+                  <span>Privacy Policy & IP NDA</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => navigateTo("faq")}
+                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 text-neutral-300 font-bold"
+                >
+                  <HelpCircle className="w-3 h-3 text-[#E21D1D]" />
+                  <span>B2B Buyer FAQ & Help</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => navigateTo("sampling-policies")}
+                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+                >
+                  <Package className="w-3 h-3 text-[#E21D1D]" />
+                  <span>Sample Prototyping Policies</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => navigateTo("quality-process")}
+                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+                >
+                  <ShieldCheck className="w-3 h-3 text-[#E21D1D]" />
+                  <span>ISO 9001 & CE Certifications</span>
+                </button>
+              </li>
             </ul>
           </div>
 
-          {/* Socials */}
+          {/* Connects & Socials */}
           <div className="md:col-span-2 space-y-3">
             <span className="text-[10px] font-bold text-[#E21D1D] uppercase tracking-widest block">
-              INTEL REEDS
+              SECURE CONNECT
             </span>
-            <div className="flex gap-3 text-neutral-400">
+            <div className="space-y-1.5 text-neutral-400 uppercase text-[10px]">
+              <div className="flex items-center gap-2"><Phone className="w-3.5 h-3.5 shrink-0 text-[#E21D1D]" /> {config.global.phone}</div>
+              <div className="flex items-center gap-2"><Mail className="w-3.5 h-3.5 shrink-0 text-[#E21D1D]" /> {config.global.email}</div>
+            </div>
+
+            <div className="pt-2 flex gap-2 text-neutral-400">
               <a href="#" className="p-2 bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg transition-colors cursor-pointer">
                 <Instagram className="w-4 h-4" />
               </a>
@@ -608,22 +612,38 @@ export default function App() {
               </a>
             </div>
           </div>
+
         </div>
 
-        {/* Brand Copyright legal statement */}
-        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[9px] font-mono text-neutral-600 uppercase">
-          <div>
-            © {new Date().getFullYear()} {config.global.brandName}. ALL RIGHTS RESERVED. DESIGN CONFIGURED GLOBALLY.
+        {/* Brand Copyright legal statement & Discreet Developer Trigger */}
+        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[9px] font-mono text-neutral-500 uppercase">
+          <div className="flex items-center gap-3">
+            <span>
+              © {new Date().getFullYear()} {config.global.brandName}. ALL RIGHTS RESERVED. B2B OEM/ODM PRIVATE LABEL.
+            </span>
+            {/* Discreet Developer Mode Button */}
+            <button
+              onClick={() => setIsDevUploadOpen(true)}
+              className="opacity-40 hover:opacity-100 hover:text-[#E21D1D] transition-opacity cursor-pointer flex items-center gap-1 bg-white/5 px-2 py-0.5 rounded border border-white/10"
+              title="Open Developer Product Ingestion Portal (or press Ctrl+Shift+D / Alt+D)"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>DEV INGESTION (CTRL+SHIFT+D)</span>
+            </button>
           </div>
           <div className="flex gap-4">
-            <a href="#" className="hover:underline">Biosecure Protection Rules</a>
+            <button onClick={() => navigateTo("privacy-policy")} className="hover:text-white transition-colors cursor-pointer">
+              Privacy Policy & IP NDA
+            </button>
             <span>•</span>
-            <a href="#" className="hover:underline">Logistics Shipment Terms</a>
+            <button onClick={() => navigateTo("faq")} className="hover:text-white transition-colors cursor-pointer">
+              Buyer FAQ & Trade Terms
+            </button>
           </div>
         </div>
       </footer>
 
-      {/* 10. SECURE SHIPMENT SHOPPING CART PANEL */}
+      {/* 5. SECURE SHIPMENT SHOPPING CART PANEL */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -633,12 +653,21 @@ export default function App() {
         onClearCart={handleClearCart}
       />
 
-      {/* 11. DYNAMIC WEBSITE MEDIA FOLDERS MANAGER (IMAGES & VIDEOS AUTO-SYNC) */}
+      {/* 6. DYNAMIC WEBSITE MEDIA FOLDERS MANAGER */}
       <MediaManagerModal
         isOpen={isMediaManagerOpen}
         onClose={() => setIsMediaManagerOpen(false)}
         defaultFolder={mediaManagerFolder}
         onMediaChanged={fetchConfig}
+      />
+
+      {/* 7. HIDDEN DEVELOPER PRODUCT FOLDER INGESTION & DUMMY REPLACEMENT MODAL */}
+      <DeveloperProductUploadModal
+        isOpen={isDevUploadOpen}
+        onClose={() => setIsDevUploadOpen(false)}
+        onCategoriesUpdated={() => {
+          fetchConfig();
+        }}
       />
     </div>
   );

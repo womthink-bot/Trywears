@@ -559,7 +559,11 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                     KEY STATS
                   </span>
                   <div className="grid grid-cols-3 gap-2">
-                    {category.stats.map((st, sIdx) => (
+                    {(category.stats || [
+                      { label: "100% FACTORY", value: "DIRECT" },
+                      { label: "LOW MOQ 25", value: "PER STYLE" },
+                      { label: "EXPRESS", value: "DDP AIR" }
+                    ]).map((st, sIdx) => (
                       <div
                         key={sIdx}
                         className="bg-black/80 backdrop-blur-md p-2.5 rounded-xl border border-white/15 flex flex-col justify-center"
@@ -579,16 +583,16 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                 <div className="pt-2 border-t border-white/10">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-widest block">
-                      SUB-CATEGORIES ({category.subCategories.length})
+                      SUB-CATEGORIES ({(category.subCategories || []).length})
                     </span>
                     <span className="text-[9px] font-mono text-[#E21D1D] font-bold">
                       CLICK TO FILTER
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-1.5">
-                    {category.subCategories.map((sub) => {
+                    {(category.subCategories || []).map((sub) => {
                       const isSubActive = selectedSubCategory === sub.id;
-                      const count = category.products.filter((p) => p.subCategoryId === sub.id).length;
+                      const count = (category.products || []).filter((p) => p.subCategoryId === sub.id).length;
                       return (
                         <button
                           key={sub.id}
@@ -735,13 +739,13 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                 <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-full ${
                   selectedSubCategory === "all" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"
                 }`}>
-                  {category.products.length}
+                  {(category.products || []).length}
                 </span>
               </button>
 
-              {category.subCategories.map((sub) => {
+              {(category.subCategories || []).map((sub) => {
                 const isSubActive = selectedSubCategory === sub.id;
-                const count = category.products.filter((p) => p.subCategoryId === sub.id).length;
+                const count = (category.products || []).filter((p) => p.subCategoryId === sub.id).length;
                 return (
                   <button
                     key={sub.id}
@@ -854,15 +858,37 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
 // 3. MAIN SCROLL-DECONSTRUCTED EXPORT ARMORY COMPONENT
 // ==============================================================
 export const ScrollDeconstructed3DGarment: React.FC = () => {
+  const [categories, setCategories] = useState<CategoryData[]>(CATEGORIES_DATA);
   const [activeTab, setActiveTab] = useState<string>("sports-wears");
   const [inspectModalProduct, setInspectModalProduct] = useState<CategoryProduct | null>(null);
   const [modalZoom, setModalZoom] = useState<number>(1.0);
+
+  // Load developer uploaded override categories on mount & listen to live event
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.success && data.categories && Array.isArray(data.categories)) {
+          setCategories(data.categories);
+        }
+      })
+      .catch(() => {});
+
+    const handleCategoriesUpdate = (e: any) => {
+      if (e.detail && Array.isArray(e.detail)) {
+        setCategories(e.detail);
+      }
+    };
+
+    window.addEventListener("trywears_categories_updated", handleCategoriesUpdate);
+    return () => window.removeEventListener("trywears_categories_updated", handleCategoriesUpdate);
+  }, []);
 
   // Active Category Scroll-Spy: detect which category is currently in view
   useEffect(() => {
     const handleScrollSpy = () => {
       const scrollPosition = window.scrollY + window.innerHeight * 0.4;
-      for (const cat of CATEGORIES_DATA) {
+      for (const cat of categories) {
         const el = document.getElementById(`cat-section-${cat.id}`);
         if (el) {
           const top = el.offsetTop;
@@ -878,7 +904,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
     window.addEventListener("scroll", handleScrollSpy, { passive: true });
     handleScrollSpy();
     return () => window.removeEventListener("scroll", handleScrollSpy);
-  }, []);
+  }, [categories]);
 
   // Smooth scroll to specific category section
   const handleScrollToCategory = (catId: string) => {
@@ -889,7 +915,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
     }
   };
 
-  const activeCategory = CATEGORIES_DATA.find((c) => c.id === activeTab) || CATEGORIES_DATA[0];
+  const activeCategory = categories.find((c) => c.id === activeTab) || categories[0] || CATEGORIES_DATA[0];
 
   return (
     <div
@@ -903,27 +929,30 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
             <div className="flex items-center gap-3 mb-3">
               <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />
               <span className="font-mono text-xs font-black tracking-widest text-[#E21D1D] uppercase">
-                PRO ATHLETIC GEAR & APPAREL • STREET / ATHLEISURE / LEATHER
+                TRY WEARS GLOBAL OEM/ODM MANUFACTURING DIVISIONS • SIALKOT FACTORY DIRECT
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black tracking-tight text-white uppercase leading-none">
-              4 CORE OEM CATEGORIES & SUB-DIVISIONS
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black tracking-tight text-white uppercase leading-tight">
+              CORE APPAREL & GEAR DIVISIONS FOR GLOBAL BUYERS
             </h2>
-            <p className="text-xs sm:text-sm font-mono text-neutral-400 mt-2 max-w-2xl uppercase">
-              Main categories featuring dedicated sub-categories (Football Uniforms, Basketball, Compression, Streetwear, Leather MOTO) with interactive 3D product zoom.
+            <p className="text-xs sm:text-sm font-mono text-neutral-300 mt-2 max-w-3xl leading-relaxed uppercase">
+              Factory direct manufacturing for sports federations, fitness chains, fight leagues, and luxury streetwear brands. Browse 72+ physical production samples with custom Pantone matching, Italian sublimation, 550 GSM heavyweight French Terry, and private label trims.
             </p>
           </div>
 
           {/* Quick Stats Pill */}
-          <div className="flex items-center gap-3 p-3 rounded-2xl bg-neutral-900/80 border border-neutral-800 font-mono text-xs text-neutral-300 shrink-0">
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-neutral-900/90 border border-white/10 font-mono text-xs text-white shrink-0 shadow-lg">
             <Factory className="w-4 h-4 text-[#E21D1D]" />
-            <span>OEM FACTORY PRODUCTION • 24 HR DISPATCH</span>
+            <div>
+              <span className="text-[#E21D1D] font-bold block text-[10px]">DIRECT B2B SUPPLY</span>
+              <span className="font-black uppercase tracking-wider">LOW MOQ 25 PCS • 7-DAY SAMPLING</span>
+            </div>
           </div>
         </div>
 
         {/* 4 CATEGORIES QUICK-JUMP BUTTONS WITH DYNAMIC ACTIVE GLIDE */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
-          {CATEGORIES_DATA.map((cat) => {
+          {categories.map((cat) => {
             const isActive = activeTab === cat.id;
             return (
               <button
@@ -946,7 +975,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
 
                 <div className="relative z-10 flex-1 min-w-0 pr-2">
                   <span className="font-mono text-[9px] font-bold text-neutral-500 group-hover:text-neutral-300 block">
-                    CATEGORY {cat.code} • {cat.products.length} SAMPLES
+                    CATEGORY {cat.code} • {cat.products?.length || 0} SAMPLES
                   </span>
                   <span className="font-display font-black text-xs sm:text-sm uppercase tracking-tight text-white group-hover:text-[#E21D1D] transition-colors truncate block">
                     {cat.name}
@@ -954,7 +983,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
 
                   {/* Sub-categories preview pills */}
                   <div className="flex flex-wrap gap-1 mt-1.5">
-                    {cat.subCategories.slice(0, 3).map((sub) => (
+                    {cat.subCategories?.slice(0, 3).map((sub) => (
                       <span
                         key={sub.id}
                         className="text-[7.5px] font-mono text-neutral-400 bg-neutral-900/90 px-1.5 py-0.5 rounded border border-white/5 truncate max-w-[105px]"
@@ -962,9 +991,9 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
                         {sub.name}
                       </span>
                     ))}
-                    {cat.subCategories.length > 3 && (
+                    {(cat.subCategories?.length || 0) > 3 && (
                       <span className="text-[7.5px] font-mono text-[#E21D1D] font-bold self-center">
-                        +{cat.subCategories.length - 3}
+                        +{(cat.subCategories?.length || 0) - 3}
                       </span>
                     )}
                   </div>
@@ -994,7 +1023,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
         <div className="flex items-center gap-3">
           {/* 4 Interactive Category Stage Dots */}
           <div className="flex items-center gap-1.5">
-            {CATEGORIES_DATA.map((c) => (
+            {categories.map((c) => (
               <button
                 key={c.id}
                 onClick={() => handleScrollToCategory(c.id)}
@@ -1009,21 +1038,14 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
           </div>
 
           <span className="text-[10px] text-neutral-400 hidden md:inline">
-            72 TOTAL SAMPLES (18/CAT)
+            {categories.reduce((acc, curr) => acc + (curr.products?.length || 0), 0)} TOTAL SAMPLES
           </span>
         </div>
       </div>
 
       {/* ================= 2. THE 4 ALTERNATING BALANCED SECTIONS ================= */}
-      {/*
-        Both sides have exact equal matching heights via `items-stretch` and `h-full flex-1`:
-        Category 1: SPORTS WEARS -> [Big Image LEFT (Equal Height)] | [9 Products RIGHT (3x3)]
-        Category 2: GYM & FITNESS -> [9 Products LEFT (3x3)] | [Big Image RIGHT (Equal Height)] (Sides Change!)
-        Category 3: STREET WEARS  -> [Big Image LEFT (Equal Height)] | [9 Products RIGHT (3x3)] (Sides Change!)
-        Category 4: LEATHER JACKETS -> [9 Products LEFT (3x3)] | [Big Image RIGHT (Equal Height)] (Sides Change!)
-      */}
       <div className="divide-y divide-neutral-900">
-        {CATEGORIES_DATA.map((category) => (
+        {categories.map((category) => (
           <CategoryShowcaseSection
             key={category.id}
             category={category}

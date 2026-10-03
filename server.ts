@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
+import { CATEGORIES_DATA } from "./src/data/categoriesData";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }));
 
 // Define config, media, uploads, and videos directories using process.cwd() (safe for both tsx and bundled CJS)
 const CONFIG_FILE_PATH = path.join(process.cwd(), "src", "data", "website_config.json");
+const CATEGORIES_OVERRIDE_PATH = path.join(process.cwd(), "src", "data", "custom_categories_override.json");
 const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
 const MEDIA_DIR = path.join(process.cwd(), "public", "media");
 const PRODUCTS_DIR = path.join(process.cwd(), "public", "products");
@@ -491,6 +493,504 @@ app.get("/api/folders/scan", (req, res) => {
   } catch (error) {
     console.error("Error scanning dynamic folders:", error);
     return res.status(500).json({ error: "Failed to scan folders." });
+  }
+});
+
+// GET /api/categories: Get current categories with any custom uploaded overrides
+app.get("/api/categories", (req, res) => {
+  try {
+    if (fs.existsSync(CATEGORIES_OVERRIDE_PATH)) {
+      const data = fs.readFileSync(CATEGORIES_OVERRIDE_PATH, "utf-8");
+      const parsed = JSON.parse(data);
+      return res.json({ success: true, customOverride: true, categories: parsed });
+    }
+    return res.json({ success: true, customOverride: false, categories: null });
+  } catch (error) {
+    console.error("Error loading categories override:", error);
+    return res.status(500).json({ error: "Failed to load categories override." });
+  }
+});
+
+// Helper to determine category, sub-category, and metadata from uploaded file path
+function parseUploadedProductInfo(relativePath: string, explicitCategory?: string) {
+  const parts = relativePath.split(/[/\\]/).filter(Boolean);
+  const fileName = parts.pop() || "product.png";
+  const nameWithoutExt = fileName.replace(/\.[^/.]+$/, "");
+  const cleanProductName = nameWithoutExt
+    .replace(/^[0-9]+_/, "")
+    .replace(/[-_]/g, " ")
+    .replace(/\b\w/g, (l) => l.toUpperCase());
+
+  let targetCat = explicitCategory && explicitCategory !== "auto" && explicitCategory !== "all" ? explicitCategory : "";
+  let subCategoryTitle = "Core Collection";
+  let subCategoryId = "core-collection";
+
+  // Check path segments for Category mapping if not explicitly forced
+  if (!targetCat && parts.length > 0) {
+    const rootName = parts[0].toLowerCase();
+    if (rootName.includes("sport") || rootName.includes("jersey") || rootName.includes("football") || rootName.includes("soccer") || rootName.includes("basketball") || rootName.includes("rugby")) {
+      targetCat = "sports-wears";
+    } else if (rootName.includes("gym") || rootName.includes("fitness") || rootName.includes("active") || rootName.includes("legging") || rootName.includes("bra") || rootName.includes("compression") || rootName.includes("rashguard") || rootName.includes("tank")) {
+      targetCat = "gym-fitness";
+    } else if (rootName.includes("street") || rootName.includes("hoodie") || rootName.includes("fleece") || rootName.includes("jogger") || rootName.includes("pant") || rootName.includes("tee") || rootName.includes("oversized")) {
+      targetCat = "street-wears";
+    } else if (rootName.includes("leather") || rootName.includes("jacket") || rootName.includes("moto") || rootName.includes("combat") || rootName.includes("boxing") || rootName.includes("glove") || rootName.includes("biker")) {
+      targetCat = "leather-jackets";
+    }
+  }
+
+  if (!targetCat) {
+    targetCat = "sports-wears";
+  }
+
+  // Determine SubCategory from folders
+  if (parts.length >= 2) {
+    const firstPart = parts[0].toLowerCase();
+    if (firstPart === targetCat || firstPart.includes("gym") || firstPart.includes("sport") || firstPart.includes("street") || firstPart.includes("leather")) {
+      subCategoryTitle = parts[1].replace(/[-_]/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+      subCategoryId = parts[1].toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+    } else {
+      subCategoryTitle = parts[0].replace(/[-_]/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+      subCategoryId = parts[0].toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+    }
+  } else if (parts.length === 1) {
+    const singleFolder = parts[0].toLowerCase();
+    if (singleFolder !== targetCat && singleFolder !== "products" && singleFolder !== "product") {
+      subCategoryTitle = parts[0].replace(/[-_]/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+      subCategoryId = parts[0].toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+    } else {
+      subCategoryTitle = "Bespoke Collection";
+      subCategoryId = "bespoke-collection";
+    }
+  } else {
+    subCategoryTitle = "Custom Line";
+    subCategoryId = "custom-line";
+  }
+
+  // Category specific specs
+  let gsm = "180-GSM";
+  let fabric = "High-Tensile Micro-Interlock Poly";
+  let accentColor = "#E21D1D";
+
+  if (targetCat === "sports-wears") {
+    gsm = "190-GSM";
+    fabric = "Micro-Interlock Dry-Fit Poly";
+    accentColor = "#E21D1D";
+  } else if (targetCat === "gym-fitness") {
+    gsm = "320-GSM";
+    fabric = "4-Way Power Stretch Nylon-Spandex";
+    accentColor = "#3B82F6";
+  } else if (targetCat === "street-wears") {
+    gsm = "500-GSM";
+    fabric = "Heavyweight 100% Combed French Terry Cotton";
+    accentColor = "#F59E0B";
+  } else if (targetCat === "leather-jackets") {
+    gsm = "1.2MM";
+    fabric = "100% Drum-Dyed Full-Grain Cowhide Leather";
+    accentColor = "#10B981";
+  }
+
+  return {
+    targetCat,
+    subCategoryTitle,
+    subCategoryId,
+    cleanProductName,
+    fileName,
+    gsm,
+    fabric,
+    accentColor
+  };
+}
+
+// In-memory active upload batches map
+const activeUploadBatches: Record<string, {
+  batchId: string;
+  replaceDummy: boolean;
+  targetCategory: string;
+  categoriesState: any[];
+  uploadedCount: number;
+  uploadedProducts: any[];
+  createdAt: number;
+}> = {};
+
+// Clean up stale batches older than 30 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const id of Object.keys(activeUploadBatches)) {
+    if (now - activeUploadBatches[id].createdAt > 30 * 60 * 1000) {
+      delete activeUploadBatches[id];
+    }
+  }
+}, 5 * 60 * 1000);
+
+// POST /api/developer/batch-start: Initialize a new lightweight file-by-file upload batch session
+app.post("/api/developer/batch-start", (req, res) => {
+  try {
+    const { replaceDummy, targetCategory } = req.body;
+    const batchId = `batch_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+
+    let categoriesState: any[] = [];
+    if (fs.existsSync(CATEGORIES_OVERRIDE_PATH)) {
+      try {
+        const raw = fs.readFileSync(CATEGORIES_OVERRIDE_PATH, "utf-8");
+        categoriesState = JSON.parse(raw);
+      } catch (e) {
+        categoriesState = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+      }
+    } else {
+      categoriesState = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+    }
+
+    if (!Array.isArray(categoriesState) || categoriesState.length === 0) {
+      categoriesState = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+    }
+
+    // If replaceDummy is true, clear previous dummy products for target category or all
+    if (replaceDummy) {
+      if (targetCategory && targetCategory !== "all" && targetCategory !== "auto") {
+        const catObj = categoriesState.find((c: any) => c.id === targetCategory);
+        if (catObj) {
+          catObj.products = [];
+          catObj.subCategories = [];
+        }
+      } else {
+        categoriesState.forEach((c: any) => {
+          c.products = [];
+          c.subCategories = [];
+        });
+      }
+    }
+
+    activeUploadBatches[batchId] = {
+      batchId,
+      replaceDummy: Boolean(replaceDummy),
+      targetCategory: targetCategory || "auto",
+      categoriesState,
+      uploadedCount: 0,
+      uploadedProducts: [],
+      createdAt: Date.now()
+    };
+
+    console.log(`[Batch-Start] Initialized batch ${batchId} for category: "${targetCategory}", replaceDummy: ${replaceDummy}`);
+    return res.json({ success: true, batchId, message: "Upload session initialized." });
+  } catch (error: any) {
+    console.error("Error starting batch upload:", error);
+    return res.status(500).json({ error: error.message || "Failed to initialize upload session." });
+  }
+});
+
+// POST /api/developer/upload-single-file: Stream a single image file to avoid browser tab memory exhaustion
+app.post("/api/developer/upload-single-file", (req, res) => {
+  try {
+    const { batchId, relativePath, fileName: rawName, fileData, targetCategory: clientCat } = req.body;
+
+    if (!batchId || !activeUploadBatches[batchId]) {
+      return res.status(400).json({ error: "Invalid or expired upload batch session." });
+    }
+    if (!fileData || !relativePath) {
+      return res.status(400).json({ error: "fileData and relativePath are required." });
+    }
+
+    const batch = activeUploadBatches[batchId];
+    const targetCategory = clientCat && clientCat !== "auto" ? clientCat : batch.targetCategory;
+
+    const parsed = parseUploadedProductInfo(relativePath, targetCategory !== "all" && targetCategory !== "auto" ? targetCategory : undefined);
+    const cleanFileName = (rawName || parsed.fileName).replace(/[^a-zA-Z0-9.\-_]/g, "_");
+
+    // Target storage directory: public/products/<targetCat>/<subCategoryId>
+    const targetDir = path.join(PRODUCTS_DIR, parsed.targetCat, parsed.subCategoryId);
+    if (!fs.existsSync(targetDir)) {
+      fs.mkdirSync(targetDir, { recursive: true });
+    }
+
+    // Decode Base64 and write single file immediately to disk
+    const matches = fileData.match(/^data:([A-Za-z0-9\-+\/.]+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      return res.status(400).json({ error: "Invalid base64 format." });
+    }
+
+    const fileBuffer = Buffer.from(matches[2], "base64");
+    const fullSavePath = path.join(targetDir, cleanFileName);
+    fs.writeFileSync(fullSavePath, fileBuffer);
+
+    batch.uploadedCount++;
+    const webUrl = `/products/${parsed.targetCat}/${parsed.subCategoryId}/${cleanFileName}`;
+
+    // Find or create category in batch.categoriesState
+    let catObj = batch.categoriesState.find((c: any) => c.id === parsed.targetCat);
+    if (!catObj) {
+      catObj = {
+        id: parsed.targetCat,
+        code: "0" + (batch.categoriesState.length + 1),
+        name: parsed.targetCat.replace(/-/g, " ").toUpperCase(),
+        tagline: "CUSTOM UPLOADED FACTORY DIVISION",
+        badge: "OEM FACTORY ACTIVE",
+        themeColor: parsed.accentColor,
+        heroImage: webUrl,
+        heroImageAlt: parsed.cleanProductName,
+        bgImage: "/images/backgrounds/sports_bg.jpg",
+        bgAlt: "Background",
+        description: "Custom uploaded production collection.",
+        stats: [
+          { label: "100% FACTORY", value: "DIRECT" },
+          { label: "LOW MOQ 25", value: "PER STYLE" },
+          { label: "7-DAY SAMPLE", value: "EXPRESS" }
+        ],
+        highlights: ["Custom Pantone Dyelot", "Laser Cut Seaming", "Private Label Trims"],
+        alignImageLeft: true,
+        subCategories: [],
+        products: []
+      };
+      batch.categoriesState.push(catObj);
+    }
+
+    // Add subCategory if not exists
+    if (!catObj.subCategories) catObj.subCategories = [];
+    let subObj = catObj.subCategories.find((s: any) => s.id === parsed.subCategoryId);
+    if (!subObj) {
+      subObj = {
+        id: parsed.subCategoryId,
+        name: parsed.subCategoryTitle,
+        tagline: `Bespoke ${parsed.subCategoryTitle} Collection`
+      };
+      catObj.subCategories.push(subObj);
+    }
+
+    // Add Product object
+    if (!catObj.products) catObj.products = [];
+    const newProduct = {
+      id: `custom-prod-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
+      sampleNum: catObj.products.length + 1,
+      name: parsed.cleanProductName,
+      subtitle: `${parsed.subCategoryTitle} Production Model`,
+      image: webUrl,
+      badge: "FACTORY OEM PRODUCTION",
+      subCategory: parsed.subCategoryTitle,
+      subCategoryId: parsed.subCategoryId,
+      gsm: parsed.gsm,
+      fabric: parsed.fabric,
+      accentColor: parsed.accentColor,
+      moq: "25 PCS",
+      colorways: [
+        { name: "Obsidian Black", hex: "#111111" },
+        { name: "Crimson Red", hex: "#E21D1D" },
+        { name: "Pure White", hex: "#FFFFFF" }
+      ],
+      specs: [
+        `${parsed.gsm} ${parsed.fabric}`,
+        "Precision Cut & Sew Construction",
+        "Custom Private Label Neck & Wash Tags",
+        "Individual Frosted Matte Ziplock Packaging"
+      ]
+    };
+
+    catObj.products.push(newProduct);
+    batch.uploadedProducts.push(newProduct);
+
+    return res.json({
+      success: true,
+      fileName: cleanFileName,
+      productName: parsed.cleanProductName,
+      category: parsed.targetCat,
+      subCategory: parsed.subCategoryTitle,
+      uploadedCount: batch.uploadedCount
+    });
+  } catch (error) {
+    console.error("Error uploading single file:", error);
+    return res.status(500).json({ error: "Failed to upload file." });
+  }
+});
+
+// POST /api/developer/batch-finalize: Save the whole processed categories override and finalize
+app.post("/api/developer/batch-finalize", (req, res) => {
+  try {
+    const { batchId } = req.body;
+    if (!batchId || !activeUploadBatches[batchId]) {
+      return res.status(400).json({ error: "Invalid or expired upload batch session." });
+    }
+
+    const batch = activeUploadBatches[batchId];
+
+    // Persist final categories state to disk
+    fs.writeFileSync(CATEGORIES_OVERRIDE_PATH, JSON.stringify(batch.categoriesState, null, 2), "utf-8");
+
+    const responseData = {
+      success: true,
+      message: `Successfully uploaded and categorized ${batch.uploadedCount} products.`,
+      uploadedCount: batch.uploadedCount,
+      categories: batch.categoriesState
+    };
+
+    // Cleanup session
+    delete activeUploadBatches[batchId];
+
+    return res.json(responseData);
+  } catch (error) {
+    console.error("Error finalizing batch:", error);
+    return res.status(500).json({ error: "Failed to finalize batch upload." });
+  }
+});
+
+// POST /api/developer/upload-folder: Bulk upload folder tree with auto-categorization & dummy deletion
+app.post("/api/developer/upload-folder", (req, res) => {
+  try {
+    const { files, replaceDummy, targetCategory, baseCategories } = req.body;
+
+    if (!Array.isArray(files) || files.length === 0) {
+      return res.status(400).json({ error: "No files provided in folder upload." });
+    }
+
+    let categoriesState: any[] = [];
+
+    // Load existing override or take base categories passed from client
+    if (fs.existsSync(CATEGORIES_OVERRIDE_PATH)) {
+      try {
+        categoriesState = JSON.parse(fs.readFileSync(CATEGORIES_OVERRIDE_PATH, "utf-8"));
+      } catch (e) {
+        categoriesState = baseCategories || [];
+      }
+    } else {
+      categoriesState = baseCategories || [];
+    }
+
+    // If replaceDummy is true for the target category, clear dummy products in those categories
+    if (replaceDummy) {
+      if (targetCategory && targetCategory !== "all") {
+        const catObj = categoriesState.find((c: any) => c.id === targetCategory);
+        if (catObj) {
+          catObj.products = [];
+          catObj.subCategories = [];
+        }
+      } else {
+        categoriesState.forEach((c: any) => {
+          c.products = [];
+          c.subCategories = [];
+        });
+      }
+    }
+
+    let uploadedCount = 0;
+
+    files.forEach((fileItem: any) => {
+      const { relativePath, fileData, fileName: rawName } = fileItem;
+      if (!fileData || !relativePath) return;
+
+      const parsed = parseUploadedProductInfo(relativePath, targetCategory !== "all" ? targetCategory : undefined);
+      const cleanFileName = (rawName || parsed.fileName).replace(/[^a-zA-Z0-9.\-_]/g, "_");
+
+      // Target storage directory on disk: public/products/<targetCat>/<subCategoryId>
+      const targetDir = path.join(PRODUCTS_DIR, parsed.targetCat, parsed.subCategoryId);
+      if (!fs.existsSync(targetDir)) {
+        fs.mkdirSync(targetDir, { recursive: true });
+      }
+
+      // Decode Base64 and write file
+      const matches = fileData.match(/^data:([A-Za-z0-9\-+\/.]+);base64,(.+)$/);
+      if (matches && matches.length === 3) {
+        const fileBuffer = Buffer.from(matches[2], "base64");
+        const fullSavePath = path.join(targetDir, cleanFileName);
+        fs.writeFileSync(fullSavePath, fileBuffer);
+        uploadedCount++;
+
+        const webUrl = `/products/${parsed.targetCat}/${parsed.subCategoryId}/${cleanFileName}`;
+
+        // Find or create category in categoriesState
+        let catObj = categoriesState.find((c: any) => c.id === parsed.targetCat);
+        if (!catObj) {
+          catObj = {
+            id: parsed.targetCat,
+            code: "0" + (categoriesState.length + 1),
+            name: parsed.targetCat.replace(/-/g, " ").toUpperCase(),
+            tagline: "CUSTOM UPLOADED FACTORY DIVISION",
+            badge: "OEM FACTORY ACTIVE",
+            themeColor: parsed.accentColor,
+            heroImage: webUrl,
+            heroImageAlt: parsed.cleanProductName,
+            bgImage: "/images/backgrounds/sports_bg.jpg",
+            bgAlt: "Background",
+            description: "Custom uploaded production collection.",
+            stats: [
+              { label: "100% FACTORY", value: "DIRECT" },
+              { label: "LOW MOQ 25", value: "PER STYLE" },
+              { label: "7-DAY SAMPLE", value: "EXPRESS" }
+            ],
+            highlights: ["Custom Pantone Dyelot", "Laser Cut Seaming", "Private Label Trims"],
+            alignImageLeft: true,
+            subCategories: [],
+            products: []
+          };
+          categoriesState.push(catObj);
+        }
+
+        // Add subCategory if not exists
+        if (!catObj.subCategories) catObj.subCategories = [];
+        let subObj = catObj.subCategories.find((s: any) => s.id === parsed.subCategoryId);
+        if (!subObj) {
+          subObj = {
+            id: parsed.subCategoryId,
+            name: parsed.subCategoryTitle,
+            tagline: `Bespoke ${parsed.subCategoryTitle} Collection`
+          };
+          catObj.subCategories.push(subObj);
+        }
+
+        // Add Product object
+        if (!catObj.products) catObj.products = [];
+        const newProduct = {
+          id: `custom-prod-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
+          sampleNum: catObj.products.length + 1,
+          name: parsed.cleanProductName,
+          subtitle: `${parsed.subCategoryTitle} Production Model`,
+          image: webUrl,
+          badge: "FACTORY OEM PRODUCTION",
+          subCategory: parsed.subCategoryTitle,
+          subCategoryId: parsed.subCategoryId,
+          gsm: parsed.gsm,
+          fabric: parsed.fabric,
+          accentColor: parsed.accentColor,
+          moq: "25 PCS",
+          colorways: [
+            { name: "Obsidian Black", hex: "#111111" },
+            { name: "Crimson Red", hex: "#E21D1D" },
+            { name: "Pure White", hex: "#FFFFFF" }
+          ],
+          specs: [
+            `${parsed.gsm} ${parsed.fabric}`,
+            "Precision Cut & Sew Construction",
+            "Custom Private Label Neck & Wash Tags",
+            "Individual Frosted Matte Ziplock Packaging"
+          ]
+        };
+
+        catObj.products.push(newProduct);
+      }
+    });
+
+    // Save override to disk
+    fs.writeFileSync(CATEGORIES_OVERRIDE_PATH, JSON.stringify(categoriesState, null, 2), "utf-8");
+
+    return res.json({
+      success: true,
+      message: `Successfully processed ${uploadedCount} product assets.`,
+      uploadedCount,
+      categories: categoriesState
+    });
+  } catch (error) {
+    console.error("Error processing developer folder upload:", error);
+    return res.status(500).json({ error: "Failed to process folder upload." });
+  }
+});
+
+// POST /api/developer/reset-categories: Clear all custom overrides and restore default factory catalog
+app.post("/api/developer/reset-categories", (req, res) => {
+  try {
+    if (fs.existsSync(CATEGORIES_OVERRIDE_PATH)) {
+      fs.unlinkSync(CATEGORIES_OVERRIDE_PATH);
+    }
+    return res.json({ success: true, message: "Categories restored to factory default." });
+  } catch (error) {
+    console.error("Error resetting categories:", error);
+    return res.status(500).json({ error: "Failed to reset categories." });
   }
 });
 

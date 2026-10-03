@@ -71,9 +71,9 @@ const CUSTOM_DIVISIONS: CustomDivision[] = [
     heroHeadline: "CUSTOMIZED",
     subHeadline: "MATCH KITS & JERSEYS",
     urduHighlight:
-      "Try Wears customize products bhi bana kar deta hai — Football, Basketball aur cricket teams ke liye 100% bespoke kits, custom numbers aur team crests.",
+      "Direct OEM/ODM production for sports clubs, academies, tournament leagues, and brand distributors with custom club crests, player numbering, and laser ventilation.",
     description:
-      "Try Wears sirf standard catalog nahi balkay aapke club, brand ya team ke mutabiq 100% custom products bana kar deta hai. Custom team crest, player numbers, pantone color matching aur zero-fade Italian sublimation printing.",
+      "Try Wears manufactures complete turnkey teamwear collections for global football, basketball, rugby, and cricket leagues. Features Pantone precision color matching, zero-fade Italian heat sublimation, and reinforced 4-needle flatlock seams.",
     features: [
       "Zero-Fade Italian Sublimation Printing",
       "Custom 3D Silicone Crests & Rubber Badges",
@@ -145,9 +145,9 @@ const CUSTOM_DIVISIONS: CustomDivision[] = [
     heroHeadline: "BESPOKE",
     subHeadline: "GYM & COMPRESSION WEAR",
     urduHighlight:
-      "Aapke fitness brand ya gym ke liye 100% custom activewear, seamless muscle-fit tops aur aesthetic bodybuilding stringers.",
+      "Custom-engineered for fitness labels, bodybuilding brands, and luxury activewear startups with high-flex squat-proof fabrics and custom silicone branding.",
     description:
-      "Aapke fitness brand ya gym label ke liye bespoke compression tops, high-flex stringers, seamless gym sets aur custom aesthetic cuts. Aapki marzi ke custom GSM fabrics, branded jacquard elastics aur private rubber tags ke sath.",
+      "Full-spectrum OEM manufacturing of muscle-mapped compression rashguards, seamless contour leggings, high-support sports bras, and deep-cut athletic stringers with anti-microbial silver yarn tech and custom branded jacquard waistbands.",
     features: [
       "4-Way Adaptive Muscle-Flex Compression",
       "High-Density 3D Rubber & Silicone Branding",
@@ -219,9 +219,9 @@ const CUSTOM_DIVISIONS: CustomDivision[] = [
     heroHeadline: "CUSTOM",
     subHeadline: "LUXURY STREETWEAR",
     urduHighlight:
-      "Heavyweight luxury oversized hoodies, vintage acid-wash tees aur custom cut-and-sew garments aapke label ke mutabiq.",
+      "Crafted for luxury streetwear brands and limited apparel drops with 500 GSM loopback cotton, vintage acid washes, 3D puff embroidery, and custom engraved metal aglets.",
     description:
-      "Heavyweight luxury drop-shoulder hoodies, boxy vintage wash tees aur custom streetwear outerwear. Aapke custom 3D puff prints, chenille embroidery patches, custom engraved metal aglets aur bespoke woven neck labels ke sath.",
+      "Heavyweight drop-shoulder oversized hoodies, boxy vintage wash tees, and modular cargo utility pants. Engineered with pre-shrunk combed cotton, double-layered stiff hoods, and bespoke damask private labeling.",
     features: [
       "450–550 GSM 100% Combed Cotton Loopback Terry",
       "Vintage Mineral & Acid Wash Garment Dyeing",
@@ -293,9 +293,9 @@ const CUSTOM_DIVISIONS: CustomDivision[] = [
     heroHeadline: "HANDCRAFTED",
     subHeadline: "LEATHER & FIGHT GEAR",
     urduHighlight:
-      "Original cowhide leather biker jackets, championship boxing gloves aur custom fight team shorts tailor-made banaiye.",
+      "Manufactured for world championship boxing federations, MMA promotions, and motorcycle apparel labels with full-grain leather and multi-core EVA shock foam.",
     description:
-      "Handcrafted real cowhide leather motorcycle jackets, pro boxing championship gloves aur bespoke combat robes. Biometric made-to-measure sizing, custom foil debossing, metallic embroidery aur multi-layer impact foam padding.",
+      "Hand-shaped top-grain cowhide boxing gloves, tournament shin guards, and classic leather biker jackets. Built with multi-layer kinetic shock dispersion cores, 24K gold foil debossed badges, and heavy bonded nylon seams.",
     features: [
       "100% Full-Grain Drum-Dyed Cowhide Leather",
       "Biometric Custom Made-to-Measure Patterns",
@@ -552,20 +552,19 @@ export function CustomProductsShowcase() {
             <div className="flex items-center gap-2.5">
               <span className="w-2.5 h-2.5 rounded-full bg-[#E21D1D] animate-ping" />
               <span className="text-[11px] font-mono font-black text-[#E21D1D] tracking-[0.25em] uppercase">
-                TRY WEARS BESPOKE OEM & ODM DIVISION
+                TRY WEARS BESPOKE OEM & ODM PRIVATE LABEL DIVISION
               </span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black uppercase tracking-tight text-white leading-[1.08]">
-              TRY WEARS{" "}
+              CUSTOMIZED READY PRODUCTS FOR{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E21D1D] to-red-500 underline decoration-[#E21D1D]/40 decoration-4 underline-offset-8">
-                CUSTOMIZE PRODUCTS
-              </span>{" "}
-              BHI BANA KAR DETA HAI
+                GLOBAL BRANDS & CLUBS
+              </span>
             </h2>
 
-            <p className="text-xs sm:text-sm font-mono text-neutral-400 uppercase tracking-wider leading-relaxed pt-1">
-              Wholesalers, fitness brands aur sports clubs ke liye 100% ready customized products — custom brand logos, client designs, Italian sublimation aur private labeling ke sath.
+            <p className="text-xs sm:text-sm font-mono text-neutral-300 uppercase tracking-wider leading-relaxed pt-1">
+              End-to-end bespoke manufacturing for international apparel wholesalers, fitness chains, and combat federations — complete with custom brand crests, Pantone color matching, Italian sublimation, and retail-ready private labeling.
             </p>
           </div>
 
@@ -858,14 +857,14 @@ export function CustomProductsShowcase() {
                     </motion.div>
                   </AnimatePresence>
 
-                  {/* Prominent Custom Capability Notice (Urdu + English) */}
+                  {/* Prominent Custom Capability Notice */}
                   <div className="p-3.5 rounded-2xl bg-neutral-950 border border-neutral-800 text-[11px] font-sans text-neutral-300 space-y-1">
                     <div className="flex items-center gap-1.5 font-mono font-bold text-white text-xs uppercase">
                       <Scissors className="w-3 h-3 text-[#E21D1D]" />
-                      <span>WHOLESALER BESPOKE ORDER FACILITY</span>
+                      <span>DIRECT FACTORY OEM/ODM FACILITY</span>
                     </div>
                     <p className="leading-relaxed">
-                      {current.urduHighlight}
+                      {current.b2bHighlight || current.urduHighlight}
                     </p>
                   </div>
 
@@ -961,7 +960,7 @@ export function CustomProductsShowcase() {
                 ANY PRODUCT, ANY CUT
               </h4>
               <p className="text-[11px] font-sans text-neutral-400 mt-0.5">
-                Aap photo ya sketch dein, hum exact physical sample deliver karein gay.
+                Send your tech pack or sketch — we deliver exact physical prototypes in 7 days.
               </p>
             </div>
           </div>
@@ -972,10 +971,10 @@ export function CustomProductsShowcase() {
             </div>
             <div>
               <h4 className="text-xs font-mono font-black text-white uppercase">
-                LOW 20 PCS MOQ
+                LOW 20–25 PCS MOQ
               </h4>
               <p className="text-[11px] font-sans text-neutral-400 mt-0.5">
-                Naye sports brands aur gym clubs ke liye flexible production batches.
+                Flexible low-minimum production runs tailored for startups and pro gyms.
               </p>
             </div>
           </div>
@@ -986,10 +985,10 @@ export function CustomProductsShowcase() {
             </div>
             <div>
               <h4 className="text-xs font-mono font-black text-white uppercase">
-                FREE 3D CAD VISUALS
+                3D CAD PREVIEWS
               </h4>
               <p className="text-[11px] font-sans text-neutral-400 mt-0.5">
-                Bulk production se pehle 360-degree digital approval preview.
+                360-degree digital CLO-3D simulation approved prior to bulk cutting.
               </p>
             </div>
           </div>
