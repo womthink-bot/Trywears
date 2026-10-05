@@ -390,7 +390,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigatePage }) => {
             {/* Visual Media Header */}
             <div className="relative h-60 w-full overflow-hidden bg-black">
               <video
-                src="/videos/sportswearsGP.mp4"
+                src="/videos/sportswearsAB1.webm"
                 autoPlay
                 loop
                 muted
@@ -459,7 +459,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigatePage }) => {
             {/* Visual Media Header */}
             <div className="relative h-60 w-full overflow-hidden bg-black">
               <video
-                src="/videos/gymandfitnessGP.mp4"
+                src="/videos/gymandfitnessAB2.webm"
                 autoPlay
                 loop
                 muted
@@ -528,7 +528,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigatePage }) => {
             {/* Visual Media Header */}
             <div className="relative h-60 w-full overflow-hidden bg-black">
               <video
-                src="/videos/streetwearsGP.mp4"
+                src="/videos/streetwearsAB3.webm"
                 autoPlay
                 loop
                 muted
@@ -597,7 +597,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigatePage }) => {
             {/* Visual Media Header */}
             <div className="relative h-60 w-full overflow-hidden bg-black">
               <video
-                src="/videos/leatherGP.mp4"
+                src="/videos/jacketsAB4.webm"
                 autoPlay
                 loop
                 muted

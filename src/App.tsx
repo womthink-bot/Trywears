@@ -44,7 +44,7 @@ import { ThemeToggle } from "./components/ThemeToggle";
 import { SportsMotionFX } from "./components/SportsMotionFX";
 import { SecurityAlerts } from "./components/SecurityAlerts";
 
-// Core and Support Pages
+// Core Pages
 import { AboutUsPage } from "./pages/AboutUsPage";
 import { CustomizationPage } from "./pages/CustomizationPage";
 import { QualityProcessPage } from "./pages/QualityProcessPage";
@@ -52,6 +52,10 @@ import { SamplingPoliciesPage } from "./pages/SamplingPoliciesPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { FAQPage } from "./pages/FAQPage";
 import { B2BQuotationPage } from "./pages/B2BQuotationPage";
+
+// Master Hub Pages for Services & Support
+import { ServicesPage } from "./pages/ServicesPage";
+import { SupportPage } from "./pages/SupportPage";
 
 // 10 UK-Optimized Services & Support Pages
 import { DesignCustomizationPage } from "./pages/DesignCustomizationPage";
@@ -68,6 +72,8 @@ import { OrderProcessPage } from "./pages/OrderProcessPage";
 export type AppPage =
   | "home"
   | "about-us"
+  | "services"
+  | "support"
   | "customization"
   | "quality-process"
   | "sampling-policies"
@@ -96,7 +102,7 @@ export function App() {
     "★ FACTORY DIRECT B2B COMBAT WEAR & SPORTS APPAREL • LOW MOQ 30-50 PCS • EXPRESS UK & WORLDWIDE DDP AIR DISPATCH"
   );
 
-  // Nav Dropdowns
+  // Nav Dropdowns state
   const [activeDropdown, setActiveDropdown] = useState<"services" | "support" | null>(null);
 
   // Form submission state for quick newsletter/contact
@@ -229,6 +235,9 @@ export function App() {
     { label: "Order Process", page: "order-process" }
   ];
 
+  const isServicesActive = activePage === "services" || SERVICES_MENU_ITEMS.some(i => i.page === activePage);
+  const isSupportActive = activePage === "support" || SUPPORT_MENU_ITEMS.some(i => i.page === activePage);
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 selection:bg-[#E21D1D] selection:text-white relative">
       {/* Dynamic Mouse Motion Glow & Top Scroll Progress Bar */}
@@ -287,7 +296,7 @@ export function App() {
             </div>
           </button>
 
-          {/* Clean Executive Navbar with SERVICES & SUPPORT Dropdowns */}
+          {/* Clean Executive Navbar with SERVICES & SUPPORT Clickable Hubs & Dropdowns */}
           <nav className="hidden xl:flex items-center gap-2 2xl:gap-3">
             {/* Home */}
             <button
@@ -315,15 +324,16 @@ export function App() {
               <span>About Us</span>
             </button>
 
-            {/* SERVICES Dropdown Menu */}
+            {/* SERVICES Button (Clickable -> Services Page, Hover -> Dropdown) */}
             <div 
               className="relative group"
               onMouseEnter={() => setActiveDropdown("services")}
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button
+                onClick={() => navigateTo("services")}
                 className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                  SERVICES_MENU_ITEMS.some(i => i.page === activePage)
+                  isServicesActive
                     ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
                     : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
                 }`}
@@ -333,13 +343,20 @@ export function App() {
               </button>
 
               <div className="absolute top-full left-0 pt-2 w-64 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
-                <div className="p-3 bg-[#0a0a12] border border-neutral-800 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.9)] space-y-1">
-                  <div className="px-3 py-1.5 border-b border-neutral-800 mb-1">
-                    <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
-                      SERVICES
-                    </span>
-                    <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
-                  </div>
+                <div className="p-3 bg-[#0a0a12] border border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1">
+                  <button
+                    onClick={() => navigateTo("services")}
+                    className="w-full text-left px-3 py-1.5 border-b border-neutral-800 mb-1 flex items-center justify-between hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
+                  >
+                    <div>
+                      <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-white">
+                        SERVICES OVERVIEW
+                      </span>
+                      <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                    </div>
+                    <span className="text-[9px] font-mono text-neutral-400 group-hover/title:text-white">View All →</span>
+                  </button>
+
                   {SERVICES_MENU_ITEMS.map((item) => (
                     <button
                       key={item.page}
@@ -347,7 +364,7 @@ export function App() {
                       className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
                         activePage === item.page
                           ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                          : "text-neutral-300 hover:bg-white/5 hover:text-white"
+                          : "text-neutral-300 hover:bg-white/10 hover:text-white"
                       }`}
                     >
                       <span>{item.label}</span>
@@ -358,15 +375,16 @@ export function App() {
               </div>
             </div>
 
-            {/* SUPPORT Dropdown Menu */}
+            {/* SUPPORT Button (Clickable -> Support Page, Hover -> Dropdown) */}
             <div 
               className="relative group"
               onMouseEnter={() => setActiveDropdown("support")}
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button
+                onClick={() => navigateTo("support")}
                 className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                  SUPPORT_MENU_ITEMS.some(i => i.page === activePage)
+                  isSupportActive
                     ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
                     : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
                 }`}
@@ -376,13 +394,20 @@ export function App() {
               </button>
 
               <div className="absolute top-full left-0 pt-2 w-64 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
-                <div className="p-3 bg-[#0a0a12] border border-neutral-800 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.9)] space-y-1">
-                  <div className="px-3 py-1.5 border-b border-neutral-800 mb-1">
-                    <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
-                      SUPPORT
-                    </span>
-                    <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
-                  </div>
+                <div className="p-3 bg-[#0a0a12] border border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1">
+                  <button
+                    onClick={() => navigateTo("support")}
+                    className="w-full text-left px-3 py-1.5 border-b border-neutral-800 mb-1 flex items-center justify-between hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
+                  >
+                    <div>
+                      <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-white">
+                        SUPPORT & POLICIES
+                      </span>
+                      <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                    </div>
+                    <span className="text-[9px] font-mono text-neutral-400 group-hover/title:text-white">View All →</span>
+                  </button>
+
                   {SUPPORT_MENU_ITEMS.map((item) => (
                     <button
                       key={item.page}
@@ -390,7 +415,7 @@ export function App() {
                       className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
                         activePage === item.page
                           ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                          : "text-neutral-300 hover:bg-white/5 hover:text-white"
+                          : "text-neutral-300 hover:bg-white/10 hover:text-white"
                       }`}
                     >
                       <span className="flex items-center gap-1.5">
@@ -438,10 +463,10 @@ export function App() {
               <span>GET B2B QUOTE</span>
             </button>
 
-            {/* Elegant Theme Toggle Switcher */}
+            {/* Theme Toggle Switcher */}
             <ThemeToggle theme={theme} onToggle={toggleTheme} />
 
-            {/* Shopping Shipment Bag */}
+            {/* Shopping Bag */}
             <button
               id="shopping-cart-button"
               onClick={() => setIsCartOpen(true)}
@@ -456,7 +481,7 @@ export function App() {
               )}
             </button>
 
-            {/* Mobile Menu Hamburger Toggle */}
+            {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="xl:hidden p-2.5 rounded-xl bg-neutral-900 border border-neutral-700 text-white hover:bg-neutral-800 transition-colors cursor-pointer"
@@ -467,7 +492,7 @@ export function App() {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu with SERVICES & SUPPORT Sections */}
+        {/* Mobile Dropdown Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -481,7 +506,7 @@ export function App() {
                 <button
                   onClick={() => navigateTo("home")}
                   className={`text-left py-2 px-3 rounded-xl text-xs font-mono font-bold uppercase transition-colors flex items-center justify-between cursor-pointer ${
-                    activePage === "home" ? "bg-[#E21D1D]/20 text-[#ff4d4d]" : "text-neutral-300"
+                    activePage === "home" ? "bg-[#E21D1D]/20 text-[#ff4d4d]" : "text-neutral-200"
                   }`}
                 >
                   <span>Home</span>
@@ -491,7 +516,7 @@ export function App() {
                 <button
                   onClick={() => navigateTo("about-us")}
                   className={`text-left py-2 px-3 rounded-xl text-xs font-mono font-bold uppercase transition-colors flex items-center justify-between cursor-pointer ${
-                    activePage === "about-us" ? "bg-[#E21D1D]/20 text-[#ff4d4d]" : "text-neutral-300"
+                    activePage === "about-us" ? "bg-[#E21D1D]/20 text-[#ff4d4d]" : "text-neutral-200"
                   }`}
                 >
                   <span>About Us</span>
@@ -501,12 +526,19 @@ export function App() {
 
               {/* Mobile SERVICES Section */}
               <div className="pt-2 border-t border-neutral-800 space-y-1.5">
-                <div className="px-3 py-1">
-                  <span className="text-[11px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
-                    SERVICES
-                  </span>
-                  <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
-                </div>
+                <button
+                  onClick={() => navigateTo("services")}
+                  className="w-full text-left px-3 py-1 flex items-center justify-between group cursor-pointer"
+                >
+                  <div>
+                    <span className="text-[11px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
+                      SERVICES (ALL OVERVIEW)
+                    </span>
+                    <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                  </div>
+                  <span className="text-[10px] font-mono text-neutral-400 group-hover:text-white">View Page →</span>
+                </button>
+
                 {SERVICES_MENU_ITEMS.map((item) => (
                   <button
                     key={item.page}
@@ -514,7 +546,7 @@ export function App() {
                     className={`w-full text-left py-2 px-3 rounded-xl text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
                       activePage === item.page
                         ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                        : "text-neutral-300 hover:bg-white/5"
+                        : "text-neutral-200 hover:bg-white/5"
                     }`}
                   >
                     <span>{item.label}</span>
@@ -525,12 +557,19 @@ export function App() {
 
               {/* Mobile SUPPORT Section */}
               <div className="pt-2 border-t border-neutral-800 space-y-1.5">
-                <div className="px-3 py-1">
-                  <span className="text-[11px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
-                    SUPPORT
-                  </span>
-                  <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
-                </div>
+                <button
+                  onClick={() => navigateTo("support")}
+                  className="w-full text-left px-3 py-1 flex items-center justify-between group cursor-pointer"
+                >
+                  <div>
+                    <span className="text-[11px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
+                      SUPPORT & POLICIES (OVERVIEW)
+                    </span>
+                    <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                  </div>
+                  <span className="text-[10px] font-mono text-neutral-400 group-hover:text-white">View Page →</span>
+                </button>
+
                 {SUPPORT_MENU_ITEMS.map((item) => (
                   <button
                     key={item.page}
@@ -538,7 +577,7 @@ export function App() {
                     className={`w-full text-left py-2 px-3 rounded-xl text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
                       activePage === item.page
                         ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                        : "text-neutral-300 hover:bg-white/5"
+                        : "text-neutral-200 hover:bg-white/5"
                     }`}
                   >
                     <span className="flex items-center gap-1.5">
@@ -635,6 +674,10 @@ export function App() {
         {activePage === "faq" && <FAQPage onNavigatePage={navigateTo} />}
         {activePage === "b2b-quote" && <B2BQuotationPage onNavigatePage={navigateTo} />}
 
+        {/* Master Hub Pages */}
+        {activePage === "services" && <ServicesPage onNavigatePage={navigateTo} />}
+        {activePage === "support" && <SupportPage onNavigatePage={navigateTo} />}
+
         {/* 10 UK-Targeted Services & Support Pages */}
         {activePage === "design-customization" && <DesignCustomizationPage onNavigatePage={navigateTo} />}
         {activePage === "brand-customization" && <BrandCustomizationPage onNavigatePage={navigateTo} />}
@@ -679,9 +722,12 @@ export function App() {
           {/* Col 2: EXACT "SERVICES" MENU BLOCK WITH PURPLE/MAGENTA ACCENT UNDERLINE */}
           <div className="space-y-3 font-mono text-xs">
             <div>
-              <h4 className="font-display font-black text-sm text-white uppercase tracking-wider">
+              <button
+                onClick={() => navigateTo("services")}
+                className="font-display font-black text-sm text-white uppercase tracking-wider hover:text-[#d946ef] transition-colors cursor-pointer block text-left"
+              >
                 SERVICES
-              </h4>
+              </button>
               {/* Exact Purple / Magenta Line under SERVICES */}
               <div className="w-8 h-1 bg-[#d946ef] rounded-full mt-1.5" />
             </div>
@@ -703,9 +749,12 @@ export function App() {
           {/* Col 3: EXACT "SUPPORT" MENU BLOCK WITH PURPLE/MAGENTA ACCENT UNDERLINE */}
           <div className="space-y-3 font-mono text-xs">
             <div>
-              <h4 className="font-display font-black text-sm text-white uppercase tracking-wider">
+              <button
+                onClick={() => navigateTo("support")}
+                className="font-display font-black text-sm text-white uppercase tracking-wider hover:text-[#d946ef] transition-colors cursor-pointer block text-left"
+              >
                 SUPPORT
-              </h4>
+              </button>
               {/* Exact Purple / Magenta Line under SUPPORT */}
               <div className="w-8 h-1 bg-[#d946ef] rounded-full mt-1.5" />
             </div>
