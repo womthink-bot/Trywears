@@ -58,7 +58,55 @@ const HERO_SLIDE_BG_VIDEOS = [
   { id: 3, url: "/videos/LeatherBG.mp4", title: "Leather Jackets" }
 ];
 
+const DEFAULT_HERO_SLIDES: HeroSlide[] = [
+  {
+    id: "slide-sports-wears",
+    category: "SPORTS WEARS",
+    title: "CUSTOM SUBLIMATED SPORTS & MATCH KITS",
+    subtitle: "SOCCER • BASKETBALL • CRICKET • RUGBY • TRACK & FIELD",
+    description: "Championship aerodynamic athletic jerseys and tracksuits engineered with Italian sublimation inks, laser-cut ventilation, and 4-way stretch interlock fabrics.",
+    image: "/videos/sportswearsBG.mp4",
+    buttonText: "CUSTOM TEAM KITS",
+    buttonLink: "#b2b-calculator",
+    tag: "SPORTS WEARS • MATCH KITS"
+  },
+  {
+    id: "slide-gym-fitness",
+    category: "GYM & FITNESS",
+    title: "HIGH-COMPRESSION GYM & ACTIVEWEAR",
+    subtitle: "SEAMLESS • SQUAT-PROOF • MUSCLE-FIT COMPRESSION",
+    description: "High-denier squat-proof seamless activewear, contour-ribbed fitness sets, compression rashguards, and quick-dry gym stringers built for maximum athletic performance.",
+    image: "/videos/gymandfitnessBG.mp4",
+    buttonText: "ORDER ACTIVEWEAR",
+    buttonLink: "#b2b-calculator",
+    tag: "GYM & FITNESS • ACTIVEWEAR"
+  },
+  {
+    id: "slide-street-wears",
+    category: "STREET WEARS",
+    title: "LUXURY HEAVYWEIGHT STREETWEAR APPAREL",
+    subtitle: "450–550 GSM HOODIES • BOXY TEES • VINTAGE MINERAL WASH",
+    description: "Bespoke custom-cut streetwear blanks crafted from 100% combed loopback French terry and heavy single jersey. 3D puff screen-printing and high-density Tajima embroidery.",
+    image: "/videos/streetwearsBG.mp4",
+    buttonText: "START STREETWEAR LINE",
+    buttonLink: "#b2b-calculator",
+    tag: "STREET WEARS • HEAVYWEIGHT"
+  },
+  {
+    id: "slide-leather-jackets",
+    category: "JACKETS",
+    title: "PREMIUM LEATHER, PUFFER, VARSITY & BOMBER JACKETS",
+    subtitle: "GENUINE LEATHER • DOWN PUFFERS • VARSITY WOOL • FLIGHT BOMBERS",
+    description: "Master artisanal outerwear production. Genuine top-grain cowhide biker jackets, quilted down winter puffers, classic American wool-leather varsity squad jackets, and tactical flight bombers.",
+    image: "/videos/LeatherBG.mp4",
+    buttonText: "BESPOKE JACKET ORDERS",
+    buttonLink: "#b2b-calculator",
+    tag: "JACKETS • LEATHER • PUFFER • VARSITY"
+  }
+];
+
 export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOpenMediaFolder }) => {
+  const activeSlides = (slides && slides.length > 0) ? slides : DEFAULT_HERO_SLIDES;
   // 3D Video & Media Settings State
   const [videoSettings, setVideoSettings] = useState<Hero3DVideoSettings>(() => {
     try {
@@ -213,7 +261,7 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
 
   // Slide advancement timer for multi-slide mode (exact 8 seconds per category)
   useEffect(() => {
-    if (!isPlaying || !slides || slides.length <= 1) return;
+    if (!isPlaying || !activeSlides || activeSlides.length <= 1) return;
 
     setProgress(0);
     const startTime = Date.now();
@@ -225,26 +273,24 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     }, TICK_INTERVAL);
 
     const slideTimer = setTimeout(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
     }, SLIDE_DURATION);
 
     return () => {
       clearInterval(progressTimer);
       clearTimeout(slideTimer);
     };
-  }, [currentSlide, isPlaying, slides?.length]);
+  }, [currentSlide, isPlaying, activeSlides.length]);
 
   const handleNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
   };
 
   const handlePrev = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setCurrentSlide((prev) => (prev - 1 + activeSlides.length) % activeSlides.length);
   };
 
-  if (!slides || slides.length === 0) return null;
-
-  const activeSlideData = slides[currentSlide];
+  const activeSlideData = activeSlides[currentSlide] || activeSlides[0];
 
   // Specific 10s video loop for category backgrounds
   const activeVideoUrl = currentSlide === 0 
@@ -274,51 +320,27 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
           style={{ transform: "translate3d(0, 0, 0)" }}
         >
           
-          {/* MODE 1: 3D VIDEO BACKGROUND (Preloaded Instant Crossfade Video Stack) */}
+          {/* MODE 1: HIGH-PERFORMANCE HARDWARE-ACCELERATED SINGLE ACTIVE VIDEO PLAYER */}
           {videoSettings.activeMode === "3d-video" && (
-            <div className="relative w-full h-full" style={{ contain: "paint" }}>
-              {videoSettings.isCustomUploaded && videoSettings.videoUrl ? (
-                <video
-                  ref={videoRef}
-                  src={videoSettings.videoUrl}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  disablePictureInPicture
-                  disableRemotePlayback
-                  tabIndex={-1}
-                  className="w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.15] scale-105"
-                  style={{ transform: "translate3d(0, 0, 0)" }}
-                />
-              ) : (
-                HERO_SLIDE_BG_VIDEOS.map((item, idx) => {
-                  const isActive = (currentSlide % HERO_SLIDE_BG_VIDEOS.length) === idx;
-                  return (
-                    <video
-                      key={item.id}
-                      src={item.url}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      preload="auto"
-                      disablePictureInPicture
-                      disableRemotePlayback
-                      tabIndex={-1}
-                      className={`absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.15] scale-105 transition-opacity duration-700 pointer-events-none ${
-                        isActive ? "opacity-100 z-10" : "opacity-0 z-0"
-                      }`}
-                      style={{
-                        transform: "translate3d(0, 0, 0)",
-                        willChange: "opacity",
-                        backfaceVisibility: "hidden"
-                      }}
-                    />
-                  );
-                })
-              )}
+            <div className="relative w-full h-full" style={{ contain: "strict" }}>
+              <video
+                key={videoSettings.isCustomUploaded && videoSettings.videoUrl ? videoSettings.videoUrl : activeVideoUrl}
+                ref={videoRef}
+                src={videoSettings.isCustomUploaded && videoSettings.videoUrl ? videoSettings.videoUrl : activeVideoUrl}
+                autoPlay
+                loop
+                muted={videoSettings.isMuted}
+                playsInline
+                preload="auto"
+                disablePictureInPicture
+                disableRemotePlayback
+                tabIndex={-1}
+                className="w-full h-full object-cover object-center scale-105 transition-opacity duration-500 transform-gpu will-change-transform"
+                style={{
+                  transform: "translateZ(0)",
+                  opacity: 0.85
+                }}
+              />
             </div>
           )}
 

@@ -6,19 +6,23 @@ import { CartItem } from "../types";
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  cartItems: CartItem[];
-  onUpdateQuantity: (index: number, quantity: number) => void;
-  onRemoveItem: (index: number) => void;
-  onClearCart: () => void;
+  cartItems?: CartItem[];
+  items?: CartItem[];
+  onUpdateQuantity?: (index: number, quantity: number) => void;
+  onRemoveItem?: (index: number) => void;
+  onClearCart?: () => void;
+  onCheckout?: () => void;
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({
   isOpen,
   onClose,
   cartItems,
+  items,
   onUpdateQuantity,
   onRemoveItem,
-  onClearCart
+  onClearCart,
+  onCheckout
 }) => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [checkoutStep, setCheckoutStep] = useState<"form" | "loading" | "success">("form");
@@ -29,9 +33,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const [address, setAddress] = useState("");
   const [card, setCard] = useState("");
 
-  const subtotal = cartItems.reduce((acc, item) => {
-    const priceNum = parseFloat(item.product.price.replace(/[^\d.]/g, ""));
-    return acc + priceNum * item.quantity;
+  const itemsList = cartItems || items || [];
+
+  const subtotal = itemsList.reduce((acc, item) => {
+    if (!item) return acc;
+    const priceStr = item.product?.price || (item as any).price || "0";
+    const priceNum = parseFloat(String(priceStr).replace(/[^\d.]/g, "")) || 0;
+    return acc + priceNum * (item.quantity || 1);
   }, 0);
 
   const shipping = subtotal > 150 ? 0 : 25;
@@ -50,7 +58,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const handleFinalize = () => {
     setIsCheckoutOpen(false);
     setCheckoutStep("form");
-    onClearCart();
+    if (onClearCart) onClearCart();
     onClose();
   };
 
@@ -93,7 +101,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
             {/* Cart Items List */}
             <div className="flex-1 overflow-y-auto p-6 space-y-6">
-              {cartItems.length === 0 ? (
+              {itemsList.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
                   <div className="w-16 h-16 bg-neutral-100 dark:bg-neutral-900 rounded-full flex items-center justify-center">
                     <ShoppingBag className="w-6 h-6 text-neutral-400" />
@@ -112,86 +120,97 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </button>
                 </div>
               ) : (
-                cartItems.map((item, idx) => (
-                  <div
-                    key={`${item.product.id}-${idx}`}
-                    className="flex gap-4 bg-neutral-50 dark:bg-neutral-900/40 p-4 rounded-xl border border-neutral-200/60 dark:border-neutral-900 relative group overflow-hidden"
-                  >
-                    {/* Security Overlay for Image */}
-                    <div className="absolute inset-0 z-10 bg-transparent select-none pointer-events-none" />
+                itemsList.map((item, idx) => {
+                  const prodName = item.product?.name || (item as any).name || "Bespoke Product";
+                  const prodImage = item.product?.image || (item as any).image || "/images/trylogo.png";
+                  const prodPrice = item.product?.price || (item as any).price || "$0.00";
+                  const prodSize = item.selectedSize || (item as any).size || "Standard";
 
-                    {/* Image */}
-                    <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-900 rounded-lg overflow-hidden shrink-0 relative">
-                      <img
-                        src={item.product.image}
-                        alt={item.product.name}
-                        className="w-full h-full object-cover"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="absolute inset-0 z-20 bg-transparent select-none pointer-events-auto" />
-                    </div>
+                  return (
+                    <div
+                      key={`${item.product?.id || idx}-${idx}`}
+                      className="flex gap-4 bg-neutral-50 dark:bg-neutral-900/40 p-4 rounded-xl border border-neutral-200/60 dark:border-neutral-900 relative group overflow-hidden"
+                    >
+                      {/* Security Overlay for Image */}
+                      <div className="absolute inset-0 z-10 bg-transparent select-none pointer-events-none" />
 
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-start">
-                        <h4 className="text-sm font-display font-bold text-neutral-950 dark:text-white truncate pr-4">
-                          {item.product.name}
-                        </h4>
-                        <button
-                          onClick={() => onRemoveItem(idx)}
-                          className="p-1 rounded text-neutral-400 hover:text-red-500 hover:bg-neutral-100 dark:hover:bg-neutral-800 shrink-0 cursor-pointer"
-                          title="Remove from shipment"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                      {/* Image */}
+                      <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-900 rounded-lg overflow-hidden shrink-0 relative">
+                        <img
+                          src={prodImage}
+                          alt={prodName}
+                          className="w-full h-full object-cover"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute inset-0 z-20 bg-transparent select-none pointer-events-auto" />
                       </div>
 
-                      <div className="text-xs text-neutral-500 dark:text-neutral-400 font-mono mt-1 flex items-center justify-between">
-                        <span>Size / Weight: {item.selectedSize}</span>
-                        <span className="font-bold text-neutral-950 dark:text-neutral-200">
-                          {item.product.price}
-                        </span>
-                      </div>
-
-                      {/* Customized Specifications List */}
-                      {item.customization && (
-                        <div className="mt-2 bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-850 p-2 rounded text-[10px] font-mono text-neutral-500 dark:text-neutral-400 space-y-0.5">
-                          <div><span className="text-[#E21D1D]">Chassis:</span> {item.customization.outerColor}</div>
-                          <div><span className="text-[#E21D1D]">Cuff:</span> {item.customization.cuffMaterial}</div>
-                          <div><span className="text-[#E21D1D]">Trim:</span> {item.customization.accentTrim}</div>
-                          <div><span className="text-[#E21D1D]">Lock:</span> {item.customization.laceStyle}</div>
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex justify-between items-start">
+                          <h4 className="text-sm font-display font-bold text-neutral-950 dark:text-white truncate pr-4">
+                            {prodName}
+                          </h4>
+                          {onRemoveItem && (
+                            <button
+                              onClick={() => onRemoveItem(idx)}
+                              className="p-1 rounded text-neutral-400 hover:text-red-500 hover:bg-neutral-100 dark:hover:bg-neutral-800 shrink-0 cursor-pointer"
+                              title="Remove from shipment"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          )}
                         </div>
-                      )}
 
-                      {/* Quantity Controls */}
-                      <div className="flex items-center gap-3 mt-3">
-                        <span className="text-[10px] font-mono font-bold uppercase text-neutral-400">Qty:</span>
-                        <div className="flex items-center border border-neutral-200 dark:border-neutral-800 rounded bg-white dark:bg-neutral-950">
-                          <button
-                            onClick={() => onUpdateQuantity(idx, Math.max(1, item.quantity - 1))}
-                            className="px-2 py-0.5 text-xs text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 font-bold cursor-pointer"
-                          >
-                            -
-                          </button>
-                          <span className="px-3 text-xs font-mono font-bold dark:text-neutral-200">
-                            {item.quantity}
+                        <div className="text-xs text-neutral-500 dark:text-neutral-400 font-mono mt-1 flex items-center justify-between">
+                          <span>Size / Weight: {prodSize}</span>
+                          <span className="font-bold text-neutral-950 dark:text-neutral-200">
+                            {prodPrice}
                           </span>
-                          <button
-                            onClick={() => onUpdateQuantity(idx, item.quantity + 1)}
-                            className="px-2 py-0.5 text-xs text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 font-bold cursor-pointer"
-                          >
-                            +
-                          </button>
                         </div>
+
+                        {/* Customized Specifications List */}
+                        {item.customization && (
+                          <div className="mt-2 bg-white dark:bg-neutral-950 border border-neutral-100 dark:border-neutral-850 p-2 rounded text-[10px] font-mono text-neutral-500 dark:text-neutral-400 space-y-0.5">
+                            {item.customization.outerColor && <div><span className="text-[#E21D1D]">Chassis:</span> {item.customization.outerColor}</div>}
+                            {item.customization.cuffMaterial && <div><span className="text-[#E21D1D]">Cuff:</span> {item.customization.cuffMaterial}</div>}
+                            {item.customization.accentTrim && <div><span className="text-[#E21D1D]">Trim:</span> {item.customization.accentTrim}</div>}
+                            {item.customization.laceStyle && <div><span className="text-[#E21D1D]">Lock:</span> {item.customization.laceStyle}</div>}
+                          </div>
+                        )}
+
+                        {/* Quantity Controls */}
+                        {onUpdateQuantity && (
+                          <div className="flex items-center gap-3 mt-3">
+                            <span className="text-[10px] font-mono font-bold uppercase text-neutral-400">Qty:</span>
+                            <div className="flex items-center border border-neutral-200 dark:border-neutral-800 rounded bg-white dark:bg-neutral-950">
+                              <button
+                                onClick={() => onUpdateQuantity(idx, Math.max(1, (item.quantity || 1) - 1))}
+                                className="px-2 py-0.5 text-xs text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 font-bold cursor-pointer"
+                              >
+                                -
+                              </button>
+                              <span className="px-3 text-xs font-mono font-bold dark:text-neutral-200">
+                                {item.quantity || 1}
+                              </span>
+                              <button
+                                onClick={() => onUpdateQuantity(idx, (item.quantity || 1) + 1)}
+                                className="px-2 py-0.5 text-xs text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 font-bold cursor-pointer"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
 
             {/* Total Calculations & Actions */}
-            {cartItems.length > 0 && !isCheckoutOpen && (
+            {itemsList.length > 0 && !isCheckoutOpen && (
               <div className="p-6 border-t border-neutral-200 dark:border-neutral-900 bg-neutral-50 dark:bg-neutral-950/40 space-y-4">
                 <div className="space-y-2 text-xs font-mono">
                   <div className="flex justify-between text-neutral-500">
@@ -212,7 +231,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
 
                 <button
-                  onClick={() => setIsCheckoutOpen(true)}
+                  onClick={() => {
+                    if (onCheckout) {
+                      onCheckout();
+                    } else {
+                      setIsCheckoutOpen(true);
+                    }
+                  }}
                   className="w-full bg-neutral-950 dark:bg-[#E21D1D] hover:bg-neutral-900 dark:hover:bg-red-700 text-white dark:text-white font-display font-bold py-3.5 rounded-xl tracking-wider uppercase text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-neutral-950/10 dark:shadow-[#E21D1D]/5"
                 >
                   <span>PROCEED TO SECURE SHIPMENT</span>

@@ -276,15 +276,15 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
       </div>
 
       {/* 2. FREESTANDING 3D GARMENTS SHOWCASE (COMPACT SIZE & BUTTERY-SMOOTH HOVER ZOOM) */}
-      <div className="relative z-20 w-full max-w-6xl mx-auto px-2 sm:px-4 my-auto min-h-[300px] sm:min-h-[330px] md:min-h-[360px] lg:min-h-[380px] flex items-center justify-center">
+      <div className="relative z-20 w-full max-w-5xl mx-auto px-2 sm:px-4 my-auto min-h-[240px] sm:min-h-[260px] md:min-h-[280px] lg:min-h-[300px] flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentCollection.id}
-            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+            initial={{ opacity: 0, y: 6, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.98 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 items-end justify-center"
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+            className="w-full grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 lg:gap-4 items-end justify-center"
           >
             {currentCollection.products.map((product, idx) => {
               const isHovered = hoveredCardIdx === idx;
@@ -294,15 +294,15 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                 <motion.div
                   key={product.id}
                   animate={{
-                    scale: isHovered ? 1.16 : isAnotherHovered ? 0.93 : 1,
-                    y: isHovered ? -12 : isAnotherHovered ? 3 : 0,
-                    opacity: isAnotherHovered ? 0.42 : 1,
+                    scale: isHovered ? 1.12 : isAnotherHovered ? 0.95 : 1,
+                    y: isHovered ? -8 : isAnotherHovered ? 2 : 0,
+                    opacity: isAnotherHovered ? 0.5 : 1,
                   }}
                   transition={{
                     type: "spring",
-                    stiffness: 320,
-                    damping: 28,
-                    mass: 0.6
+                    stiffness: 360,
+                    damping: 30,
+                    mass: 0.5
                   }}
                   onMouseEnter={() => {
                     setHoveredCardIdx(idx);
@@ -321,22 +321,22 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                 >
                   {/* Atmospheric Glow Spotlight Behind Freestanding Garment */}
                   <div
-                    className={`absolute inset-0 rounded-full blur-[36px] transition-opacity duration-500 ease-out pointer-events-none ${
-                      isHovered ? "opacity-85 scale-110" : "opacity-0 scale-75"
+                    className={`absolute inset-0 rounded-full blur-[24px] transition-opacity duration-300 pointer-events-none ${
+                      isHovered ? "opacity-75 scale-105" : "opacity-0 scale-75"
                     }`}
                     style={{
-                      background: `radial-gradient(circle, ${product.accentColor} 0%, rgba(226, 29, 29, 0.22) 50%, transparent 75%)`
+                      background: `radial-gradient(circle, ${product.accentColor} 0%, rgba(226, 29, 29, 0.2) 50%, transparent 70%)`
                     }}
                   />
 
                   {/* FREESTANDING PRODUCT IMAGE (COMPACT, SLEEK PROPORTIONS WITH CRISP RESOLUTION) */}
-                  <div className="relative w-full max-w-[190px] sm:max-w-[220px] md:max-w-[240px] h-[190px] sm:h-[230px] md:h-[260px] lg:h-[285px] flex items-center justify-center">
+                  <div className="relative w-full max-w-[140px] sm:max-w-[160px] md:max-w-[175px] lg:max-w-[190px] h-[140px] sm:h-[160px] md:h-[180px] lg:h-[200px] flex items-center justify-center">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className={`w-full h-full object-contain filter transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] transform-gpu will-change-transform drop-shadow-[0_16px_24px_rgba(0,0,0,0.85)] ${
+                      className={`w-full h-full object-contain transition-transform duration-300 ease-out transform-gpu will-change-transform drop-shadow-[0_12px_18px_rgba(0,0,0,0.85)] ${
                         isHovered
-                          ? "scale-105 drop-shadow-[0_26px_36px_rgba(0,0,0,0.95)]"
+                          ? "scale-105 drop-shadow-[0_20px_28px_rgba(0,0,0,0.95)]"
                           : ""
                       }`}
                       loading="eager"
@@ -350,50 +350,50 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                         initial={{ opacity: 0, scale: 0.85, y: -4 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.85 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-1.5 right-1.5 bg-black/85 backdrop-blur-md border border-[#E21D1D]/70 text-white font-mono text-[8px] sm:text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg pointer-events-none"
+                        transition={{ duration: 0.15 }}
+                        className="absolute top-1 right-1 bg-black/90 backdrop-blur-md border border-[#E21D1D]/70 text-white font-mono text-[8px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-1 shadow-lg pointer-events-none"
                       >
-                        <ZoomIn className="w-3 h-3 text-[#E21D1D]" />
-                        <span>ZOOMED</span>
+                        <ZoomIn className="w-2.5 h-2.5 text-[#E21D1D]" />
+                        <span>ZOOM</span>
                       </motion.div>
                     )}
                   </div>
 
                   {/* 3D Soft Floor Contact Shadow */}
                   <div
-                    className="w-2/3 h-4 rounded-[100%] blur-[10px] bg-black/90 transition-all duration-400 ease-out pointer-events-none -mt-1"
+                    className="w-2/3 h-3 rounded-[100%] blur-[8px] bg-black/90 transition-all duration-300 pointer-events-none -mt-1"
                     style={{
-                      transform: `scale(${isHovered ? 1.25 : 0.95})`,
-                      opacity: isHovered ? 0.9 : isAnotherHovered ? 0.25 : 0.6
+                      transform: `scale(${isHovered ? 1.15 : 0.95})`,
+                      opacity: isHovered ? 0.85 : isAnotherHovered ? 0.3 : 0.6
                     }}
                   />
 
                   {/* CLEAN PRODUCT TYPOGRAPHY (SLEEK & REFINED) */}
                   <div
-                    className={`mt-1.5 flex flex-col items-center text-center transition-opacity duration-300 ${
-                      isHovered ? "opacity-100" : isAnotherHovered ? "opacity-30" : "opacity-85"
+                    className={`mt-1 flex flex-col items-center text-center transition-opacity duration-200 ${
+                      isHovered ? "opacity-100" : isAnotherHovered ? "opacity-35" : "opacity-90"
                     }`}
                   >
-                    <span className="text-[8px] sm:text-[9px] font-mono font-black text-[#E21D1D] tracking-widest uppercase">
+                    <span className="text-[7.5px] sm:text-[8.5px] font-mono font-black text-[#E21D1D] tracking-wider uppercase">
                       {product.badge}
                     </span>
-                    <h4 className="text-xs sm:text-xs lg:text-sm font-display font-black text-white uppercase tracking-wider mt-0.5 line-clamp-1 group-hover:text-red-400 transition-colors">
+                    <h4 className="text-[11px] sm:text-xs font-display font-black text-white uppercase tracking-wider mt-0.5 line-clamp-1 group-hover:text-red-400 transition-colors max-w-[180px]">
                       {product.name}
                     </h4>
 
                     {/* Quick Specs Revealed on Hover */}
-                    <div className="h-4 flex items-center justify-center mt-0.5">
+                    <div className="h-3.5 flex items-center justify-center mt-0.5">
                       {isHovered ? (
                         <motion.span
                           initial={{ opacity: 0, y: 2 }}
                           animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="text-[8px] sm:text-[9px] font-mono text-neutral-300 line-clamp-1 max-w-[190px]"
+                          transition={{ duration: 0.15 }}
+                          className="text-[7.5px] sm:text-[8px] font-mono text-neutral-300 line-clamp-1 max-w-[170px]"
                         >
                           {product.specs}
                         </motion.span>
                       ) : (
-                        <span className="text-[8px] sm:text-[9px] font-mono text-neutral-500 uppercase tracking-widest">
+                        <span className="text-[7.5px] sm:text-[8px] font-mono text-neutral-500 uppercase tracking-widest">
                           0{idx + 1} / 04 • HOVER TO ZOOM
                         </span>
                       )}

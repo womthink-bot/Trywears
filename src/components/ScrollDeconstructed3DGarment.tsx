@@ -1038,7 +1038,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
           </div>
 
           <span className="text-[10px] text-neutral-400 hidden md:inline">
-            {categories.reduce((acc, curr) => acc + (curr.products?.length || 0), 0)} TOTAL SAMPLES
+            {(categories || []).reduce((acc, curr) => acc + (curr.products?.length || 0), 0)} TOTAL SAMPLES
           </span>
         </div>
       </div>

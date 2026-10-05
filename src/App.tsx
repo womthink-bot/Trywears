@@ -1,54 +1,69 @@
 import React, { useState, useEffect } from "react";
-import {
-  ShoppingBag,
-  ShieldCheck,
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-  ArrowRight,
-  Phone,
-  Mail,
-  MapPin,
-  Instagram,
-  Twitter,
-  Youtube,
-  Volume2,
-  VolumeX,
-  Plus,
-  ArrowUpRight,
-  Check,
-  Shield,
-  Activity,
+import { 
+  ShoppingBag, 
+  Menu, 
+  X, 
+  ChevronRight, 
+  ChevronDown,
+  Send, 
+  ShieldCheck, 
+  Clock, 
+  Truck, 
   Award,
-  Image,
-  RefreshCw,
-  FolderOpen,
-  Menu,
-  X,
-  Lock,
-  HelpCircle,
   Scissors,
-  FileCheck,
-  Package
+  CheckCircle2, 
+  FileCheck, 
+  Building, 
+  Mail, 
+  Phone, 
+  MapPin, 
+  ExternalLink, 
+  Sparkles, 
+  Layers, 
+  Zap, 
+  Globe2, 
+  Lock, 
+  Rotate3d, 
+  Sliders, 
+  Check, 
+  ArrowRight,
+  Plus
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { WebsiteConfig, CartItem, Product } from "./types";
-import { ThemeToggle } from "./components/ThemeToggle";
+import { SportsHeroSlider, HeroSlide } from "./components/SportsHeroSlider";
+import { SportsB2BMarquee } from "./components/SportsB2BMarquee";
+import { CustomProductsShowcase } from "./components/CustomProductsShowcase";
+import { ScrollDeconstructed3DGarment } from "./components/ScrollDeconstructed3DGarment";
+import { B2BFactoryCapabilities } from "./components/B2BFactoryCapabilities";
+import { BrandLogosMarqueeSection } from "./components/BrandLogosMarqueeSection";
+import { FactoryLiveVideoShowcase } from "./components/FactoryLiveVideoShowcase";
+import { FashionWearCustomVideoSection } from "./components/FashionWearCustomVideoSection";
+import { TShirtCustomizer, DEFAULT_CUSTOMIZER_PRODUCT } from "./components/TShirtCustomizer";
 import { CartDrawer } from "./components/CartDrawer";
-import { SecurityAlerts } from "./components/SecurityAlerts";
+import { ThemeToggle } from "./components/ThemeToggle";
 import { SportsMotionFX } from "./components/SportsMotionFX";
-import { MediaManagerModal } from "./components/MediaManagerModal";
-import { DeveloperProductUploadModal } from "./components/DeveloperProductUploadModal";
-import fallbackConfig from "./data/website_config.json";
+import { SecurityAlerts } from "./components/SecurityAlerts";
 
-// Pages
-import { HomePage } from "./pages/HomePage";
+// Core and Support Pages
 import { AboutUsPage } from "./pages/AboutUsPage";
 import { CustomizationPage } from "./pages/CustomizationPage";
 import { QualityProcessPage } from "./pages/QualityProcessPage";
 import { SamplingPoliciesPage } from "./pages/SamplingPoliciesPage";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicyPage";
 import { FAQPage } from "./pages/FAQPage";
+import { B2BQuotationPage } from "./pages/B2BQuotationPage";
+
+// 10 UK-Optimized Services & Support Pages
+import { DesignCustomizationPage } from "./pages/DesignCustomizationPage";
+import { BrandCustomizationPage } from "./pages/BrandCustomizationPage";
+import { CustomizeYourProductPage } from "./pages/CustomizeYourProductPage";
+import { SampleDevelopmentPage } from "./pages/SampleDevelopmentPage";
+import { BulkProductionPage } from "./pages/BulkProductionPage";
+import { ShippingPolicyPage } from "./pages/ShippingPolicyPage";
+import { ReturnRefundPolicyPage } from "./pages/ReturnRefundPolicyPage";
+import { TermsConditionsPage } from "./pages/TermsConditionsPage";
+import { MOQLeadTimePage } from "./pages/MOQLeadTimePage";
+import { OrderProcessPage } from "./pages/OrderProcessPage";
 
 export type AppPage =
   | "home"
@@ -57,190 +72,135 @@ export type AppPage =
   | "quality-process"
   | "sampling-policies"
   | "privacy-policy"
-  | "faq";
+  | "faq"
+  | "b2b-quote"
+  | "design-customization"
+  | "brand-customization"
+  | "customize-your-product"
+  | "sample-development"
+  | "bulk-production"
+  | "shipping-policy"
+  | "return-refund-policy"
+  | "terms-and-conditions"
+  | "moq-lead-time"
+  | "order-process";
 
-export default function App() {
-  const [config, setConfig] = useState<WebsiteConfig | null>(null);
+export function App() {
   const [activePage, setActivePage] = useState<AppPage>("home");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMediaManagerOpen, setIsMediaManagerOpen] = useState(false);
-  const [mediaManagerFolder, setMediaManagerFolder] = useState("home-page/hero-section");
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isSlidePlaying, setIsSlidePlaying] = useState(true);
-  
-  // Customizer default product state
-  const [customizerProduct, setCustomizerProduct] = useState<Product | null>(null);
+  const [config, setConfig] = useState<any>(null);
+  const [cart, setCart] = useState<any[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [bannerText, setBannerText] = useState<string>(
+    "★ FACTORY DIRECT B2B COMBAT WEAR & SPORTS APPAREL • LOW MOQ 30-50 PCS • EXPRESS UK & WORLDWIDE DDP AIR DISPATCH"
+  );
 
-  // Audio track ambient loop simulation
-  const [isSoundMuted, setIsSoundMuted] = useState(true);
+  // Nav Dropdowns
+  const [activeDropdown, setActiveDropdown] = useState<"services" | "support" | null>(null);
 
-  // Notification Banner
-  const [bannerText, setBannerText] = useState("★ FACTORY DIRECT B2B COMBAT WEAR & SPORTS APPAREL • LOW MOQ 25 PCS • EXPRESS WORLDWIDE DDP AIR DISPATCH");
-
-  // Hidden Developer Mode Folder Upload Modal
-  const [isDevUploadOpen, setIsDevUploadOpen] = useState(false);
-
-  // Contact Form Submission State
+  // Form submission state for quick newsletter/contact
+  const [contactName, setContactName] = useState("");
   const [contactSubmitting, setContactSubmitting] = useState(false);
   const [contactSuccess, setContactSuccess] = useState(false);
-  const [contactName, setContactName] = useState("");
 
-  // Secret Developer Mode Keyboard Shortcut (Ctrl+Shift+D or Alt+D)
-  useEffect(() => {
-    const handleDevKeyDown = (e: KeyboardEvent) => {
-      if (
-        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "d") ||
-        (e.altKey && e.key.toLowerCase() === "d")
-      ) {
-        e.preventDefault();
-        setIsDevUploadOpen((prev) => !prev);
-      }
-    };
-
-    window.addEventListener("keydown", handleDevKeyDown);
-    return () => window.removeEventListener("keydown", handleDevKeyDown);
-  }, []);
-
-  // Hash Routing sync
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace("#", "").trim();
-      const validPages: AppPage[] = [
-        "home",
-        "about-us",
-        "customization",
-        "quality-process",
-        "sampling-policies",
-        "privacy-policy",
-        "faq"
-      ];
-      if (validPages.includes(hash as AppPage)) {
-        setActivePage(hash as AppPage);
-      } else if (!hash) {
-        setActivePage("home");
-      }
-    };
-
-    handleHashChange();
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
-
+  // Auto-scroll to top on page navigation
   const navigateTo = (page: AppPage) => {
     setActivePage(page);
     setIsMobileMenuOpen(false);
-    window.location.hash = page === "home" ? "" : page;
+    setActiveDropdown(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Load configuration from Express Backend API
-  const fetchConfig = async () => {
-    try {
-      const response = await fetch("/api/config");
-      if (response.ok) {
-        const data = await response.json();
-        setConfig(data);
-        const customProduct = data.products?.find((p: any) => p.customizable) || data.products?.[0] || (fallbackConfig.products as any)[0];
-        setCustomizerProduct(customProduct);
-      } else {
-        throw new Error("Config endpoint returned non-OK status");
-      }
-    } catch (err) {
-      console.warn("Failed to fetch website config from backend, using local fallback config:", err);
-      setConfig(fallbackConfig as any);
-      const customProduct = (fallbackConfig.products as any).find((p: any) => p.customizable) || fallbackConfig.products[0];
-      setCustomizerProduct(customProduct as any);
-    }
-  };
-
   useEffect(() => {
-    fetchConfig();
+    // Fetch initial configuration
+    fetch("/api/config")
+      .then((res) => res.json())
+      .then((data) => {
+        setConfig(data);
+        if (data.global && data.global.bannerText) {
+          setBannerText(data.global.bannerText);
+        }
+      })
+      .catch((err) => {
+        console.warn("Could not load config from backend, using fallback:", err);
+        setConfig({
+          global: {
+            brandName: "TRY WEARS",
+            tagline: "OEM/ODM COMBAT SPORTS & ATHLETIC APPAREL FACTORY",
+            announcement: "FACTORY DIRECT B2B WHOLESALE & CUSTOM CLOTHING MANUFACTURING",
+            logo: "/images/trylogo.png",
+            contactEmail: "info@trywears.com",
+            phone: "+92 300 1234567"
+          }
+        });
+      });
 
+    // Theme initialization
+    const savedTheme = localStorage.getItem("trywears_theme") as "dark" | "light";
+    if (savedTheme) {
+      setTheme(savedTheme);
+      if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    } else {
+      document.documentElement.classList.add("dark");
+    }
+
+    // Load Cart from local storage
     try {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("admin") === "true" || params.get("media") === "true") {
-        setIsMediaManagerOpen(true);
+      const savedCart = localStorage.getItem("trywears_b2b_cart");
+      if (savedCart) {
+        setCart(JSON.parse(savedCart));
       }
-    } catch (e) {}
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "A" || e.key === "a")) {
-        e.preventDefault();
-        setIsMediaManagerOpen((prev) => !prev);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    } catch {}
   }, []);
 
-  // Sync theme to root element
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-      root.style.backgroundColor = "#050505";
-    } else {
-      root.classList.remove("dark");
-      root.style.backgroundColor = "#ffffff";
-    }
-  }, [theme]);
-
-  // Update HTML `<title>` and `<meta>` tags dynamically to support 100% white-labeled SEO
-  useEffect(() => {
-    if (config) {
-      document.title = config.seo.title;
-      let metaDesc = document.querySelector('meta[name="description"]');
-      if (!metaDesc) {
-        metaDesc = document.createElement("meta");
-        metaDesc.setAttribute("name", "description");
-        document.head.appendChild(metaDesc);
-      }
-      metaDesc.setAttribute("content", config.seo.description);
-    }
-  }, [config]);
-
-  // Theme Toggler
   const toggleTheme = () => {
-    setTheme(prev => (prev === "dark" ? "light" : "dark"));
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    localStorage.setItem("trywears_theme", nextTheme);
+    if (nextTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
   };
 
-  // Cart Handlers
-  const handleAddToCart = (product: Product, size: string, color: string) => {
-    setCart(prev => {
-      const existing = prev.find(item => item.product.id === product.id && item.size === size && item.color === color);
-      if (existing) {
-        return prev.map(item =>
-          item.product.id === product.id && item.size === size && item.color === color
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prev, { product, quantity: 1, size, color }];
-    });
+  const handleAddToCart = (productConfig: any) => {
+    const updated = [...cart, { ...productConfig, id: `custom-${Date.now()}` }];
+    setCart(updated);
+    try {
+      localStorage.setItem("trywears_b2b_cart", JSON.stringify(updated));
+    } catch {}
     setIsCartOpen(true);
   };
 
-  const handleUpdateCartQuantity = (index: number, quantity: number) => {
-    if (quantity <= 0) {
-      handleRemoveCartItem(index);
-      return;
-    }
-    setCart(prev => prev.map((item, idx) => (idx === index ? { ...item, quantity } : item)));
+  const handleUpdateQuantity = (id: string, qty: number) => {
+    const updated = cart.map((i) => (i.id === id ? { ...i, quantity: qty } : i));
+    setCart(updated);
+    try {
+      localStorage.setItem("trywears_b2b_cart", JSON.stringify(updated));
+    } catch {}
   };
 
-  const handleRemoveCartItem = (index: number) => {
-    setCart(prev => prev.filter((_, idx) => idx !== index));
+  const handleRemoveFromCart = (id: string) => {
+    const updated = cart.filter((i) => i.id !== id);
+    setCart(updated);
+    try {
+      localStorage.setItem("trywears_b2b_cart", JSON.stringify(updated));
+    } catch {}
   };
 
   const handleClearCart = () => {
     setCart([]);
+    try {
+      localStorage.removeItem("trywears_b2b_cart");
+    } catch {}
   };
 
-  // Form submission handler
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!contactName) return;
@@ -248,34 +208,25 @@ export default function App() {
     setTimeout(() => {
       setContactSubmitting(false);
       setContactSuccess(true);
-      setTimeout(() => {
-        setContactSuccess(false);
-        setContactName("");
-      }, 5000);
-    }, 1500);
+      setContactName("");
+      setTimeout(() => setContactSuccess(false), 5000);
+    }, 800);
   };
 
-  if (!config) {
-    return (
-      <div className="fixed inset-0 bg-neutral-950 flex flex-col items-center justify-center text-center p-6 select-none">
-        <div className="w-10 h-10 border-2 border-neutral-800 border-t-red-600 rounded-full animate-spin mb-4" />
-        <h4 className="font-display font-black text-xs text-white uppercase tracking-widest">
-          TRY WEARS LOGISTICS INTERFACE BOOTING...
-        </h4>
-        <p className="text-[9px] font-mono text-neutral-500 mt-1 uppercase">
-          Compiling luxury assets & server specifications
-        </p>
-      </div>
-    );
-  }
+  const SERVICES_MENU_ITEMS: { label: string; page: AppPage }[] = [
+    { label: "Design Customization", page: "design-customization" },
+    { label: "Brand Customization", page: "brand-customization" },
+    { label: "Customize Your Product", page: "customize-your-product" },
+    { label: "Sample Development", page: "sample-development" },
+    { label: "Bulk Production", page: "bulk-production" }
+  ];
 
-  // Header Nav Items: Home, About Us, Customization, Quality & Process, Sampling Policies
-  const NAV_ITEMS: { label: string; page: AppPage }[] = [
-    { label: "Home", page: "home" },
-    { label: "About Us", page: "about-us" },
-    { label: "Customization", page: "customization" },
-    { label: "Quality & Process", page: "quality-process" },
-    { label: "Sampling Policies", page: "sampling-policies" }
+  const SUPPORT_MENU_ITEMS: { label: string; page: AppPage; hasBadge?: boolean }[] = [
+    { label: "Shipping Policy", page: "shipping-policy" },
+    { label: "Return and Refund Policy", page: "return-refund-policy" },
+    { label: "Terms and Conditions", page: "terms-and-conditions" },
+    { label: "MOQ and Lead Time", page: "moq-lead-time", hasBadge: true },
+    { label: "Order Process", page: "order-process" }
   ];
 
   return (
@@ -286,96 +237,205 @@ export default function App() {
       {/* Security Protection Layer */}
       <SecurityAlerts />
 
-      {/* 1. TOP NOTIFICATION RUNNER */}
-      <div className="bg-neutral-950 text-white py-2 px-4 border-b border-neutral-900 overflow-hidden relative">
-        <div className="flex items-center justify-between max-w-7xl mx-auto text-[9px] font-mono tracking-widest font-black uppercase">
+      {/* 1. TOP NOTIFICATION RUNNER (FULL SCREEN WIDTH) */}
+      <div className="bg-[#08080c] text-white py-2 px-4 sm:px-6 lg:px-10 xl:px-14 border-b border-neutral-800/80 overflow-hidden relative z-50">
+        <div className="w-full flex items-center justify-between text-[9.5px] sm:text-[10px] font-mono tracking-widest font-black uppercase">
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
-            <span
-              data-editable-path="bannerText"
-              data-editable-label="Top Announcement Banner Text"
-            >
+            <span className="h-2 w-2 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
+            <span className="truncate max-w-[280px] sm:max-w-none text-neutral-200">
               {bannerText}
             </span>
           </div>
-          <div className="hidden sm:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-5 shrink-0">
             <button
-              onClick={() => navigateTo("sampling-policies")}
-              className="hover:text-[#E21D1D] transition-colors text-emerald-400 font-bold cursor-pointer"
+              onClick={() => navigateTo("sample-development")}
+              className="hover:text-white transition-colors text-emerald-400 font-bold cursor-pointer flex items-center gap-1.5"
             >
-              EXPRESS SAMPLE DESK
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span>EXPRESS 7-DAY SAMPLE DESK</span>
             </button>
-            <span>•</span>
-            <span className="text-[#E21D1D] font-bold">ISO 9001:2015 CERTIFIED</span>
+            <span className="text-neutral-700">|</span>
+            <span className="text-[#ff3b3b] font-bold tracking-wider">ISO 9001:2015 & CE CERTIFIED FACTORY</span>
           </div>
         </div>
       </div>
 
-      {/* 2. PREMIUM NAVIGATION HEADER */}
-      <header className="sticky top-0 z-40 bg-white/90 dark:bg-[#050505]/90 backdrop-blur-md border-b border-neutral-200/80 dark:border-neutral-900/80 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      {/* 2. EXECUTIVE FULL-SCREEN NAVIGATION HEADER */}
+      <header className="sticky top-0 z-40 bg-[#07070b]/95 backdrop-blur-2xl border-b border-neutral-800 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all">
+        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 py-3 sm:py-3.5 flex items-center justify-between gap-4 lg:gap-8">
           
           {/* Branded Logo */}
           <button
             onClick={() => navigateTo("home")}
-            className="flex items-center gap-3 group text-left cursor-pointer"
+            className="flex items-center gap-3.5 group text-left cursor-pointer shrink-0"
           >
-            <div className="h-11 w-11 sm:h-13 sm:w-13 flex items-center justify-center shrink-0">
+            <div className="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl bg-neutral-900/60 p-1 border border-neutral-800 group-hover:border-[#E21D1D]/60 flex items-center justify-center shrink-0 transition-all duration-300 shadow-md">
               <img 
-                src={config.global.logo || "/images/trylogo.png"} 
+                src={config?.global?.logo || "/images/trylogo.png"} 
                 alt="Try Wears Logo" 
-                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm" 
+                className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-300 drop-shadow-[0_2px_10px_rgba(226,29,29,0.3)]" 
                 referrerPolicy="no-referrer" 
               />
             </div>
             <div>
-              <span className="font-display font-black text-base sm:text-lg tracking-widest dark:text-white block uppercase leading-none">
-                {config.global.brandName}
+              <span className="font-display font-black text-lg sm:text-xl lg:text-2xl tracking-[0.14em] text-white block uppercase leading-none group-hover:text-[#ff3b3b] transition-colors">
+                {config?.global?.brandName || "TRY WEARS"}
               </span>
-              <span className="text-[9px] font-mono font-bold tracking-widest text-[#E21D1D] block uppercase mt-1">
-                {config.global.tagline}
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-[#ff3b3b] block uppercase mt-1 whitespace-nowrap">
+                {config?.global?.tagline || "OEM/ODM COMBAT SPORTS & ATHLETIC APPAREL FACTORY"}
               </span>
             </div>
           </button>
 
-          {/* Clean 5-Item Navigation Menu as Specified */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-[11px] font-mono font-bold uppercase tracking-widest">
-            {NAV_ITEMS.map((item) => {
-              const isActive = activePage === item.page;
-              return (
-                <button
-                  key={item.page}
-                  onClick={() => navigateTo(item.page)}
-                  className={`flex items-center gap-1.5 transition-all py-1 cursor-pointer relative ${
-                    isActive
-                      ? "text-[#E21D1D] font-black"
-                      : "text-neutral-400 hover:text-white"
-                  }`}
-                >
-                  {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping" />
-                  )}
-                  <span>{item.label}</span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="nav-underline"
-                      className="absolute -bottom-1 inset-x-0 h-0.5 bg-[#E21D1D]"
-                    />
-                  )}
-                </button>
-              );
-            })}
+          {/* Clean Executive Navbar with SERVICES & SUPPORT Dropdowns */}
+          <nav className="hidden xl:flex items-center gap-2 2xl:gap-3">
+            {/* Home */}
+            <button
+              onClick={() => navigateTo("home")}
+              className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                activePage === "home"
+                  ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                  : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+              }`}
+            >
+              {activePage === "home" && <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping shrink-0" />}
+              <span>Home</span>
+            </button>
+
+            {/* About Us */}
+            <button
+              onClick={() => navigateTo("about-us")}
+              className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                activePage === "about-us"
+                  ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                  : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+              }`}
+            >
+              {activePage === "about-us" && <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping shrink-0" />}
+              <span>About Us</span>
+            </button>
+
+            {/* SERVICES Dropdown Menu */}
+            <div 
+              className="relative group"
+              onMouseEnter={() => setActiveDropdown("services")}
+              onMouseLeave={() => setActiveDropdown(null)}
+            >
+              <button
+                className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                  SERVICES_MENU_ITEMS.some(i => i.page === activePage)
+                    ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                    : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+                }`}
+              >
+                <span>Services</span>
+                <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" />
+              </button>
+
+              <div className="absolute top-full left-0 pt-2 w-64 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
+                <div className="p-3 bg-[#0a0a12] border border-neutral-800 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.9)] space-y-1">
+                  <div className="px-3 py-1.5 border-b border-neutral-800 mb-1">
+                    <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
+                      SERVICES
+                    </span>
+                    <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                  </div>
+                  {SERVICES_MENU_ITEMS.map((item) => (
+                    <button
+                      key={item.page}
+                      onClick={() => navigateTo(item.page)}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
+                        activePage === item.page
+                          ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
+                          : "text-neutral-300 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* SUPPORT Dropdown Menu */}
+            <div 
+              className="relative group"
+              onMouseEnter={() => setActiveDropdown("support")}
+              onMouseLeave={() => setActiveDropdown(null)}
+            >
+              <button
+                className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                  SUPPORT_MENU_ITEMS.some(i => i.page === activePage)
+                    ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                    : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+                }`}
+              >
+                <span>Support</span>
+                <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" />
+              </button>
+
+              <div className="absolute top-full left-0 pt-2 w-64 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
+                <div className="p-3 bg-[#0a0a12] border border-neutral-800 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.9)] space-y-1">
+                  <div className="px-3 py-1.5 border-b border-neutral-800 mb-1">
+                    <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
+                      SUPPORT
+                    </span>
+                    <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                  </div>
+                  {SUPPORT_MENU_ITEMS.map((item) => (
+                    <button
+                      key={item.page}
+                      onClick={() => navigateTo(item.page)}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
+                        activePage === item.page
+                          ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
+                          : "text-neutral-300 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <span>{item.label}</span>
+                        {item.hasBadge && (
+                          <span className="w-4 h-4 rounded-full bg-[#d946ef]/20 border border-[#d946ef]/40 text-[#d946ef] flex items-center justify-center text-[10px] font-bold">
+                            +
+                          </span>
+                        )}
+                      </span>
+                      <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Quality & Process */}
+            <button
+              onClick={() => navigateTo("quality-process")}
+              className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                activePage === "quality-process"
+                  ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                  : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+              }`}
+            >
+              {activePage === "quality-process" && <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping shrink-0" />}
+              <span>Quality & Process</span>
+            </button>
           </nav>
 
-          {/* Header Controls */}
-          <div className="flex items-center gap-3 sm:gap-4">
-            {/* Quick Action Button */}
+          {/* Header Controls & Unified B2B Quote Action */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+            
+            {/* High-Impact B2B Quote Action Button */}
             <button
-              onClick={() => navigateTo("customization")}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-[10px] font-black uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(226,29,29,0.3)] cursor-pointer"
+              onClick={() => navigateTo("b2b-quote")}
+              className={`hidden sm:inline-flex items-center gap-2.5 px-5 py-2.5 sm:py-3 rounded-xl font-mono text-xs font-black uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-lg whitespace-nowrap active:scale-95 ${
+                activePage === "b2b-quote"
+                  ? "bg-red-700 text-white ring-2 ring-white shadow-[0_0_25px_rgba(226,29,29,0.6)]"
+                  : "bg-gradient-to-r from-[#E21D1D] to-[#b91313] hover:from-red-600 hover:to-red-700 text-white shadow-[0_0_20px_rgba(226,29,29,0.4)] hover:shadow-[0_0_30px_rgba(226,29,29,0.6)] hover:scale-102"
+              }`}
             >
-              <Scissors className="w-3.5 h-3.5" />
-              <span>Get B2B Quote</span>
+              <FileCheck className="w-4 h-4" />
+              <span>GET B2B QUOTE</span>
             </button>
 
             {/* Elegant Theme Toggle Switcher */}
@@ -385,13 +445,13 @@ export default function App() {
             <button
               id="shopping-cart-button"
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white/40 dark:bg-black/40 backdrop-blur-md hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors cursor-pointer group"
+              className="relative p-2.5 sm:p-3 rounded-xl border border-neutral-700 bg-neutral-900/80 hover:bg-neutral-800 hover:border-neutral-600 transition-all cursor-pointer group shadow-md"
               title="Open Shipment Bag Inventory"
             >
-              <ShoppingBag className="w-5 h-5 text-neutral-700 dark:text-neutral-300 group-hover:scale-105 transition-transform" />
-              {cart.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#E21D1D] text-white font-mono font-bold text-[9px] h-4 w-4 rounded-full flex items-center justify-center">
-                  {cart.reduce((sum, i) => sum + i.quantity, 0)}
+              <ShoppingBag className="w-4 h-4 text-neutral-200 group-hover:text-white group-hover:scale-108 transition-transform" />
+              {cart && cart.length > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-[#E21D1D] text-white font-mono font-black text-[9px] h-5 w-5 rounded-full flex items-center justify-center shadow-lg ring-2 ring-[#07070b]">
+                  {(cart || []).reduce((sum, i) => sum + (i?.quantity || 1), 0)}
                 </span>
               )}
             </button>
@@ -399,7 +459,7 @@ export default function App() {
             {/* Mobile Menu Hamburger Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="xl:hidden p-2.5 rounded-xl bg-neutral-900 border border-neutral-700 text-white hover:bg-neutral-800 transition-colors cursor-pointer"
               aria-label="Toggle navigation menu"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -407,41 +467,100 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown Menu with SERVICES & SUPPORT Sections */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden border-t border-neutral-800 bg-neutral-950 px-6 py-6 space-y-4"
+              className="xl:hidden border-t border-neutral-800 bg-[#0a0a10] px-5 py-5 space-y-4 shadow-2xl max-h-[80vh] overflow-y-auto"
             >
-              <div className="flex flex-col space-y-2">
-                {NAV_ITEMS.map((item) => {
-                  const isActive = activePage === item.page;
-                  return (
-                    <button
-                      key={item.page}
-                      onClick={() => navigateTo(item.page)}
-                      className={`text-left py-3 px-4 rounded-xl text-xs font-mono font-bold uppercase transition-colors flex items-center justify-between cursor-pointer ${
-                        isActive
-                          ? "bg-[#E21D1D]/15 text-[#E21D1D] border border-[#E21D1D]/40 font-black"
-                          : "text-neutral-300 hover:bg-white/5"
-                      }`}
-                    >
-                      <span>{item.label}</span>
-                      {isActive && <span className="w-2 h-2 rounded-full bg-[#E21D1D]" />}
-                    </button>
-                  );
-                })}
+              {/* Main Links */}
+              <div className="flex flex-col space-y-1">
+                <button
+                  onClick={() => navigateTo("home")}
+                  className={`text-left py-2 px-3 rounded-xl text-xs font-mono font-bold uppercase transition-colors flex items-center justify-between cursor-pointer ${
+                    activePage === "home" ? "bg-[#E21D1D]/20 text-[#ff4d4d]" : "text-neutral-300"
+                  }`}
+                >
+                  <span>Home</span>
+                  {activePage === "home" && <span className="w-2 h-2 rounded-full bg-[#E21D1D]" />}
+                </button>
+
+                <button
+                  onClick={() => navigateTo("about-us")}
+                  className={`text-left py-2 px-3 rounded-xl text-xs font-mono font-bold uppercase transition-colors flex items-center justify-between cursor-pointer ${
+                    activePage === "about-us" ? "bg-[#E21D1D]/20 text-[#ff4d4d]" : "text-neutral-300"
+                  }`}
+                >
+                  <span>About Us</span>
+                  {activePage === "about-us" && <span className="w-2 h-2 rounded-full bg-[#E21D1D]" />}
+                </button>
               </div>
 
-              <div className="pt-2 border-t border-neutral-900">
+              {/* Mobile SERVICES Section */}
+              <div className="pt-2 border-t border-neutral-800 space-y-1.5">
+                <div className="px-3 py-1">
+                  <span className="text-[11px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
+                    SERVICES
+                  </span>
+                  <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                </div>
+                {SERVICES_MENU_ITEMS.map((item) => (
+                  <button
+                    key={item.page}
+                    onClick={() => navigateTo(item.page)}
+                    className={`w-full text-left py-2 px-3 rounded-xl text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
+                      activePage === item.page
+                        ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
+                        : "text-neutral-300 hover:bg-white/5"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronRight className="w-3.5 h-3.5 opacity-40" />
+                  </button>
+                ))}
+              </div>
+
+              {/* Mobile SUPPORT Section */}
+              <div className="pt-2 border-t border-neutral-800 space-y-1.5">
+                <div className="px-3 py-1">
+                  <span className="text-[11px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
+                    SUPPORT
+                  </span>
+                  <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                </div>
+                {SUPPORT_MENU_ITEMS.map((item) => (
+                  <button
+                    key={item.page}
+                    onClick={() => navigateTo(item.page)}
+                    className={`w-full text-left py-2 px-3 rounded-xl text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
+                      activePage === item.page
+                        ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
+                        : "text-neutral-300 hover:bg-white/5"
+                    }`}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <span>{item.label}</span>
+                      {item.hasBadge && (
+                        <span className="w-4 h-4 rounded-full bg-[#d946ef]/20 border border-[#d946ef]/40 text-[#d946ef] flex items-center justify-center text-[9px] font-bold">
+                          +
+                        </span>
+                      )}
+                    </span>
+                    <ChevronRight className="w-3.5 h-3.5 opacity-40" />
+                  </button>
+                ))}
+              </div>
+
+              <div className="pt-2 border-t border-neutral-800">
                 <button
-                  onClick={() => navigateTo("customization")}
-                  className="w-full py-3 rounded-xl bg-[#E21D1D] text-white font-mono text-xs font-black uppercase text-center cursor-pointer shadow-lg"
+                  onClick={() => navigateTo("b2b-quote")}
+                  className="w-full py-3.5 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase text-center cursor-pointer shadow-[0_0_20px_rgba(226,29,29,0.4)] flex items-center justify-center gap-2"
                 >
-                  Configure Custom Tech Pack
+                  <FileCheck className="w-4 h-4" />
+                  <span>GET B2B QUOTATION / TECH PACK</span>
                 </button>
               </div>
             </motion.div>
@@ -449,226 +568,244 @@ export default function App() {
         </AnimatePresence>
       </header>
 
-      {/* 3. DYNAMIC MULTI-PAGE VIEW ROUTER */}
-      <main className="min-h-screen">
+      {/* 3. MAIN DYNAMIC PAGE CONTENT SWITCHER */}
+      <main>
         {activePage === "home" && (
-          <HomePage
-            config={config}
-            customizerProduct={customizerProduct}
-            onAddToCart={handleAddToCart}
-            contactName={contactName}
-            setContactName={setContactName}
-            contactSubmitting={contactSubmitting}
-            contactSuccess={contactSuccess}
-            handleContactSubmit={handleContactSubmit}
-            onNavigatePage={navigateTo}
-            onOpenMediaFolder={(folder) => {
-              setMediaManagerFolder(folder);
-              setIsMediaManagerOpen(true);
-            }}
-          />
-        )}
+          <>
+            {/* 1. Cinematic Hero Slider with 3D Garments Stage & 4 Background Video Loops */}
+            <SportsHeroSlider slides={config?.hero?.slides || config?.heroSlides || []} />
 
-        {activePage === "about-us" && (
-          <AboutUsPage onNavigatePage={navigateTo} />
-        )}
+            {/* 2. Sports & B2B Marquee */}
+            <SportsB2BMarquee />
 
-        {activePage === "customization" && (
-          <CustomizationPage
-            customizerProduct={customizerProduct}
-            onAddToCart={handleAddToCart}
-            onNavigatePage={navigateTo}
-          />
-        )}
+            {/* 3. Core Apparel & Gear Divisions */}
+            <ScrollDeconstructed3DGarment />
 
-        {activePage === "quality-process" && (
-          <QualityProcessPage onNavigatePage={navigateTo} />
-        )}
+            {/* 4. Real Bespoke Wholesale Products */}
+            <CustomProductsShowcase />
 
-        {activePage === "sampling-policies" && (
-          <SamplingPoliciesPage onNavigatePage={navigateTo} />
-        )}
+            {/* 5. 3D Bespoke Prototype Lab & Customizer */}
+            <section id="customizer" className="py-20 px-4 sm:px-6 bg-neutral-900/40 dark:bg-black/80 border-y border-neutral-200/60 dark:border-neutral-800 transition-colors">
+              <div className="max-w-7xl mx-auto space-y-10">
+                <div className="text-center space-y-2">
+                  <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block uppercase">
+                    INTERACTIVE BESPOKE ENGINEERING
+                  </span>
+                  <h2 className="text-3xl sm:text-4xl font-display font-black tracking-tight dark:text-white uppercase leading-none">
+                    3D BESPOKE PROTOTYPE LAB
+                  </h2>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono uppercase max-w-md mx-auto">
+                    Simulate colorways, custom leather paneling, embossed brand crests, and metallic piping with real-time B2B tech pack estimation.
+                  </p>
+                </div>
 
-        {activePage === "privacy-policy" && (
-          <PrivacyPolicyPage onNavigatePage={navigateTo} />
-        )}
-
-        {activePage === "faq" && (
-          <FAQPage onNavigatePage={navigateTo} />
-        )}
-      </main>
-
-      {/* 4. PREMIUM WHITE-LABEL B2B FOOTER */}
-      <footer className="bg-neutral-950 text-white py-16 px-6 border-t border-neutral-900 select-none">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 text-xs font-mono">
-          
-          {/* Logo Brand column */}
-          <div className="md:col-span-4 space-y-4">
-            <button
-              onClick={() => navigateTo("home")}
-              className="flex items-center gap-3 text-left cursor-pointer"
-            >
-              <div className="w-12 h-12 flex items-center justify-center shrink-0">
-                <img
-                  src={config.global.logo || "/images/trylogo.png"}
-                  alt="Try Wears Logo"
-                  className="w-full h-full object-contain"
-                  referrerPolicy="no-referrer"
+                <TShirtCustomizer
+                  product={DEFAULT_CUSTOMIZER_PRODUCT}
+                  onAddToCart={handleAddToCart}
                 />
               </div>
-              <span className="font-display font-black text-base tracking-widest uppercase">
-                {config.global.brandName}
+            </section>
+
+            {/* 6. B2B Factory Lifecycle & Private Label Capabilities */}
+            <B2BFactoryCapabilities onNavigatePage={navigateTo} />
+
+            {/* 7. Global Brands & Federations Trust Marquee */}
+            <BrandLogosMarqueeSection />
+
+            {/* 8. Factory Live Video Showcase */}
+            <FactoryLiveVideoShowcase />
+
+            {/* 9. Fashion Wear Custom Video Section */}
+            <FashionWearCustomVideoSection onNavigatePage={navigateTo} />
+          </>
+        )}
+
+        {/* Existing Pages */}
+        {activePage === "about-us" && <AboutUsPage onNavigatePage={navigateTo} />}
+        {activePage === "customization" && (
+          <CustomizationPage 
+            customizerProduct={DEFAULT_CUSTOMIZER_PRODUCT}
+            onAddToCart={handleAddToCart}
+            onNavigatePage={navigateTo}
+          />
+        )}
+        {activePage === "quality-process" && <QualityProcessPage onNavigatePage={navigateTo} />}
+        {activePage === "sampling-policies" && <SamplingPoliciesPage onNavigatePage={navigateTo} />}
+        {activePage === "privacy-policy" && <PrivacyPolicyPage onNavigatePage={navigateTo} />}
+        {activePage === "faq" && <FAQPage onNavigatePage={navigateTo} />}
+        {activePage === "b2b-quote" && <B2BQuotationPage onNavigatePage={navigateTo} />}
+
+        {/* 10 UK-Targeted Services & Support Pages */}
+        {activePage === "design-customization" && <DesignCustomizationPage onNavigatePage={navigateTo} />}
+        {activePage === "brand-customization" && <BrandCustomizationPage onNavigatePage={navigateTo} />}
+        {activePage === "customize-your-product" && (
+          <CustomizeYourProductPage onNavigatePage={navigateTo} onAddToCart={handleAddToCart} />
+        )}
+        {activePage === "sample-development" && <SampleDevelopmentPage onNavigatePage={navigateTo} />}
+        {activePage === "bulk-production" && <BulkProductionPage onNavigatePage={navigateTo} />}
+        {activePage === "shipping-policy" && <ShippingPolicyPage onNavigatePage={navigateTo} />}
+        {activePage === "return-refund-policy" && <ReturnRefundPolicyPage onNavigatePage={navigateTo} />}
+        {activePage === "terms-and-conditions" && <TermsConditionsPage onNavigatePage={navigateTo} />}
+        {activePage === "moq-lead-time" && <MOQLeadTimePage onNavigatePage={navigateTo} />}
+        {activePage === "order-process" && <OrderProcessPage onNavigatePage={navigateTo} />}
+      </main>
+
+      {/* 4. FOOTER WITH HIGH-CONTRAST TEXT & EXACT SERVICES & SUPPORT BLOCKS */}
+      <footer className="bg-[#0a0a12] text-neutral-200 border-t border-neutral-700 pt-16 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          
+          {/* Col 1: Brand Info */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <img 
+                src={config?.global?.logo || "/images/trylogo.png"} 
+                alt="Try Wears Logo" 
+                className="h-10 w-10 object-contain"
+                referrerPolicy="no-referrer" 
+              />
+              <span className="font-display font-black text-xl text-white tracking-widest uppercase">
+                {config?.global?.brandName || "TRY WEARS"}
               </span>
-            </button>
-            <p className="text-[10px] text-neutral-500 max-w-xs leading-relaxed uppercase">
-              Elite handcrafted boxing gloves, custom combat gears, championship shin guards, and ultra-durability performance sportswear designed for professional combat champions and luxury streetwear labels.
+            </div>
+            <p className="text-sm font-sans leading-relaxed text-neutral-200 font-normal">
+              Direct OEM/ODM industrial manufacturing facility for world championship fight gear, heavyweight luxury streetwear, sublimated sportswear, and bespoke private label collections.
             </p>
+            <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>ISO 9001:2015 & CE CERTIFIED FACTORY</span>
+            </div>
           </div>
 
-          {/* Quick Page Links */}
-          <div className="md:col-span-3 space-y-3">
-            <span className="text-[10px] font-bold text-[#E21D1D] uppercase tracking-widest block">
-              PRIMARY NAVIGATION
-            </span>
-            <ul className="space-y-2 text-neutral-400 uppercase text-[10px]">
-              {NAV_ITEMS.map((item) => (
+          {/* Col 2: EXACT "SERVICES" MENU BLOCK WITH PURPLE/MAGENTA ACCENT UNDERLINE */}
+          <div className="space-y-3 font-mono text-xs">
+            <div>
+              <h4 className="font-display font-black text-sm text-white uppercase tracking-wider">
+                SERVICES
+              </h4>
+              {/* Exact Purple / Magenta Line under SERVICES */}
+              <div className="w-8 h-1 bg-[#d946ef] rounded-full mt-1.5" />
+            </div>
+
+            <ul className="space-y-2.5 pt-2">
+              {SERVICES_MENU_ITEMS.map((item) => (
                 <li key={item.page}>
                   <button
                     onClick={() => navigateTo(item.page)}
-                    className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-200 hover:font-bold text-left text-xs"
                   >
-                    <span className="text-neutral-600">›</span>
-                    <span>{item.label}</span>
+                    {item.label}
                   </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Legal & Help Links: Privacy Policy & FAQ */}
-          <div className="md:col-span-3 space-y-3">
-            <span className="text-[10px] font-bold text-[#E21D1D] uppercase tracking-widest block">
-              LEGAL, NDA & SUPPORT
-            </span>
-            <ul className="space-y-2 text-neutral-400 uppercase text-[10px]">
-              <li>
-                <button
-                  onClick={() => navigateTo("privacy-policy")}
-                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 text-neutral-300 font-bold"
-                >
-                  <Lock className="w-3 h-3 text-[#E21D1D]" />
-                  <span>Privacy Policy & IP NDA</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => navigateTo("faq")}
-                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 text-neutral-300 font-bold"
-                >
-                  <HelpCircle className="w-3 h-3 text-[#E21D1D]" />
-                  <span>B2B Buyer FAQ & Help</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => navigateTo("sampling-policies")}
-                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
-                >
-                  <Package className="w-3 h-3 text-[#E21D1D]" />
-                  <span>Sample Prototyping Policies</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => navigateTo("quality-process")}
-                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
-                >
-                  <ShieldCheck className="w-3 h-3 text-[#E21D1D]" />
-                  <span>ISO 9001 & CE Certifications</span>
-                </button>
-              </li>
+          {/* Col 3: EXACT "SUPPORT" MENU BLOCK WITH PURPLE/MAGENTA ACCENT UNDERLINE */}
+          <div className="space-y-3 font-mono text-xs">
+            <div>
+              <h4 className="font-display font-black text-sm text-white uppercase tracking-wider">
+                SUPPORT
+              </h4>
+              {/* Exact Purple / Magenta Line under SUPPORT */}
+              <div className="w-8 h-1 bg-[#d946ef] rounded-full mt-1.5" />
+            </div>
+
+            <ul className="space-y-2.5 pt-2">
+              {SUPPORT_MENU_ITEMS.map((item) => (
+                <li key={item.page}>
+                  <button
+                    onClick={() => navigateTo(item.page)}
+                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-200 hover:font-bold text-left text-xs flex items-center gap-1.5"
+                  >
+                    <span>{item.label}</span>
+                    {item.hasBadge && (
+                      <span className="w-4 h-4 rounded-full bg-[#d946ef]/30 border border-[#d946ef]/60 text-[#f0abfc] flex items-center justify-center text-[10px] font-bold">
+                        +
+                      </span>
+                    )}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Connects & Socials */}
-          <div className="md:col-span-2 space-y-3">
-            <span className="text-[10px] font-bold text-[#E21D1D] uppercase tracking-widest block">
-              SECURE CONNECT
-            </span>
-            <div className="space-y-1.5 text-neutral-400 uppercase text-[10px]">
-              <div className="flex items-center gap-2"><Phone className="w-3.5 h-3.5 shrink-0 text-[#E21D1D]" /> {config.global.phone}</div>
-              <div className="flex items-center gap-2"><Mail className="w-3.5 h-3.5 shrink-0 text-[#E21D1D]" /> {config.global.email}</div>
+          {/* Col 4: Direct Factory Contact & Quick Dispatches */}
+          <div className="space-y-4 font-mono text-xs">
+            <h4 className="font-display font-black text-sm text-white uppercase tracking-widest">
+              Direct Factory Contact
+            </h4>
+            <div className="space-y-2.5 text-neutral-100">
+              <div className="flex items-center gap-2.5">
+                <MapPin className="w-4 h-4 text-[#ff4d4d] shrink-0" />
+                <span className="text-white font-medium">Small Industrial Estate, Sialkot, Pakistan</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-[#ff4d4d] shrink-0" />
+                <span className="text-white font-medium">export@trywears.com</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-[#ff4d4d] shrink-0" />
+                <span className="text-white font-bold">+92 300 0000000 (WhatsApp 24/7 Desk)</span>
+              </div>
             </div>
 
-            <div className="pt-2 flex gap-2 text-neutral-400">
-              <a href="#" className="p-2 bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg transition-colors cursor-pointer">
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a href="#" className="p-2 bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg transition-colors cursor-pointer">
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a href="#" className="p-2 bg-neutral-900 hover:bg-neutral-800 text-white rounded-lg transition-colors cursor-pointer">
-                <Youtube className="w-4 h-4" />
-              </a>
-            </div>
+            <form onSubmit={handleContactSubmit} className="space-y-2 pt-2">
+              <span className="text-xs text-white uppercase font-bold block">
+                Get Wholesale Price Catalog (£ GBP):
+              </span>
+              <div className="flex items-center gap-1.5">
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter your email address..."
+                  value={contactName}
+                  onChange={(e) => setContactName(e.target.value)}
+                  className="bg-[#12121c] border border-neutral-600 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-neutral-400 focus:outline-none focus:border-[#E21D1D] w-full"
+                />
+                <button
+                  type="submit"
+                  disabled={contactSubmitting}
+                  className="px-4 py-2.5 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-bold uppercase transition-colors shrink-0 cursor-pointer shadow-md"
+                >
+                  {contactSubmitting ? "..." : <Send className="w-3.5 h-3.5" />}
+                </button>
+              </div>
+              {contactSuccess && (
+                <span className="text-xs text-emerald-400 font-bold block">✓ Catalog link dispatched!</span>
+              )}
+            </form>
           </div>
 
         </div>
 
-        {/* Brand Copyright legal statement & Discreet Developer Trigger */}
-        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[9px] font-mono text-neutral-500 uppercase">
-          <div className="flex items-center gap-3">
-            <span>
-              © {new Date().getFullYear()} {config.global.brandName}. ALL RIGHTS RESERVED. B2B OEM/ODM PRIVATE LABEL.
-            </span>
-            {/* Discreet Developer Mode Button */}
-            <button
-              onClick={() => setIsDevUploadOpen(true)}
-              className="opacity-40 hover:opacity-100 hover:text-[#E21D1D] transition-opacity cursor-pointer flex items-center gap-1 bg-white/5 px-2 py-0.5 rounded border border-white/10"
-              title="Open Developer Product Ingestion Portal (or press Ctrl+Shift+D / Alt+D)"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>DEV INGESTION (CTRL+SHIFT+D)</span>
-            </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 mt-10 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-300">
+          <div className="font-medium">
+            © {new Date().getFullYear()} TRY WEARS SPORTSWEAR & COMBAT APPAREL MANUFACTURING. ALL RIGHTS RESERVED.
           </div>
-          <div className="flex gap-4">
-            <button onClick={() => navigateTo("privacy-policy")} className="hover:text-white transition-colors cursor-pointer">
-              Privacy Policy & IP NDA
-            </button>
+          <div className="flex items-center gap-4 text-white font-bold">
+            <span>SIALKOT INDUSTRIAL DIVISION</span>
             <span>•</span>
-            <button onClick={() => navigateTo("faq")} className="hover:text-white transition-colors cursor-pointer">
-              Buyer FAQ & Trade Terms
-            </button>
+            <span>UK & EUROPE DDP LOGISTICS</span>
           </div>
         </div>
       </footer>
 
-      {/* 5. SECURE SHIPMENT SHOPPING CART PANEL */}
+      {/* Shopping Bag Drawer Modal */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
-        cartItems={cart}
-        onUpdateQuantity={handleUpdateCartQuantity}
-        onRemoveItem={handleRemoveCartItem}
+        items={cart || []}
+        cartItems={cart || []}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveFromCart}
         onClearCart={handleClearCart}
-      />
-
-      {/* 6. DYNAMIC WEBSITE MEDIA FOLDERS MANAGER */}
-      <MediaManagerModal
-        isOpen={isMediaManagerOpen}
-        onClose={() => setIsMediaManagerOpen(false)}
-        defaultFolder={mediaManagerFolder}
-        onMediaChanged={fetchConfig}
-      />
-
-      {/* 7. HIDDEN DEVELOPER PRODUCT FOLDER INGESTION & DUMMY REPLACEMENT MODAL */}
-      <DeveloperProductUploadModal
-        isOpen={isDevUploadOpen}
-        onClose={() => setIsDevUploadOpen(false)}
-        onCategoriesUpdated={() => {
-          fetchConfig();
+        onCheckout={() => {
+          setIsCartOpen(false);
+          navigateTo("b2b-quote");
         }}
       />
     </div>
   );
 }
+
+export default App;

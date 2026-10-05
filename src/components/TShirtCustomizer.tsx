@@ -14,9 +14,27 @@ import {
 import { Product, CartItem } from "../types";
 
 interface TShirtCustomizerProps {
-  product: Product;
+  product?: Product | null;
   onAddToCart: (cartItem: CartItem) => void;
 }
+
+export const DEFAULT_CUSTOMIZER_PRODUCT: Product = {
+  id: "custom-pro-1",
+  name: "Try Wears 3D Bespoke Customizer",
+  category: "Combat & Athletic Apparel",
+  price: "$45.00",
+  rating: 5,
+  image: "/images/trylogo.png",
+  description: "Interactive 3D Prototyping Lab: Design Custom Sublimated Match Jerseys, 450GSM French Terry Hoodies, Fight Shorts, Boxing Gloves, Tracksuits, and Silk Walkout Robes.",
+  specs: [
+    "Full-Vector CAD Customizer",
+    "Italian Zero-Fade Sublimation",
+    "3D High-Density Puff Embroidery",
+    "Custom Pantone Color Matching"
+  ],
+  inStock: true,
+  customizable: true
+};
 
 export type GearType = "hoodie" | "tracksuit" | "tee" | "gloves" | "shorts" | "robe";
 export type ViewMode = "front" | "back";

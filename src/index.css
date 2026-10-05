@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700;1,800;1,900&family=Oxanium:wght@600;700;800;900&family=Teko:wght@600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
+  --font-display: "Chakra Petch", "Oxanium", "Teko", sans-serif;
+  --font-sports: "Chakra Petch", "Oxanium", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 
-/* Base custom styles for high-fidelity luxury aesthetic */
+/* Base custom styles for high-fidelity luxury athletic aesthetic */
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -17,6 +18,20 @@ body {
   font-family: var(--font-sans);
   overflow-x: hidden;
   background-color: #0a0a0b;
+}
+
+/* ✦ SPORT FIELD MODERN SPORTS TYPEFACE STYLING */
+h1, h2, h3, h4, .font-display, .font-sports {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.font-sportfield {
+  font-family: "Chakra Petch", "Oxanium", sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
 }
 
 /* GPU Acceleration & Performance Optimizations */
@@ -101,44 +116,10 @@ input, textarea, select, button, [role="button"], [contenteditable="true"] {
 
 .animate-marquee {
   display: flex;
-  width: 200%;
-  animation: marquee-scroll 25s linear infinite;
+  width: max-content;
+  animation: marquee-scroll 28s linear infinite;
 }
 
 .animate-marquee:hover {
   animation-play-state: paused;
-}
-
-/* Neon Glow Pulse */
-.glow-red {
-  box-shadow: 0 0 25px rgba(226, 29, 29, 0.35);
-}
-
-.glow-red-sm {
-  box-shadow: 0 0 12px rgba(226, 29, 29, 0.25);
-}
-
-/* Smooth fade in transition for Elementor editor states */
-.editor-transition {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Keyframes for PrintScreen blur flash */
-@keyframes flash-blur {
-  0% {
-    filter: blur(0px);
-  }
-  20% {
-    filter: blur(25px);
-  }
-  80% {
-    filter: blur(25px);
-  }
-  100% {
-    filter: blur(0px);
-  }
-}
-
-.flash-protect {
-  animation: flash-blur 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

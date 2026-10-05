@@ -11,23 +11,11 @@ import {
   Volume2,
   VolumeX,
   Maximize2,
-  Upload,
   Sparkles,
   Scissors,
-  Layers,
-  Sparkle,
   CheckCircle2,
-  Sliders,
-  Film,
-  Download,
-  ExternalLink,
   ChevronRight,
   ShieldCheck,
-  RefreshCw,
-  X,
-  Plus,
-  Tv,
-  Eye,
   Zap
 } from "lucide-react";
 
@@ -80,57 +68,12 @@ const DEFAULT_FASHION_FEATURES: FashionFeature[] = [
   }
 ];
 
-const PRESET_FASHION_VIDEOS = [
-  {
-    id: "preset-all-pv",
-    name: "Try Wears Signature Fashion & Streetwear Drop",
-    url: "/videos/allPV.mp4",
-    badge: "OFFICIAL 4K RUNWAY",
-    desc: "Cinematic 4K signature showcase of Try Wears custom apparel, hoodies, caps, and oversized streetwear fits."
-  },
-  {
-    id: "preset-street",
-    name: "Luxury Streetwear Atelier & Runway Drop",
-    url: "/videos/streetwearsBG.mp4",
-    badge: "STREETWEAR RUNWAY",
-    desc: "Cinematic showcase of oversized fleece hoodies, cargo joggers, and streetwear silhouettes."
-  },
-  {
-    id: "preset-street-gp",
-    name: "Streetwear Craftsmanship & Printing Floor",
-    url: "/videos/streetwearsGP.mp4",
-    badge: "FABRIC & CUT",
-    desc: "High-speed precision textile cutting and custom embroidery seaming in action."
-  },
-  {
-    id: "preset-leather",
-    name: "Artisan Leather Jackets & Varsity Craft",
-    url: "/videos/leatherBG.mp4",
-    badge: "VARSITY & LEATHER",
-    desc: "Full-grain top-tier cowhide & wool varsity tailoring with custom chainstitch badges."
-  },
-  {
-    id: "preset-leather-gp",
-    name: "Bespoke Leather Hardware & Finish",
-    url: "/videos/leatherGP.mp4",
-    badge: "HARDWARE & DETAILS",
-    desc: "Handcrafted metal hardware riveting, edge dyeing, and luxury lining integration."
-  }
-];
-
-export const FashionWearCustomVideoSection: React.FC = () => {
+export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: string) => void }> = ({ onNavigatePage }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Video playback states - default to the newly uploaded /videos/allPV.mp4
-  const [videoSource, setVideoSource] = useState<string>(() => {
-    try {
-      const saved = localStorage.getItem("trywears_fashion_video_custom");
-      return saved || "/videos/allPV.mp4";
-    } catch {
-      return "/videos/allPV.mp4";
-    }
-  });
+  // Official loop video source
+  const videoSource = "/videos/allPV.mp4";
 
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isMuted, setIsMuted] = useState<boolean>(true);
@@ -141,11 +84,6 @@ export const FashionWearCustomVideoSection: React.FC = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [activeFeatureTab, setActiveFeatureTab] = useState<number>(0);
 
-  // Video change modal state
-  const [isUploaderOpen, setIsUploaderOpen] = useState<boolean>(false);
-  const [customVideoUrlInput, setCustomVideoUrlInput] = useState<string>("");
-  const [uploadFeedback, setUploadFeedback] = useState<string>("");
-
   // Parallax / Scroll effect
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -155,10 +93,15 @@ export const FashionWearCustomVideoSection: React.FC = () => {
   const videoScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.96, 1, 0.98]);
   const videoY = useTransform(scrollYProgress, [0, 0.5, 1], [30, 0, -20]);
 
-  // Video event handlers
+  // Video event handlers and auto-loop trigger
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
+    // Ensure immediate playback on mount
+    video.play().then(() => setIsPlaying(true)).catch(() => {
+      // Autoplay with muted is guaranteed by browser policy
+    });
 
     const handleTimeUpdate = () => {
       setCurrentTime(video.currentTime);
@@ -171,14 +114,20 @@ export const FashionWearCustomVideoSection: React.FC = () => {
       setDuration(video.duration);
     };
 
+    const handleEnded = () => {
+      video.play().catch(() => {});
+    };
+
     video.addEventListener("timeupdate", handleTimeUpdate);
     video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("ended", handleEnded);
 
     return () => {
       video.removeEventListener("timeupdate", handleTimeUpdate);
       video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("ended", handleEnded);
     };
-  }, [videoSource]);
+  }, []);
 
   // Play/Pause toggle
   const togglePlay = () => {
@@ -226,47 +175,22 @@ export const FashionWearCustomVideoSection: React.FC = () => {
     setCurrentTime(newTime);
   };
 
-  // Handle Custom Video Upload
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("video/")) {
-      setUploadFeedback("Please select a valid video file (MP4, WebM, MOV).");
-      return;
-    }
-
-    const localUrl = URL.createObjectURL(file);
-    setVideoSource(localUrl);
-    try {
-      localStorage.setItem("trywears_fashion_video_custom", localUrl);
-    } catch {}
-    setUploadFeedback(`✓ Successfully loaded video: "${file.name}"`);
-    setTimeout(() => {
-      setIsUploaderOpen(false);
-      setUploadFeedback("");
-    }, 1200);
-  };
-
-  // Handle URL Apply
-  const handleApplyUrl = () => {
-    if (!customVideoUrlInput.trim()) return;
-    setVideoSource(customVideoUrlInput.trim());
-    try {
-      localStorage.setItem("trywears_fashion_video_custom", customVideoUrlInput.trim());
-    } catch {}
-    setUploadFeedback("✓ Custom fashion video URL updated successfully!");
-    setTimeout(() => {
-      setIsUploaderOpen(false);
-      setUploadFeedback("");
-    }, 1200);
-  };
-
   // Format seconds to mm:ss
   const formatTime = (secs: number) => {
     const mins = Math.floor(secs / 60);
     const s = Math.floor(secs % 60);
     return `${mins.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  };
+
+  const handleStartCustomOrder = () => {
+    if (onNavigatePage) {
+      onNavigatePage("b2b-quote");
+    } else {
+      const el = document.getElementById("customizer");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   };
 
   return (
@@ -307,23 +231,15 @@ export const FashionWearCustomVideoSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Action Trigger Buttons */}
-          <div className="flex flex-wrap items-center gap-3">
+          {/* Action Trigger Button */}
+          <div className="flex items-center shrink-0">
             <button
-              onClick={() => setIsUploaderOpen(true)}
-              className="px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/30 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg hover:shadow-white/5 cursor-pointer"
-            >
-              <Upload className="w-4 h-4 text-[#E21D1D]" />
-              <span>Upload / Change Video</span>
-            </button>
-
-            <a
-              href="#customizer"
-              className="px-5 py-3 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_0_25px_rgba(226,29,29,0.4)] hover:scale-105 cursor-pointer"
+              onClick={handleStartCustomOrder}
+              className="px-6 py-3.5 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase tracking-wider flex items-center gap-2.5 transition-all shadow-[0_0_25px_rgba(226,29,29,0.45)] hover:scale-105 cursor-pointer active:scale-95"
             >
               <Scissors className="w-4 h-4" />
-              <span>Start Custom Order</span>
-            </a>
+              <span>START CUSTOM ORDER</span>
+            </button>
           </div>
         </div>
 
@@ -345,24 +261,13 @@ export const FashionWearCustomVideoSection: React.FC = () => {
                 4K ATELIER FASHION FEED • PRIVATE LABEL RUNWAY
               </span>
             </div>
-
-            <div className="flex items-center gap-2 pointer-events-auto">
-              <button
-                onClick={() => setIsUploaderOpen(true)}
-                className="px-3 py-1.5 rounded-lg bg-black/70 hover:bg-black/90 backdrop-blur-md border border-white/20 hover:border-red-500 text-[11px] font-mono font-bold text-neutral-300 hover:text-white uppercase flex items-center gap-1.5 transition-colors cursor-pointer"
-                title="Change or upload fashion video"
-              >
-                <Film className="w-3.5 h-3.5 text-[#E21D1D]" />
-                <span className="hidden sm:inline">Change Video</span>
-              </button>
-            </div>
           </div>
 
-          {/* Core HTML5 Video Element with Full Autoplay, Loop & Inline Streaming */}
-          <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] min-h-[320px] sm:min-h-[440px] lg:min-h-[520px] bg-black flex items-center justify-center">
+          {/* Core HTML5 Video Element with Full Autoplay, Infinite Loop & Inline Streaming */}
+          <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] min-h-[320px] sm:min-h-[440px] lg:min-h-[520px] bg-black flex items-center justify-center overflow-hidden">
             <video
               ref={videoRef}
-              src={videoSource}
+              key={videoSource}
               autoPlay
               loop
               muted={isMuted}
@@ -370,7 +275,11 @@ export const FashionWearCustomVideoSection: React.FC = () => {
               preload="auto"
               onClick={togglePlay}
               className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 ease-out"
-            />
+            >
+              <source src="/videos/allPV.mp4" type="video/mp4" />
+              <source src="/videos/allPV.webm" type="video/webm" />
+              Your browser does not support the video tag.
+            </video>
 
             {/* Subtle Gradient Overlays for High-Contrast Luxury Feel */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30 pointer-events-none" />
@@ -421,7 +330,7 @@ export const FashionWearCustomVideoSection: React.FC = () => {
                   className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
                   title={isPlaying ? "Pause" : "Play"}
                 >
-                  {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current text-[#E21D1D]" />}
+                  {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 text-[#E21D1D] fill-current" />}
                 </button>
 
                 {/* Mute/Unmute Button */}
@@ -431,12 +340,31 @@ export const FashionWearCustomVideoSection: React.FC = () => {
                   title={isMuted ? "Unmute" : "Mute"}
                 >
                   {isMuted ? (
-                    <VolumeX className="w-4 h-4 text-neutral-400" />
+                    <>
+                      <VolumeX className="w-4 h-4 text-neutral-400" />
+                      <span className="text-[10px] text-neutral-400 uppercase hidden sm:inline">MUTED</span>
+                    </>
                   ) : (
-                    <Volume2 className="w-4 h-4 text-[#E21D1D] animate-pulse" />
+                    <>
+                      <Volume2 className="w-4 h-4 text-emerald-400" />
+                      <span className="text-[10px] text-emerald-400 uppercase hidden sm:inline">AUDIO ON</span>
+                    </>
                   )}
-                  <span className="text-[10px] uppercase font-bold text-neutral-300">
-                    {isMuted ? "MUTED" : "AUDIO ON"}
+                </button>
+
+                {/* Live Indicator */}
+                <button
+                  onClick={() => {
+                    if (videoRef.current) {
+                      videoRef.current.currentTime = 0;
+                      videoRef.current.play().catch(() => {});
+                    }
+                  }}
+                  className="px-2 py-1 rounded-md bg-red-600/20 text-[#E21D1D] border border-red-600/30 text-[10px] font-bold uppercase cursor-pointer hover:bg-red-600/30"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-pulse" />
+                    LIVE RUNWAY
                   </span>
                 </button>
 
@@ -446,7 +374,7 @@ export const FashionWearCustomVideoSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* Right Side Options: Speed, Fullscreen, Video Selector */}
+              {/* Right Side Options: Speed, Fullscreen */}
               <div className="flex items-center gap-2 sm:gap-3">
                 {/* Playback Speed Switcher */}
                 <button
@@ -521,55 +449,60 @@ export const FashionWearCustomVideoSection: React.FC = () => {
                       {feat.title}
                     </p>
                   </div>
+
+                  {/* Active bottom highlight bar */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="fashion-pillar-active-bar"
+                      className="absolute bottom-0 inset-x-0 h-1 bg-[#E21D1D]"
+                    />
+                  )}
                 </button>
               );
             })}
           </div>
 
-          {/* Active Pillar Full Detail Showcase Card */}
+          {/* Expanded Pillar Details Card */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeFeatureTab}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="p-6 sm:p-8 rounded-3xl bg-neutral-900/90 border border-white/10 shadow-2xl space-y-6"
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25 }}
+              className="p-6 sm:p-8 rounded-3xl bg-[#111118] border border-neutral-800 shadow-2xl"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
                 
-                {/* Left Description Column */}
+                {/* Left Side: Overview & Description */}
                 <div className="lg:col-span-2 space-y-4">
-                  <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#E21D1D] uppercase">
-                    <Zap className="w-4 h-4" />
-                    <span>CRAFT SPECIFICATION • {DEFAULT_FASHION_FEATURES[activeFeatureTab].code}</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono font-black text-[#E21D1D] uppercase px-2.5 py-1 rounded-lg bg-[#E21D1D]/15 border border-[#E21D1D]/30">
+                      PILLAR {DEFAULT_FASHION_FEATURES[activeFeatureTab].code}
+                    </span>
+                    <h4 className="text-lg sm:text-2xl font-display font-black text-white uppercase">
+                      {DEFAULT_FASHION_FEATURES[activeFeatureTab].title}
+                    </h4>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-display font-black text-white uppercase tracking-tight">
-                    {DEFAULT_FASHION_FEATURES[activeFeatureTab].title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed">
+                  <p className="text-xs sm:text-sm text-neutral-300 font-mono leading-relaxed">
                     {DEFAULT_FASHION_FEATURES[activeFeatureTab].description}
                   </p>
 
-                  {/* Highlights Bullet Tags */}
+                  {/* Bullet Specs Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
-                    {DEFAULT_FASHION_FEATURES[activeFeatureTab].specs.map((spec, sIdx) => (
-                      <div
-                        key={sIdx}
-                        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-black/50 border border-white/5 text-xs font-mono text-neutral-200"
-                      >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    {DEFAULT_FASHION_FEATURES[activeFeatureTab].specs.map((spec, i) => (
+                      <div key={i} className="flex items-center gap-2 text-xs font-mono text-neutral-200">
+                        <CheckCircle2 className="w-4 h-4 text-[#E21D1D] shrink-0" />
                         <span>{spec}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Right Action & Quick B2B Specs Matrix */}
-                <div className="bg-black/60 border border-white/10 p-6 rounded-2xl flex flex-col justify-between space-y-4">
-                  <div className="space-y-3">
+                {/* Right Side: Factory Turnaround Box */}
+                <div className="bg-black/60 border border-white/10 rounded-2xl p-5 space-y-4">
+                  <div className="space-y-1">
                     <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-widest block">
                       FACTORY SAMPLING & PRODUCTION
                     </span>
@@ -594,13 +527,13 @@ export const FashionWearCustomVideoSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <a
-                    href="#b2b-calculator"
+                  <button
+                    onClick={handleStartCustomOrder}
                     className="w-full py-3 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase tracking-wider text-center flex items-center justify-center gap-2 transition-colors shadow-lg cursor-pointer"
                   >
-                    <span>Calculate Custom Fashion MOQ</span>
+                    <span>REQUEST FACTORY QUOTE</span>
                     <ChevronRight className="w-4 h-4" />
-                  </a>
+                  </button>
                 </div>
 
               </div>
@@ -609,154 +542,6 @@ export const FashionWearCustomVideoSection: React.FC = () => {
         </div>
 
       </div>
-
-      {/* ================= VIDEO UPLOADER & PRESET PICKER MODAL ================= */}
-      <AnimatePresence>
-        {isUploaderOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-2xl bg-neutral-900 border border-white/15 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setIsUploaderOpen(false)}
-                className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-colors cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              {/* Modal Header */}
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#E21D1D] uppercase">
-                  <Film className="w-4 h-4" />
-                  <span>FASHION VIDEO MANAGEMENT LAB</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-display font-black text-white uppercase">
-                  CHANGE / UPLOAD FASHION WEAR VIDEO
-                </h3>
-                <p className="text-xs font-mono text-neutral-400">
-                  Select a runway preset or upload your custom fashion brand video directly.
-                </p>
-              </div>
-
-              {/* Upload Feedback alert */}
-              {uploadFeedback && (
-                <div className="p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 font-mono text-xs flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 shrink-0" />
-                  <span>{uploadFeedback}</span>
-                </div>
-              )}
-
-              {/* OPTION 1: CHOOSE FROM CINEMATIC PRESETS */}
-              <div className="space-y-3">
-                <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                  Option 1: Select Atelier Runway Preset
-                </span>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {PRESET_FASHION_VIDEOS.map((preset) => {
-                    const isSelected = videoSource === preset.url;
-                    return (
-                      <button
-                        key={preset.id}
-                        onClick={() => {
-                          setVideoSource(preset.url);
-                          try {
-                            localStorage.setItem("trywears_fashion_video_custom", preset.url);
-                          } catch {}
-                          setUploadFeedback(`✓ Preset activated: "${preset.name}"`);
-                          setTimeout(() => {
-                            setIsUploaderOpen(false);
-                            setUploadFeedback("");
-                          }, 1000);
-                        }}
-                        className={`text-left p-3.5 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
-                          isSelected
-                            ? "bg-[#E21D1D]/15 border-[#E21D1D] shadow-[0_0_15px_rgba(226,29,29,0.3)]"
-                            : "bg-black/50 hover:bg-black/80 border-white/10"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-[9px] font-mono font-black text-[#E21D1D] uppercase px-2 py-0.5 rounded-md bg-black/60">
-                            {preset.badge}
-                          </span>
-                          {isSelected && <CheckCircle2 className="w-4 h-4 text-[#E21D1D]" />}
-                        </div>
-                        <h5 className="text-xs font-display font-bold text-white uppercase line-clamp-1">
-                          {preset.name}
-                        </h5>
-                        <p className="text-[10px] font-mono text-neutral-400 mt-1 line-clamp-2">
-                          {preset.desc}
-                        </p>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* OPTION 2: DIRECT FILE UPLOAD FROM PC */}
-              <div className="space-y-3 pt-3 border-t border-white/10">
-                <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                  Option 2: Direct Video Upload (MP4 / WebM / MOV)
-                </span>
-
-                <label className="border-2 border-dashed border-white/20 hover:border-[#E21D1D] rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-black/40 hover:bg-black/70">
-                  <Upload className="w-8 h-8 text-[#E21D1D] mb-2" />
-                  <span className="text-xs font-mono font-bold text-white uppercase">
-                    CLICK TO BROWSE & UPLOAD FASHION VIDEO
-                  </span>
-                  <span className="text-[10px] font-mono text-neutral-500 mt-1">
-                    Supports high-resolution MP4, WebM, MOV clips
-                  </span>
-                  <input
-                    type="file"
-                    accept="video/mp4,video/webm,video/quicktime"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                </label>
-              </div>
-
-              {/* OPTION 3: PASTE DIRECT VIDEO URL */}
-              <div className="space-y-3 pt-3 border-t border-white/10">
-                <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                  Option 3: External Video URL / CDN Link
-                </span>
-
-                <div className="flex gap-2">
-                  <input
-                    type="url"
-                    placeholder="https://example.com/my-fashion-runway-video.mp4"
-                    value={customVideoUrlInput}
-                    onChange={(e) => setCustomVideoUrlInput(e.target.value)}
-                    className="flex-1 bg-black/60 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-white placeholder:text-neutral-600 focus:outline-none focus:border-[#E21D1D]"
-                  />
-                  <button
-                    onClick={handleApplyUrl}
-                    className="px-4 py-2.5 bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase rounded-xl transition-colors cursor-pointer"
-                  >
-                    Apply URL
-                  </button>
-                </div>
-              </div>
-
-              {/* Modal Footer */}
-              <div className="flex justify-end pt-2 border-t border-white/10">
-                <button
-                  onClick={() => setIsUploaderOpen(false)}
-                  className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white font-mono text-xs uppercase transition-colors cursor-pointer"
-                >
-                  Close Manager
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
     </section>
   );
 };
