@@ -694,7 +694,7 @@ export function App() {
       </main>
 
       {/* 4. FOOTER WITH HIGH-CONTRAST TEXT & EXACT SERVICES & SUPPORT BLOCKS */}
-      <footer className="bg-[#0a0a12] text-neutral-200 border-t border-neutral-700 pt-16 pb-12">
+      <footer className="relative z-30 bg-[#0b0b14] text-white border-t-2 border-neutral-700 pt-16 pb-12 shadow-2xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           
           {/* Col 1: Brand Info */}
@@ -710,7 +710,7 @@ export function App() {
                 {config?.global?.brandName || "TRY WEARS"}
               </span>
             </div>
-            <p className="text-sm font-sans leading-relaxed text-neutral-200 font-normal">
+            <p className="text-sm font-sans leading-relaxed text-neutral-100 font-normal">
               Direct OEM/ODM industrial manufacturing facility for world championship fight gear, heavyweight luxury streetwear, sublimated sportswear, and bespoke private label collections.
             </p>
             <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold">
@@ -737,7 +737,7 @@ export function App() {
                 <li key={item.page}>
                   <button
                     onClick={() => navigateTo(item.page)}
-                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-200 hover:font-bold text-left text-xs"
+                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-100 hover:font-bold text-left text-xs"
                   >
                     {item.label}
                   </button>
@@ -764,7 +764,7 @@ export function App() {
                 <li key={item.page}>
                   <button
                     onClick={() => navigateTo(item.page)}
-                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-200 hover:font-bold text-left text-xs flex items-center gap-1.5"
+                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-100 hover:font-bold text-left text-xs flex items-center gap-1.5"
                   >
                     <span>{item.label}</span>
                     {item.hasBadge && (
@@ -793,7 +793,7 @@ export function App() {
                 <span className="text-white font-medium">export@trywears.com</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#ff4d4d] shrink-0" />
+                <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="text-white font-bold">+92 300 0000000 (WhatsApp 24/7 Desk)</span>
               </div>
             </div>
@@ -809,7 +809,7 @@ export function App() {
                   placeholder="Enter your email address..."
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
-                  className="bg-[#12121c] border border-neutral-600 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-neutral-400 focus:outline-none focus:border-[#E21D1D] w-full"
+                  className="bg-[#141424] border border-neutral-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-neutral-300 focus:outline-none focus:border-[#E21D1D] w-full"
                 />
                 <button
                   type="submit"
@@ -827,7 +827,7 @@ export function App() {
 
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 mt-10 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 mt-10 border-t border-neutral-700 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-200">
           <div className="font-medium">
             © {new Date().getFullYear()} TRY WEARS SPORTSWEAR & COMBAT APPAREL MANUFACTURING. ALL RIGHTS RESERVED.
           </div>

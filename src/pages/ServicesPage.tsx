@@ -28,7 +28,11 @@ import {
   Crosshair,
   Cpu,
   Eye,
-  Check
+  Check,
+  FileCode2,
+  Box,
+  BadgeCheck,
+  Sparkle
 } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -96,7 +100,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
         </div>
       </div>
 
-      {/* 3. DISTINCT BESPOKE SERVICE SECTIONS (EACH WITH UNIQUE LAYOUT & AESTHETIC) */}
+      {/* 3. DISTINCT BESPOKE SERVICE SECTIONS WITH RICH BALANCED CONTENT */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
 
         {/* ============================================================== */}
@@ -112,9 +116,9 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
             
             {/* Left: Futuristic CAD Video Box with Scanner HUD */}
-            <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-[480px] overflow-hidden group">
+            <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-full overflow-hidden group">
               <video
-                src="/videos/sportswearsGP.mp4"
+                src="/videos/design_customization_SR1.webm"
                 autoPlay
                 loop
                 muted
@@ -161,7 +165,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               </div>
             </div>
 
-            {/* Right: Technical Blueprint Content */}
+            {/* Right: Technical Blueprint Content - Rich, Filled & Balanced */}
             <div className="lg:col-span-7 p-6 sm:p-10 space-y-6 flex flex-col justify-between bg-[#0e0e16]">
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-800 pb-4">
@@ -188,8 +192,8 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                   Complete apparel engineering from hand drawings, moodboards, or phone photos. We draft full graded CAD patterns (UK XS to 5XL), bill of materials (BOM), 3D digital CLO virtual fittings, stitch density tolerances, and pantone TCX color-matching sheets.
                 </p>
 
-                {/* Interactive Blueprint Chips */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+                {/* Primary Spec Chips */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                   {[
                     "Vector CAD flats with 4-angle seam callouts",
                     "UK & European true-to-size grading specs",
@@ -202,10 +206,41 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                     </div>
                   ))}
                 </div>
+
+                {/* Additional Rich Content: Master CAD Deliverables Suite */}
+                <div className="p-4 rounded-2xl bg-[#080810] border border-neutral-800 space-y-2.5 font-mono text-xs">
+                  <div className="flex items-center justify-between text-blue-300 font-bold border-b border-neutral-800 pb-2">
+                    <span className="flex items-center gap-1.5">
+                      <FileCode2 className="w-4 h-4 text-blue-400" />
+                      <span>MASTER FACTORY DELIVERABLES INCLUDED</span>
+                    </span>
+                    <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                      PRO GRADE
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-neutral-300 text-[11px]">
+                    <div className="flex items-start gap-2">
+                      <span className="text-blue-400 font-bold">▪</span>
+                      <span><strong>Pattern Files:</strong> Formatted in DXF, AI, PDF vector ready for CNC laser cutting tables.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-blue-400 font-bold">▪</span>
+                      <span><strong>Fabric BOM:</strong> Detailed yarn composition, GSM density, shrinkage rate & rib elasticity.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-blue-400 font-bold">▪</span>
+                      <span><strong>Stitch Density:</strong> Stitches-per-inch (SPI) & overlock seam strength allowances specified.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-blue-400 font-bold">▪</span>
+                      <span><strong>Fit Verification:</strong> 3D pressure heatmap tension test to eliminate pre-sample fit errors.</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Action Button */}
-              <div className="pt-6 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="pt-4 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <button
                   onClick={() => onNavigatePage("design-customization")}
                   className="px-6 py-3.5 rounded-xl bg-[#3B82F6] hover:bg-blue-600 text-white font-mono text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:scale-105"
@@ -232,7 +267,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
             
-            {/* Left: Luxury Branding Text & Swatch Badges */}
+            {/* Left: Luxury Branding Text & Swatch Badges - Rich & Balanced */}
             <div className="lg:col-span-7 p-6 sm:p-10 space-y-6 flex flex-col justify-between bg-[#100f16] order-2 lg:order-1">
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-800 pb-4">
@@ -260,7 +295,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                 </p>
 
                 {/* Luxury Trim Badges Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
                   {[
                     { title: "Damask Tags", desc: "50-Denier Soft" },
                     { title: "Metal Aglets", desc: "Engraved Alloy" },
@@ -273,10 +308,41 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                     </div>
                   ))}
                 </div>
+
+                {/* Additional Rich Content: Private Label Retail Finishing Suite */}
+                <div className="p-4 rounded-2xl bg-[#0a0910] border border-neutral-800 space-y-2.5 font-mono text-xs">
+                  <div className="flex items-center justify-between text-[#f0abfc] font-bold border-b border-neutral-800 pb-2">
+                    <span className="flex items-center gap-1.5">
+                      <Box className="w-4 h-4 text-[#d946ef]" />
+                      <span>FULL BOUTIQUE-READY PACKAGING PROTOCOLS</span>
+                    </span>
+                    <span className="text-[10px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                      100% PRIVATE LABEL
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-neutral-300 text-[11px]">
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#d946ef] font-bold">▪</span>
+                      <span><strong>Laser-Cut Neck Tags:</strong> Ultra-soft zero-scratch sonic sealed edges for skin comfort.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#d946ef] font-bold">▪</span>
+                      <span><strong>Zippers & Aglets:</strong> Branded YKK / metal zippers with bespoke logo engraving.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#d946ef] font-bold">▪</span>
+                      <span><strong>Barcode Stickers:</strong> High-resolution EAN-13 / Amazon FBA scannable stickers attached.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#d946ef] font-bold">▪</span>
+                      <span><strong>Individual Polybags:</strong> Clean steam-pressed & packaged in 80-micron frosted zip bags.</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Action Button */}
-              <div className="pt-6 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="pt-4 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <button
                   onClick={() => onNavigatePage("brand-customization")}
                   className="px-6 py-3.5 rounded-xl bg-[#d946ef] hover:bg-fuchsia-600 text-white font-mono text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(217,70,239,0.4)] hover:scale-105"
@@ -289,9 +355,9 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
             </div>
 
             {/* Right: Video Chamber with Luxury Gold/Fuchsia Accents */}
-            <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-[480px] overflow-hidden group order-1 lg:order-2">
+            <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-full overflow-hidden group order-1 lg:order-2">
               <video
-                src="/videos/streetwearsGP.mp4"
+                src="/videos/brand_customization_SR2.webm"
                 autoPlay
                 loop
                 muted
@@ -391,7 +457,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
             {/* Right: Visual 3D Preview Frame */}
             <div className="w-full lg:w-[460px] h-[340px] rounded-3xl overflow-hidden bg-black border border-neutral-700 relative group shadow-2xl">
               <video
-                src="/videos/allPV.mp4"
+                src="/videos/customize_product_3d_SR3.webm"
                 autoPlay
                 loop
                 muted
@@ -426,9 +492,9 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
             
             {/* Left: Video with Live Speed Badge */}
-            <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-[480px] overflow-hidden group">
+            <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-full overflow-hidden group">
               <video
-                src="/videos/aboutV1.webm"
+                src="/videos/sample_development_SR4.webm"
                 autoPlay
                 loop
                 muted
@@ -455,7 +521,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               </div>
             </div>
 
-            {/* Right: Timeline & Step-by-Step Sampling Process */}
+            {/* Right: Timeline & Step-by-Step Sampling Process - Rich & Balanced */}
             <div className="lg:col-span-7 p-6 sm:p-10 space-y-6 flex flex-col justify-between bg-[#0c120e]">
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-800 pb-4">
@@ -483,27 +549,58 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                 </p>
 
                 {/* Sampling Timeline Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
-                  <div className="p-3.5 rounded-xl bg-[#090910] border border-emerald-500/20 font-mono">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                  <div className="p-3 rounded-xl bg-[#090910] border border-emerald-500/20 font-mono">
                     <span className="text-[#34d399] font-bold text-xs block">Days 1 - 3</span>
                     <span className="text-white text-xs font-bold block mt-1">CAD & Fabric Dye</span>
                     <span className="text-[10px] text-neutral-400 block mt-0.5">Pattern grading & trims</span>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-[#090910] border border-emerald-500/20 font-mono">
+                  <div className="p-3 rounded-xl bg-[#090910] border border-emerald-500/20 font-mono">
                     <span className="text-[#34d399] font-bold text-xs block">Days 4 - 7</span>
                     <span className="text-white text-xs font-bold block mt-1">Cut, Sew & Print</span>
                     <span className="text-[10px] text-neutral-400 block mt-0.5">Embroidery & assembly</span>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-[#090910] border border-emerald-500/20 font-mono">
+                  <div className="p-3 rounded-xl bg-[#090910] border border-emerald-500/20 font-mono">
                     <span className="text-[#34d399] font-bold text-xs block">Days 8 - 10</span>
                     <span className="text-white text-xs font-bold block mt-1">DHL DDP Flight</span>
                     <span className="text-[10px] text-neutral-400 block mt-0.5">Doorstep delivery in 3d</span>
                   </div>
                 </div>
+
+                {/* Additional Rich Content: Pre-Shipment Sample Quality Audit */}
+                <div className="p-4 rounded-2xl bg-[#070e0a] border border-neutral-800 space-y-2.5 font-mono text-xs">
+                  <div className="flex items-center justify-between text-emerald-300 font-bold border-b border-neutral-800 pb-2">
+                    <span className="flex items-center gap-1.5">
+                      <BadgeCheck className="w-4 h-4 text-emerald-400" />
+                      <span>PPS PHYSICAL VERIFICATION CHECKLIST</span>
+                    </span>
+                    <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                      100% REFUNDABLE
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-neutral-300 text-[11px]">
+                    <div className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-bold">▪</span>
+                      <span><strong>Macro 4K Video:</strong> Real-time HD walkthrough of seams, prints & tags before air dispatch.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-bold">▪</span>
+                      <span><strong>Measurement Audit:</strong> Chest, sleeve, length & collar verified within ±0.5cm tolerances.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-bold">▪</span>
+                      <span><strong>Fabric Wash Test:</strong> Pre-shrunk and tested for colorfastness prior to courier pickup.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-bold">▪</span>
+                      <span><strong>Bulk Credit:</strong> Full prototype invoice amount deducted from your bulk production invoice.</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Action Button */}
-              <div className="pt-6 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="pt-4 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <button
                   onClick={() => onNavigatePage("sample-development")}
                   className="px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-mono text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:scale-105"
@@ -530,7 +627,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
             
-            {/* Left: Scalable Manufacturing Content */}
+            {/* Left: Scalable Manufacturing Content - Rich & Balanced */}
             <div className="lg:col-span-7 p-6 sm:p-10 space-y-6 flex flex-col justify-between bg-[#140e0c] order-2 lg:order-1">
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-800 pb-4">
@@ -558,27 +655,58 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                 </p>
 
                 {/* Tiered MOQ Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 font-mono text-center">
-                  <div className="p-3.5 rounded-xl bg-[#090910] border border-neutral-700">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 font-mono text-center">
+                  <div className="p-3 rounded-xl bg-[#090910] border border-neutral-700">
                     <span className="text-white font-bold text-xs block">Low MOQ Run</span>
                     <span className="text-[#ff4d4d] font-black text-base block mt-0.5">30 - 100 Pcs</span>
                     <span className="text-[9px] text-neutral-400 block mt-0.5">Ideal for Brand Launch</span>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-[#090910] border border-neutral-700">
+                  <div className="p-3 rounded-xl bg-[#090910] border border-neutral-700">
                     <span className="text-white font-bold text-xs block">Growth Tier</span>
                     <span className="text-[#ff4d4d] font-black text-base block mt-0.5">250 - 500 Pcs</span>
                     <span className="text-[9px] text-neutral-400 block mt-0.5">Save ~24% Per Garment</span>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-[#090910] border border-neutral-700">
+                  <div className="p-3 rounded-xl bg-[#090910] border border-neutral-700">
                     <span className="text-white font-bold text-xs block">Enterprise Bulk</span>
                     <span className="text-[#ff4d4d] font-black text-base block mt-0.5">1,000+ Units</span>
                     <span className="text-[9px] text-neutral-400 block mt-0.5">Save ~42% Volume Rate</span>
                   </div>
                 </div>
+
+                {/* Additional Rich Content: Plant Machinery & Freight Logistics */}
+                <div className="p-4 rounded-2xl bg-[#0c0808] border border-neutral-800 space-y-2.5 font-mono text-xs">
+                  <div className="flex items-center justify-between text-[#ff4d4d] font-bold border-b border-neutral-800 pb-2">
+                    <span className="flex items-center gap-1.5">
+                      <Factory className="w-4 h-4 text-[#ff4d4d]" />
+                      <span>INDUSTRIAL INFRASTRUCTURE & AIR DDP LOGISTICS</span>
+                    </span>
+                    <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                      ISO 9001:2015
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-neutral-300 text-[11px]">
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#ff4d4d] font-bold">▪</span>
+                      <span><strong>Tajima 15-Head Embroidery:</strong> Japanese multi-head 3D puff and heavy stitch lines.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#ff4d4d] font-bold">▪</span>
+                      <span><strong>Automated Cutting Beds:</strong> Multi-ply laser fabric cutters with 0.1mm repeatable accuracy.</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#ff4d4d] font-bold">▪</span>
+                      <span><strong>Air Freight DDP UK:</strong> Express priority customs-cleared door-to-door (all UK VAT/duty included).</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#ff4d4d] font-bold">▪</span>
+                      <span><strong>Ocean Container Freight:</strong> Cost-effective LCL / FCL sea freight for high-volume 10,000+ orders.</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Action Button */}
-              <div className="pt-6 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="pt-4 border-t border-neutral-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <button
                   onClick={() => onNavigatePage("bulk-production")}
                   className="px-6 py-3.5 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(226,29,29,0.5)] hover:scale-105"
@@ -591,9 +719,9 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
             </div>
 
             {/* Right: High Impact Production Video */}
-            <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-[480px] overflow-hidden group order-1 lg:order-2">
+            <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-full overflow-hidden group order-1 lg:order-2">
               <video
-                src="/videos/leatherGP.mp4"
+                src="/videos/bulk_production_SR5.webm"
                 autoPlay
                 loop
                 muted
