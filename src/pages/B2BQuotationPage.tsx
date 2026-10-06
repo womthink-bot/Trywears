@@ -36,6 +36,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { CATEGORIES_DATA, CategoryProduct } from "../data/categoriesData";
+import { SocialLinks } from "../components/SocialLinks";
 
 interface B2BQuotationPageProps {
   onNavigatePage: (page: string) => void;
@@ -576,6 +577,14 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
                   <span>Physical pre-production counter-sample dispatched via DHL Express in 6-8 business days.</span>
                 </li>
               </ul>
+            </div>
+
+            {/* Official Social Media Connect on Confirmation */}
+            <div className="p-6 rounded-2xl bg-neutral-900/60 border border-neutral-800 space-y-3">
+              <span className="text-xs font-mono font-bold text-neutral-300 uppercase block">
+                Connect Directly With TRY WEARS Engineering Desk (7 Official Channels):
+              </span>
+              <SocialLinks variant="contact" />
             </div>
 
             {/* Action Buttons */}
@@ -1255,6 +1264,14 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
                   </>
                 )}
               </button>
+            </div>
+
+            {/* Direct Factory Consultation & Social Support */}
+            <div className="p-6 rounded-3xl bg-[#090910] border border-neutral-800 space-y-3">
+              <span className="text-xs font-mono font-bold text-neutral-300 uppercase block">
+                Prefer to Discuss Your Tech Pack Live on Social / WhatsApp?
+              </span>
+              <SocialLinks variant="contact" />
             </div>
 
           </form>

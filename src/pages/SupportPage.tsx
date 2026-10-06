@@ -38,6 +38,8 @@ import {
   ShieldAlert
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { SocialLinks } from "../components/SocialLinks";
+import { WHATSAPP_DISPLAY, getWhatsAppUrl } from "../components/WhatsAppChatWidget";
 
 interface PageProps {
   onNavigatePage: (page: string) => void;
@@ -846,8 +848,16 @@ export const SupportPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               NEED IMMEDIATE ASSISTANCE OR ORDER TRACKING?
             </h3>
             <p className="text-neutral-100 text-sm font-sans leading-relaxed font-normal">
-              Our dedicated client merchandisers operate 24/7 on WhatsApp, Email, and Phone to assist you with tech pack evaluations, shipping status, customs documentation, and commercial invoices.
+              Our dedicated client merchandisers operate 24/7 on WhatsApp, Email, Phone, and all official social networks to assist you with tech pack evaluations, shipping status, customs documentation, and commercial invoices.
             </p>
+
+            {/* Official 7 Social Networks Grid */}
+            <div className="pt-2">
+              <span className="text-xs font-mono font-bold text-neutral-300 uppercase block mb-2">
+                Connect on Official Channels (7 Networks):
+              </span>
+              <SocialLinks variant="footer" />
+            </div>
           </div>
 
           <div className="bg-[#090910] p-6 rounded-2xl border border-neutral-700 space-y-3 text-xs font-mono">
@@ -855,19 +865,35 @@ export const SupportPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               <Mail className="w-4 h-4 text-[#ff4d4d] shrink-0" />
               <span className="text-white font-bold">export@trywears.com</span>
             </div>
-            <div className="flex items-center gap-2.5 pb-2 border-b border-neutral-800">
-              <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span className="text-white font-bold">+92 300 0000000 (WhatsApp 24/7)</span>
-            </div>
+            <a 
+              href={getWhatsAppUrl("Hello TRYWEARS, I need support regarding my order / inquiry.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2.5 pb-2 border-b border-neutral-800 group hover:text-emerald-400 transition-colors"
+            >
+              <Phone className="w-4 h-4 text-emerald-400 shrink-0 group-hover:scale-110 transition-transform" />
+              <span className="text-white font-bold group-hover:text-emerald-400">{WHATSAPP_DISPLAY} (WhatsApp 24/7)</span>
+            </a>
             <div className="flex items-center gap-2.5">
               <MapPin className="w-4 h-4 text-[#d946ef] shrink-0" />
               <span className="text-neutral-200">Sialkot Industrial Zone, Pakistan</span>
             </div>
+            
+            <a
+              href={getWhatsAppUrl("Hello TRYWEARS, I would like to start a live inquiry.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3 mt-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-black font-mono text-xs font-black uppercase text-center transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] cursor-pointer flex items-center justify-center gap-2 hover:scale-102"
+            >
+              <MessageSquare className="w-4 h-4 fill-black" />
+              <span>LIVE WHATSAPP CHAT</span>
+            </a>
+
             <button
               onClick={() => onNavigatePage("b2b-quote")}
-              className="w-full py-3 mt-2 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase text-center transition-all shadow-md cursor-pointer hover:scale-102"
+              className="w-full py-2.5 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase text-center transition-all shadow-md cursor-pointer hover:scale-102"
             >
-              START PROJECT INQUIRY
+              START B2B PROJECT INQUIRY
             </button>
           </div>
         </div>

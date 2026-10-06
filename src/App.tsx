@@ -43,6 +43,8 @@ import { CartDrawer } from "./components/CartDrawer";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { SportsMotionFX } from "./components/SportsMotionFX";
 import { SecurityAlerts } from "./components/SecurityAlerts";
+import { SocialLinks } from "./components/SocialLinks";
+import { WhatsAppChatWidget, WHATSAPP_DISPLAY, getWhatsAppUrl } from "./components/WhatsAppChatWidget";
 
 // Core Pages
 import { AboutUsPage } from "./pages/AboutUsPage";
@@ -717,6 +719,14 @@ export function App() {
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>ISO 9001:2015 & CE CERTIFIED FACTORY</span>
             </div>
+            
+            {/* 7 Official Social Channels Bar in Brand Col */}
+            <div className="pt-1 space-y-2">
+              <span className="text-[10px] font-mono text-neutral-300 font-bold uppercase tracking-wider block">
+                Official Social Networks (7):
+              </span>
+              <SocialLinks variant="footer" />
+            </div>
           </div>
 
           {/* Col 2: EXACT "SERVICES" MENU BLOCK WITH PURPLE/MAGENTA ACCENT UNDERLINE */}
@@ -792,10 +802,15 @@ export function App() {
                 <Mail className="w-4 h-4 text-[#ff4d4d] shrink-0" />
                 <span className="text-white font-medium">export@trywears.com</span>
               </div>
-              <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span className="text-white font-bold">+92 300 0000000 (WhatsApp 24/7 Desk)</span>
-              </div>
+              <a 
+                href={getWhatsAppUrl("Hello TRYWEARS, I would like to inquire about manufacturing.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 group hover:text-emerald-400 transition-colors"
+              >
+                <Phone className="w-4 h-4 text-emerald-400 shrink-0 group-hover:scale-110 transition-transform" />
+                <span className="text-white font-bold group-hover:text-emerald-400">{WHATSAPP_DISPLAY} (WhatsApp 24/7 Desk)</span>
+              </a>
             </div>
 
             <form onSubmit={handleContactSubmit} className="space-y-2 pt-2">
@@ -853,6 +868,9 @@ export function App() {
           navigateTo("b2b-quote");
         }}
       />
+
+      {/* Persistent Live WhatsApp Chat Widget */}
+      <WhatsAppChatWidget />
     </div>
   );
 }
