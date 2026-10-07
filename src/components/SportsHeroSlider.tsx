@@ -52,10 +52,10 @@ interface SportsHeroSliderProps {
 const STORAGE_KEY = "trywears_3d_hero_settings_v1";
 
 const HERO_SLIDE_BG_VIDEOS = [
-  { id: 0, url: "/videos/sportswearsBG.mp4", title: "Sports Wears" },
-  { id: 1, url: "/videos/gymandfitnessBG.mp4", title: "Gym & Fitness" },
-  { id: 2, url: "/videos/streetwearsBG.mp4", title: "Street Wears" },
-  { id: 3, url: "/videos/LeatherBG.mp4", title: "Leather Jackets" }
+  { id: 0, url: "/media/home/videos/sportswearsBG.webm", title: "Sports Wears" },
+  { id: 1, url: "/media/home/videos/gymandfitnessBG.webm", title: "Gym & Fitness" },
+  { id: 2, url: "/media/home/videos/streetwearsBG.webm", title: "Street Wears" },
+  { id: 3, url: "/media/home/videos/leatherBG.webm", title: "Leather Jackets" }
 ];
 
 const DEFAULT_HERO_SLIDES: HeroSlide[] = [
@@ -65,7 +65,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     title: "CUSTOM SUBLIMATED SPORTS & MATCH KITS",
     subtitle: "SOCCER • BASKETBALL • CRICKET • RUGBY • TRACK & FIELD",
     description: "Championship aerodynamic athletic jerseys and tracksuits engineered with Italian sublimation inks, laser-cut ventilation, and 4-way stretch interlock fabrics.",
-    image: "/videos/sportswearsBG.mp4",
+    image: "/media/home/videos/sportswearsBG.webm",
     buttonText: "CUSTOM TEAM KITS",
     buttonLink: "#b2b-calculator",
     tag: "SPORTS WEARS • MATCH KITS"
@@ -76,7 +76,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     title: "HIGH-COMPRESSION GYM & ACTIVEWEAR",
     subtitle: "SEAMLESS • SQUAT-PROOF • MUSCLE-FIT COMPRESSION",
     description: "High-denier squat-proof seamless activewear, contour-ribbed fitness sets, compression rashguards, and quick-dry gym stringers built for maximum athletic performance.",
-    image: "/videos/gymandfitnessBG.mp4",
+    image: "/media/home/videos/gymandfitnessBG.webm",
     buttonText: "ORDER ACTIVEWEAR",
     buttonLink: "#b2b-calculator",
     tag: "GYM & FITNESS • ACTIVEWEAR"
@@ -87,7 +87,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     title: "LUXURY HEAVYWEIGHT STREETWEAR APPAREL",
     subtitle: "450–550 GSM HOODIES • BOXY TEES • VINTAGE MINERAL WASH",
     description: "Bespoke custom-cut streetwear blanks crafted from 100% combed loopback French terry and heavy single jersey. 3D puff screen-printing and high-density Tajima embroidery.",
-    image: "/videos/streetwearsBG.mp4",
+    image: "/media/home/videos/streetwearsBG.webm",
     buttonText: "START STREETWEAR LINE",
     buttonLink: "#b2b-calculator",
     tag: "STREET WEARS • HEAVYWEIGHT"
@@ -98,7 +98,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     title: "PREMIUM LEATHER, PUFFER, VARSITY & BOMBER JACKETS",
     subtitle: "GENUINE LEATHER • DOWN PUFFERS • VARSITY WOOL • FLIGHT BOMBERS",
     description: "Master artisanal outerwear production. Genuine top-grain cowhide biker jackets, quilted down winter puffers, classic American wool-leather varsity squad jackets, and tactical flight bombers.",
-    image: "/videos/LeatherBG.mp4",
+    image: "/media/home/videos/leatherBG.webm",
     buttonText: "BESPOKE JACKET ORDERS",
     buttonLink: "#b2b-calculator",
     tag: "JACKETS • LEATHER • PUFFER • VARSITY"
@@ -294,14 +294,14 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
 
   // Specific 10s video loop for category backgrounds
   const activeVideoUrl = currentSlide === 0 
-    ? "/videos/sportswearsBG.mp4" 
+    ? "/media/home/videos/sportswearsBG.webm" 
     : currentSlide === 1
-    ? "/videos/gymandfitnessBG.mp4"
+    ? "/media/home/videos/gymandfitnessBG.webm"
     : currentSlide === 2
-    ? "/videos/streetwearsBG.mp4"
+    ? "/media/home/videos/streetwearsBG.webm"
     : currentSlide === 3
-    ? "/videos/LeatherBG.mp4"
-    : (videoSettings.videoUrl || "/videos/sportswearsBG.mp4");
+    ? "/media/home/videos/leatherBG.webm"
+    : (videoSettings.videoUrl || "/media/home/videos/sportswearsBG.webm");
 
   return (
     <section

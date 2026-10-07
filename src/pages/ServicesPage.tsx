@@ -118,7 +118,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
             {/* Left: Futuristic CAD Video Box with Scanner HUD */}
             <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-full overflow-hidden group">
               <video
-                src="/videos/design_customization_SR1.webm"
+                src="/media/services/videos/design_customization_SR1.webm"
                 autoPlay
                 loop
                 muted
@@ -357,7 +357,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
             {/* Right: Video Chamber with Luxury Gold/Fuchsia Accents */}
             <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-full overflow-hidden group order-1 lg:order-2">
               <video
-                src="/videos/brand_customization_SR2.webm"
+                src="/media/services/videos/brand_customization_SR2.webm"
                 autoPlay
                 loop
                 muted
@@ -457,7 +457,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
             {/* Right: Visual 3D Preview Frame */}
             <div className="w-full lg:w-[460px] h-[340px] rounded-3xl overflow-hidden bg-black border border-neutral-700 relative group shadow-2xl">
               <video
-                src="/videos/customize_product_3d_SR3.webm"
+                src="/media/services/videos/customize_product_3d_SR3.webm"
                 autoPlay
                 loop
                 muted
@@ -494,7 +494,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
             {/* Left: Video with Live Speed Badge */}
             <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-full overflow-hidden group">
               <video
-                src="/videos/sample_development_SR4.webm"
+                src="/media/services/videos/sample_development_SR4.webm"
                 autoPlay
                 loop
                 muted
@@ -721,7 +721,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
             {/* Right: High Impact Production Video */}
             <div className="lg:col-span-5 relative bg-black min-h-[360px] lg:min-h-full overflow-hidden group order-1 lg:order-2">
               <video
-                src="/videos/bulk_production_SR5.webm"
+                src="/media/services/videos/bulk_production_SR5.webm"
                 autoPlay
                 loop
                 muted

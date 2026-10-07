@@ -45,6 +45,7 @@ import { SportsMotionFX } from "./components/SportsMotionFX";
 import { SecurityAlerts } from "./components/SecurityAlerts";
 import { SocialLinks } from "./components/SocialLinks";
 import { WhatsAppChatWidget, WHATSAPP_DISPLAY, getWhatsAppUrl } from "./components/WhatsAppChatWidget";
+import { SportsFontSwitcher } from "./components/SportsFontSwitcher";
 
 // Core Pages
 import { AboutUsPage } from "./pages/AboutUsPage";
@@ -119,6 +120,33 @@ export function App() {
     setActiveDropdown(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Sync document title on page navigation to always show Try Wears
+  useEffect(() => {
+    const titles: Record<AppPage, string> = {
+      home: "Try Wears | Premier B2B Sports Manufacturer & Custom Fightwear",
+      "b2b-quote": "B2B Quotation & Tech Pack Portal | Try Wears",
+      customization: "Custom Apparel Manufacturing & 3D Studio | Try Wears",
+      "customize-your-product": "Customize Your Combat & Sports Gear | Try Wears",
+      "about-us": "About Us | Try Wears OEM/ODM Factory",
+      "quality-process": "Quality Assurance & QC Testing Protocol | Try Wears",
+      services: "B2B Services & Private Label Manufacturing | Try Wears",
+      support: "Factory Support & Direct Communication | Try Wears",
+      "sampling-policies": "Sampling Policies & Prototype Development | Try Wears",
+      "privacy-policy": "Privacy Policy & Data Protection | Try Wears",
+      faq: "Frequently Asked Questions | Try Wears",
+      "design-customization": "Technical Design & Vector Artwork | Try Wears",
+      "brand-customization": "Private Label Trims & Branding | Try Wears",
+      "sample-development": "Rapid Sample Development | Try Wears",
+      "bulk-production": "High-Volume Production & Tiered Pricing | Try Wears",
+      "shipping-policy": "Global DDP Shipping & Express Logistics | Try Wears",
+      "return-refund-policy": "Replacement & Return Policy | Try Wears",
+      "terms-and-conditions": "International Terms of Trade & B2B Contracts | Try Wears",
+      "moq-lead-time": "MOQ & Production Lead Times | Try Wears",
+      "order-process": "6-Step Manufacturing Process | Try Wears",
+    };
+    document.title = titles[activePage] || "Try Wears | Premier B2B Sports Manufacturer & OEM/ODM Fight Gear";
+  }, [activePage]);
 
   useEffect(() => {
     // Fetch initial configuration
@@ -871,6 +899,9 @@ export function App() {
 
       {/* Persistent Live WhatsApp Chat Widget */}
       <WhatsAppChatWidget />
+
+      {/* Developer Sports Font Switcher (Live Preview & Switcher) */}
+      <SportsFontSwitcher />
     </div>
   );
 }

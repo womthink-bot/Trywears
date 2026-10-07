@@ -73,7 +73,7 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Official loop video source
-  const videoSource = "/videos/allPV.mp4";
+  const videoSource = "/media/home/videos/allPV.webm";
 
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isMuted, setIsMuted] = useState<boolean>(true);
@@ -276,8 +276,7 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
               onClick={togglePlay}
               className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 ease-out"
             >
-              <source src="/videos/allPV.mp4" type="video/mp4" />
-              <source src="/videos/allPV.webm" type="video/webm" />
+              <source src="/media/home/videos/allPV.webm" type="video/webm" />
               Your browser does not support the video tag.
             </video>
 

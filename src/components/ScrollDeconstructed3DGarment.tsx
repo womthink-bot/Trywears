@@ -493,7 +493,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             >
               {/* Big High-Resolution 3D Model / Garment Image or Seamless Video Loop */}
               <div className="absolute inset-0 overflow-hidden" style={{ transform: "translateZ(0)" }}>
-                {category.heroVideo || category.heroImage.endsWith(".mp4") ? (
+                {category.heroVideo || category.heroImage.endsWith(".mp4") || category.heroImage.endsWith(".webm") ? (
                   <SmoothSeamlessVideo src={category.heroVideo || category.heroImage} />
                 ) : (
                   <motion.img

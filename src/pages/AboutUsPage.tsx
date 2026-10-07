@@ -215,7 +215,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigatePage }) => {
               <div className="relative aspect-[9/16] w-full max-h-[660px] overflow-hidden bg-black">
                 <video
                   ref={videoRef}
-                  src="/videos/aboutV1.webm"
+                  src="/media/about/videos/aboutV1.webm"
                   autoPlay
                   loop
                   muted={isMuted}
@@ -390,7 +390,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigatePage }) => {
             {/* Visual Media Header */}
             <div className="relative h-60 w-full overflow-hidden bg-black">
               <video
-                src="/videos/sportswearsAB1.webm"
+                src="/media/about/videos/sportswearsAB1.webm"
                 autoPlay
                 loop
                 muted
@@ -459,7 +459,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigatePage }) => {
             {/* Visual Media Header */}
             <div className="relative h-60 w-full overflow-hidden bg-black">
               <video
-                src="/videos/gymandfitnessAB2.webm"
+                src="/media/about/videos/gymandfitnessAB2.webm"
                 autoPlay
                 loop
                 muted
@@ -528,7 +528,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigatePage }) => {
             {/* Visual Media Header */}
             <div className="relative h-60 w-full overflow-hidden bg-black">
               <video
-                src="/videos/streetwearsAB3.webm"
+                src="/media/about/videos/streetwearsAB3.webm"
                 autoPlay
                 loop
                 muted
@@ -597,7 +597,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ onNavigatePage }) => {
             {/* Visual Media Header */}
             <div className="relative h-60 w-full overflow-hidden bg-black">
               <video
-                src="/videos/jacketsAB4.webm"
+                src="/media/about/videos/jacketsAB4.webm"
                 autoPlay
                 loop
                 muted

@@ -39,7 +39,7 @@ export const PRESET_3D_VIDEOS = [
     id: "preset-sportswears",
     title: "Sports Wears & Pro Match Kits 10s Loop",
     category: "Sports Wears",
-    url: "/videos/sportswearsBG.mp4",
+    url: "/media/home/videos/sportswearsBG.webm",
     poster: "/media/home-page/hero-section/01_sports_wears.jpg",
     description: "10-second seamless muted looping background video for Sports Wears category."
   },
@@ -47,7 +47,7 @@ export const PRESET_3D_VIDEOS = [
     id: "preset-gym-fitness",
     title: "Gym & Fitness Performance 10s Loop",
     category: "Gym & Fitness",
-    url: "/videos/gymandfitnessBG.mp4",
+    url: "/media/home/videos/gymandfitnessBG.webm",
     poster: "/media/home-page/hero-section/02_gym_fitness.jpg",
     description: "10-second seamless muted looping background video for Gym & Fitness category."
   },
@@ -55,7 +55,7 @@ export const PRESET_3D_VIDEOS = [
     id: "preset-streetwears",
     title: "Street Wears Urban Motion 10s Loop",
     category: "Street Wears",
-    url: "/videos/streetwearsBG.mp4",
+    url: "/media/home/videos/streetwearsBG.webm",
     poster: "/media/home-page/hero-section/03_street_wears.jpg",
     description: "10-second seamless muted looping background video for Street Wears category."
   },
@@ -63,7 +63,7 @@ export const PRESET_3D_VIDEOS = [
     id: "preset-leather",
     title: "Artisan Leather Jackets 10s Loop",
     category: "Leather Jackets",
-    url: "/videos/LeatherBG.mp4",
+    url: "/media/home/videos/LeatherBG.webm",
     poster: "/media/home-page/hero-section/04_leather_jackets.jpg",
     description: "10-second seamless muted looping background video for Leather Jackets category."
   },

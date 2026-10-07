@@ -211,7 +211,7 @@ export const QualityProcessPage: React.FC<QualityProcessPageProps> = ({ onNaviga
       {/* 1. CINEMATIC AMBIENT BACKGROUND VIDEO ATMOSPHERE */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <video
-          src="/videos/LeatherBG.mp4"
+          src="/media/quality/videos/LeatherBG.webm"
           autoPlay
           loop
           muted
@@ -349,7 +349,7 @@ export const QualityProcessPage: React.FC<QualityProcessPageProps> = ({ onNaviga
               <div className="relative h-[460px] sm:h-[500px] w-full overflow-hidden bg-black">
                 <video
                   ref={videoRef}
-                  src="/videos/qualityprocess1.webm"
+                  src="/media/quality/videos/qualityprocess1.webm"
                   autoPlay
                   loop
                   muted={isMuted}

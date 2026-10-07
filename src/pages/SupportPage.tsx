@@ -148,7 +148,7 @@ export const SupportPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               {/* Left: Video with Live Global Airway HUD */}
               <div className="lg:col-span-5 relative bg-black min-h-[420px] lg:min-h-full overflow-hidden group">
                 <video
-                  src="/videos/shipping_policy_SQ1.webm"
+                  src="/media/support/videos/shipping_policy_SQ1.webm"
                   autoPlay
                   loop
                   muted
@@ -414,7 +414,7 @@ export const SupportPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               {/* Right: Video Chamber with Quality Assurance HUD */}
               <div className="lg:col-span-5 relative bg-black min-h-[420px] lg:min-h-full overflow-hidden group order-1 lg:order-2">
                 <video
-                  src="/videos/return_refund_policy_SQ2.webm"
+                  src="/media/support/videos/return_refund_policy_SQ2.webm"
                   autoPlay
                   loop
                   muted
@@ -524,7 +524,7 @@ export const SupportPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               {/* Right: Video Frame with Security Tag */}
               <div className="w-full lg:w-[460px] h-[380px] rounded-3xl overflow-hidden bg-black border border-neutral-700 relative group shadow-2xl">
                 <video
-                  src="/videos/terms_conditions_SQ3.webm"
+                  src="/media/support/videos/terms_conditions_SQ3.webm"
                   autoPlay
                   loop
                   muted
@@ -563,7 +563,7 @@ export const SupportPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               {/* Left: Video with Speedometer HUD */}
               <div className="lg:col-span-5 relative bg-black min-h-[420px] lg:min-h-full overflow-hidden group">
                 <video
-                  src="/videos/moq_lead_time_SQ4.webm"
+                  src="/media/support/videos/moq_lead_time_SQ4.webm"
                   autoPlay
                   loop
                   muted
@@ -814,7 +814,7 @@ export const SupportPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               {/* Right: Video Chamber with 6-Step Stepper HUD */}
               <div className="lg:col-span-5 relative bg-black min-h-[420px] lg:min-h-full overflow-hidden group order-1 lg:order-2">
                 <video
-                  src="/videos/order_process_SQ5.webm"
+                  src="/media/support/videos/order_process_SQ5.webm"
                   autoPlay
                   loop
                   muted

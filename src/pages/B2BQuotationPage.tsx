@@ -423,7 +423,7 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
       {/* 1. CINEMATIC AMBIENT BACKGROUND VIDEO ATMOSPHERE */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <video
-          src="/videos/allPV.mp4"
+          src="/media/home/videos/allPV.webm"
           autoPlay
           loop
           muted

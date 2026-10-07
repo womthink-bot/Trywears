@@ -294,7 +294,7 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
       {/* 1. CINEMATIC AMBIENT BACKGROUND VIDEO ATMOSPHERE */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <video
-          src="/videos/streetwearsBG.mp4"
+          src="/media/home/videos/streetwearsBG.webm"
           autoPlay
           loop
           muted
@@ -441,7 +441,7 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
               <div className="relative h-[320px] sm:h-[420px] lg:h-[500px] w-full overflow-hidden bg-black">
                 <video
                   ref={videoRef}
-                  src="/videos/streetwearsGP.mp4"
+                  src="/media/home/videos/streetwearsGP.webm"
                   autoPlay
                   loop
                   muted={isMuted}

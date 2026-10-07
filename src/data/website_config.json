@@ -25,8 +25,8 @@
         "title": "OEM / ODM CUSTOM SPORTS WEARS & TEAM KITS",
         "subtitle": "PRO MATCH JERSEYS • ATHLETIC UNIFORMS • LOW MOQ 25 PCS",
         "description": "Specialized sublimation manufacturing of football kits, basketball uniforms, athletic tracksuits, and high-tensile sports apparel. Certified Italian zero-fade inks, anti-microbial dri-fit fabric, and laser-cut ventilation.",
-        "image": "/videos/sportswearsBG.mp4",
-        "video": "/videos/sportswearsBG.mp4",
+        "image": "/media/home/videos/sportswearsBG.webm",
+        "video": "/media/home/videos/sportswearsBG.webm",
         "buttonText": "CALCULATE B2B SPORTS WEARS",
         "buttonLink": "#b2b-calculator",
         "tag": "SPORTS WEARS • OEM / ODM",
@@ -71,8 +71,8 @@
         "title": "ENGINEERED GYM & FITNESS PERFORMANCE APPAREL",
         "subtitle": "SEAMLESS KNIT • 4-WAY COMPRESSION • HIGH-FLEX SPANDEX",
         "description": "Private label activewear for global fitness brands, bodybuilding gyms, and athletic influencers. Squat-proof seamless tights, muscle-fit tanks, compression rashguards, and custom silicone branded waistbands.",
-        "image": "/videos/gymandfitnessBG.mp4",
-        "video": "/videos/gymandfitnessBG.mp4",
+        "image": "/media/home/videos/gymandfitnessBG.webm",
+        "video": "/media/home/videos/gymandfitnessBG.webm",
         "buttonText": "ORDER FITNESS SAMPLES",
         "buttonLink": "#b2b-calculator",
         "tag": "GYM & FITNESS WEARS",
@@ -81,7 +81,7 @@
             "id": "gym-slot-1",
             "title": "Women's Seamless Sports Bra & Contour Leggings Set",
             "subtitle": "Sculpted Ribbed 2-Piece Activewear Suit",
-            "image": "/images/gym-fitness/gym_women_seamless_set_v2.png",
+            "image": "/images/gym-fitness/gym_women_seamless_set_v2.webp",
             "badge": "WOMEN'S SEAMLESS 2-PIECE SET",
             "specs": "Sculpted Sports Bra • High-Waisted Ribbed Contour Leggings"
           },
@@ -89,7 +89,7 @@
             "id": "gym-slot-2",
             "title": "Women's High-Support Racerback Bra & Active Leggings Suit",
             "subtitle": "Forest Emerald Performance Activewear Suit",
-            "image": "/images/gym-fitness/gym_women_emerald_bra_set_v2.png",
+            "image": "/images/gym-fitness/gym_women_emerald_bra_set_v2.webp",
             "badge": "WOMEN'S ACTIVE GYM SUIT",
             "specs": "Impact-Absorbing Racerback Bra • Booty-Contour Compression Leggings"
           },
@@ -97,7 +97,7 @@
             "id": "gym-slot-3",
             "title": "Men's 2-Piece Compression Rashguard & Tights Base Layer Suit",
             "subtitle": "Ergonomic Muscle-Mapped Training Suit",
-            "image": "/images/gym-fitness/gym_men_compression_suit_v2.png",
+            "image": "/images/gym-fitness/gym_men_compression_suit_v2.webp",
             "badge": "MEN'S 2-PIECE COMPRESSION SUIT",
             "specs": "Long-Sleeve Compression Top • Full-Length Base Layer Tights"
           },
@@ -105,7 +105,7 @@
             "id": "gym-slot-4",
             "title": "Men's Pro Sleeveless Workout Hoodie & 2-in-1 Training Shorts Set",
             "subtitle": "Bodybuilding & Conditioning Gym Set",
-            "image": "/images/gym-fitness/gym_men_training_set_v2.png",
+            "image": "/images/gym-fitness/gym_men_training_set_v2.webp",
             "badge": "MEN'S GYM TRAINING SET",
             "specs": "Deep-Cut Athletic Hooded Tank • 5-inch 2-in-1 Compression Liner Shorts"
           }
@@ -117,8 +117,8 @@
         "title": "LUXURY STREET WEARS & HEAVYWEIGHT FLEECE",
         "subtitle": "450GSM FRENCH TERRY • DROPPED SHOULDERS • BOX-FIT SILHOUETTES",
         "description": "Custom streetwear manufacturing for contemporary high-fashion labels. Ultra-heavy 450GSM loopback cotton hoodies, vintage acid-wash oversized tees, techwear cargo joggers, and high-density 3D puff embroidery.",
-        "image": "/videos/streetwearsBG.mp4",
-        "video": "/videos/streetwearsBG.mp4",
+        "image": "/media/home/videos/streetwearsBG.webm",
+        "video": "/media/home/videos/streetwearsBG.webm",
         "buttonText": "CUSTOM STREETWEAR RFQ",
         "buttonLink": "#b2b-calculator",
         "tag": "STREET WEARS • LUXURY HEAVY",
@@ -127,7 +127,7 @@
             "id": "street-slot-1",
             "title": "Women's Cropped Boxy Hoodie & Wide-Leg Street Sweatpants Set",
             "subtitle": "Aesthetic 2-Piece Street Tracksuit",
-            "image": "/images/street-wears/street_women_cropped_hoodie_set_v2.png",
+            "image": "/images/street-wears/street_women_cropped_hoodie_set_v2.webp",
             "badge": "WOMEN'S 420GSM TRACKSUIT",
             "specs": "Cropped Boxy Heavy Hoodie • High-Waisted Wide-Leg Sweats"
           },
@@ -135,7 +135,7 @@
             "id": "street-slot-2",
             "title": "Women's Washed Oversized Graphic Tee & Parachute Cargo Pants Set",
             "subtitle": "Sage Olive Utility Streetwear Set",
-            "image": "/images/street-wears/street_women_boxy_tee_cargo_set_v2.png",
+            "image": "/images/street-wears/street_women_boxy_tee_cargo_set_v2.webp",
             "badge": "WOMEN'S CARGO STREET SET",
             "specs": "Drop-Shoulder Vintage Tee • High-Waisted Toggle Parachute Cargo Pants"
           },
@@ -143,7 +143,7 @@
             "id": "street-slot-3",
             "title": "Men's Luxury 450GSM French Terry Boxy Hoodie & Sweatpants Set",
             "subtitle": "Heavyweight Street Tracksuit Set",
-            "image": "/images/street-wears/street_men_heavy_hoodie_set_v2.png",
+            "image": "/images/street-wears/street_men_heavy_hoodie_set_v2.webp",
             "badge": "MEN'S 450GSM TRACKSUIT",
             "specs": "450GSM French Terry • Dropped Shoulders • Heavy Cuffed Sweats"
           },
@@ -151,7 +151,7 @@
             "id": "street-slot-4",
             "title": "Men's Vintage Washed Heavy Oversized Tee & Tactical Cargo Pants Set",
             "subtitle": "Urban Techwear Streetwear Set",
-            "image": "/images/street-wears/street_men_vintage_tee_cargo_set_v2.png",
+            "image": "/images/street-wears/street_men_vintage_tee_cargo_set_v2.webp",
             "badge": "MEN'S TACTICAL STREET SET",
             "specs": "300GSM Enzyme Washed Heavy Tee • Multi-Pocket Utility Cargo Pants"
           }
@@ -163,8 +163,8 @@
         "title": "PREMIUM LEATHER, PUFFER, VARSITY & BOMBER JACKETS",
         "subtitle": "GENUINE LEATHER • DOWN PUFFERS • VARSITY WOOL • FLIGHT BOMBERS",
         "description": "Master artisanal outerwear production. Genuine top-grain cowhide biker jackets, quilted down winter puffers, classic American wool-leather varsity squad jackets, and tactical flight bombers.",
-        "image": "/videos/LeatherBG.mp4",
-        "video": "/videos/LeatherBG.mp4",
+        "image": "/media/home/videos/LeatherBG.webm",
+        "video": "/media/home/videos/LeatherBG.webm",
         "buttonText": "BESPOKE JACKET ORDERS",
         "buttonLink": "#b2b-calculator",
         "tag": "JACKETS • LEATHER • PUFFER • VARSITY",
@@ -173,7 +173,7 @@
             "id": "leather-slot-1",
             "title": "Full-Grain Cowhide Biker Moto Jacket",
             "subtitle": "Asymmetric Heavy Moto Outerwear",
-            "image": "/images/leather-jackets/leather_biker.png",
+            "image": "/images/leather-jackets/leather_biker.webp",
             "badge": "1.2MM COWHIDE LEATHER",
             "specs": "1.2mm Drum-Dyed Cowhide • Heavy YKK Antique Silver Zips"
           },
@@ -181,7 +181,7 @@
             "id": "leather-slot-2",
             "title": "Heritage Wool & Leather Varsity",
             "subtitle": "Custom Chenille Squad Jacket",
-            "image": "/images/leather-jackets/leather_varsity.png",
+            "image": "/images/leather-jackets/leather_varsity.webp",
             "badge": "MELTON WOOL & COWHIDE",
             "specs": "24oz Melton Wool Body • Genuine Top-Grain Leather Sleeves"
           },
@@ -189,7 +189,7 @@
             "id": "leather-slot-3",
             "title": "Waxed Cafe Racer Moto Leather Jacket",
             "subtitle": "Mandarin Snap Collar Silhouette",
-            "image": "/images/leather-jackets/leather_cafe_racer.png",
+            "image": "/images/leather-jackets/leather_cafe_racer.webp",
             "badge": "MANDARIN SNAP MOTO",
             "specs": "Distressed Top-Grain Waxed Leather • Quilted Shoulders"
           },
@@ -197,7 +197,7 @@
             "id": "leather-slot-4",
             "title": "Aviator Shearling Bomber Leather Jacket",
             "subtitle": "Authentic Shearling Flight Coat",
-            "image": "/images/leather-jackets/leather_aviator_jacket.png",
+            "image": "/images/leather-jackets/leather_aviator_jacket.webp",
             "badge": "SHEARLING AVIATOR BOMBER",
             "specs": "Rich Espresso Full-Grain Leather • Heavy Shearling Wool Collar"
           }
