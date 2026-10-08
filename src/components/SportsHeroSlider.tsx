@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { 
   ArrowRight, 
   ChevronLeft, 
@@ -121,8 +121,8 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
       videoUrl: PRESET_3D_VIDEOS[0].url,
       videoTitle: PRESET_3D_VIDEOS[0].title,
       isCustomUploaded: false,
-      enable3DTilt: true,
-      tiltIntensity: 2,
+      enable3DTilt: false,
+      tiltIntensity: 1,
       isMuted: true,
       volume: 0.5,
       playbackSpeed: 1,
@@ -135,51 +135,12 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [progress, setProgress] = useState<number>(0);
-  const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
-  const [videoError, setVideoError] = useState<boolean>(false);
 
-  // 3D Mouse Parallax & Gyroscopic Spatial Tilt State
+  // Video Ref for direct hardware playback control
   const heroRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [tilt, setTilt] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const timerRef = useRef<any>(null);
-
-  // Scroll-Driven 3D Cinematic Motion
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-
-  const smoothHeroScroll = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 24,
-    restDelta: 0.001
-  });
-
-  // 3D Parallax & Depth transforms
-  const heroScale = useTransform(smoothHeroScroll, [0, 1], [1, 0.92]);
-  const heroY = useTransform(smoothHeroScroll, [0, 1], [0, 140]);
-  const heroRotateX = useTransform(smoothHeroScroll, [0, 1], [0, 15]);
-  const heroOpacity = useTransform(smoothHeroScroll, [0, 0.85], [1, 0.25]);
-
-  // Video Background 3D Zoom & Recede
-  const bgScale = useTransform(smoothHeroScroll, [0, 1], [1.05, 1.25]);
-  const bgY = useTransform(smoothHeroScroll, [0, 1], [0, 80]);
-
-  // Floating Cyber Grid Parallax
-  const gridY = useTransform(smoothHeroScroll, [0, 1], [120, -40]);
-  const gridOpacity = useTransform(smoothHeroScroll, [0, 0.7], [0.25, 0.05]);
-
-  // HUD Top Bar Parallax
-  const hudY = useTransform(smoothHeroScroll, [0, 0.4], [0, -50]);
-  const hudOpacity = useTransform(smoothHeroScroll, [0, 0.35], [1, 0]);
-
-  // Floating Embers / Particles Parallax
-  const particlesY = useTransform(smoothHeroScroll, [0, 1], [0, -260]);
 
   const SLIDE_DURATION = 8000; // 8 seconds interval between category slides
-  const TICK_INTERVAL = 50;
 
   // Persist video settings
   const handleSaveVideoSettings = async (newSettings: Hero3DVideoSettings) => {
@@ -208,14 +169,14 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     }
   };
 
-  // Sync Video playback rate, volume & viewport visibility
+  // Sync Video playback rate, volume & viewport visibility without thrashing
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     video.playbackRate = videoSettings.playbackSpeed || 1;
+    video.muted = videoSettings.isMuted;
     video.volume = 0;
-    video.muted = true;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -235,49 +196,17 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     return () => {
       observer.disconnect();
     };
-  }, [videoSettings.playbackSpeed, currentSlide]);
+  }, [videoSettings.playbackSpeed, videoSettings.isMuted, currentSlide]);
 
-  // Handle Mouse 3D Gyro Tilt
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!videoSettings.enable3DTilt || !heroRef.current) return;
-    const rect = heroRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    // Normalized -1 to +1
-    const normX = (x / rect.width) * 2 - 1;
-    const normY = (y / rect.height) * 2 - 1;
-
-    const factor = videoSettings.tiltIntensity === 1 ? 5 : videoSettings.tiltIntensity === 2 ? 10 : 16;
-    setTilt({
-      x: -normY * factor,
-      y: normX * factor
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-  };
-
-  // Slide advancement timer for multi-slide mode (exact 8 seconds per category)
+  // Clean slide advancement timer without continuous interval re-renders
   useEffect(() => {
     if (!isPlaying || !activeSlides || activeSlides.length <= 1) return;
-
-    setProgress(0);
-    const startTime = Date.now();
-
-    const progressTimer = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const currentPct = Math.min((elapsed / SLIDE_DURATION) * 100, 100);
-      setProgress(currentPct);
-    }, TICK_INTERVAL);
 
     const slideTimer = setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % activeSlides.length);
     }, SLIDE_DURATION);
 
     return () => {
-      clearInterval(progressTimer);
       clearTimeout(slideTimer);
     };
   }, [currentSlide, isPlaying, activeSlides.length]);
@@ -309,12 +238,11 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
       ref={heroRef}
       className="relative min-h-[740px] sm:min-h-[820px] bg-neutral-950 overflow-hidden border-b border-neutral-900 select-none"
     >
-      {/* STRAIGHT, STABLE HERO CONTAINER WITH 3D PERSPECTIVE SCROLL DYNAMICS */}
+      {/* SOLID, HARDWARE-ACCELERATED HERO CONTAINER */}
       <div 
         className="w-full h-full min-h-[740px] sm:min-h-[820px] relative flex flex-col justify-between py-10"
-        style={{ perspective: "1200px" }}
       >
-        {/* ================= BACKGROUND LAYER (3D VIDEO / HOLOGRAPHIC / SLIDES) ================= */}
+        {/* ================= BACKGROUND LAYER (SMOOTH 60FPS VIDEO / HOLOGRAPHIC / SLIDES) ================= */}
         <div 
           className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
           style={{ transform: "translate3d(0, 0, 0)" }}
@@ -322,7 +250,7 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
           
           {/* MODE 1: HIGH-PERFORMANCE HARDWARE-ACCELERATED SINGLE ACTIVE VIDEO PLAYER */}
           {videoSettings.activeMode === "3d-video" && (
-            <div className="relative w-full h-full" style={{ contain: "strict" }}>
+            <div className="relative w-full h-full">
               <video
                 key={videoSettings.isCustomUploaded && videoSettings.videoUrl ? videoSettings.videoUrl : activeVideoUrl}
                 ref={videoRef}
@@ -335,10 +263,10 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
                 disablePictureInPicture
                 disableRemotePlayback
                 tabIndex={-1}
-                className="w-full h-full object-cover object-center scale-105 transition-opacity duration-500 transform-gpu will-change-transform"
+                className="w-full h-full object-cover object-center transition-opacity duration-300"
                 style={{
-                  transform: "translateZ(0)",
-                  opacity: 0.85
+                  transform: "translate3d(0, 0, 0)",
+                  opacity: 0.88
                 }}
               />
             </div>
@@ -357,10 +285,10 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSlideData.id}
-                initial={{ opacity: 0, scale: 1.05 }}
+                initial={{ opacity: 0, scale: 1.02 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 className="absolute inset-0"
               >
                 <img
@@ -377,16 +305,14 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/45 to-neutral-950/70 pointer-events-none" />
           <div className="absolute inset-y-0 left-0 w-full lg:w-[65%] bg-gradient-to-r from-neutral-950/95 via-neutral-950/75 to-transparent pointer-events-none" />
 
-          {/* 3D HOLOGRAPHIC CYBER FLOOR GRID */}
+          {/* CYBER FLOOR GRID */}
           {videoSettings.showHoloGrid && (
-            <motion.div 
-              className="absolute inset-0 pointer-events-none"
+            <div 
+              className="absolute inset-0 pointer-events-none opacity-20"
               style={{
-                y: gridY,
-                opacity: gridOpacity,
                 backgroundImage: `
-                  linear-gradient(to right, rgba(226, 29, 29, 0.3) 1px, transparent 1px),
-                  linear-gradient(to bottom, rgba(226, 29, 29, 0.3) 1px, transparent 1px)
+                  linear-gradient(to right, rgba(226, 29, 29, 0.25) 1px, transparent 1px),
+                  linear-gradient(to bottom, rgba(226, 29, 29, 0.25) 1px, transparent 1px)
                 `,
                 backgroundSize: "60px 60px",
                 transform: "perspective(600px) rotateX(65deg) scale(1.6)",
@@ -395,33 +321,31 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
             />
           )}
 
-          {/* Atmospheric Floating 3D Spark Particles */}
-          <motion.div 
-            className="absolute inset-0 pointer-events-none overflow-hidden"
-            style={{ y: particlesY }}
-          >
-            {[
-              { top: "20%", left: "15%", size: 4, delay: 0 },
-              { top: "45%", left: "25%", size: 3, delay: 0.5 },
-              { top: "30%", left: "75%", size: 5, delay: 1 },
-              { top: "65%", left: "85%", size: 3, delay: 1.5 },
-              { top: "15%", left: "60%", size: 4, delay: 2 },
-              { top: "80%", left: "40%", size: 3, delay: 2.5 }
-            ].map((p, idx) => (
-              <div
-                key={idx}
-                className="absolute rounded-full bg-[#E21D1D] shadow-[0_0_12px_#E21D1D] animate-pulse"
-                style={{
-                  top: p.top,
-                  left: p.left,
-                  width: p.size,
-                  height: p.size,
-                  animationDelay: `${p.delay}s`,
-                  opacity: 0.7
-                }}
-              />
-            ))}
-          </motion.div>
+          {/* Atmospheric Floating Spark Particles */}
+          {videoSettings.show3DParticles && (
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {[
+                { top: "20%", left: "15%", size: 4 },
+                { top: "45%", left: "25%", size: 3 },
+                { top: "30%", left: "75%", size: 5 },
+                { top: "65%", left: "85%", size: 3 },
+                { top: "15%", left: "60%", size: 4 },
+                { top: "80%", left: "40%", size: 3 }
+              ].map((p, idx) => (
+                <div
+                  key={idx}
+                  className="absolute rounded-full bg-[#E21D1D] shadow-[0_0_8px_#E21D1D]"
+                  style={{
+                    top: p.top,
+                    left: p.left,
+                    width: p.size,
+                    height: p.size,
+                    opacity: 0.6
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Athletic Texture Hatch overlay */}
           <div className="absolute inset-0 athletic-hatch opacity-20 pointer-events-none" />
@@ -430,11 +354,8 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
         {/* ================= FOREGROUND CONTENT LAYER (HERO STAGE + 4 3D VIDEO BOXES) ================= */}
         <div className="relative z-20 max-w-7xl mx-auto px-6 w-full flex flex-col justify-between flex-1 pointer-events-auto">
           
-          {/* TOP 3D HUD CONTROLS BAR (PARALLAX ON SCROLL) */}
-          <motion.div 
-            className="flex flex-wrap items-center justify-between gap-4 pt-2"
-            style={{ y: hudY, opacity: hudOpacity }}
-          >
+          {/* TOP HUD CONTROLS BAR */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
             
             {/* Left Status Badges */}
             <div className="flex flex-wrap items-center gap-2.5">
@@ -452,11 +373,11 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
                 <span className="hidden md:inline text-emerald-400 font-bold">LOW MOQ 25 PCS</span>
               </div>
 
-              {/* 3D Mode Indicator Badge */}
+              {/* Mode Indicator Badge */}
               <div className="hidden sm:inline-flex items-center gap-2 bg-neutral-900/80 border border-white/10 px-3 py-1.5 rounded-full text-[10px] font-mono text-neutral-300">
                 <Rotate3d className="w-3.5 h-3.5 text-[#E21D1D]" />
                 <span className="font-bold text-white uppercase">
-                  3D {videoSettings.activeMode.toUpperCase()}
+                  {videoSettings.activeMode.toUpperCase()}
                 </span>
               </div>
             </div>
@@ -502,24 +423,15 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
               </div>
 
             </div>
-          </motion.div>
+          </div>
 
-          {/* CENTER: INTERACTIVE 3D MOVING GARMENTS STAGE WITH CONTINUOUS SCROLL DEPTH TRANSFORM */}
-          <motion.div 
-            className="w-full my-auto py-1"
-            style={{
-              scale: heroScale,
-              y: heroY,
-              rotateX: heroRotateX,
-              opacity: heroOpacity,
-              transformStyle: "preserve-3d"
-            }}
-          >
+          {/* CENTER: INTERACTIVE MOVING GARMENTS STAGE - ROCK SOLID & BUTTER SMOOTH */}
+          <div className="w-full my-auto py-1">
             <Interactive3DGarmentsStage 
               currentCategoryIndex={currentSlide} 
               onCategoryChange={(idx) => setCurrentSlide(idx)}
             />
-          </motion.div>
+          </div>
 
         </div>
       </div>

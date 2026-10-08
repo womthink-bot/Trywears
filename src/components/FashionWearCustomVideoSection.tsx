@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
   motion,
-  AnimatePresence,
-  useScroll,
-  useTransform
+  AnimatePresence
 } from "motion/react";
 import {
   Play,
@@ -84,29 +82,38 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [activeFeatureTab, setActiveFeatureTab] = useState<number>(0);
 
-  // Parallax / Scroll effect
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const videoScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.96, 1, 0.98]);
-  const videoY = useTransform(scrollYProgress, [0, 0.5, 1], [30, 0, -20]);
-
-  // Video event handlers and auto-loop trigger
+  // Video event handlers and auto-loop trigger with viewport awareness
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Ensure immediate playback on mount
-    video.play().then(() => setIsPlaying(true)).catch(() => {
-      // Autoplay with muted is guaranteed by browser policy
-    });
+    video.muted = isMuted;
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().then(() => setIsPlaying(true)).catch(() => {});
+          } else {
+            video.pause();
+            setIsPlaying(false);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+
+    let lastUpdate = 0;
     const handleTimeUpdate = () => {
-      setCurrentTime(video.currentTime);
-      if (video.duration) {
-        setProgress((video.currentTime / video.duration) * 100);
+      const now = Date.now();
+      if (now - lastUpdate > 250) { // Throttled to 4 times/sec max to avoid React render thrashing
+        lastUpdate = now;
+        setCurrentTime(video.currentTime);
+        if (video.duration) {
+          setProgress((video.currentTime / video.duration) * 100);
+        }
       }
     };
 
@@ -123,11 +130,12 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
     video.addEventListener("ended", handleEnded);
 
     return () => {
+      observer.disconnect();
       video.removeEventListener("timeupdate", handleTimeUpdate);
       video.removeEventListener("loadedmetadata", handleLoadedMetadata);
       video.removeEventListener("ended", handleEnded);
     };
-  }, []);
+  }, [isMuted, videoSource]);
 
   // Play/Pause toggle
   const togglePlay = () => {
@@ -244,8 +252,8 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
         </div>
 
         {/* ================= 2. BIG CINEMATIC FASHION VIDEO PLAYER ================= */}
-        <motion.div
-          style={{ scale: videoScale, y: videoY }}
+        <div
+          style={{ transform: "translate3d(0, 0, 0)" }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className="relative w-full rounded-3xl overflow-hidden bg-neutral-900 border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.9)] group"
@@ -395,7 +403,7 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* ================= 3. FOUR CORE FASHION WEAR CUSTOMIZATION PILLARS ================= */}
         <div className="space-y-6">

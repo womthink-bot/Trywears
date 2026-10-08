@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
-import { Sparkles, Shield, Flame, Award, Globe, Zap } from "lucide-react";
+import React from "react";
+import { Zap } from "lucide-react";
 
 const MARQUEE_ROW_1 = [
   "FACTORY DIRECT B2B WHOLESALE",
@@ -25,29 +24,9 @@ const MARQUEE_ROW_2 = [
 ];
 
 export const SportsB2BMarquee: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 25,
-    restDelta: 0.001
-  });
-
-  // Dynamic 3D Perspective Skew & Rotation on Scroll
-  const skewX = useTransform(smoothProgress, [0, 0.5, 1], [-4, 0, 4]);
-  const rotateX = useTransform(smoothProgress, [0, 0.5, 1], [15, 0, -15]);
-  const scale = useTransform(smoothProgress, [0, 0.5, 1], [0.96, 1.02, 0.96]);
-
   return (
     <div
-      ref={containerRef}
       className="relative z-20 py-6 overflow-hidden bg-[#060608] border-y border-neutral-800 select-none shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
-      style={{ perspective: "1000px" }}
     >
       {/* Ambient Red Laser Beam Lights */}
       <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[#E21D1D] to-transparent shadow-[0_0_15px_#E21D1D]" />
@@ -62,16 +41,8 @@ export const SportsB2BMarquee: React.FC = () => {
         }}
       />
 
-      {/* 3D Moving Marquee Rig */}
-      <motion.div
-        style={{
-          skewX,
-          rotateX,
-          scale,
-          transformStyle: "preserve-3d"
-        }}
-        className="space-y-3 transition-transform duration-100 ease-out"
-      >
+      {/* Moving Marquee Rig - 60fps native CSS marquee */}
+      <div className="space-y-3">
         {/* ROW 1: Slides Left with Red Highlight */}
         <div className="flex whitespace-nowrap overflow-hidden">
           <div className="flex animate-marquee shrink-0 items-center">
@@ -115,7 +86,7 @@ export const SportsB2BMarquee: React.FC = () => {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-  useSpring,
-  useMotionValue
+  AnimatePresence
 } from "motion/react";
 import {
   ShieldCheck,
@@ -221,7 +217,7 @@ const CATEGORY_BACKGROUND_THEMES: Record<
 
 // ==============================================================
 // ✦ HIGH-PERFORMANCE HARDWARE-ACCELERATED SEAMLESS VIDEO PLAYER
-// Completely isolated, never interrupted during mouse scrolling or hover
+// Pauses when offscreen to conserve GPU/decoding buffers, plays 60fps smoothly in view
 // ==============================================================
 const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React.memo(
   ({ src, className }) => {
@@ -236,25 +232,38 @@ const SmoothSeamlessVideo: React.FC<{ src: string; className?: string }> = React
       video.playsInline = true;
       video.autoplay = true;
       video.loop = true;
-      video.currentTime = 0;
 
-      const tryPlay = () => {
-        if (video.paused) {
-          video.play().catch(() => {});
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              video.play().catch(() => {});
+            } else {
+              video.pause();
+            }
+          });
+        },
+        { threshold: 0.08 }
+      );
+
+      observer.observe(video);
+
+      const onInteraction = () => {
+        if (video.paused && document.contains(video)) {
+          const rect = video.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            video.play().catch(() => {});
+          }
         }
       };
 
-      tryPlay();
-
-      const onInteraction = () => tryPlay();
       window.addEventListener("pointerdown", onInteraction, { once: true, passive: true });
       window.addEventListener("touchstart", onInteraction, { once: true, passive: true });
-      window.addEventListener("keydown", onInteraction, { once: true, passive: true });
 
       return () => {
+        observer.disconnect();
         window.removeEventListener("pointerdown", onInteraction);
         window.removeEventListener("touchstart", onInteraction);
-        window.removeEventListener("keydown", onInteraction);
       };
     }, [src]);
 
@@ -342,38 +351,6 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
     setCurrentPage((prev) => (prev + 1) % totalPages);
   };
 
-  // Scroll Progress across this specific category section
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Scroll Parallax for Section-Wide Living Background Image
-  const bgParallaxY = useTransform(scrollYProgress, [0, 1], [-90, 90]);
-  const bgParallaxScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.18, 1.05, 1.16]);
-
-  // Large Typographic Watermark Smooth Horizontal Parallax
-  const watermarkX = useTransform(
-    scrollYProgress,
-    [0, 1],
-    isLeftImage ? ["-6%", "6%"] : ["6%", "-6%"]
-  );
-
-  // Volumetric Sweeping Spotlight Gliding across Background
-  const spotlightSweepX = useTransform(scrollYProgress, [0, 1], ["-40%", "140%"]);
-  const spotlightRotate = useTransform(
-    scrollYProgress,
-    [0, 1],
-    isLeftImage ? [-20, 20] : [20, -20]
-  );
-
-  // Parallax calculations for the Big Contextual Hero Card
-  const heroBgScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.08, 1.02, 1.06]);
-  const lightSheenX = useTransform(scrollYProgress, [0, 1], ["-120%", "220%"]);
-
-  // Scanning Laser Line through Under-Grid Chamber
-  const scanLineY = useTransform(scrollYProgress, [0, 1], ["-10%", "110%"]);
-
   return (
     <section
       ref={sectionRef}
@@ -382,27 +359,19 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
     >
       {/* ============================================================== */}
       {/* 1. DYNAMIC CATEGORY-SPECIFIC LIVING BACKGROUND SYSTEM          */}
-      {/* Moves on scroll with parallax, zoom, and live 3D mouse tilt    */}
+      {/* Hardware-accelerated, zero-stutter background presentation     */}
       {/* ============================================================== */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         
-        {/* Living Background Image with 3D Depth & Scroll Parallax */}
-        <motion.div
-          style={{
-            y: bgParallaxY,
-            scale: bgParallaxScale,
-            transform: "translate3d(0, 0, 0)",
-            willChange: "transform"
-          }}
-          className="absolute inset-[-8%] w-[116%] h-[116%]"
-        >
+        {/* Living Background Image */}
+        <div className="absolute inset-0 w-full h-full">
           <img
             src={category.bgImage}
             alt={category.bgAlt}
             loading="lazy"
             className="w-full h-full object-cover object-center filter brightness-[0.32] contrast-125 saturate-125"
           />
-        </motion.div>
+        </div>
 
         {/* Multi-layered Vignettes: Center translucency + deep edge fading */}
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/45 to-black z-[1]" />
@@ -415,40 +384,23 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
           }}
         />
 
-        {/* Sweeping Live Volumetric Spotlight Beam on Scroll */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none z-[2] opacity-35"
-          style={{
-            x: spotlightSweepX,
-            rotate: spotlightRotate,
-            background: `linear-gradient(90deg, transparent 0%, ${category.themeColor}33 45%, rgba(255,255,255,0.25) 50%, ${themeDetails.ambientSecondary}33 55%, transparent 100%)`,
-            filter: "blur(40px)"
-          }}
-        />
-
-        {/* Ambient Category Pulsing Glow Orb */}
-        <motion.div
-          className="absolute top-1/2 -translate-y-1/2 w-[850px] h-[850px] rounded-full blur-[180px] pointer-events-none z-[2]"
+        {/* Ambient Category Glowing Atmosphere */}
+        <div
+          className="absolute top-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full blur-[140px] pointer-events-none z-[2] opacity-25"
           style={{
             backgroundColor: category.themeColor,
-            left: isLeftImage ? "5%" : "55%"
+            left: isLeftImage ? "10%" : "50%"
           }}
-          animate={{
-            scale: [0.9, 1.15, 0.9],
-            opacity: [0.18, 0.32, 0.18]
-          }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        {/* Large Typographic Watermark Gliding across Background */}
-        <motion.div
-          style={{ x: watermarkX }}
-          className="absolute top-1/2 -translate-y-1/2 left-0 w-[200%] pointer-events-none select-none z-[2] opacity-[0.06] whitespace-nowrap"
+        {/* Large Typographic Watermark */}
+        <div
+          className="absolute top-1/2 -translate-y-1/2 left-0 w-full pointer-events-none select-none z-[2] opacity-[0.05] whitespace-nowrap overflow-hidden"
         >
           <span className="font-display font-black text-[120px] sm:text-[180px] uppercase tracking-tighter text-white block">
             {themeDetails.watermark}
           </span>
-        </motion.div>
+        </div>
 
         {/* Technical Blueprint Coordinate Grid Overlay */}
         <div
@@ -480,41 +432,38 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           
           {/* ============================================================== */}
-          {/* BIG CONTEXTUAL HERO IMAGE BLOCK (MATCHING USER IMAGE.PNG EXACTLY!) */}
+          {/* BIG CONTEXTUAL HERO IMAGE BLOCK */}
           {/* ============================================================== */}
           <div
             className={`lg:col-span-5 flex flex-col h-full ${
               isLeftImage ? "lg:order-1" : "lg:order-2"
             }`}
-            style={{ perspective: "1200px" }}
           >
             <div
               className="relative rounded-3xl overflow-hidden border border-neutral-700/80 bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[580px]"
             >
               {/* Big High-Resolution 3D Model / Garment Image or Seamless Video Loop */}
-              <div className="absolute inset-0 overflow-hidden" style={{ transform: "translateZ(0)" }}>
+              <div className="absolute inset-0 overflow-hidden" style={{ transform: "translate3d(0, 0, 0)" }}>
                 {category.heroVideo || category.heroImage.endsWith(".mp4") || category.heroImage.endsWith(".webm") ? (
                   <SmoothSeamlessVideo src={category.heroVideo || category.heroImage} />
                 ) : (
-                  <motion.img
+                  <img
                     src={category.heroImage}
                     alt={category.heroImageAlt || category.name}
-                    style={{ scale: heroBgScale }}
-                    className="w-full h-full object-cover object-top filter brightness-[0.88] contrast-110 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover object-top filter brightness-[0.88] contrast-110"
                   />
                 )}
-                {/* Vignette gradients for pristine text readability matching image.png */}
+                {/* Vignette gradients for pristine text readability */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent pointer-events-none" />
               </div>
 
-              {/* Dynamic Sweeping Light Reflection Sheen as you scroll */}
-              <motion.div
-                className="absolute inset-0 pointer-events-none opacity-20 z-10"
+              {/* Dynamic Clean Light Sheen */}
+              <div
+                className="absolute inset-0 pointer-events-none opacity-15 z-10"
                 style={{
                   background:
-                    "linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.45) 48%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.45) 52%, transparent 65%)",
-                  x: lightSheenX
+                    "linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.4) 50%, transparent 65%)"
                 }}
               />
 
@@ -649,11 +598,10 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             <div className="absolute inset-0 -m-3 sm:-m-4 pointer-events-none rounded-3xl overflow-hidden -z-10">
               <div className="absolute inset-0 bg-neutral-950/60 backdrop-blur-[6px] border border-white/10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.8)]" />
 
-              {/* Scanning Laser Line through Under-Grid Chamber */}
-              <motion.div
-                className="absolute left-0 right-0 h-[2px] opacity-35 z-0"
+              {/* Subtle Laser Accent Line through Under-Grid Chamber */}
+              <div
+                className="absolute left-0 right-0 top-1/2 h-[1px] opacity-25 z-0 pointer-events-none"
                 style={{
-                  top: scanLineY,
                   background: `linear-gradient(90deg, transparent 5%, ${category.themeColor} 50%, transparent 95%)`
                 }}
               />

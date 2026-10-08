@@ -3,19 +3,8 @@ import { motion, useScroll, useSpring, useTransform } from "motion/react";
 import { Calculator, ArrowUp, Sparkles, Activity } from "lucide-react";
 
 export const SportsMotionFX: React.FC = () => {
-  const { scrollYProgress, scrollY } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: -1000, y: -1000 });
+  const { scrollYProgress } = useScroll();
   const [showScrollTop, setShowScrollTop] = useState<boolean>(false);
-  const [scrollVelocity, setScrollVelocity] = useState<number>(0);
-
-  // Laser Scanline Position based on scroll
-  const scanlineY = useTransform(scrollYProgress, [0, 1], ["0vh", "95vh"]);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -55,26 +44,10 @@ export const SportsMotionFX: React.FC = () => {
       {/* 1. TOP SCROLL PROGRESS BAR WITH METALLIC SHEEN */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#E21D1D] via-red-500 to-[#E21D1D] origin-left z-50 shadow-[0_0_12px_#E21D1D]"
-        style={{ scaleX }}
+        style={{ scaleX: scrollYProgress }}
       />
 
-      {/* 2. SUBTLE CYBER-SPORTS MOUSE CURSOR RADIAL SPOTLIGHT */}
-      <div
-        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(226, 29, 29, 0.05), transparent 75%)`
-        }}
-      />
-
-      {/* 3. CINEMATIC AMBIENT LASER SCANLINE ON SCROLL */}
-      {scrollVelocity > 5 && (
-        <motion.div
-          className="pointer-events-none fixed inset-x-0 h-0.5 z-40 bg-gradient-to-r from-transparent via-[#E21D1D] to-transparent shadow-[0_0_20px_#E21D1D] opacity-70 transition-opacity duration-200"
-          style={{ top: scanlineY }}
-        />
-      )}
-
-      {/* 4. FLOATING QUICK SCROLL TO TOP */}
+      {/* 2. FLOATING QUICK SCROLL TO TOP */}
       {showScrollTop && (
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
