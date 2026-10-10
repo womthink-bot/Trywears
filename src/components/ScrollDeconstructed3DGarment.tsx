@@ -23,8 +23,11 @@ import {
   Sliders,
   Play,
   Pause,
-  Maximize2
+  Maximize2,
+  Cloud
 } from "lucide-react";
+
+import { ImageKitSyncModal } from "./ImageKitSyncModal";
 
 import {
   CATEGORIES_DATA,
@@ -136,6 +139,9 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
             }`}
             loading="lazy"
             decoding="async"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&q=80&auto=format&fit=crop";
+            }}
           />
         </div>
 
@@ -538,7 +544,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                       CLICK TO FILTER
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-1.5">
+                  <div className="grid grid-cols-2 gap-1.5 max-h-56 overflow-y-auto pr-1">
                     {(category.subCategories || []).map((sub) => {
                       const isSubActive = selectedSubCategory === sub.id;
                       const count = (category.products || []).filter((p) => p.subCategoryId === sub.id).length;
@@ -669,7 +675,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             </div>
 
             {/* HIGH-TECH SUB-CATEGORY SELECTOR TABS */}
-            <div className="flex flex-wrap items-center gap-1.5 mb-3 bg-black/60 p-1.5 sm:p-2 rounded-2xl border border-neutral-800/80 backdrop-blur-md">
+            <div className="flex flex-wrap items-center gap-1.5 mb-3 bg-black/60 p-1.5 sm:p-2 rounded-2xl border border-neutral-800/80 backdrop-blur-md max-h-36 overflow-y-auto pr-1">
               <div className="flex items-center gap-1.5 mr-1 font-mono text-[9px] font-black text-neutral-400 uppercase tracking-wider pl-1">
                 <Layers className="w-3.5 h-3.5 text-[#E21D1D]" />
                 <span className="hidden sm:inline">SUB-CATEGORIES:</span>
@@ -770,23 +776,43 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   </span>
                 </span>
 
-                {/* Interactive Page Dots */}
-                <div className="flex items-center gap-2">
-                  {[...Array(totalPages)].map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        setSlideDirection(i > currentPage ? "next" : "prev");
-                        setCurrentPage(i);
-                      }}
-                      className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                        currentPage === i
-                          ? "w-7 bg-[#E21D1D]"
-                          : "w-2 bg-neutral-700 hover:bg-neutral-500"
-                      }`}
-                      title={`Jump to Page ${i + 1}`}
-                    />
-                  ))}
+                {/* Interactive Page Controls */}
+                <div className="flex items-center gap-1.5">
+                  {totalPages <= 8 ? (
+                    [...Array(totalPages)].map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => {
+                          setSlideDirection(i > currentPage ? "next" : "prev");
+                          setCurrentPage(i);
+                        }}
+                        className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                          currentPage === i
+                            ? "w-7 bg-[#E21D1D]"
+                            : "w-2 bg-neutral-700 hover:bg-neutral-500"
+                        }`}
+                        title={`Jump to Page ${i + 1}`}
+                      />
+                    ))
+                  ) : (
+                    <div className="flex items-center gap-1.5 font-mono text-[10px]">
+                      <button
+                        onClick={handlePrevPage}
+                        className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-700 hover:bg-neutral-800 text-neutral-300 hover:text-white"
+                      >
+                        PREV
+                      </button>
+                      <span className="text-white px-1 font-bold">
+                        PAGE {currentPage + 1} OF {totalPages}
+                      </span>
+                      <button
+                        onClick={handleNextPage}
+                        className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-700 hover:bg-neutral-800 text-neutral-300 hover:text-white"
+                      >
+                        NEXT
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 <span className="hidden sm:inline text-neutral-500">
@@ -810,6 +836,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("sports-wears");
   const [inspectModalProduct, setInspectModalProduct] = useState<CategoryProduct | null>(null);
   const [modalZoom, setModalZoom] = useState<number>(1.0);
+  const [isImageKitModalOpen, setIsImageKitModalOpen] = useState<boolean>(false);
 
   // Load developer uploaded override categories on mount & listen to live event
   useEffect(() => {
@@ -888,13 +915,30 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
             </p>
           </div>
 
-          {/* Quick Stats Pill */}
-          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-neutral-900/90 border border-white/10 font-mono text-xs text-white shrink-0 shadow-lg">
-            <Factory className="w-4 h-4 text-[#E21D1D]" />
-            <div>
-              <span className="text-[#E21D1D] font-bold block text-[10px]">DIRECT B2B SUPPLY</span>
-              <span className="font-black uppercase tracking-wider">LOW MOQ 25 PCS • 7-DAY SAMPLING</span>
+          {/* Quick Actions Pills */}
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            {/* Quick Stats Pill */}
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-neutral-900/90 border border-white/10 font-mono text-xs text-white shadow-lg">
+              <Factory className="w-4 h-4 text-[#E21D1D]" />
+              <div>
+                <span className="text-[#E21D1D] font-bold block text-[10px]">DIRECT B2B SUPPLY</span>
+                <span className="font-black uppercase tracking-wider">LOW MOQ 25 PCS • 7-DAY SAMPLING</span>
+              </div>
             </div>
+
+            {/* ImageKit Cloud Sync Button */}
+            <button
+              type="button"
+              onClick={() => setIsImageKitModalOpen(true)}
+              className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-[#E21D1D]/15 hover:bg-[#E21D1D]/25 border border-[#E21D1D]/40 text-white font-mono text-xs font-bold transition-all shadow-lg hover:shadow-[#E21D1D]/20 cursor-pointer"
+              title="Sync product folders from ImageKit.io (Try Products)"
+            >
+              <Cloud className="w-4 h-4 text-[#E21D1D]" />
+              <div className="text-left">
+                <span className="text-[#E21D1D] font-bold block text-[9px] uppercase tracking-wider">IMAGEKIT CDN</span>
+                <span className="font-black uppercase tracking-wider text-[11px]">SYNC TRY PRODUCTS</span>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -1157,6 +1201,13 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
           </div>
         )}
       </AnimatePresence>
+
+      {/* ImageKit Cloud Folders & Products Sync Modal */}
+      <ImageKitSyncModal
+        isOpen={isImageKitModalOpen}
+        onClose={() => setIsImageKitModalOpen(false)}
+        onCategoriesUpdated={(newCats) => setCategories(newCats)}
+      />
     </div>
   );
 };

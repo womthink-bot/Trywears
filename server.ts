@@ -19,6 +19,7 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }));
 // Define config, media, uploads, and videos directories using process.cwd() (safe for both tsx and bundled CJS)
 const CONFIG_FILE_PATH = path.join(process.cwd(), "src", "data", "website_config.json");
 const CATEGORIES_OVERRIDE_PATH = path.join(process.cwd(), "src", "data", "custom_categories_override.json");
+const IMAGEKIT_CONFIG_PATH = path.join(process.cwd(), "src", "data", "imagekit_config.json");
 const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
 const MEDIA_DIR = path.join(process.cwd(), "public", "media");
 const PRODUCTS_DIR = path.join(process.cwd(), "public", "products");
@@ -991,6 +992,524 @@ app.post("/api/developer/reset-categories", (req, res) => {
   } catch (error) {
     console.error("Error resetting categories:", error);
     return res.status(500).json({ error: "Failed to reset categories." });
+  }
+});
+
+// GET /api/imagekit/config: Get ImageKit integration configuration
+app.get("/api/imagekit/config", (req, res) => {
+  try {
+    let config: any = {
+      imagekitId: "pngplvaq1",
+      urlEndpoint: "https://ik.imagekit.io/pngplvaq1",
+      publicKey: "public_ZIZOwEaN8kHiqOyVn+N0jgzfBTQ=",
+      rootFolder: "Try Products",
+      hasSavedKey: false
+    };
+    if (fs.existsSync(IMAGEKIT_CONFIG_PATH)) {
+      try {
+        const raw = fs.readFileSync(IMAGEKIT_CONFIG_PATH, "utf-8");
+        const parsed = JSON.parse(raw);
+        config = { ...config, ...parsed, hasSavedKey: !!parsed.privateKey && !parsed.privateKey.includes("*") };
+      } catch (e) {}
+    }
+    const { privateKey, ...safeConfig } = config;
+    return res.json({ success: true, config: safeConfig });
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to read ImageKit config." });
+  }
+});
+
+// POST /api/imagekit/test-connection: Verify ImageKit API credentials
+app.post("/api/imagekit/test-connection", async (req, res) => {
+  try {
+    let { privateKey, urlEndpoint, rootFolder } = req.body;
+    if (!privateKey && fs.existsSync(IMAGEKIT_CONFIG_PATH)) {
+      try {
+        const saved = JSON.parse(fs.readFileSync(IMAGEKIT_CONFIG_PATH, "utf-8"));
+        privateKey = saved.privateKey;
+      } catch (e) {}
+    }
+
+    if (!privateKey) {
+      return res.status(400).json({
+        success: false,
+        error: "Private Key is required. Please copy the unmasked private key from ImageKit dashboard."
+      });
+    }
+
+    if (privateKey.includes("*")) {
+      return res.status(400).json({
+        success: false,
+        error: "The private key contains asterisks (***). In the ImageKit dashboard, please click the Eye icon (👁️) or the Copy button next to the Private Key to copy the real key without masking."
+      });
+    }
+
+    const folderToTest = (rootFolder || "Try Products").trim().replace(/^\/+|\/+$/g, "");
+    const authHeader = `Basic ${Buffer.from(privateKey + ":").toString("base64")}`;
+    const testUrl = `https://api.imagekit.io/v1/files?path=${encodeURIComponent(folderToTest)}&limit=10`;
+
+    const response = await fetch(testUrl, {
+      headers: { Authorization: authHeader }
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      let parsedErr: any = null;
+      try { parsedErr = JSON.parse(errText); } catch(e) {}
+      return res.status(response.status).json({
+        success: false,
+        error: parsedErr?.message || `ImageKit returned status ${response.status}: ${errText}`
+      });
+    }
+
+    const data: any = await response.json();
+    return res.json({
+      success: true,
+      message: "ImageKit credentials verified successfully!",
+      itemCount: Array.isArray(data) ? data.length : 0,
+      sampleItems: Array.isArray(data) ? data.slice(0, 3).map((item: any) => ({
+        name: item.name,
+        filePath: item.filePath,
+        url: item.url,
+        fileType: item.fileType
+      })) : []
+    });
+  } catch (error: any) {
+    console.error("ImageKit connection test failed:", error);
+    return res.status(500).json({ success: false, error: error.message || "Failed to test ImageKit connection" });
+  }
+});
+
+// POST /api/imagekit/sync: Auto-crawl 'Try Products' from ImageKit and sync website categories
+app.post("/api/imagekit/sync", async (req, res) => {
+  try {
+    let { privateKey, urlEndpoint, rootFolder, replaceExisting = true } = req.body;
+    
+    if (!urlEndpoint) urlEndpoint = "https://ik.imagekit.io/pngplvaq1";
+    if (!rootFolder) rootFolder = "Try Products";
+    
+    if (!privateKey && fs.existsSync(IMAGEKIT_CONFIG_PATH)) {
+      try {
+        const saved = JSON.parse(fs.readFileSync(IMAGEKIT_CONFIG_PATH, "utf-8"));
+        privateKey = saved.privateKey;
+      } catch (e) {}
+    }
+
+    if (!privateKey) {
+      return res.status(400).json({
+        success: false,
+        error: "Private Key is required to fetch files from ImageKit. Please provide the unmasked private key."
+      });
+    }
+
+    if (privateKey.includes("*")) {
+      return res.status(400).json({
+        success: false,
+        error: "The private key contains asterisks (***). Please click the Eye icon (👁️) or Copy button in ImageKit dashboard to reveal the real key."
+      });
+    }
+
+    const authHeader = `Basic ${Buffer.from(privateKey + ":").toString("base64")}`;
+    const cleanRootFolder = rootFolder.trim().replace(/^\/+|\/+$/g, "");
+    
+    // Fetch all files from ImageKit recursively with pagination
+    let allFiles: any[] = [];
+    let skip = 0;
+    const limit = 100;
+    let hasMore = true;
+
+    while (hasMore) {
+      // NOTE: Do not pass path param to ImageKit because ImageKit path filter is non-recursive.
+      // Listing files without path param returns all files across all nested subdirectories.
+      const apiUrl = `https://api.imagekit.io/v1/files?limit=${limit}&skip=${skip}`;
+      const response = await fetch(apiUrl, {
+        headers: { Authorization: authHeader }
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        let parsedErr: any = null;
+        try { parsedErr = JSON.parse(errText); } catch(e) {}
+        return res.status(response.status).json({
+          success: false,
+          error: parsedErr?.message || `ImageKit API error (${response.status}): ${errText}`
+        });
+      }
+
+      const batch: any = await response.json();
+      if (Array.isArray(batch) && batch.length > 0) {
+        allFiles.push(...batch);
+        skip += batch.length;
+        if (batch.length < limit) {
+          hasMore = false;
+        }
+      } else {
+        hasMore = false;
+      }
+
+      if (skip >= 10000) break;
+    }
+
+    // Filter files for root folder (defaults to 'Try Products')
+    const lowerRoot = cleanRootFolder.toLowerCase();
+    const folderFiles = allFiles.filter((f: any) => {
+      const p = (f.filePath || "").toLowerCase();
+      return p.includes(lowerRoot) || p.startsWith("/" + lowerRoot) || p.startsWith(lowerRoot);
+    });
+
+    const targetPool = folderFiles.length > 0 ? folderFiles : allFiles;
+
+    // Filter image files
+    const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".avif"];
+    const validImages = targetPool.filter((f: any) => {
+      if (f.fileType === "image") return true;
+      const ext = path.extname(f.name || "").toLowerCase();
+      return imageExtensions.includes(ext);
+    });
+
+    if (validImages.length === 0) {
+      return res.json({
+        success: true,
+        message: `Found folder '${cleanRootFolder}' but no image files were found inside it. Total files found: ${allFiles.length}`,
+        totalScanned: allFiles.length,
+        syncedCount: 0
+      });
+    }
+
+    // Load existing categoriesState
+    let categoriesState: any[] = [];
+    if (fs.existsSync(CATEGORIES_OVERRIDE_PATH)) {
+      try {
+        categoriesState = JSON.parse(fs.readFileSync(CATEGORIES_OVERRIDE_PATH, "utf-8"));
+      } catch (e) {
+        categoriesState = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+      }
+    } else {
+      categoriesState = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+    }
+
+    if (!Array.isArray(categoriesState) || categoriesState.length === 0) {
+      categoriesState = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+    }
+
+    // If replaceExisting is true, clear products from each category before rebuilding
+    if (replaceExisting) {
+      categoriesState.forEach(cat => {
+        cat.products = [];
+        cat.subCategories = [];
+      });
+    }
+
+    const categoryDefaults: Record<string, { gsm: string; fabric: string; accentColor: string; colorways: any[] }> = {
+      "sports-wears": {
+        gsm: "190-GSM",
+        fabric: "Micro-Interlock Dry-Fit Poly",
+        accentColor: "#E21D1D",
+        colorways: [
+          { name: "Obsidian Purple", hex: "#7E22CE" },
+          { name: "Royal Cobalt", hex: "#2563EB" },
+          { name: "Crimson Match", hex: "#DC2626" }
+        ]
+      },
+      "gym-fitness": {
+        gsm: "320-GSM",
+        fabric: "4-Way Power Stretch Seamless Nylon-Spandex",
+        accentColor: "#3B82F6",
+        colorways: [
+          { name: "Stealth Onyx", hex: "#18181B" },
+          { name: "Deep Navy", hex: "#1E3A8A" },
+          { name: "Sage Mist", hex: "#059669" }
+        ]
+      },
+      "street-wears": {
+        gsm: "500-GSM",
+        fabric: "Heavyweight 100% Combed French Terry Cotton",
+        accentColor: "#F59E0B",
+        colorways: [
+          { name: "Vintage Washed Black", hex: "#27272A" },
+          { name: "Bone Ecru", hex: "#E5E5E5" },
+          { name: "Mocha Brown", hex: "#78350F" }
+        ]
+      },
+      "leather-jackets": {
+        gsm: "1.2MM",
+        fabric: "100% Drum-Dyed Full-Grain Cowhide Leather & Melton Wool",
+        accentColor: "#10B981",
+        colorways: [
+          { name: "Jet Matte Black", hex: "#09090B" },
+          { name: "Rich Cognac", hex: "#B45309" },
+          { name: "Racing Emerald", hex: "#047857" }
+        ]
+      }
+    };
+
+    let totalProductsSynced = 0;
+    const detectedSubCats: Record<string, Map<string, { id: string; name: string; tagline: string }>> = {
+      "sports-wears": new Map(),
+      "gym-fitness": new Map(),
+      "street-wears": new Map(),
+      "leather-jackets": new Map()
+    };
+
+    validImages.forEach((imgFile: any, idx: number) => {
+      const cleanPath = (imgFile.filePath || "").replace(/^\/+/, "");
+      let segments = cleanPath.split("/").filter(Boolean);
+
+      // Remove root folder if present
+      if (segments.length > 0 && segments[0].toLowerCase().includes("try") && segments[0].toLowerCase().includes("product")) {
+        segments.shift();
+      }
+
+      if (segments.length === 0) return;
+
+      // Top category detection from 1st folder
+      const catFolder = segments[0].toLowerCase();
+      let targetCatId = "sports-wears";
+
+      if (catFolder.includes("gym") || catFolder.includes("fit") || catFolder.includes("active") || catFolder.includes("compression")) {
+        targetCatId = "gym-fitness";
+      } else if (catFolder.includes("street") || catFolder.includes("hoodie") || catFolder.includes("fleece") || catFolder.includes("pant")) {
+        targetCatId = "street-wears";
+      } else if (catFolder.includes("jacket") || catFolder.includes("leather") || catFolder.includes("varsity") || catFolder.includes("bomber") || catFolder.includes("puffer")) {
+        targetCatId = "leather-jackets";
+      } else if (catFolder.includes("sport") || catFolder.includes("jersey") || catFolder.includes("uniform") || catFolder.includes("kit")) {
+        targetCatId = "sports-wears";
+      }
+
+      let catObj = categoriesState.find(c => c.id === targetCatId);
+      if (!catObj) {
+        catObj = categoriesState[0];
+        targetCatId = catObj.id;
+      }
+
+      // Hierarchical folder decomposition:
+      // segments: [TopCat, subFolder1, subFolder2, subFolder3, ..., fileName]
+      let subCategoryTitle = "Core Collection";
+      let subCategoryId = "core-collection";
+      let subSubCategory = "";
+
+      if (targetCatId === "sports-wears") {
+        // e.g. ["SPORTS WEARS", "FOOTBALL UNIFORM", "Football Uniform Mens", "TRY_101.webp"]
+        if (segments.length >= 3) {
+          subCategoryTitle = segments[1]
+            .replace(/[-_]/g, " ")
+            .replace(/\b\w/g, (l: string) => l.toUpperCase())
+            .trim();
+          subCategoryId = segments[1].toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+          subSubCategory = segments[2]
+            .replace(/[-_]/g, " ")
+            .replace(/\b\w/g, (l: string) => l.toUpperCase())
+            .trim();
+        } else if (segments.length === 2) {
+          subCategoryTitle = segments[0].replace(/[-_]/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase()).trim();
+          subCategoryId = segments[0].toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+        }
+      } else if (targetCatId === "gym-fitness") {
+        // e.g. ["GYM & FITNESS WEARS", "WOMEN GYM & FITNESS WEARS", "WORKOUT LEGGINGS BRA WOMEN GYM & FITNESS", "file.webp"]
+        const genderPart = (segments[1] || "").toLowerCase().includes("women") ? "Women's" : "Men's";
+        let typePart = segments[2] || segments[1] || "Activewear";
+        typePart = typePart
+          .replace(/MENS|WOMEN|WOMENS|GYM|FITNESS|WEARS/gi, "")
+          .replace(/[-_]/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+        if (!typePart) typePart = "Performance Wear";
+        typePart = typePart.replace(/\b\w/g, (l: string) => l.toUpperCase());
+        
+        subCategoryTitle = `${genderPart} ${typePart}`.trim();
+        subCategoryId = `${genderPart.toLowerCase()}-${typePart.toLowerCase()}`.replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+        if (segments.length >= 4) {
+          subSubCategory = segments[3].replace(/[-_]/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase()).trim();
+        } else {
+          subSubCategory = genderPart;
+        }
+      } else if (targetCatId === "street-wears") {
+        // e.g. ["STREET WEARS", "WOMENS STREET WEARS", "Women Street Wears SETS", "Women Street Hoodie Set", "TRY_2002.webp"]
+        const genderPart = (segments[1] || "").toLowerCase().includes("women") ? "Women's" : "Men's";
+        let typePart = segments[2] || segments[1] || "Urban Collection";
+        typePart = typePart
+          .replace(/MENS|WOMEN|WOMENS|STREET|WEARS/gi, "")
+          .replace(/[-_]/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+        if (!typePart) typePart = "Street Essentials";
+        typePart = typePart.replace(/\b\w/g, (l: string) => l.toUpperCase());
+
+        subCategoryTitle = `${genderPart} ${typePart}`.trim();
+        subCategoryId = `${genderPart.toLowerCase()}-${typePart.toLowerCase()}`.replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+        if (segments.length >= 4) {
+          subSubCategory = segments[3].replace(/[-_]/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase()).trim();
+        } else {
+          subSubCategory = genderPart;
+        }
+      } else if (targetCatId === "leather-jackets") {
+        // e.g. ["JACKETS", "Biker Jackets", "TRY_16014.webp"]
+        if (segments.length >= 2) {
+          subCategoryTitle = segments[1]
+            .replace(/[-_]/g, " ")
+            .replace(/\b\w/g, (l: string) => l.toUpperCase())
+            .trim();
+          subCategoryId = segments[1].toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+          if (segments.length >= 3) {
+            subSubCategory = segments[2].replace(/[-_]/g, " ").replace(/\b\w/g, (l: string) => l.toUpperCase()).trim();
+          }
+        }
+      }
+
+      if (!detectedSubCats[targetCatId].has(subCategoryId)) {
+        detectedSubCats[targetCatId].set(subCategoryId, {
+          id: subCategoryId,
+          name: subCategoryTitle,
+          tagline: subSubCategory || "OEM Production"
+        });
+      }
+
+      const fileName = segments[segments.length - 1];
+      const cleanName = fileName
+        .replace(/\.[^/.]+$/, "")
+        .replace(/^[0-9]+[_-]/, "")
+        .replace(/[-_]/g, " ")
+        .replace(/\b\w/g, (l: string) => l.toUpperCase())
+        .trim();
+
+      const defaults = categoryDefaults[targetCatId] || categoryDefaults["sports-wears"];
+      const cdnUrl = imgFile.url || `${urlEndpoint.replace(/\/+$/, "")}/${encodeURI(cleanPath)}`;
+
+      const newProduct: any = {
+        id: `ik-${imgFile.fileId || idx + 1}`,
+        sampleNum: (catObj.products?.length || 0) + 1,
+        name: cleanName || `Sample #${idx + 1}`,
+        subtitle: subSubCategory ? `${subSubCategory} • Pro Grade` : `${subCategoryTitle} • Custom OEM`,
+        image: cdnUrl,
+        badge: subSubCategory ? subSubCategory.toUpperCase() : "TRY WEARS OEM",
+        subCategory: subCategoryTitle,
+        subCategoryId: subCategoryId,
+        gsm: defaults.gsm,
+        fabric: defaults.fabric,
+        accentColor: defaults.accentColor,
+        moq: "25 PCS",
+        colorways: defaults.colorways,
+        specs: [
+          `${defaults.gsm} ${defaults.fabric}`,
+          subSubCategory ? `Edition: ${subSubCategory}` : `Sub-category: ${subCategoryTitle}`,
+          "Reinforced Flatlock & Bar-Tack Tension Seams",
+          "Custom Woven Labels & Barcoded Polybag Packaging"
+        ]
+      };
+
+      if (!Array.isArray(catObj.products)) {
+        catObj.products = [];
+      }
+      catObj.products.push(newProduct);
+      totalProductsSynced++;
+    });
+
+    // Populate subCategories arrays
+    categoriesState.forEach(cat => {
+      const map = detectedSubCats[cat.id];
+      if (map && map.size > 0) {
+        cat.subCategories = Array.from(map.values());
+      } else if (!cat.subCategories || cat.subCategories.length === 0) {
+        cat.subCategories = [
+          { id: "core-collection", name: "Core Collection", tagline: "Factory OEM Production" }
+        ];
+      }
+    });
+
+    fs.writeFileSync(CATEGORIES_OVERRIDE_PATH, JSON.stringify(categoriesState, null, 2), "utf-8");
+
+    const savedConfig = {
+      imagekitId: "pngplvaq1",
+      urlEndpoint,
+      publicKey: "public_ZIZOwEaN8kHiqOyVn+N0jgzfBTQ=",
+      rootFolder: cleanRootFolder,
+      privateKey,
+      lastSyncedAt: new Date().toISOString(),
+      lastSyncedCount: totalProductsSynced
+    };
+    fs.writeFileSync(IMAGEKIT_CONFIG_PATH, JSON.stringify(savedConfig, null, 2), "utf-8");
+
+    return res.json({
+      success: true,
+      message: `Successfully synced ${totalProductsSynced} products from ImageKit!`,
+      totalSynced: totalProductsSynced,
+      categoriesSummary: categoriesState.map(c => ({
+        id: c.id,
+        name: c.name,
+        subCategoriesCount: (c.subCategories || []).length,
+        productsCount: (c.products || []).length
+      }))
+    });
+  } catch (error: any) {
+    console.error("ImageKit sync error:", error);
+    return res.status(500).json({ success: false, error: error.message || "Failed to sync ImageKit files" });
+  }
+});
+
+// POST /api/imagekit/manual-import: Import products via direct ImageKit image URLs
+app.post("/api/imagekit/manual-import", (req, res) => {
+  try {
+    const { urls, targetCategory = "sports-wears", subCategoryName = "Imported Line" } = req.body;
+    if (!Array.isArray(urls) || urls.length === 0) {
+      return res.status(400).json({ error: "URLs list is required." });
+    }
+
+    let categoriesState: any[] = [];
+    if (fs.existsSync(CATEGORIES_OVERRIDE_PATH)) {
+      try {
+        categoriesState = JSON.parse(fs.readFileSync(CATEGORIES_OVERRIDE_PATH, "utf-8"));
+      } catch (e) {
+        categoriesState = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+      }
+    } else {
+      categoriesState = JSON.parse(JSON.stringify(CATEGORIES_DATA));
+    }
+
+    let catObj = categoriesState.find(c => c.id === targetCategory) || categoriesState[0];
+    const subCatId = subCategoryName.toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+
+    if (!catObj.subCategories.some((s: any) => s.id === subCatId)) {
+      catObj.subCategories.push({
+        id: subCatId,
+        name: subCategoryName,
+        tagline: "Custom Line"
+      });
+    }
+
+    let added = 0;
+    urls.forEach((url: string, i: number) => {
+      const cleanUrl = url.trim();
+      if (!cleanUrl) return;
+      const fileName = cleanUrl.split("/").pop()?.split("?")[0] || `item_${i + 1}`;
+      const cleanName = fileName
+        .replace(/\.[^/.]+$/, "")
+        .replace(/[-_]/g, " ")
+        .replace(/\b\w/g, (l: string) => l.toUpperCase());
+
+      catObj.products.push({
+        id: `ik-manual-${Date.now()}-${i}`,
+        sampleNum: (catObj.products?.length || 0) + 1,
+        name: cleanName,
+        subtitle: `${subCategoryName} • OEM Production`,
+        image: cleanUrl,
+        badge: "IMAGEKIT CDN",
+        subCategory: subCategoryName,
+        subCategoryId: subCatId,
+        gsm: "220-GSM",
+        fabric: "High-Tensile Performance Fabric",
+        accentColor: "#E21D1D",
+        moq: "25 PCS",
+        colorways: [{ name: "Standard", hex: "#E21D1D" }],
+        specs: ["ImageKit High-Speed CDN", "Direct B2B Factory Sample", "Full Custom Branding"]
+      });
+      added++;
+    });
+
+    fs.writeFileSync(CATEGORIES_OVERRIDE_PATH, JSON.stringify(categoriesState, null, 2), "utf-8");
+    return res.json({ success: true, addedCount: added, totalProducts: catObj.products.length });
+  } catch (error) {
+    console.error("Error in manual import:", error);
+    return res.status(500).json({ error: "Failed to process manual import." });
   }
 });
 
