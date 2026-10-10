@@ -644,6 +644,20 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                 <span className="font-mono text-[10px] text-neutral-400 bg-neutral-900/90 px-2.5 py-0.5 rounded-full border border-neutral-800">
                   {filteredProducts.length > 0 ? currentPage * pageSize + 1 : 0}-{Math.min((currentPage + 1) * pageSize, filteredProducts.length)} OF {filteredProducts.length}
                 </span>
+
+                <button
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent("open-catalog-page", {
+                        detail: { categoryName: category.name }
+                      })
+                    )
+                  }
+                  className="hidden sm:inline-flex font-mono text-[10px] font-bold text-[#ff4d4d] hover:text-white hover:underline items-center gap-1 cursor-pointer ml-1"
+                  title="Open All Products in Dedicated Catalog Page"
+                >
+                  <span>VIEW FULL CATALOG ➔</span>
+                </button>
               </div>
 
               {/* Clean Left/Right Controls with Page Indicator */}

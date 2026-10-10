@@ -20,6 +20,7 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }));
 const CONFIG_FILE_PATH = path.join(process.cwd(), "src", "data", "website_config.json");
 const CATEGORIES_OVERRIDE_PATH = path.join(process.cwd(), "src", "data", "custom_categories_override.json");
 const IMAGEKIT_CONFIG_PATH = path.join(process.cwd(), "src", "data", "imagekit_config.json");
+const IMAGEKIT_TREE_PATH = path.join(process.cwd(), "src", "data", "imagekit_folder_tree.json");
 const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
 const MEDIA_DIR = path.join(process.cwd(), "public", "media");
 const PRODUCTS_DIR = path.join(process.cwd(), "public", "products");
@@ -1019,6 +1020,20 @@ app.get("/api/imagekit/config", (req, res) => {
   }
 });
 
+// GET /api/imagekit/tree: Return the hierarchical folder and image tree
+app.get("/api/imagekit/tree", (req, res) => {
+  try {
+    if (fs.existsSync(IMAGEKIT_TREE_PATH)) {
+      const data = JSON.parse(fs.readFileSync(IMAGEKIT_TREE_PATH, "utf-8"));
+      return res.json({ success: true, tree: data });
+    }
+    return res.status(404).json({ success: false, error: "Folder tree not generated yet. Please run sync first." });
+  } catch (error: any) {
+    console.error("Error reading folder tree:", error);
+    return res.status(500).json({ success: false, error: error.message || "Failed to load folder tree" });
+  }
+});
+
 // POST /api/imagekit/test-connection: Verify ImageKit API credentials
 app.post("/api/imagekit/test-connection", async (req, res) => {
   try {
@@ -1417,6 +1432,71 @@ app.post("/api/imagekit/sync", async (req, res) => {
     });
 
     fs.writeFileSync(CATEGORIES_OVERRIDE_PATH, JSON.stringify(categoriesState, null, 2), "utf-8");
+
+    // Also build and save full hierarchical folder tree
+    try {
+      const rootTree: any = {
+        name: "Try Products",
+        path: "/Try Products",
+        type: "folder",
+        children: {},
+        files: []
+      };
+
+      validImages.forEach((img: any) => {
+        const rawPath = (img.filePath || "").replace(/^\/+/, "");
+        const parts = rawPath.split("/").filter(Boolean);
+        let current = rootTree;
+        let accumulatedPath = "/Try Products";
+        const folderParts = parts[0].toLowerCase().includes("try") ? parts.slice(1, -1) : parts.slice(0, -1);
+
+        for (const folderName of folderParts) {
+          accumulatedPath += "/" + folderName;
+          if (!current.children[folderName]) {
+            current.children[folderName] = {
+              name: folderName,
+              path: accumulatedPath,
+              type: "folder",
+              children: {},
+              files: []
+            };
+          }
+          current = current.children[folderName];
+        }
+
+        current.files.push({
+          fileId: img.fileId,
+          name: img.name,
+          filePath: img.filePath,
+          url: img.url,
+          thumbnail: img.thumbnail || img.url + "?tr=n-ik_ml_thumbnail",
+          width: img.width,
+          height: img.height,
+          size: img.size
+        });
+      });
+
+      function formatNode(node: any): any {
+        const childrenKeys = Object.keys(node.children || {}).sort();
+        const childrenArray = childrenKeys.map(k => formatNode(node.children[k]));
+        let totalFiles = (node.files || []).length;
+        childrenArray.forEach(c => totalFiles += c.totalFiles);
+        return {
+          name: node.name,
+          path: node.path,
+          type: "folder",
+          fileCount: (node.files || []).length,
+          totalFiles: totalFiles,
+          files: node.files || [],
+          children: childrenArray
+        };
+      }
+
+      const formattedTree = formatNode(rootTree);
+      fs.writeFileSync(IMAGEKIT_TREE_PATH, JSON.stringify(formattedTree, null, 2), "utf-8");
+    } catch (treeErr) {
+      console.error("Failed to build folder tree during sync:", treeErr);
+    }
 
     const savedConfig = {
       imagekitId: "pngplvaq1",

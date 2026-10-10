@@ -46,8 +46,12 @@ import { SecurityAlerts } from "./components/SecurityAlerts";
 import { SocialLinks } from "./components/SocialLinks";
 import { WhatsAppChatWidget, WHATSAPP_DISPLAY, getWhatsAppUrl } from "./components/WhatsAppChatWidget";
 import { SportsFontSwitcher } from "./components/SportsFontSwitcher";
+import { TryProductsMegaMenu, TryProductsMobileAccordion } from "./components/TryProductsMegaMenu";
+import { FolderNode } from "./types/folderTree";
 
 // Core Pages
+import { HomePage } from "./pages/HomePage";
+import { CatalogPage } from "./pages/CatalogPage";
 import { AboutUsPage } from "./pages/AboutUsPage";
 import { CustomizationPage } from "./pages/CustomizationPage";
 import { QualityProcessPage } from "./pages/QualityProcessPage";
@@ -74,6 +78,8 @@ import { OrderProcessPage } from "./pages/OrderProcessPage";
 
 export type AppPage =
   | "home"
+  | "catalog"
+  | "try-products"
   | "about-us"
   | "services"
   | "support"
@@ -105,6 +111,10 @@ export function App() {
     "★ FACTORY DIRECT B2B COMBAT WEAR & SPORTS APPAREL • LOW MOQ 30-50 PCS • EXPRESS UK & WORLDWIDE DDP AIR DISPATCH"
   );
 
+  // Catalog Navigation State
+  const [catalogInitialFolder, setCatalogInitialFolder] = useState<FolderNode | null>(null);
+  const [catalogInitialCategory, setCatalogInitialCategory] = useState<string | null>(null);
+
   // Nav Dropdowns state
   const [activeDropdown, setActiveDropdown] = useState<"services" | "support" | null>(null);
 
@@ -121,10 +131,35 @@ export function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Dedicated catalog navigation helper (routes to separate catalog page)
+  const navigateToCatalog = (folder?: FolderNode, categoryName?: string) => {
+    setCatalogInitialFolder(folder || null);
+    setCatalogInitialCategory(categoryName || (folder ? null : "all"));
+    setActivePage("catalog");
+    setIsMobileMenuOpen(false);
+    setActiveDropdown(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Global event listener for opening dedicated catalog page from anywhere
+  useEffect(() => {
+    const handleOpenCatalog = (e: any) => {
+      if (e.detail) {
+        navigateToCatalog(e.detail.folder, e.detail.categoryName);
+      } else {
+        navigateToCatalog();
+      }
+    };
+    window.addEventListener("open-catalog-page", handleOpenCatalog);
+    return () => window.removeEventListener("open-catalog-page", handleOpenCatalog);
+  }, []);
+
   // Sync document title on page navigation to always show Try Wears
   useEffect(() => {
     const titles: Record<AppPage, string> = {
       home: "Try Wears | Premier B2B Sports Manufacturer & Custom Fightwear",
+      catalog: "TRY Products B2B Catalog | 2,372 Factory Samples | Try Wears",
+      "try-products": "TRY Products B2B Catalog | 2,372 Factory Samples | Try Wears",
       "b2b-quote": "B2B Quotation & Tech Pack Portal | Try Wears",
       customization: "Custom Apparel Manufacturing & 3D Studio | Try Wears",
       "customize-your-product": "Customize Your Combat & Sports Gear | Try Wears",
@@ -354,6 +389,12 @@ export function App() {
               <span>About Us</span>
             </button>
 
+            {/* TRY PRODUCTS MULTI-TIER CATALOG DROPDOWN */}
+            <TryProductsMegaMenu
+              onNavigateToQuote={() => navigateTo("b2b-quote")}
+              onNavigateToCatalog={navigateToCatalog}
+            />
+
             {/* SERVICES Button (Clickable -> Services Page, Hover -> Dropdown) */}
             <div 
               className="relative group"
@@ -552,6 +593,14 @@ export function App() {
                   <span>About Us</span>
                   {activePage === "about-us" && <span className="w-2 h-2 rounded-full bg-[#E21D1D]" />}
                 </button>
+
+                {/* Mobile TRY PRODUCTS CATALOG ACCORDION */}
+                <TryProductsMobileAccordion
+                  onNavigateToCatalog={navigateToCatalog}
+                  onOpenFolderModal={(node) => {
+                    navigateToCatalog(node);
+                  }}
+                />
               </div>
 
               {/* Mobile SERVICES Section */}
@@ -687,6 +736,18 @@ export function App() {
             {/* 9. Fashion Wear Custom Video Section */}
             <FashionWearCustomVideoSection onNavigatePage={navigateTo} />
           </>
+        )}
+
+        {/* Dedicated Try Products B2B Catalog Page */}
+        {(activePage === "catalog" || activePage === "try-products") && (
+          <CatalogPage
+            initialFolder={catalogInitialFolder}
+            initialCategoryName={catalogInitialCategory}
+            onNavigatePage={navigateTo}
+            onNavigateToQuote={(prodName) => {
+              navigateTo("b2b-quote");
+            }}
+          />
         )}
 
         {/* Existing Pages */}
