@@ -503,12 +503,12 @@ export const DeveloperProductUploadModal: React.FC<DeveloperProductUploadModalPr
           <div className="p-3.5 rounded-2xl bg-neutral-950 border border-neutral-800 flex items-center justify-between">
             <div className="space-y-0.5">
               <span className="text-xs font-mono font-black text-white uppercase block">
-                Replace Dummy Products in [{currentCategoryObj.title}]
+                Update / Replace Products in [{currentCategoryObj.title}]
               </span>
               <span className="text-[10px] font-mono text-neutral-400 block">
                 {targetCategory === "auto"
-                  ? "Delete dummy samples across all 4 categories and display uploaded items."
-                  : `Only delete dummy samples inside "${currentCategoryObj.title}". Other 3 categories will remain safe.`}
+                  ? "Replace existing samples across all 4 categories and display uploaded items."
+                  : `Only replace samples inside "${currentCategoryObj.title}". Other 3 categories will remain safe.`}
               </span>
             </div>
             <input

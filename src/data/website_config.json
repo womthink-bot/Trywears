@@ -23,45 +23,45 @@
         "id": "slide-sports-wears",
         "category": "SPORTS WEARS",
         "title": "OEM / ODM CUSTOM SPORTS WEARS & TEAM KITS",
-        "subtitle": "PRO MATCH JERSEYS • ATHLETIC UNIFORMS • LOW MOQ 25 PCS",
+        "subtitle": "PRO MATCH JERSEYS \u2022 ATHLETIC UNIFORMS \u2022 LOW MOQ 25 PCS",
         "description": "Specialized sublimation manufacturing of football kits, basketball uniforms, athletic tracksuits, and high-tensile sports apparel. Certified Italian zero-fade inks, anti-microbial dri-fit fabric, and laser-cut ventilation.",
         "image": "/media/home/videos/sportswearsBG.webm",
         "video": "/media/home/videos/sportswearsBG.webm",
         "buttonText": "CALCULATE B2B SPORTS WEARS",
         "buttonLink": "#b2b-calculator",
-        "tag": "SPORTS WEARS • OEM / ODM",
+        "tag": "SPORTS WEARS \u2022 OEM / ODM",
         "slots3D": [
           {
-            "id": "sports-slot-1",
-            "title": "Sublimated Pro Match Jersey",
-            "subtitle": "Purple & Gold V-Neck",
-            "image": "/images/sports-wears/sportswearsP1.webp",
-            "badge": "CLO 3D MATCH GRADE",
-            "specs": "180GSM Micro-Interlock Poly • Italian Zero-Fade Sublimation"
+            "id": "sports-wears-slot-1",
+            "title": "TRY 12503",
+            "subtitle": "Vollyball Uniform Womens \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/SPORTS%20WEARS/VOLLYBALL%20UNIFORM/Vollyball%20Uniform%20Womens/TRY_12503.webp?updatedAt=1791625660033",
+            "badge": "VOLLYBALL UNIFORM WOMENS",
+            "specs": "VOLLYBALL UNIFORM \u2022 190-GSM \u2022 Micro-Interlock Dry-Fit Poly"
           },
           {
-            "id": "sports-slot-2",
-            "title": "Classic Striped Football Kit",
-            "subtitle": "White & Blue Striped Match Fit",
-            "image": "/images/sports-wears/sportswearsP2.webp",
-            "badge": "PRO ATHLETIC KIT",
-            "specs": "Anti-Bacterial Dri-Fit • Laser-Cut Ventilation Panels"
+            "id": "sports-wears-slot-2",
+            "title": "TRY 12501",
+            "subtitle": "Vollyball Uniform Womens \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/SPORTS%20WEARS/VOLLYBALL%20UNIFORM/Vollyball%20Uniform%20Womens/TRY_12501.webp?updatedAt=1791625660898",
+            "badge": "VOLLYBALL UNIFORM WOMENS",
+            "specs": "VOLLYBALL UNIFORM \u2022 190-GSM \u2022 Micro-Interlock Dry-Fit Poly"
           },
           {
-            "id": "sports-slot-3",
-            "title": "Vanguard Squad Match Jersey",
-            "subtitle": "Deep Navy & Royal Blue",
-            "image": "/images/sports-wears/sportswearsP3.webp",
-            "badge": "MATCH LEVEL UNIFORM",
-            "specs": "Ergonomic Raglan Seaming • High-Flex Poly • Match Level"
+            "id": "sports-wears-slot-3",
+            "title": "TRY 12502",
+            "subtitle": "Vollyball Uniform Womens \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/SPORTS%20WEARS/VOLLYBALL%20UNIFORM/Vollyball%20Uniform%20Womens/TRY_12502.webp?updatedAt=1791625661390",
+            "badge": "VOLLYBALL UNIFORM WOMENS",
+            "specs": "VOLLYBALL UNIFORM \u2022 190-GSM \u2022 Micro-Interlock Dry-Fit Poly"
           },
           {
-            "id": "sports-slot-4",
-            "title": "Sublimated Championship Team Kit",
-            "subtitle": "Crimson & Midnight Technical Jersey",
-            "image": "/images/sports-wears/sportswearsP4.webp",
-            "badge": "PRO ATHLETIC JERSEY",
-            "specs": "Rapid Moisture Dry • High-Tensile Microfiber"
+            "id": "sports-wears-slot-4",
+            "title": "TRY 12509",
+            "subtitle": "Vollyball Uniform Womens \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/SPORTS%20WEARS/VOLLYBALL%20UNIFORM/Vollyball%20Uniform%20Womens/TRY_12509.webp?updatedAt=1791625662556",
+            "badge": "VOLLYBALL UNIFORM WOMENS",
+            "specs": "VOLLYBALL UNIFORM \u2022 190-GSM \u2022 Micro-Interlock Dry-Fit Poly"
           }
         ]
       },
@@ -69,7 +69,7 @@
         "id": "slide-gym-fitness",
         "category": "GYM AND FITNESS WEARS",
         "title": "ENGINEERED GYM & FITNESS PERFORMANCE APPAREL",
-        "subtitle": "SEAMLESS KNIT • 4-WAY COMPRESSION • HIGH-FLEX SPANDEX",
+        "subtitle": "SEAMLESS KNIT \u2022 4-WAY COMPRESSION \u2022 HIGH-FLEX SPANDEX",
         "description": "Private label activewear for global fitness brands, bodybuilding gyms, and athletic influencers. Squat-proof seamless tights, muscle-fit tanks, compression rashguards, and custom silicone branded waistbands.",
         "image": "/media/home/videos/gymandfitnessBG.webm",
         "video": "/media/home/videos/gymandfitnessBG.webm",
@@ -78,36 +78,36 @@
         "tag": "GYM & FITNESS WEARS",
         "slots3D": [
           {
-            "id": "gym-slot-1",
-            "title": "Women's Seamless Sports Bra & Contour Leggings Set",
-            "subtitle": "Sculpted Ribbed 2-Piece Activewear Suit",
-            "image": "/images/gym-fitness/gym_women_seamless_set_v2.webp",
-            "badge": "WOMEN'S SEAMLESS 2-PIECE SET",
-            "specs": "Sculpted Sports Bra • High-Waisted Ribbed Contour Leggings"
+            "id": "gym-fitness-slot-1",
+            "title": "TRY 16201",
+            "subtitle": "Side Pocket Tech Fleece Workout Leggings Womens \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/GYM%20&%20FITNESS%20WEARS/WOMEN%20GYM%20&%20FITNESS%20WEARS/WORKOUT%20LEGGINGS%20BRA%20WOMEN%20GYM%20&%20FITNESS/Side-Pocket%20Tech-Fleece%20Workout%20Leggings%20Womens/TRY_16201.webp?updatedAt=1791625915351",
+            "badge": "SIDE POCKET TECH FLEECE WORKOUT LEGGINGS WOMENS",
+            "specs": "Women's WORKOUT LEGGINGS BRA & \u2022 320-GSM \u2022 4-Way Power Stretch Seamless Nylon-Spandex"
           },
           {
-            "id": "gym-slot-2",
-            "title": "Women's High-Support Racerback Bra & Active Leggings Suit",
-            "subtitle": "Forest Emerald Performance Activewear Suit",
-            "image": "/images/gym-fitness/gym_women_emerald_bra_set_v2.webp",
-            "badge": "WOMEN'S ACTIVE GYM SUIT",
-            "specs": "Impact-Absorbing Racerback Bra • Booty-Contour Compression Leggings"
+            "id": "gym-fitness-slot-2",
+            "title": "TRY 16208",
+            "subtitle": "Side Pocket Tech Fleece Workout Leggings Womens \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/GYM%20&%20FITNESS%20WEARS/WOMEN%20GYM%20&%20FITNESS%20WEARS/WORKOUT%20LEGGINGS%20BRA%20WOMEN%20GYM%20&%20FITNESS/Side-Pocket%20Tech-Fleece%20Workout%20Leggings%20Womens/TRY_16208.webp?updatedAt=1791625915644",
+            "badge": "SIDE POCKET TECH FLEECE WORKOUT LEGGINGS WOMENS",
+            "specs": "Women's WORKOUT LEGGINGS BRA & \u2022 320-GSM \u2022 4-Way Power Stretch Seamless Nylon-Spandex"
           },
           {
-            "id": "gym-slot-3",
-            "title": "Men's 2-Piece Compression Rashguard & Tights Base Layer Suit",
-            "subtitle": "Ergonomic Muscle-Mapped Training Suit",
-            "image": "/images/gym-fitness/gym_men_compression_suit_v2.webp",
-            "badge": "MEN'S 2-PIECE COMPRESSION SUIT",
-            "specs": "Long-Sleeve Compression Top • Full-Length Base Layer Tights"
+            "id": "gym-fitness-slot-3",
+            "title": "TRY 16203",
+            "subtitle": "Side Pocket Tech Fleece Workout Leggings Womens \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/GYM%20&%20FITNESS%20WEARS/WOMEN%20GYM%20&%20FITNESS%20WEARS/WORKOUT%20LEGGINGS%20BRA%20WOMEN%20GYM%20&%20FITNESS/Side-Pocket%20Tech-Fleece%20Workout%20Leggings%20Womens/TRY_16203.webp?updatedAt=1791625916078",
+            "badge": "SIDE POCKET TECH FLEECE WORKOUT LEGGINGS WOMENS",
+            "specs": "Women's WORKOUT LEGGINGS BRA & \u2022 320-GSM \u2022 4-Way Power Stretch Seamless Nylon-Spandex"
           },
           {
-            "id": "gym-slot-4",
-            "title": "Men's Pro Sleeveless Workout Hoodie & 2-in-1 Training Shorts Set",
-            "subtitle": "Bodybuilding & Conditioning Gym Set",
-            "image": "/images/gym-fitness/gym_men_training_set_v2.webp",
-            "badge": "MEN'S GYM TRAINING SET",
-            "specs": "Deep-Cut Athletic Hooded Tank • 5-inch 2-in-1 Compression Liner Shorts"
+            "id": "gym-fitness-slot-4",
+            "title": "TRY 16205",
+            "subtitle": "Side Pocket Tech Fleece Workout Leggings Womens \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/GYM%20&%20FITNESS%20WEARS/WOMEN%20GYM%20&%20FITNESS%20WEARS/WORKOUT%20LEGGINGS%20BRA%20WOMEN%20GYM%20&%20FITNESS/Side-Pocket%20Tech-Fleece%20Workout%20Leggings%20Womens/TRY_16205.webp?updatedAt=1791625916198",
+            "badge": "SIDE POCKET TECH FLEECE WORKOUT LEGGINGS WOMENS",
+            "specs": "Women's WORKOUT LEGGINGS BRA & \u2022 320-GSM \u2022 4-Way Power Stretch Seamless Nylon-Spandex"
           }
         ]
       },
@@ -115,45 +115,45 @@
         "id": "slide-street-wears",
         "category": "STREET WEARS",
         "title": "LUXURY STREET WEARS & HEAVYWEIGHT FLEECE",
-        "subtitle": "450GSM FRENCH TERRY • DROPPED SHOULDERS • BOX-FIT SILHOUETTES",
+        "subtitle": "450GSM FRENCH TERRY \u2022 DROPPED SHOULDERS \u2022 BOX-FIT SILHOUETTES",
         "description": "Custom streetwear manufacturing for contemporary high-fashion labels. Ultra-heavy 450GSM loopback cotton hoodies, vintage acid-wash oversized tees, techwear cargo joggers, and high-density 3D puff embroidery.",
         "image": "/media/home/videos/streetwearsBG.webm",
         "video": "/media/home/videos/streetwearsBG.webm",
         "buttonText": "CUSTOM STREETWEAR RFQ",
         "buttonLink": "#b2b-calculator",
-        "tag": "STREET WEARS • LUXURY HEAVY",
+        "tag": "STREET WEARS \u2022 LUXURY HEAVY",
         "slots3D": [
           {
-            "id": "street-slot-1",
-            "title": "Women's Cropped Boxy Hoodie & Wide-Leg Street Sweatpants Set",
-            "subtitle": "Aesthetic 2-Piece Street Tracksuit",
-            "image": "/images/street-wears/street_women_cropped_hoodie_set_v2.webp",
-            "badge": "WOMEN'S 420GSM TRACKSUIT",
-            "specs": "Cropped Boxy Heavy Hoodie • High-Waisted Wide-Leg Sweats"
+            "id": "street-wears-slot-1",
+            "title": "TRY 2002",
+            "subtitle": "Women Street Hoodie Set \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/STREET%20WEARS/WOMENS%20STREET%20WEARS/Women%20Street%20Wears%20SETS/Women%20Street%20Hoodie%20Set/TRY_2002.webp?updatedAt=1791625301599",
+            "badge": "WOMEN STREET HOODIE SET",
+            "specs": "Women's SETS \u2022 500-GSM \u2022 Heavyweight 100% Combed French Terry Cotton"
           },
           {
-            "id": "street-slot-2",
-            "title": "Women's Washed Oversized Graphic Tee & Parachute Cargo Pants Set",
-            "subtitle": "Sage Olive Utility Streetwear Set",
-            "image": "/images/street-wears/street_women_boxy_tee_cargo_set_v2.webp",
-            "badge": "WOMEN'S CARGO STREET SET",
-            "specs": "Drop-Shoulder Vintage Tee • High-Waisted Toggle Parachute Cargo Pants"
+            "id": "street-wears-slot-2",
+            "title": "TRY 2019",
+            "subtitle": "Women Street Hoodie Set \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/STREET%20WEARS/WOMENS%20STREET%20WEARS/Women%20Street%20Wears%20SETS/Women%20Street%20Hoodie%20Set/TRY_2019.webp?updatedAt=1791625301904",
+            "badge": "WOMEN STREET HOODIE SET",
+            "specs": "Women's SETS \u2022 500-GSM \u2022 Heavyweight 100% Combed French Terry Cotton"
           },
           {
-            "id": "street-slot-3",
-            "title": "Men's Luxury 450GSM French Terry Boxy Hoodie & Sweatpants Set",
-            "subtitle": "Heavyweight Street Tracksuit Set",
-            "image": "/images/street-wears/street_men_heavy_hoodie_set_v2.webp",
-            "badge": "MEN'S 450GSM TRACKSUIT",
-            "specs": "450GSM French Terry • Dropped Shoulders • Heavy Cuffed Sweats"
+            "id": "street-wears-slot-3",
+            "title": "TRY 2008",
+            "subtitle": "Women Street Hoodie Set \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/STREET%20WEARS/WOMENS%20STREET%20WEARS/Women%20Street%20Wears%20SETS/Women%20Street%20Hoodie%20Set/TRY_2008.webp?updatedAt=1791625302364",
+            "badge": "WOMEN STREET HOODIE SET",
+            "specs": "Women's SETS \u2022 500-GSM \u2022 Heavyweight 100% Combed French Terry Cotton"
           },
           {
-            "id": "street-slot-4",
-            "title": "Men's Vintage Washed Heavy Oversized Tee & Tactical Cargo Pants Set",
-            "subtitle": "Urban Techwear Streetwear Set",
-            "image": "/images/street-wears/street_men_vintage_tee_cargo_set_v2.webp",
-            "badge": "MEN'S TACTICAL STREET SET",
-            "specs": "300GSM Enzyme Washed Heavy Tee • Multi-Pocket Utility Cargo Pants"
+            "id": "street-wears-slot-4",
+            "title": "TRY 2001",
+            "subtitle": "Women Street Hoodie Set \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/STREET%20WEARS/WOMENS%20STREET%20WEARS/Women%20Street%20Wears%20SETS/Women%20Street%20Hoodie%20Set/TRY_2001.webp?updatedAt=1791625303019",
+            "badge": "WOMEN STREET HOODIE SET",
+            "specs": "Women's SETS \u2022 500-GSM \u2022 Heavyweight 100% Combed French Terry Cotton"
           }
         ]
       },
@@ -161,45 +161,45 @@
         "id": "slide-leather-jackets",
         "category": "JACKETS",
         "title": "PREMIUM LEATHER, PUFFER, VARSITY & BOMBER JACKETS",
-        "subtitle": "GENUINE LEATHER • DOWN PUFFERS • VARSITY WOOL • FLIGHT BOMBERS",
+        "subtitle": "GENUINE LEATHER \u2022 DOWN PUFFERS \u2022 VARSITY WOOL \u2022 FLIGHT BOMBERS",
         "description": "Master artisanal outerwear production. Genuine top-grain cowhide biker jackets, quilted down winter puffers, classic American wool-leather varsity squad jackets, and tactical flight bombers.",
         "image": "/media/home/videos/LeatherBG.webm",
         "video": "/media/home/videos/LeatherBG.webm",
         "buttonText": "BESPOKE JACKET ORDERS",
         "buttonLink": "#b2b-calculator",
-        "tag": "JACKETS • LEATHER • PUFFER • VARSITY",
+        "tag": "JACKETS \u2022 LEATHER \u2022 PUFFER \u2022 VARSITY",
         "slots3D": [
           {
-            "id": "leather-slot-1",
-            "title": "Full-Grain Cowhide Biker Moto Jacket",
-            "subtitle": "Asymmetric Heavy Moto Outerwear",
-            "image": "/images/leather-jackets/leather_biker.webp",
-            "badge": "1.2MM COWHIDE LEATHER",
-            "specs": "1.2mm Drum-Dyed Cowhide • Heavy YKK Antique Silver Zips"
+            "id": "leather-jackets-slot-1",
+            "title": "TRY 14301",
+            "subtitle": "TRY 14301.Webp \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/JACKETS/Utility%20Jackets%20-%20Cargo%20Jackets/TRY_14301.webp?updatedAt=1791625761792",
+            "badge": "TRY 14301.WEBP",
+            "specs": "Utility Jackets   Cargo Jackets \u2022 1.2MM \u2022 100% Drum-Dyed Full-Grain Cowhide Leather & Melton Wool"
           },
           {
-            "id": "leather-slot-2",
-            "title": "Heritage Wool & Leather Varsity",
-            "subtitle": "Custom Chenille Squad Jacket",
-            "image": "/images/leather-jackets/leather_varsity.webp",
-            "badge": "MELTON WOOL & COWHIDE",
-            "specs": "24oz Melton Wool Body • Genuine Top-Grain Leather Sleeves"
+            "id": "leather-jackets-slot-2",
+            "title": "TRY 14302",
+            "subtitle": "TRY 14302.Webp \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/JACKETS/Utility%20Jackets%20-%20Cargo%20Jackets/TRY_14302.webp?updatedAt=1791625762133",
+            "badge": "TRY 14302.WEBP",
+            "specs": "Utility Jackets   Cargo Jackets \u2022 1.2MM \u2022 100% Drum-Dyed Full-Grain Cowhide Leather & Melton Wool"
           },
           {
-            "id": "leather-slot-3",
-            "title": "Waxed Cafe Racer Moto Leather Jacket",
-            "subtitle": "Mandarin Snap Collar Silhouette",
-            "image": "/images/leather-jackets/leather_cafe_racer.webp",
-            "badge": "MANDARIN SNAP MOTO",
-            "specs": "Distressed Top-Grain Waxed Leather • Quilted Shoulders"
+            "id": "leather-jackets-slot-3",
+            "title": "TRY 14306",
+            "subtitle": "TRY 14306.Webp \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/JACKETS/Utility%20Jackets%20-%20Cargo%20Jackets/TRY_14306.webp?updatedAt=1791625762089",
+            "badge": "TRY 14306.WEBP",
+            "specs": "Utility Jackets   Cargo Jackets \u2022 1.2MM \u2022 100% Drum-Dyed Full-Grain Cowhide Leather & Melton Wool"
           },
           {
-            "id": "leather-slot-4",
-            "title": "Aviator Shearling Bomber Leather Jacket",
-            "subtitle": "Authentic Shearling Flight Coat",
-            "image": "/images/leather-jackets/leather_aviator_jacket.webp",
-            "badge": "SHEARLING AVIATOR BOMBER",
-            "specs": "Rich Espresso Full-Grain Leather • Heavy Shearling Wool Collar"
+            "id": "leather-jackets-slot-4",
+            "title": "TRY 14308",
+            "subtitle": "TRY 14308.Webp \u2022 Pro Grade",
+            "image": "https://ik.imagekit.io/pngplvaq1/Try%20Products/JACKETS/Utility%20Jackets%20-%20Cargo%20Jackets/TRY_14308.webp?updatedAt=1791625762504",
+            "badge": "TRY 14308.WEBP",
+            "specs": "Utility Jackets   Cargo Jackets \u2022 1.2MM \u2022 100% Drum-Dyed Full-Grain Cowhide Leather & Melton Wool"
           }
         ]
       }

@@ -109,6 +109,8 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
   // 1. Search & Filter State for Product Catalog Browser
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategoryTab, setSelectedCategoryTab] = useState("all");
+  const [selectedSubCategoryTab, setSelectedSubCategoryTab] = useState("all");
+  const [visibleProductsCount, setVisibleProductsCount] = useState(24);
   const [isCustomItemModalOpen, setIsCustomItemModalOpen] = useState(false);
   const [customItemName, setCustomItemName] = useState("");
   const [customItemCategory, setCustomItemCategory] = useState("Streetwear & Hoodies");
@@ -130,16 +132,77 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
     return list;
   }, []);
 
-  // Filtered Products
-  const filteredProducts = useMemo(() => {
-    return allCatalogProducts.filter((p) => {
+  // Available Sub-Categories for current category selection
+  const availableSubCategories = useMemo(() => {
+    if (selectedCategoryTab === "all") {
+      const map = new Map<string, { id: string; name: string }>();
+      CATEGORIES_DATA.forEach((cat) => {
+        (cat.subCategories || []).forEach((sub) => {
+          if (!map.has(sub.id)) {
+            map.set(sub.id, { id: sub.id, name: sub.name });
+          }
+        });
+      });
+      return Array.from(map.values());
+    }
+
+    const currentCat = CATEGORIES_DATA.find((c) => {
+      const idLower = c.id.toLowerCase();
+      const nameLower = c.name.toLowerCase();
+      if (selectedCategoryTab === "sports") return idLower.includes("sport") || nameLower.includes("sport");
+      if (selectedCategoryTab === "gym") return idLower.includes("gym") || nameLower.includes("gym");
+      if (selectedCategoryTab === "street") return idLower.includes("street") || nameLower.includes("street");
+      if (selectedCategoryTab === "jackets") return idLower.includes("jacket") || nameLower.includes("jacket");
+      return idLower.includes(selectedCategoryTab.toLowerCase());
+    });
+
+    return (currentCat?.subCategories || []).map((sub) => ({
+      id: sub.id,
+      name: sub.name
+    }));
+  }, [selectedCategoryTab]);
+
+  // Product Counts per Sub-Category in current category scope
+  const subCategoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    allCatalogProducts.forEach((p) => {
       const matchesCategory =
         selectedCategoryTab === "all" ||
         p.categoryName.toLowerCase().includes(selectedCategoryTab.toLowerCase()) ||
         p.subCategory.toLowerCase().includes(selectedCategoryTab.toLowerCase());
-      
+
+      if (matchesCategory) {
+        const subId = p.subCategoryId || p.subCategory;
+        counts[subId] = (counts[subId] || 0) + 1;
+      }
+    });
+    return counts;
+  }, [allCatalogProducts, selectedCategoryTab]);
+
+  // Filtered Products
+  const filteredProducts = useMemo(() => {
+    return allCatalogProducts.filter((p) => {
+      // 1. Category Filter
+      let matchesCategory = true;
+      if (selectedCategoryTab !== "all") {
+        const catKey = selectedCategoryTab.toLowerCase();
+        matchesCategory =
+          p.categoryName.toLowerCase().includes(catKey) ||
+          p.subCategory.toLowerCase().includes(catKey);
+      }
+      if (!matchesCategory) return false;
+
+      // 2. Sub-Category Filter
+      if (selectedSubCategoryTab !== "all") {
+        const matchesSub =
+          p.subCategoryId === selectedSubCategoryTab ||
+          p.subCategory.toLowerCase() === selectedSubCategoryTab.toLowerCase();
+        if (!matchesSub) return false;
+      }
+
+      // 3. Search Query Filter
       const query = searchQuery.trim().toLowerCase();
-      if (!query) return matchesCategory;
+      if (!query) return true;
 
       const matchesSearch =
         p.name.toLowerCase().includes(query) ||
@@ -148,9 +211,9 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
         p.fabric.toLowerCase().includes(query) ||
         p.gsm.toLowerCase().includes(query);
 
-      return matchesCategory && matchesSearch;
+      return matchesSearch;
     });
-  }, [allCatalogProducts, selectedCategoryTab, searchQuery]);
+  }, [allCatalogProducts, selectedCategoryTab, selectedSubCategoryTab, searchQuery]);
 
   // 2. Tagged Items in the RFQ Inquiry Tray
   const [taggedItems, setTaggedItems] = useState<TaggedInquiryItem[]>(() => {
@@ -161,7 +224,7 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
           articleCode: preselectedProduct.articleNumber || "TW-CUSTOM-01",
           name: preselectedProduct.name,
           category: preselectedProduct.categoryName || "Custom Order",
-          image: preselectedProduct.image || "/images/sports-wears/sportswearsP1.png",
+          image: preselectedProduct.image || "https://ik.imagekit.io/pngplvaq1/Try%20Products/SPORTS%20WEARS/VOLLYBALL%20UNIFORM/Vollyball%20Uniform%20Womens/TRY_12501.webp?updatedAt=1791625660898",
           fabric: preselectedProduct.fabric || FABRIC_OPTIONS[0],
           gsm: preselectedProduct.gsm || "450 GSM",
           colorway: "Midnight Black / Custom Pantone",
@@ -291,7 +354,7 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
       articleCode: `TW-BESPOKE-${String(taggedItems.length + 1).padStart(2, "0")}`,
       name: customItemName.trim(),
       category: customItemCategory,
-      image: "/images/sports-wears/sportswearsP1.png",
+      image: "https://ik.imagekit.io/pngplvaq1/Try%20Products/SPORTS%20WEARS/VOLLYBALL%20UNIFORM/Vollyball%20Uniform%20Womens/TRY_12501.webp?updatedAt=1791625660898",
       fabric: FABRIC_OPTIONS[0],
       gsm: "Custom GSM",
       colorway: "Custom Colorway / Pantone",
@@ -692,7 +755,11 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
                     <button
                       key={tab.id}
                       type="button"
-                      onClick={() => setSelectedCategoryTab(tab.id)}
+                      onClick={() => {
+                        setSelectedCategoryTab(tab.id);
+                        setSelectedSubCategoryTab("all");
+                        setVisibleProductsCount(24);
+                      }}
                       className={`px-3.5 py-1.5 rounded-full font-mono text-xs uppercase tracking-wider transition-all cursor-pointer ${
                         selectedCategoryTab === tab.id
                           ? "bg-[#E21D1D] text-white font-black shadow-[0_0_15px_rgba(226,29,29,0.4)]"
@@ -703,71 +770,165 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
                     </button>
                   ))}
                 </div>
+
+                {/* Sub-Categories Quick Filter Pills (Slightly smaller size for clear, easy browsing) */}
+                <div className="pt-2.5 border-t border-neutral-900/80">
+                  <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 pt-0.5 custom-scrollbar flex-nowrap sm:flex-wrap">
+                    <div className="flex items-center gap-1 text-[9px] font-mono font-bold text-neutral-500 uppercase tracking-wider mr-1 shrink-0">
+                      <Layers className="w-3 h-3 text-[#E21D1D]" />
+                      <span>SUB-CATEGORIES:</span>
+                    </div>
+
+                    {/* All Subcategories Option */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedSubCategoryTab("all");
+                        setVisibleProductsCount(24);
+                      }}
+                      className={`px-2.5 py-1 rounded-lg font-mono text-[10px] sm:text-[10.5px] uppercase tracking-wider transition-all cursor-pointer shrink-0 flex items-center gap-1.5 ${
+                        selectedSubCategoryTab === "all"
+                          ? "bg-white text-black font-black shadow-sm"
+                          : "bg-neutral-900/90 text-neutral-400 hover:text-white hover:bg-neutral-800 border border-neutral-800/80"
+                      }`}
+                    >
+                      <span>
+                        All {selectedCategoryTab === "sports" ? "Sports" : selectedCategoryTab === "gym" ? "Fitness" : selectedCategoryTab === "street" ? "Streetwear" : selectedCategoryTab === "jackets" ? "Jackets" : "Subcategories"}
+                      </span>
+                      <span className={`text-[8.5px] px-1.5 py-0.2 rounded font-mono font-bold ${
+                        selectedSubCategoryTab === "all" ? "bg-black/20 text-black font-black" : "bg-neutral-800 text-neutral-400"
+                      }`}>
+                        {filteredProducts.length}
+                      </span>
+                    </button>
+
+                    {/* Dynamic Sub-Category Pills for Selected Category */}
+                    {availableSubCategories.map((sub) => {
+                      const isSubActive = selectedSubCategoryTab === sub.id;
+                      const count = subCategoryCounts[sub.id] || 0;
+                      return (
+                        <button
+                          key={sub.id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedSubCategoryTab(sub.id);
+                            setVisibleProductsCount(24);
+                          }}
+                          className={`px-2.5 py-1 rounded-lg font-mono text-[10px] sm:text-[10.5px] uppercase tracking-wider transition-all cursor-pointer shrink-0 flex items-center gap-1.5 ${
+                            isSubActive
+                              ? "bg-[#E21D1D] text-white font-black shadow-[0_0_12px_rgba(226,29,29,0.35)]"
+                              : "bg-neutral-900/90 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800 border border-neutral-800/80"
+                          }`}
+                        >
+                          <span className="truncate max-w-[190px]">{sub.name}</span>
+                          {count > 0 && (
+                            <span className={`text-[8.5px] px-1.5 py-0.2 rounded font-mono font-bold ${
+                              isSubActive ? "bg-black/30 text-white font-bold" : "bg-neutral-800 text-neutral-400"
+                            }`}>
+                              {count}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
               {/* Filtered Products Scrollable Shelf */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[440px] overflow-y-auto pr-2 custom-scrollbar">
-                {filteredProducts.slice(0, 16).map((product) => {
-                  const isAlreadyTagged = taggedItems.some((item) => item.articleCode === product.articleNumber);
-                  return (
-                    <div
-                      key={product.id}
-                      className={`p-4 rounded-2xl border transition-all flex flex-col justify-between group ${
-                        isAlreadyTagged
-                          ? "bg-neutral-900/90 border-[#E21D1D]/50 shadow-[0_0_15px_rgba(226,29,29,0.2)]"
-                          : "bg-neutral-900/50 hover:bg-neutral-900 border-neutral-800"
-                      }`}
-                    >
-                      <div className="space-y-2">
-                        <div className="relative aspect-square w-full rounded-xl bg-black/60 overflow-hidden flex items-center justify-center p-2">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                          />
-                          <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md text-[#E21D1D] font-mono text-[9px] font-bold">
-                            {product.articleNumber}
-                          </span>
-                        </div>
+              {filteredProducts.length === 0 ? (
+                <div className="py-12 px-4 text-center bg-neutral-900/40 rounded-2xl border border-neutral-800 space-y-3 font-mono text-xs text-neutral-400">
+                  <p>No products found matching the selected subcategory or search query.</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategoryTab("all");
+                      setSelectedSubCategoryTab("all");
+                      setSearchQuery("");
+                    }}
+                    className="px-3.5 py-1.5 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white text-[11px] font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                  >
+                    Reset Filter to All
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[460px] overflow-y-auto pr-2 custom-scrollbar">
+                    {filteredProducts.slice(0, visibleProductsCount).map((product) => {
+                      const isAlreadyTagged = taggedItems.some((item) => item.articleCode === product.articleNumber);
+                      return (
+                        <div
+                          key={product.id}
+                          className={`p-4 rounded-2xl border transition-all flex flex-col justify-between group ${
+                            isAlreadyTagged
+                              ? "bg-neutral-900/90 border-[#E21D1D]/50 shadow-[0_0_15px_rgba(226,29,29,0.2)]"
+                              : "bg-neutral-900/50 hover:bg-neutral-900 border-neutral-800"
+                          }`}
+                        >
+                          <div className="space-y-2">
+                            <div className="relative aspect-square w-full rounded-xl bg-black/60 overflow-hidden flex items-center justify-center p-2">
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                              />
+                              <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md text-[#E21D1D] font-mono text-[9px] font-bold">
+                                {product.articleNumber}
+                              </span>
+                            </div>
 
-                        <div>
-                          <span className="text-[9px] font-mono text-neutral-400 block uppercase line-clamp-1">
-                            {product.subCategory}
-                          </span>
-                          <h4 className="text-xs font-display font-black text-white uppercase line-clamp-1 group-hover:text-red-400 transition-colors">
-                            {product.name}
-                          </h4>
-                          <span className="text-[10px] font-mono text-neutral-500 block mt-0.5">
-                            {product.gsm} • {product.moq}
-                          </span>
-                        </div>
-                      </div>
+                            <div>
+                              <span className="text-[9px] font-mono text-neutral-400 block uppercase line-clamp-1">
+                                {product.subCategory}
+                              </span>
+                              <h4 className="text-xs font-display font-black text-white uppercase line-clamp-1 group-hover:text-red-400 transition-colors">
+                                {product.name}
+                              </h4>
+                              <span className="text-[10px] font-mono text-neutral-500 block mt-0.5">
+                                {product.gsm} • {product.moq}
+                              </span>
+                            </div>
+                          </div>
 
+                          <button
+                            type="button"
+                            onClick={() => handleTagProduct(product)}
+                            className={`w-full mt-3 py-2 rounded-xl font-mono text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                              isAlreadyTagged
+                                ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                                : "bg-[#E21D1D] hover:bg-red-700 text-white shadow-md hover:scale-102"
+                            }`}
+                          >
+                            {isAlreadyTagged ? (
+                              <>
+                                <Check className="w-3 h-3" />
+                                <span>Tagged In RFQ (+1)</span>
+                              </>
+                            ) : (
+                              <>
+                                <Plus className="w-3 h-3" />
+                                <span>Tag to Inquiry</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {filteredProducts.length > visibleProductsCount && (
+                    <div className="pt-2 text-center">
                       <button
                         type="button"
-                        onClick={() => handleTagProduct(product)}
-                        className={`w-full mt-3 py-2 rounded-xl font-mono text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                          isAlreadyTagged
-                            ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                            : "bg-[#E21D1D] hover:bg-red-700 text-white shadow-md hover:scale-102"
-                        }`}
+                        onClick={() => setVisibleProductsCount((prev) => prev + 24)}
+                        className="px-5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-neutral-300 hover:text-white font-mono text-xs uppercase tracking-wider transition-colors cursor-pointer"
                       >
-                        {isAlreadyTagged ? (
-                          <>
-                            <Check className="w-3 h-3" />
-                            <span>Tagged In RFQ (+1)</span>
-                          </>
-                        ) : (
-                          <>
-                            <Plus className="w-3 h-3" />
-                            <span>Tag to Inquiry</span>
-                          </>
-                        )}
+                        Load More Products ({filteredProducts.length - visibleProductsCount} remaining)
                       </button>
                     </div>
-                  );
-                })}
-              </div>
+                  )}
+                </>
+              )}
 
             </section>
 

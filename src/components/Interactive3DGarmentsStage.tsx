@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, Pause, Play, Sparkles, ZoomIn, Eye, ArrowUpRight, X } from "lucide-react";
+import { CATEGORIES_DATA } from "../data/categoriesData";
 
 export interface Garment3DProduct {
   id: string;
@@ -21,188 +22,22 @@ export interface CategoryCollection {
   products: Garment3DProduct[];
 }
 
-export const CATEGORIES_3D_DATA: CategoryCollection[] = [
-  {
-    id: "cat-sports",
-    categoryName: "SPORTS WEARS",
-    code: "01",
-    tagline: "PRO MATCH JERSEYS • ATHLETIC UNIFORMS • TEAM KITS",
-    accentColor: "#E21D1D",
-    products: [
-      {
-        id: "sports-1",
-        name: "Sublimated Wildcats #24 Basketball Kit",
-        category: "SPORTS WEARS",
-        image: "/images/sports-wears/sportswearsP1.png",
-        badge: "PRO BASKETBALL MATCH KIT",
-        specs: "Crimson & Midnight Black Set • 220GSM Birdseye Mesh • Zero-Fade Italian Sublimation",
-        accentColor: "#E21D1D"
-      },
-      {
-        id: "sports-2",
-        name: "Classic Black & Gold Football Kit",
-        category: "SPORTS WEARS",
-        image: "/images/sports-wears/sportswearsP2.png",
-        badge: "CHAMPIONSHIP MATCH GRADE",
-        specs: "Matte Black & Metallic Gold V-Neck • 200GSM Micro-Interlock • Anti-Bacterial Dri-Fit",
-        accentColor: "#F59E0B"
-      },
-      {
-        id: "sports-3",
-        name: "Vanguard Speed Stripe Soccer Kit",
-        category: "SPORTS WEARS",
-        image: "/images/sports-wears/sportswearsP3.png",
-        badge: "PRO ATHLETIC SOCCER KIT",
-        specs: "Crisp White & Dynamic Red/Blue Stripes • High-Flex Poly • Laser-Cut Ventilation",
-        accentColor: "#3B82F6"
-      },
-      {
-        id: "sports-4",
-        name: "Sublimated Teal & Orange Match Kit",
-        category: "SPORTS WEARS",
-        image: "/images/sports-wears/sportswearsP4.png",
-        badge: "PRO SQUAD UNIFORM SET",
-        specs: "Teal Cyan & Neon Orange Panels • Rapid Capillary Moisture Dry • Reinforced Seams",
-        accentColor: "#06B6D4"
-      }
-    ]
-  },
-  {
-    id: "cat-gym",
-    categoryName: "GYM AND FITNESS WEARS",
-    code: "02",
-    tagline: "WOMEN'S ACTIVEWEAR SETS • MEN'S COMPRESSION SUITS • 4-WAY STRETCH",
-    accentColor: "#3B82F6",
-    products: [
-      {
-        id: "gym-1",
-        name: "Women's Seamless Sports Bra & Contour Leggings Set",
-        category: "GYM AND FITNESS WEARS",
-        image: "/images/gym-fitness/gym_women_seamless_set_v2.png",
-        badge: "WOMEN'S SEAMLESS 2-PIECE SET",
-        specs: "Sculpted Sports Bra • High-Waisted Ribbed Contour Leggings • 4-Way Spandex",
-        accentColor: "#EC4899"
-      },
-      {
-        id: "gym-2",
-        name: "Women's High-Support Racerback Bra & Active Leggings Suit",
-        category: "GYM AND FITNESS WEARS",
-        image: "/images/gym-fitness/gym_women_emerald_bra_set_v2.png",
-        badge: "WOMEN'S ACTIVE GYM SUIT",
-        specs: "Impact-Absorbing Racerback Bra • Booty-Contour Compression Leggings • Moisture-Wicking",
-        accentColor: "#10B981"
-      },
-      {
-        id: "gym-3",
-        name: "Men's 2-Piece Compression Rashguard & Tights Base Layer Suit",
-        category: "GYM AND FITNESS WEARS",
-        image: "/images/gym-fitness/gym_men_compression_suit_v2.png",
-        badge: "MEN'S 2-PIECE COMPRESSION SUIT",
-        specs: "Long-Sleeve Muscle Compression Top • Full-Length Base Layer Tights • Flatlock Stitch",
-        accentColor: "#06B6D4"
-      },
-      {
-        id: "gym-4",
-        name: "Men's Pro Sleeveless Workout Hoodie & 2-in-1 Training Shorts Set",
-        category: "GYM AND FITNESS WEARS",
-        image: "/images/gym-fitness/gym_men_training_set_v2.png",
-        badge: "MEN'S GYM TRAINING SET",
-        specs: "Deep-Cut Athletic Hooded Tank • 5-inch 2-in-1 Compression Liner Shorts",
-        accentColor: "#E21D1D"
-      }
-    ]
-  },
-  {
-    id: "cat-street",
-    categoryName: "STREET WEARS",
-    code: "03",
-    tagline: "WOMEN'S & MEN'S HEAVYWEIGHT TRACKSUITS • VINTAGE CARGO SETS",
-    accentColor: "#F59E0B",
-    products: [
-      {
-        id: "street-1",
-        name: "Women's Cropped Boxy Hoodie & Wide-Leg Street Sweatpants Set",
-        category: "STREET WEARS",
-        image: "/images/street-wears/street_women_cropped_hoodie_set_v2.png",
-        badge: "WOMEN'S 420GSM TRACKSUIT",
-        specs: "Cropped Boxy Heavy Hoodie • High-Waisted Wide-Leg Sweats • Vintage Bone Oat",
-        accentColor: "#F59E0B"
-      },
-      {
-        id: "street-2",
-        name: "Women's Washed Oversized Graphic Tee & Parachute Cargo Pants Set",
-        category: "STREET WEARS",
-        image: "/images/street-wears/street_women_boxy_tee_cargo_set_v2.png",
-        badge: "WOMEN'S CARGO STREET SET",
-        specs: "Drop-Shoulder Vintage Tee • High-Waisted Toggle Parachute Cargo Pants • Sage Olive",
-        accentColor: "#10B981"
-      },
-      {
-        id: "street-3",
-        name: "Men's Luxury 450GSM French Terry Boxy Hoodie & Sweatpants Set",
-        category: "STREET WEARS",
-        image: "/images/street-wears/street_men_heavy_hoodie_set_v2.png",
-        badge: "MEN'S 450GSM TRACKSUIT",
-        specs: "450GSM Heavyweight French Terry • Dropped Shoulders • Heavy Cuffed Sweats",
-        accentColor: "#E21D1D"
-      },
-      {
-        id: "street-4",
-        name: "Men's Vintage Washed Heavy Oversized Tee & Tactical Cargo Pants Set",
-        category: "STREET WEARS",
-        image: "/images/street-wears/street_men_vintage_tee_cargo_set_v2.png",
-        badge: "MEN'S TACTICAL STREET SET",
-        specs: "300GSM Enzyme Washed Heavy Tee • Multi-Pocket Utility Tactical Cargo Pants",
-        accentColor: "#8B5CF6"
-      }
-    ]
-  },
-  {
-    id: "cat-leather",
-    categoryName: "JACKETS",
-    code: "04",
-    tagline: "LEATHER • PUFFER • VARSITY • BOMBER & WINDBREAKER JACKETS",
-    accentColor: "#E21D1D",
-    products: [
-      {
-        id: "jacket-1",
-        name: "Full-Grain Cowhide Biker Leather Jacket",
-        category: "JACKETS",
-        image: "/images/jackets/leather_biker.png",
-        badge: "LEATHER BIKER JACKET",
-        specs: "100% Genuine Full-Grain Leather • Asymmetric YKK Zippers • Heavy Quilted Silk Lining",
-        accentColor: "#E21D1D"
-      },
-      {
-        id: "jacket-2",
-        name: "High-Insulation Quilted Winter Puffer Jacket",
-        category: "JACKETS",
-        image: "/images/jackets/leather_aviator_jacket.png",
-        badge: "PUFFER DOWN JACKET",
-        specs: "Heavy Down Fill Insulation • Water-Resistant Ripstop Shell • Storm Hood & Thermal Cuffs",
-        accentColor: "#D97706"
-      },
-      {
-        id: "jacket-3",
-        name: "Heritage Wool & Leather Varsity Letterman Jacket",
-        category: "JACKETS",
-        image: "/images/jackets/leather_varsity.png",
-        badge: "VARSITY BOMBER JACKET",
-        specs: "24oz Heavy Melton Wool Body • Genuine Leather Sleeves • Striped Rib Knit Collar & Cuffs",
-        accentColor: "#B45309"
-      },
-      {
-        id: "jacket-4",
-        name: "Modern Urban Technical Bomber & Windbreaker Jacket",
-        category: "JACKETS",
-        image: "/images/jackets/leather_cafe_racer.png",
-        badge: "TACTICAL BOMBER JACKET",
-        specs: "Weatherproof Matte Shell • Utility Sleeve Pockets • Military Heavy-Duty Ribbed Hem",
-        accentColor: "#854D0E"
-      }
-    ]
-  }
-];
+export const CATEGORIES_3D_DATA: CategoryCollection[] = CATEGORIES_DATA.map((cat, catIdx) => ({
+  id: `cat-${cat.id}`,
+  categoryName: cat.name,
+  code: cat.code || String(catIdx + 1).padStart(2, '0'),
+  tagline: cat.tagline,
+  accentColor: cat.themeColor || '#E21D1D',
+  products: (cat.products || []).slice(0, 8).map((p, pIdx) => ({
+    id: p.id || `${cat.id}-${pIdx + 1}`,
+    name: p.name,
+    category: cat.name,
+    image: p.image,
+    badge: p.badge || p.subCategory || 'OEM READY',
+    specs: `${p.subCategory || cat.name} • ${p.gsm || 'PRO SPEC'} • ${p.fabric || 'EXPORT GRADE'}`,
+    accentColor: p.accentColor || cat.themeColor || '#E21D1D'
+  }))
+}));
 
 interface Interactive3DGarmentsStageProps {
   currentCategoryIndex?: number;

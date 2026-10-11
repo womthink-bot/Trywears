@@ -93,6 +93,31 @@ input, textarea, select, button, [role="button"], [contenteditable="true"] {
   background: #E21D1D;
 }
 
+/* Dedicated visible custom scrollbar for menus, lists and modals */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #ff3b3b #15151e;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #111118;
+  border-radius: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #E21D1D;
+  border-radius: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ff4d4d;
+}
+
 /* Sports Aesthetic Skew & Slants */
 .sports-skew {
   transform: skewX(-12deg);

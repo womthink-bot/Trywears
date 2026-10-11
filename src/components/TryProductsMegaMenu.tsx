@@ -294,9 +294,9 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
                 </div>
               ) : (
                 /* 3-COLUMN CASCADING DIRECTORY BROWSER */
-                <div className="grid grid-cols-1 md:grid-cols-12 min-h-[420px] max-h-[520px]">
+                <div className="grid grid-cols-1 md:grid-cols-12 h-[500px] max-h-[70vh]">
                   {/* COLUMN 1: MAIN CATEGORIES (4-Cols) */}
-                  <div className="md:col-span-4 border-r border-neutral-800/80 p-3 space-y-1.5 bg-neutral-950/40 overflow-y-auto">
+                  <div className="md:col-span-4 border-r border-neutral-800/80 p-3 space-y-1.5 bg-neutral-950/40 overflow-y-auto custom-scrollbar">
                     <span className="text-[9px] font-mono font-bold text-neutral-500 uppercase tracking-widest block px-2 py-1">
                       1. SELECT MAIN CATEGORY
                     </span>
@@ -366,8 +366,8 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
                   </div>
 
                   {/* COLUMN 2: SUB-CATEGORIES (4-Cols) */}
-                  <div className="md:col-span-4 border-r border-neutral-800/80 p-3 space-y-1 bg-black/40 overflow-y-auto">
-                    <span className="text-[9px] font-mono font-bold text-neutral-500 uppercase tracking-widest block px-2 py-1">
+                  <div className="md:col-span-4 border-r border-neutral-800/80 p-3 space-y-1 bg-black/40 overflow-y-auto custom-scrollbar">
+                    <span className="text-[9px] font-mono font-bold text-neutral-500 uppercase tracking-widest block px-2 py-1 sticky top-0 bg-neutral-950/90 z-10 backdrop-blur-md rounded-lg">
                       2. SUB-CATEGORIES ({subCategories.length})
                     </span>
 
@@ -417,7 +417,7 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
                   </div>
 
                   {/* COLUMN 3: DEEP SUB-SUB FOLDERS / LEAF FOLDERS (4-Cols) */}
-                  <div className="md:col-span-4 p-3 space-y-1.5 bg-neutral-950/60 overflow-y-auto">
+                  <div className="md:col-span-4 p-3 space-y-1.5 bg-neutral-950/60 overflow-y-auto custom-scrollbar">
                     <div className="flex items-center justify-between px-2 py-1">
                       <span className="text-[9px] font-mono font-bold text-neutral-500 uppercase tracking-widest">
                         3. LEAF FOLDERS & SAMPLES
