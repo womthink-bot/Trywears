@@ -115,6 +115,38 @@ app.use("/images", express.static(path.join(process.cwd(), "public", "images"), 
 app.use("/videos", express.static(VIDEOS_DIR, staticCacheOptions));
 app.use("/videos", express.static(path.join(MEDIA_DIR, "videos"), staticCacheOptions));
 
+// SEO: robots.txt
+app.get("/robots.txt", (req, res) => {
+  res.type("text/plain");
+  res.send(`User-agent: *
+Allow: /
+Sitemap: https://trywears.com/sitemap.xml
+`);
+});
+
+// SEO: dynamic sitemap.xml
+app.get("/sitemap.xml", (req, res) => {
+  const baseUrl = "https://trywears.com";
+  const today = new Date().toISOString().split("T")[0];
+  const pages = [
+    { url: "", priority: "1.0", changefreq: "daily" },
+    { url: "/catalog", priority: "0.9", changefreq: "daily" },
+    { url: "/b2b-quotation", priority: "0.9", changefreq: "weekly" },
+    { url: "/about", priority: "0.8", changefreq: "monthly" },
+    { url: "/services", priority: "0.8", changefreq: "monthly" },
+    { url: "/customization", priority: "0.8", changefreq: "monthly" },
+    { url: "/faq", priority: "0.7", changefreq: "monthly" }
+  ];
+
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+  pages.forEach((p) => {
+    xml += `  <url>\n    <loc>${baseUrl}${p.url}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${p.changefreq}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>\n`;
+  });
+  xml += `</urlset>`;
+  res.type("application/xml");
+  res.send(xml);
+});
+
 // Helper function to scan all media folders dynamically
 function scanMediaFolders() {
   const imageExts = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"];

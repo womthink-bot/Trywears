@@ -7,6 +7,13 @@ export interface FolderFileItem {
   width?: number;
   height?: number;
   size?: number;
+  description?: string;
+  seoTitle?: string;
+  seoSummary?: string;
+  seoKeywords?: string[];
+  category?: string;
+  subCategory?: string;
+  tags?: string[];
 }
 
 export interface FolderNode {

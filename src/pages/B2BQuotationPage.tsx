@@ -209,7 +209,9 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
         p.articleNumber.toLowerCase().includes(query) ||
         p.subCategory.toLowerCase().includes(query) ||
         p.fabric.toLowerCase().includes(query) ||
-        p.gsm.toLowerCase().includes(query);
+        p.gsm.toLowerCase().includes(query) ||
+        (p.description && p.description.toLowerCase().includes(query)) ||
+        (p.seoKeywords && p.seoKeywords.some((k) => k.toLowerCase().includes(query)));
 
       return matchesSearch;
     });

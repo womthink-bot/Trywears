@@ -148,14 +148,18 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
     return collectAllFiles(tree);
   }, [selectedFolder, activeCategoryNode, tree]);
 
-  // Filter by search query
+  // Filter by search query (including rich SEO keywords, folder hierarchy & descriptions)
   const filteredFiles = useMemo(() => {
     if (!searchQuery.trim()) return baseFiles;
     const q = searchQuery.toLowerCase().trim();
     return baseFiles.filter(
       (f) =>
         f.name.toLowerCase().includes(q) ||
-        (f.filePath && f.filePath.toLowerCase().includes(q))
+        (f.filePath && f.filePath.toLowerCase().includes(q)) ||
+        (f.description && f.description.toLowerCase().includes(q)) ||
+        (f.seoKeywords && f.seoKeywords.some((k) => k.toLowerCase().includes(q))) ||
+        (f.tags && f.tags.some((t) => t.toLowerCase().includes(q))) ||
+        (f.subCategory && f.subCategory.toLowerCase().includes(q))
     );
   }, [baseFiles, searchQuery]);
 

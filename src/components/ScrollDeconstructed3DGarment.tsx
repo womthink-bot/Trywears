@@ -28,6 +28,9 @@ import {
 } from "lucide-react";
 
 import { ImageKitSyncModal } from "./ImageKitSyncModal";
+import { ProductImageLightbox } from "./ProductImageLightbox";
+import { FolderFileItem } from "../types/folderTree";
+import defaultTreeData from "../data/imagekit_folder_tree.json";
 
 import {
   CATEGORIES_DATA,
@@ -38,6 +41,53 @@ import {
 
 export type { CategoryData, CategoryProduct, SubCategoryItem };
 export { CATEGORIES_DATA };
+
+// Quick lookup index for exact FolderFileItem by url or fileId
+const treeFileMap: Record<string, FolderFileItem> = {};
+function indexTree(node: any) {
+  if (node.files && Array.isArray(node.files)) {
+    for (const f of node.files) {
+      if (f.fileId) treeFileMap[f.fileId] = f;
+      if (f.url) treeFileMap[f.url] = f;
+    }
+  }
+  if (node.children && Array.isArray(node.children)) {
+    for (const c of node.children) {
+      indexTree(c);
+    }
+  }
+}
+indexTree(defaultTreeData);
+
+function getFolderFileItem(p: any, categoryName: string): FolderFileItem {
+  const cleanId = (p.id || "").replace(/^ik-/, "");
+  const found = treeFileMap[cleanId] || treeFileMap[p.image];
+  if (found) {
+    return {
+      ...found,
+      description: found.description || p.description,
+      seoKeywords: found.seoKeywords || p.seoKeywords,
+      subCategory: found.subCategory || p.subCategory || categoryName,
+      category: found.category || categoryName
+    };
+  }
+  const cleanName = (p.name || "").endsWith(".webp") ? p.name : `${p.name}.webp`;
+  const sub = p.subCategory || categoryName;
+  return {
+    fileId: cleanId || `try-${Math.random().toString(36).slice(2)}`,
+    name: cleanName,
+    filePath: `/Try Products/${categoryName}/${sub}/${cleanName}`,
+    url: p.image,
+    thumbnail: p.image,
+    description: p.description,
+    seoTitle: p.seoTitle,
+    seoSummary: p.seoSummary,
+    seoKeywords: p.seoKeywords,
+    category: categoryName,
+    subCategory: p.subCategory,
+    tags: Array.isArray(p.specs) ? p.specs : [p.specs || ""]
+  };
+}
 
 // ==============================================================
 // 1. INTERACTIVE 3D PRODUCT CARD COMPONENT
@@ -848,9 +898,25 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
 export const ScrollDeconstructed3DGarment: React.FC = () => {
   const [categories, setCategories] = useState<CategoryData[]>(CATEGORIES_DATA);
   const [activeTab, setActiveTab] = useState<string>("sports-wears");
-  const [inspectModalProduct, setInspectModalProduct] = useState<CategoryProduct | null>(null);
-  const [modalZoom, setModalZoom] = useState<number>(1.0);
+  const [lightboxImages, setLightboxImages] = useState<FolderFileItem[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState<number>(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
+  const [lightboxFolderName, setLightboxFolderName] = useState<string>("");
+  const [lightboxFolderPath, setLightboxFolderPath] = useState<string>("");
   const [isImageKitModalOpen, setIsImageKitModalOpen] = useState<boolean>(false);
+
+  const handleInspectProduct = (prod: CategoryProduct, cat: CategoryData) => {
+    const fileItems = (cat.products || []).map((p) => getFolderFileItem(p, cat.name));
+    const cleanId = (prod.id || "").replace(/^ik-/, "");
+    const idx = fileItems.findIndex(
+      (f) => f.url === prod.image || f.fileId === cleanId
+    );
+    setLightboxImages(fileItems);
+    setLightboxIndex(idx >= 0 ? idx : 0);
+    setLightboxFolderName(prod.subCategory || cat.name);
+    setLightboxFolderPath(`/Try Products/${cat.name}/${prod.subCategory || cat.name}`);
+    setIsLightboxOpen(true);
+  };
 
   // Load developer uploaded override categories on mount & listen to live event
   useEffect(() => {
@@ -1055,166 +1121,29 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
           <CategoryShowcaseSection
             key={category.id}
             category={category}
-            onInspect={(prod) => {
-              setModalZoom(1.0);
-              setInspectModalProduct(prod);
-            }}
+            onInspect={(prod) => handleInspectProduct(prod, category)}
           />
         ))}
       </div>
 
-      {/* ================= 3. QUICK 3D INSPECT & SPEC MODAL ================= */}
-      <AnimatePresence>
-        {inspectModalProduct && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 25, rotateX: 8 }}
-              animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
-              exit={{ opacity: 0, scale: 0.94, y: 25, rotateX: 8 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-3xl bg-neutral-950 border border-neutral-800 rounded-3xl p-6 sm:p-8 overflow-hidden shadow-2xl text-white"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setInspectModalProduct(null)}
-                className="absolute top-5 right-5 p-2 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white transition-colors cursor-pointer z-30"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                {/* Transparent Product Cutout Image with Glow & Zoom Controls */}
-                <div className="relative h-[290px] sm:h-[350px] flex flex-col items-center justify-center bg-neutral-900/60 rounded-2xl border border-neutral-800 p-4 overflow-hidden">
-                  <div
-                    className="absolute w-48 h-48 rounded-full blur-[80px] pointer-events-none"
-                    style={{ backgroundColor: inspectModalProduct.accentColor, opacity: 0.35 }}
-                  />
-                  <div className="relative w-full h-[220px] sm:h-[260px] flex items-center justify-center overflow-hidden">
-                    <motion.img
-                      src={inspectModalProduct.image}
-                      alt={inspectModalProduct.name}
-                      animate={{
-                        y: modalZoom === 1 ? [0, -6, 0] : 0,
-                        scale: modalZoom
-                      }}
-                      transition={{
-                        y: { duration: 3.5, repeat: Infinity, ease: "easeInOut" },
-                        scale: { type: "spring", stiffness: 300, damping: 25 }
-                      }}
-                      className="max-h-full max-w-full object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.95)] relative z-10 transition-transform"
-                    />
-                  </div>
-
-                  {/* Zoom Controls inside Modal */}
-                  <div className="relative z-20 flex items-center gap-2 mt-2 bg-black/85 px-3 py-1 rounded-full border border-neutral-700/80 backdrop-blur-md">
-                    <span className="font-mono text-[9px] text-neutral-400 font-bold">ZOOM:</span>
-                    {[1.0, 1.5, 2.2].map((zVal) => (
-                      <button
-                        key={zVal}
-                        onClick={() => setModalZoom(zVal)}
-                        className={`font-mono text-[9px] px-2 py-0.5 rounded cursor-pointer transition-colors ${
-                          modalZoom === zVal
-                            ? "bg-[#E21D1D] text-white font-bold"
-                            : "text-neutral-400 hover:text-white"
-                        }`}
-                      >
-                        {zVal}X
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Details & Specs */}
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <span className="text-[10px] font-mono font-bold text-[#E21D1D] tracking-widest uppercase">
-                        {inspectModalProduct.badge} • SAMPLE #{inspectModalProduct.sampleNum}
-                      </span>
-                      {inspectModalProduct.subCategory && (
-                        <span className="text-[9px] font-mono font-bold text-neutral-300 bg-neutral-900 border border-neutral-700 px-2 py-0.5 rounded-full uppercase">
-                          {inspectModalProduct.subCategory}
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-display font-black uppercase text-white mt-1 leading-tight">
-                      {inspectModalProduct.name}
-                    </h3>
-                    <p className="text-xs font-mono text-neutral-400 mt-1">
-                      {inspectModalProduct.subtitle}
-                    </p>
-                  </div>
-
-                  <div className="p-3 bg-neutral-900/80 rounded-xl border border-neutral-800 space-y-1">
-                    <div className="flex justify-between text-[10px] font-mono">
-                      <span className="text-neutral-400 uppercase">FABRIC GSM:</span>
-                      <span className="text-white font-bold">{inspectModalProduct.gsm}</span>
-                    </div>
-                    <div className="flex justify-between text-[10px] font-mono">
-                      <span className="text-neutral-400 uppercase">MATERIAL:</span>
-                      <span className="text-white font-bold">{inspectModalProduct.fabric}</span>
-                    </div>
-                    <div className="flex justify-between text-[10px] font-mono">
-                      <span className="text-neutral-400 uppercase">MIN ORDER QUANTITY:</span>
-                      <span className="text-emerald-400 font-bold">{inspectModalProduct.moq}</span>
-                    </div>
-                  </div>
-
-                  {/* Technical Specs List */}
-                  <div>
-                    <span className="text-[10px] font-mono font-bold text-neutral-400 tracking-wider block uppercase mb-2">
-                      ENGINEERING SPECIFICATIONS
-                    </span>
-                    <ul className="space-y-1.5 text-xs font-mono text-neutral-300">
-                      {inspectModalProduct.specs.map((sp, idx) => (
-                        <li key={idx} className="flex items-center gap-2">
-                          <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                          <span>{sp}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Colorways */}
-                  {inspectModalProduct.colorways.length > 0 && (
-                    <div>
-                      <span className="text-[10px] font-mono font-bold text-neutral-400 tracking-wider block uppercase mb-1.5">
-                        AVAILABLE COLORWAYS
-                      </span>
-                      <div className="flex items-center gap-2">
-                        {inspectModalProduct.colorways.map((cw) => (
-                          <div
-                            key={cw.name}
-                            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-neutral-900 border border-neutral-800 text-[10px] font-mono"
-                          >
-                            <span
-                              className="w-2.5 h-2.5 rounded-full border border-white/30"
-                              style={{ backgroundColor: cw.hex }}
-                            />
-                            <span>{cw.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Action */}
-                  <div className="pt-2">
-                    <a
-                      href="#b2b-calculator"
-                      onClick={() => setInspectModalProduct(null)}
-                      className="w-full bg-[#E21D1D] hover:bg-red-700 text-white font-display font-black py-3 rounded-xl text-xs uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-xl shadow-red-900/40 transition-all cursor-pointer"
-                    >
-                      <span>ORDER PRODUCTION SAMPLE</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      {/* ================= 3. FULLSCREEN HIGH-RES PRODUCT LIGHTBOX (EXACTLY AS IN MEGA MENU) ================= */}
+      <ProductImageLightbox
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+        images={lightboxImages}
+        currentIndex={lightboxIndex}
+        onIndexChange={(idx) => setLightboxIndex(idx)}
+        folderName={lightboxFolderName}
+        folderPath={lightboxFolderPath}
+        onRequestQuote={(info) => {
+          setIsLightboxOpen(false);
+          window.dispatchEvent(
+            new CustomEvent("open-quote-page", {
+              detail: { productName: info.name }
+            })
+          );
+        }}
+      />
 
       {/* ImageKit Cloud Folders & Products Sync Modal */}
       <ImageKitSyncModal

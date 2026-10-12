@@ -21,6 +21,10 @@ export interface CategoryProduct {
   moq: string;
   colorways: { name: string; hex: string }[];
   specs: string[];
+  description?: string;
+  seoTitle?: string;
+  seoSummary?: string;
+  seoKeywords?: string[];
 }
 
 export interface CategoryData {

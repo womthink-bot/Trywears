@@ -154,6 +154,15 @@ export function App() {
     return () => window.removeEventListener("open-catalog-page", handleOpenCatalog);
   }, []);
 
+  // Global event listener for opening quote page from anywhere
+  useEffect(() => {
+    const handleOpenQuote = () => {
+      navigateTo("b2b-quote");
+    };
+    window.addEventListener("open-quote-page", handleOpenQuote);
+    return () => window.removeEventListener("open-quote-page", handleOpenQuote);
+  }, []);
+
   // Sync document title on page navigation to always show Try Wears
   useEffect(() => {
     const titles: Record<AppPage, string> = {

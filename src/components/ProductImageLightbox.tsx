@@ -15,9 +15,13 @@ import {
   Layers,
   Sparkles,
   RotateCcw,
-  Move
+  Move,
+  FileText,
+  Info,
+  MessageCircle
 } from "lucide-react";
 import { FolderFileItem } from "../types/folderTree";
+import { getWhatsAppUrl } from "./WhatsAppChatWidget";
 
 interface ProductImageLightboxProps {
   isOpen: boolean;
@@ -52,6 +56,7 @@ export const ProductImageLightbox: React.FC<ProductImageLightboxProps> = ({
 
   const [copiedUrl, setCopiedUrl] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [showSpecsModal, setShowSpecsModal] = useState<boolean>(false);
 
   const currentImage = images[currentIndex] || images[0];
 
@@ -348,6 +353,20 @@ export const ProductImageLightbox: React.FC<ProductImageLightboxProps> = ({
               )}
             </button>
 
+            {/* Product Description Drawer Toggle */}
+            <button
+              onClick={() => setShowSpecsModal((prev) => !prev)}
+              className={`p-2 sm:px-3 sm:py-2 rounded-xl border text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                showSpecsModal
+                  ? "bg-[#E21D1D] text-white border-red-500 shadow-[0_0_15px_rgba(226,29,29,0.5)]"
+                  : "bg-neutral-900/90 border-neutral-700 text-neutral-300 hover:text-white hover:border-neutral-500"
+              }`}
+              title="View Product Description"
+            >
+              <FileText className="w-4 h-4 text-[#ff4d4d]" />
+              <span className="hidden sm:inline">DESCRIPTION</span>
+            </button>
+
             {/* Fullscreen */}
             <button
               onClick={toggleFullscreen}
@@ -474,6 +493,127 @@ export const ProductImageLightbox: React.FC<ProductImageLightboxProps> = ({
             </button>
           </div>
         </div>
+
+        {/* OEM SPECIFICATIONS & SEO DESCRIPTION DRAWER */}
+        <AnimatePresence>
+          {showSpecsModal && (
+            <motion.div
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ type: "spring", damping: 28, stiffness: 300 }}
+              className="absolute top-0 right-0 bottom-0 z-40 w-full sm:w-[480px] bg-neutral-950/95 backdrop-blur-2xl border-l border-neutral-800 flex flex-col p-6 overflow-y-auto custom-scrollbar shadow-2xl"
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-neutral-800">
+                <div className="flex items-center gap-2.5">
+                  <span className="p-2 rounded-xl bg-red-600/20 text-[#ff3b3b] border border-red-500/30">
+                    <FileText className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <h4 className="font-display font-black text-base text-white uppercase tracking-tight">
+                      {cleanName}
+                    </h4>
+                    <span className="text-[10px] font-mono text-neutral-400 block">
+                      {currentImage.subCategory || folderName || "Bespoke Garment Division"}
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setShowSpecsModal(false)}
+                  className="p-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                  title="Close Specifications"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Description Content */}
+              <div className="py-5 space-y-4 font-mono text-xs text-neutral-300 leading-relaxed">
+                <div>
+                  <span className="text-[10px] font-bold text-[#E21D1D] uppercase tracking-wider block mb-1.5">
+                    PRODUCT DESCRIPTION
+                  </span>
+                  <div className="whitespace-pre-line text-[11px] text-neutral-300 bg-neutral-900/70 p-4 rounded-2xl border border-neutral-800/80 leading-relaxed">
+                    {currentImage.description || "Tournament-grade physical sample manufactured factory-direct at our Sialkot atelier. Custom private label branding, 3D silicone badging, zero-fade sublimation, and worldwide DDP express shipping."}
+                  </div>
+                </div>
+
+                {/* Sialkot OEM Capabilities Highlights */}
+                <div className="p-4 rounded-2xl bg-black/70 border border-neutral-800/80 space-y-2.5">
+                  <span className="text-[10px] font-bold text-white uppercase tracking-wider block">
+                    FACTORY DIRECT MANUFACTURING HIGHLIGHTS:
+                  </span>
+                  <div className="grid grid-cols-2 gap-2 text-[10px]">
+                    <div className="p-2.5 rounded-xl bg-neutral-900/80 border border-white/5">
+                      <span className="text-neutral-500 block text-[9px]">MINIMUM ORDER:</span>
+                      <span className="text-white font-bold">25 PCS / COLORWAY</span>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-neutral-900/80 border border-white/5">
+                      <span className="text-neutral-500 block text-[9px]">PROTOTYPING:</span>
+                      <span className="text-emerald-400 font-bold">5-7 DAYS DISPATCH</span>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-neutral-900/80 border border-white/5">
+                      <span className="text-neutral-500 block text-[9px]">MANUFACTURING:</span>
+                      <span className="text-white font-bold">SIALKOT, PAKISTAN</span>
+                    </div>
+                    <div className="p-2.5 rounded-xl bg-neutral-900/80 border border-white/5">
+                      <span className="text-neutral-500 block text-[9px]">EXPORT MARKETS:</span>
+                      <span className="text-white font-bold">USA, UK, CA, EU, AUS</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* SEO Keywords Pills (No unprofessional heading, badges displayed directly) */}
+                {currentImage.seoKeywords && currentImage.seoKeywords.length > 0 && (
+                  <div className="pt-1">
+                    <div className="flex flex-wrap gap-1.5">
+                      {currentImage.seoKeywords.map((kw, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-0.5 rounded-md bg-neutral-900 border border-neutral-800 text-[9.5px] text-neutral-400 font-mono hover:text-white transition-colors"
+                        >
+                          #{kw.replace(/\s+/g, "")}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="mt-auto pt-4 border-t border-neutral-800 space-y-2.5 font-mono text-xs">
+                <button
+                  onClick={() => {
+                    if (onRequestQuote) {
+                      onRequestQuote({
+                        name: cleanName,
+                        image: currentImage.url,
+                        path: currentImage.filePath || folderPath || ""
+                      });
+                    }
+                    setShowSpecsModal(false);
+                    onClose();
+                  }}
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-[#E21D1D] to-[#b91313] hover:from-red-600 hover:to-red-700 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-red-900/30"
+                >
+                  <FileCheck className="w-4 h-4" />
+                  <span>REQUEST B2B SAMPLE QUOTE</span>
+                </button>
+
+                <a
+                  href={getWhatsAppUrl(`Hi Try Wears, I want to inquire about custom production for ${cleanName} (${currentImage.subCategory || folderName || ""})`)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full py-3 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white font-bold uppercase tracking-wider flex items-center justify-center gap-2 border border-emerald-500/30 transition-colors text-center cursor-pointer"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>INQUIRE ON WHATSAPP</span>
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
       )}
     </AnimatePresence>
