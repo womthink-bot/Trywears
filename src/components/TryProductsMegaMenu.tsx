@@ -485,7 +485,7 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
                   <span>
-                    Active CDN: <span className="text-white font-bold">ik.imagekit.io/pngplvaq1</span> (Zero Hosting Load)
+                    Direct Factory Samples: <span className="text-white font-bold">2,372 Physical Prototypes</span> Ready for Production
                   </span>
                 </div>
                 <div className="flex items-center gap-3">

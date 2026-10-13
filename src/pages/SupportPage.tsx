@@ -598,7 +598,7 @@ export const SupportPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                         PILLAR 04 • MOQ & LEAD TIMES
                       </span>
                       <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30">
-                        LOW MOQ 30 PCS
+                        LOW MOQ 20 PCS
                       </span>
                     </div>
                     <button
@@ -620,14 +620,14 @@ export const SupportPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                   </div>
 
                   <p className="text-neutral-100 text-sm sm:text-base leading-relaxed font-normal">
-                    Designed to empower emerging British streetwear founders and growing sports labels to launch without excess deadstock risk. Low minimum order quantities starting from just 30 units per design, with transparent timelines and emergency 10-day rush manufacturing options.
+                    Designed to empower emerging British streetwear founders and growing sports labels to launch without excess deadstock risk. Low minimum order quantities starting from just 20 units per design, with transparent timelines and emergency 10-day rush manufacturing options.
                   </p>
 
                   {/* 3 Tier Volume Cards */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 font-mono text-center">
                     <div className="p-3 rounded-xl bg-[#090910] border border-emerald-500/20">
                       <span className="text-white font-bold text-xs block">Startup Drop</span>
-                      <span className="text-emerald-400 font-black text-sm block mt-0.5">30 - 100 Pcs</span>
+                      <span className="text-emerald-400 font-black text-sm block mt-0.5">20 - 100 Pcs</span>
                       <span className="text-[10px] text-neutral-300 block mt-0.5">Zero deadstock risk</span>
                     </div>
                     <div className="p-3 rounded-xl bg-[#090910] border border-emerald-500/20">

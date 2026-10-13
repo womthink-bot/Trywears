@@ -30,7 +30,7 @@ export const ShippingPolicyPage: React.FC<PageProps> = ({ onNavigatePage }) => {
       icon: <Plane className="w-6 h-6 text-[#E21D1D]" />,
       name: "DHL / FedEx Priority Express (DDP Air)",
       time: "3 - 5 Business Days",
-      bestFor: "Prototypes, Pre-Production Samples & Agiles Runs (30 - 300 Pcs)",
+      bestFor: "Prototypes, Pre-Production Samples & Agile Runs (20 - 300 Pcs)",
       desc: "Doorstep delivery directly to your UK studio, home, or office with full real-time GPS tracking. Zero customs hassle.",
       duty: "DDP (Delivered Duty Paid) Available — All UK VAT & Import Tariffs Handled"
     },

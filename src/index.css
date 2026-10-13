@@ -31,18 +31,27 @@
   --font-aeromove: "Aeromove", "Chakra Petch", "Oxanium", sans-serif;
   --font-sports: "Chakra Petch", "Oxanium", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+  --breakpoint-xs: 360px;
 }
 
 /* Base custom styles for high-fidelity luxury athletic aesthetic */
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
   font-family: var(--font-sans);
   overflow-x: hidden;
+  max-width: 100vw;
   background-color: #0a0a0b;
+}
+
+#root {
+  overflow-x: hidden;
+  max-width: 100vw;
+  min-height: 100vh;
 }
 
 /* ✦ MODERN SPORTS TYPEFACE STYLING FOR ALL HEADINGS */

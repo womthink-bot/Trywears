@@ -639,7 +639,7 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">3.</span>
-                  <span>Physical pre-production counter-sample dispatched via DHL Express in 6-8 business days.</span>
+                  <span>Physical pre-production counter-sample dispatched via client-selected express courier or freight terms.</span>
                 </li>
               </ul>
             </div>
@@ -1386,7 +1386,7 @@ export const B2BQuotationPage: React.FC<B2BQuotationPageProps> = ({
                     className="accent-[#E21D1D] w-4 h-4"
                   />
                   <div className="text-[11px]">
-                    <span className="text-white font-bold block">Dispatch 1 Physical Pre-Production Sample First (7-Day Courier)</span>
+                    <span className="text-white font-bold block">Dispatch 1 Physical Pre-Production Sample First (Express Courier on Client Specs)</span>
                     <span className="text-neutral-400 text-[10px]">Inspect fabric feel, sizing, and embroidery in hand before authorizing bulk factory run.</span>
                   </div>
                 </label>

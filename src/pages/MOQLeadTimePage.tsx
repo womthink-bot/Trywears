@@ -34,14 +34,14 @@ export const MOQLeadTimePage: React.FC<PageProps> = ({ onNavigatePage }) => {
     {
       id: "cat-1",
       category: "Heavyweight Streetwear Hoodies & Sweats",
-      ukSearch: "Custom Hoodies Low MOQ UK (30 Pcs)",
-      moq: "30 Pcs / Colorway",
+      ukSearch: "Custom Hoodies Low MOQ UK (20 Pcs)",
+      moq: "20 Pcs / Colorway",
       sampleTime: "7 - 10 Days",
       bulkTime: "14 - 18 Days",
       fabrics: "450-550 GSM Organic Cotton, French Terry, Brushed Fleece",
       pricingTier: "£14.50 - £24.00 (Volume Dependent)",
       details: [
-        "Sizes: UK XS to 5XL (Mixed size curve allowed in 30 pcs)",
+        "Sizes: UK XS to 5XL (Mixed size curve allowed in 20 pcs)",
         "Includes 3D Puff Screen Print or Multi-color Embroidery",
         "Custom Woven Neck Labels & 80-micron Frosted Polybag included",
         "Rush 10-day production lane available upon request"
@@ -50,8 +50,8 @@ export const MOQLeadTimePage: React.FC<PageProps> = ({ onNavigatePage }) => {
     {
       id: "cat-2",
       category: "Bespoke Gym T-Shirts & Stringers",
-      ukSearch: "Custom Activewear Manufacturer UK Low MOQ",
-      moq: "50 Pcs / Colorway",
+      ukSearch: "Custom Activewear Manufacturer UK Low MOQ (20 Pcs)",
+      moq: "20 Pcs / Colorway",
       sampleTime: "5 - 7 Days",
       bulkTime: "12 - 16 Days",
       fabrics: "220-300 GSM Heavy Jersey, 4-Way Poly-Spandex Lycra",
@@ -66,8 +66,8 @@ export const MOQLeadTimePage: React.FC<PageProps> = ({ onNavigatePage }) => {
     {
       id: "cat-3",
       category: "Cut & Sew Tracksuits & Cargo Joggers",
-      ukSearch: "Custom Cut & Sew Tracksuits UK (30 Sets MOQ)",
-      moq: "30 Sets / Colorway",
+      ukSearch: "Custom Cut & Sew Tracksuits UK (20 Sets MOQ)",
+      moq: "20 Sets / Colorway",
       sampleTime: "8 - 10 Days",
       bulkTime: "16 - 20 Days",
       fabrics: "380-450 GSM Heavy French Terry, Technical Taslan Nylon",
@@ -82,7 +82,7 @@ export const MOQLeadTimePage: React.FC<PageProps> = ({ onNavigatePage }) => {
     {
       id: "cat-4",
       category: "Artisan Leather & Wool Varsity Jackets",
-      ukSearch: "Custom Varsity Leather Jackets UK Low MOQ",
+      ukSearch: "Custom Varsity Leather Jackets UK Low MOQ (20 Pcs)",
       moq: "20 Pcs / Style",
       sampleTime: "10 - 12 Days",
       bulkTime: "21 - 25 Days",
@@ -98,8 +98,8 @@ export const MOQLeadTimePage: React.FC<PageProps> = ({ onNavigatePage }) => {
     {
       id: "cat-5",
       category: "MMA Fight Shorts & BJJ Rashguards",
-      ukSearch: "Custom Fightwear Manufacturer UK Low MOQ",
-      moq: "30 Pcs / Design",
+      ukSearch: "Custom Fightwear Manufacturer UK Low MOQ (20 Pcs)",
+      moq: "20 Pcs / Design",
       sampleTime: "6 - 8 Days",
       bulkTime: "14 - 18 Days",
       fabrics: "240 GSM 4-Way Stretch Poly-Elastane, Lycra Crotch Flex",
@@ -139,7 +139,7 @@ export const MOQLeadTimePage: React.FC<PageProps> = ({ onNavigatePage }) => {
               MOQ & LEAD TIME <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-white to-neutral-400">PRODUCTION MATRIX</span>
             </h1>
             <p className="text-xs sm:text-sm font-mono text-neutral-300 leading-relaxed">
-              Transparent, low minimum order quantities starting from just 30 units per design. Rapid 7-10 day sampling and 14-21 day bulk turnaround designed to empower British streetwear brands, fitness startups, and gym chains to launch fast with zero excess deadstock risk.
+              Transparent, low minimum order quantities starting from just 20 units per design. Rapid 7-10 day sampling and 14-21 day bulk turnaround designed to empower British streetwear brands, fitness startups, and gym chains to launch fast with zero excess deadstock risk.
             </p>
           </div>
 

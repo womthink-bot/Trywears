@@ -133,7 +133,7 @@ export const SampleDevelopmentPage: React.FC<PageProps> = ({ onNavigatePage }) =
               SAMPLE COSTS DEDUCTED 100% FROM YOUR BULK INVOICE
             </h3>
             <p className="text-xs font-mono text-neutral-300 leading-relaxed">
-              We operate on an honest factory partnership model. When you approve your pre-production prototype and place your bulk order (MOQ 30+ pcs), the entire sample fee is subtracted directly from your bulk production invoice.
+              We operate on an honest factory partnership model. When you approve your pre-production prototype and place your bulk order (MOQ 20+ pcs), the entire sample fee is subtracted directly from your bulk production invoice.
             </p>
           </div>
 

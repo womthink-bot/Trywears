@@ -23,7 +23,7 @@ export const WhatsAppChatWidget: React.FC = () => {
   };
 
   return (
-    <aside aria-label="WhatsApp live chat assistant" className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <aside aria-label="WhatsApp live chat assistant" className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end">
       {/* Quick Chat Popup Card */}
       <AnimatePresence>
         {isOpen && (
@@ -32,7 +32,7 @@ export const WhatsAppChatWidget: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25 }}
-            className="mb-3 w-[330px] sm:w-[360px] rounded-3xl bg-[#0d1410] border border-emerald-500/40 shadow-[0_20px_60px_rgba(0,0,0,0.95)] overflow-hidden font-sans text-white"
+            className="mb-3 w-[calc(100vw-32px)] max-w-[360px] rounded-3xl bg-[#0d1410] border border-emerald-500/40 shadow-[0_20px_60px_rgba(0,0,0,0.95)] overflow-hidden font-sans text-white"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 p-4 flex items-center justify-between text-white">

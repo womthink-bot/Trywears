@@ -322,18 +322,18 @@ export const QualityProcessPage: React.FC<QualityProcessPageProps> = ({ onNaviga
             </div>
 
             {/* Quick Tolerance Summary Bar */}
-            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-neutral-800 font-mono text-xs">
-              <div className="p-3.5 rounded-xl bg-[#0e0e18] border border-neutral-700">
-                <span className="text-white font-black text-sm block">AQL 1.0</span>
-                <span className="text-[10px] text-neutral-300 font-bold block uppercase mt-0.5">DISPATCH POLICY</span>
+            <div className="grid grid-cols-1 xs:grid-cols-3 gap-2.5 sm:gap-3 pt-4 border-t border-neutral-800 font-mono text-xs">
+              <div className="p-3 sm:p-3.5 rounded-xl bg-[#0e0e18] border border-neutral-700">
+                <span className="text-white font-black text-xs sm:text-sm block">AQL 1.0</span>
+                <span className="text-[9.5px] sm:text-[10px] text-neutral-300 font-bold block uppercase mt-0.5">DISPATCH POLICY</span>
               </div>
-              <div className="p-3.5 rounded-xl bg-[#0e0e18] border border-neutral-700">
-                <span className="text-emerald-400 font-black text-sm block">± 0.1MM</span>
-                <span className="text-[10px] text-neutral-300 font-bold block uppercase mt-0.5">CNC ACCURACY</span>
+              <div className="p-3 sm:p-3.5 rounded-xl bg-[#0e0e18] border border-neutral-700">
+                <span className="text-emerald-400 font-black text-xs sm:text-sm block">± 0.1MM</span>
+                <span className="text-[9.5px] sm:text-[10px] text-neutral-300 font-bold block uppercase mt-0.5">CNC ACCURACY</span>
               </div>
-              <div className="p-3.5 rounded-xl bg-[#0e0e18] border border-neutral-700">
-                <span className="text-[#ff4d4d] font-black text-sm block">100% METAL SCAN</span>
-                <span className="text-[10px] text-neutral-300 font-bold block uppercase mt-0.5">NEEDLE DETECTOR</span>
+              <div className="p-3 sm:p-3.5 rounded-xl bg-[#0e0e18] border border-neutral-700">
+                <span className="text-[#ff4d4d] font-black text-xs sm:text-sm block">100% METAL SCAN</span>
+                <span className="text-[9.5px] sm:text-[10px] text-neutral-300 font-bold block uppercase mt-0.5">NEEDLE DETECTOR</span>
               </div>
             </div>
           </motion.div>

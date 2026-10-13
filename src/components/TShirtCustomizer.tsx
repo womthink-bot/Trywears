@@ -933,7 +933,7 @@ export const TShirtCustomizer: React.FC<TShirtCustomizerProps> = ({ product, onA
                     ? "ring-2 ring-white scale-110 border-white"
                     : "border-neutral-600 hover:scale-105"
                 }`}
-                title="Apni Marzi Ka Koi Bhi Color Choose Karein"
+                title="Select Custom Body Color"
               >
                 <input
                   type="color"
@@ -981,7 +981,7 @@ export const TShirtCustomizer: React.FC<TShirtCustomizerProps> = ({ product, onA
                     ? "ring-2 ring-white scale-110 border-white"
                     : "border-neutral-600 hover:scale-105"
                 }`}
-                title="Sleeves Ke Liye Apni Marzi Ka Color Choose Karein"
+                title="Select Custom Sleeves Color"
               >
                 <input
                   type="color"
@@ -1029,7 +1029,7 @@ export const TShirtCustomizer: React.FC<TShirtCustomizerProps> = ({ product, onA
                     ? "ring-2 ring-white scale-110 border-white"
                     : "border-neutral-600 hover:scale-105"
                 }`}
-                title="Trim & Stripes Ke Liye Custom Color Choose Karein"
+                title="Select Custom Trim & Accent Color"
               >
                 <input
                   type="color"

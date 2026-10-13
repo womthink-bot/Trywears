@@ -517,7 +517,7 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
                     <div className="space-y-2 text-xs font-mono">
                       <div className="flex justify-between py-1 border-b border-white/5">
                         <span className="text-neutral-400">Low MOQ:</span>
-                        <span className="text-white font-bold">30 Pcs / Colorway</span>
+                        <span className="text-white font-bold">20 Pcs / Colorway</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-white/5">
                         <span className="text-neutral-400">Sample Turnaround:</span>

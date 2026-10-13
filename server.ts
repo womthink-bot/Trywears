@@ -214,7 +214,7 @@ const defaultWebsiteConfig = {
       {
         id: "slide-1",
         title: "OEM / ODM COMBAT ARMORY & PRO FIGHT GEAR FACTORY",
-        subtitle: "DIRECT B2B FACTORY WHOLESALE • LOW MOQ 25 PCS",
+        subtitle: "DIRECT B2B FACTORY WHOLESALE • LOW MOQ 20 PCS",
         description: "Industrial manufacturing of championship boxing gloves, biomechanical shin guards & headgear for international promotions, gyms, and sports brands. 100% genuine cowhide, IMF multi-layer shock foam, and custom embossed laser-branding.",
         image: "/images/hero_1.jpg",
         buttonText: "CALCULATE B2B WHOLESALE",
@@ -767,8 +767,8 @@ app.post("/api/developer/upload-single-file", (req, res) => {
         description: "Custom uploaded production collection.",
         stats: [
           { label: "100% FACTORY", value: "DIRECT" },
-          { label: "LOW MOQ 25", value: "PER STYLE" },
-          { label: "7-DAY SAMPLE", value: "EXPRESS" }
+          { label: "LOW MOQ 20", value: "PER STYLE" },
+          { label: "ON-DEMAND", value: "SAMPLES" }
         ],
         highlights: ["Custom Pantone Dyelot", "Laser Cut Seaming", "Private Label Trims"],
         alignImageLeft: true,
@@ -804,7 +804,7 @@ app.post("/api/developer/upload-single-file", (req, res) => {
       gsm: parsed.gsm,
       fabric: parsed.fabric,
       accentColor: parsed.accentColor,
-      moq: "25 PCS",
+      moq: "20 PCS",
       colorways: [
         { name: "Obsidian Black", hex: "#111111" },
         { name: "Crimson Red", hex: "#E21D1D" },
@@ -945,8 +945,8 @@ app.post("/api/developer/upload-folder", (req, res) => {
             description: "Custom uploaded production collection.",
             stats: [
               { label: "100% FACTORY", value: "DIRECT" },
-              { label: "LOW MOQ 25", value: "PER STYLE" },
-              { label: "7-DAY SAMPLE", value: "EXPRESS" }
+              { label: "LOW MOQ 20", value: "PER STYLE" },
+              { label: "ON-DEMAND", value: "SAMPLES" }
             ],
             highlights: ["Custom Pantone Dyelot", "Laser Cut Seaming", "Private Label Trims"],
             alignImageLeft: true,
@@ -982,7 +982,7 @@ app.post("/api/developer/upload-folder", (req, res) => {
           gsm: parsed.gsm,
           fabric: parsed.fabric,
           accentColor: parsed.accentColor,
-          moq: "25 PCS",
+          moq: "20 PCS",
           colorways: [
             { name: "Obsidian Black", hex: "#111111" },
             { name: "Crimson Red", hex: "#E21D1D" },
@@ -1434,7 +1434,7 @@ app.post("/api/imagekit/sync", async (req, res) => {
         gsm: defaults.gsm,
         fabric: defaults.fabric,
         accentColor: defaults.accentColor,
-        moq: "25 PCS",
+        moq: "20 PCS",
         colorways: defaults.colorways,
         specs: [
           `${defaults.gsm} ${defaults.fabric}`,
@@ -1604,15 +1604,15 @@ app.post("/api/imagekit/manual-import", (req, res) => {
         name: cleanName,
         subtitle: `${subCategoryName} • OEM Production`,
         image: cleanUrl,
-        badge: "IMAGEKIT CDN",
+        badge: "FACTORY SAMPLE",
         subCategory: subCategoryName,
         subCategoryId: subCatId,
         gsm: "220-GSM",
         fabric: "High-Tensile Performance Fabric",
         accentColor: "#E21D1D",
-        moq: "25 PCS",
+        moq: "20 PCS",
         colorways: [{ name: "Standard", hex: "#E21D1D" }],
-        specs: ["ImageKit High-Speed CDN", "Direct B2B Factory Sample", "Full Custom Branding"]
+        specs: ["Direct B2B Factory Sample", "Full Custom Branding", "Sialkot Export Quality"]
       });
       added++;
     });

@@ -23,11 +23,9 @@ import {
   Sliders,
   Play,
   Pause,
-  Maximize2,
-  Cloud
+  Maximize2
 } from "lucide-react";
 
-import { ImageKitSyncModal } from "./ImageKitSyncModal";
 import { ProductImageLightbox } from "./ProductImageLightbox";
 import { FolderFileItem } from "../types/folderTree";
 import defaultTreeData from "../data/imagekit_folder_tree.json";
@@ -169,7 +167,7 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* 100% TRANSPARENT PNG GARMENT CUTOUT WITH SMOOTH HOVER ZOOM */}
-      <div className="relative w-full h-[155px] sm:h-[170px] flex items-center justify-center my-1.5 overflow-visible">
+      <div className="relative w-full h-[130px] xs:h-[150px] sm:h-[170px] flex items-center justify-center my-1.5 overflow-visible">
         {/* Soft ground contact shadow */}
         <div
           className={`absolute bottom-1 w-3/4 h-3.5 rounded-full blur-[6px] bg-black/80 transition-all duration-300 pointer-events-none ${
@@ -182,7 +180,7 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
           <img
             src={product.image}
             alt={product.name}
-            className={`max-w-full max-h-[145px] sm:max-h-[160px] object-contain transition-transform duration-300 ease-out transform-gpu will-change-transform ${
+            className={`max-w-full max-h-[120px] xs:max-h-[140px] sm:max-h-[160px] object-contain transition-transform duration-300 ease-out transform-gpu will-change-transform ${
               isHovered
                 ? "scale-110 drop-shadow-[0_20px_35px_rgba(0,0,0,0.95)] brightness-105"
                 : "scale-100 drop-shadow-[0_10px_18px_rgba(0,0,0,0.75)] opacity-95"
@@ -242,31 +240,31 @@ const CATEGORY_BACKGROUND_THEMES: Record<
   }
 > = {
   "sports-wears": {
-    environmentBadge: "LIVE STADIUM FLOODLIGHTS • ARENA SECTOR 01",
+    environmentBadge: "PRO MATCH TEAMWEAR • QUICK-DRY INTERLOCK & DIGITAL SUBLIMATION",
     ambientSecondary: "#9333EA",
-    watermark: "MATCH PRO ARMORY // SUBLIMATION // 400N SEAMS // ZERO FADE",
-    atmosphereTag: "TURF FLOODLIGHTS • HIGH AEROBIC MESH",
+    watermark: "SPORTS WEARS // PRO TEAMWEAR // DIGITAL SUBLIMATION // OEM SIALKOT",
+    atmosphereTag: "PRO MATCH KITS • QUICK-DRY INTERLOCK",
     laserColor: "#E21D1D"
   },
   "gym-fitness": {
-    environmentBadge: "CYBER POWER CAGE • ATHLETIC FACILITY 02",
+    environmentBadge: "ACTIVEWEAR & COMPRESSION APPAREL • 4-WAY STRETCH & SQUAT-PROOF",
     ambientSecondary: "#06B6D4",
-    watermark: "POWER COMPRESSION // DUAL KNIT // MUSCLE LOCK MATRIX",
-    atmosphereTag: "ISO TRAINING CAGE • CHALK DUST DISPERSION",
+    watermark: "GYM & FITNESS // 4-WAY COMPRESSION // SQUAT PROOF // ATHLETIC WEAR",
+    atmosphereTag: "PERFORMANCE ACTIVEWEAR • FLATLOCK SEAMING",
     laserColor: "#3B82F6"
   },
   "street-wears": {
-    environmentBadge: "METROPOLITAN BRUTALISM • NEON SECTOR 03",
+    environmentBadge: "LUXURY STREETWEAR APPAREL • 450–550 GSM COMBED FRENCH TERRY",
     ambientSecondary: "#EF4444",
-    watermark: "OVERSIZED LUXURY // 460GSM TERRY // RAW HEM BRUTALISM",
-    atmosphereTag: "NEON RAIN ASPHALT • CONCRETE ARCHITECTURE",
+    watermark: "STREET WEARS // 480GSM FRENCH TERRY // BESPOKE CUT & SEW // HOODIES & TEES",
+    atmosphereTag: "HEAVYWEIGHT STREETWEAR • BOX HOODIES & TEES",
     laserColor: "#F59E0B"
   },
   "leather-jackets": {
-    environmentBadge: "HAND-CRAFTED ATELIER • TUNGSTEN FORGE 04",
+    environmentBadge: "FULL-GRAIN GENUINE LEATHER • HANDCRAFTED VARSITY & MOTO JACKETS",
     ambientSecondary: "#B45309",
-    watermark: "1.2MM DRUM DYED // BRASS HARDWARE // HEIRLOOM GRAIN",
-    atmosphereTag: "TUNGSTEN WORKSHOP • VINTAGE MOTORCYCLE ATELIER",
+    watermark: "LEATHER JACKETS // 1.2MM DRUM-DYED COWHIDE // MELTON WOOL VARSITY // SIALKOT",
+    atmosphereTag: "HANDCRAFTED LEATHER • COWHIDE & SHEARLING",
     laserColor: "#D97706"
   }
 };
@@ -411,7 +409,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
     <section
       ref={sectionRef}
       id={`cat-section-${category.id}`}
-      className="relative py-16 sm:py-24 px-4 sm:px-6 overflow-hidden min-h-[920px] select-none"
+      className="relative py-12 sm:py-20 lg:py-24 px-3 sm:px-6 overflow-hidden min-h-auto select-none"
     >
       {/* ============================================================== */}
       {/* 1. DYNAMIC CATEGORY-SPECIFIC LIVING BACKGROUND SYSTEM          */}
@@ -496,7 +494,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             }`}
           >
             <div
-              className="relative rounded-3xl overflow-hidden border border-neutral-700/80 bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[580px]"
+              className="relative rounded-3xl overflow-hidden border border-neutral-700/80 bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[440px] sm:min-h-[520px] lg:min-h-[580px]"
             >
               {/* Big High-Resolution 3D Model / Garment Image or Seamless Video Loop */}
               <div className="absolute inset-0 overflow-hidden" style={{ transform: "translate3d(0, 0, 0)" }}>
@@ -525,15 +523,15 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
 
               {/* Top Category Badge */}
               <div
-                className="relative z-10 p-6 sm:p-7 flex items-center justify-between"
+                className="relative z-10 p-4 sm:p-7 flex items-center justify-between"
                 style={{ transform: "translateZ(20px)" }}
               >
-                <div className="inline-flex items-center gap-2 bg-black/85 border border-white/20 px-3.5 py-1.5 rounded-full backdrop-blur-md shadow-lg">
+                <div className="inline-flex items-center gap-2 bg-black/85 border border-white/20 px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg">
                   <span
                     className="w-2 h-2 rounded-full"
                     style={{ backgroundColor: category.themeColor }}
                   />
-                  <span className="font-mono text-[10px] font-black text-white uppercase tracking-wider">
+                  <span className="font-mono text-[9px] sm:text-[10px] font-black text-white uppercase tracking-wider">
                     {category.code} / 04 — {category.name}
                   </span>
                 </div>
@@ -546,7 +544,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
 
               {/* Bottom Card Content matching image.png */}
               <div
-                className="relative z-10 p-6 sm:p-7 space-y-4"
+                className="relative z-10 p-4 sm:p-7 space-y-3 sm:space-y-4"
                 style={{ transform: "translateZ(25px)" }}
               >
                 <div>
@@ -563,20 +561,20 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-widest block mb-2">
                     KEY STATS
                   </span>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                     {(category.stats || [
                       { label: "100% FACTORY", value: "DIRECT" },
-                      { label: "LOW MOQ 25", value: "PER STYLE" },
-                      { label: "EXPRESS", value: "DDP AIR" }
+                      { label: "LOW MOQ 20", value: "PER STYLE" },
+                      { label: "WORLDWIDE FREIGHT", value: "AIR & SEA" }
                     ]).map((st, sIdx) => (
                       <div
                         key={sIdx}
-                        className="bg-black/80 backdrop-blur-md p-2.5 rounded-xl border border-white/15 flex flex-col justify-center"
+                        className="bg-black/80 backdrop-blur-md p-1.5 sm:p-2.5 rounded-xl border border-white/15 flex flex-col justify-center text-center"
                       >
-                        <span className="font-mono text-[11px] sm:text-xs font-black text-white block">
+                        <span className="font-mono text-[8.5px] xs:text-[10px] sm:text-xs font-black text-white block leading-tight truncate">
                           {st.label}
                         </span>
-                        <span className="font-mono text-[8px] text-neutral-400 block uppercase mt-0.5 truncate">
+                        <span className="font-mono text-[7px] xs:text-[8px] text-neutral-400 block uppercase mt-0.5 truncate">
                           {st.value}
                         </span>
                       </div>
@@ -813,7 +811,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-3.5 flex-1 relative z-10"
+                  className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-3.5 flex-1 relative z-10"
                 >
                   {currentProducts.map((product, pIdx) => (
                     <Interactive3DProductCard
@@ -903,7 +901,6 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
   const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
   const [lightboxFolderName, setLightboxFolderName] = useState<string>("");
   const [lightboxFolderPath, setLightboxFolderPath] = useState<string>("");
-  const [isImageKitModalOpen, setIsImageKitModalOpen] = useState<boolean>(false);
 
   const handleInspectProduct = (prod: CategoryProduct, cat: CategoryData) => {
     const fileItems = (cat.products || []).map((p) => getFolderFileItem(p, cat.name));
@@ -1002,23 +999,9 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
               <Factory className="w-4 h-4 text-[#E21D1D]" />
               <div>
                 <span className="text-[#E21D1D] font-bold block text-[10px]">DIRECT B2B SUPPLY</span>
-                <span className="font-black uppercase tracking-wider">LOW MOQ 25 PCS • 7-DAY SAMPLING</span>
+                <span className="font-black uppercase tracking-wider">LOW MOQ 20 PCS • ON-DEMAND SAMPLING</span>
               </div>
             </div>
-
-            {/* ImageKit Cloud Sync Button */}
-            <button
-              type="button"
-              onClick={() => setIsImageKitModalOpen(true)}
-              className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-[#E21D1D]/15 hover:bg-[#E21D1D]/25 border border-[#E21D1D]/40 text-white font-mono text-xs font-bold transition-all shadow-lg hover:shadow-[#E21D1D]/20 cursor-pointer"
-              title="Sync product folders from ImageKit.io (Try Products)"
-            >
-              <Cloud className="w-4 h-4 text-[#E21D1D]" />
-              <div className="text-left">
-                <span className="text-[#E21D1D] font-bold block text-[9px] uppercase tracking-wider">IMAGEKIT CDN</span>
-                <span className="font-black uppercase tracking-wider text-[11px]">SYNC TRY PRODUCTS</span>
-              </div>
-            </button>
           </div>
         </div>
 
@@ -1081,14 +1064,14 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
         </div>
       </div>
 
-      {/* ================= STICKY / FLOATING 3D SPATIAL SCROLL HUD ================= */}
+      {/* ================= STICKY / FLOATING CATEGORIES NAVIGATION HUD ================= */}
       <div className="sticky top-0 z-30 py-2.5 px-4 sm:px-6 bg-neutral-950/90 backdrop-blur-xl border-b border-neutral-800/80 flex items-center justify-between text-xs font-mono">
         <div className="flex items-center gap-2 sm:gap-3">
           <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />
-          <span className="text-[#E21D1D] font-bold tracking-wider">3D SCROLL PERSPECTIVE</span>
+          <span className="text-[#E21D1D] font-bold tracking-wider">TRY WEARS FACTORY DIVISIONS</span>
           <span className="text-neutral-600 hidden sm:inline">|</span>
           <span className="text-neutral-300 uppercase truncate">
-            STAGE {activeCategory.code}: {activeCategory.name}
+            CATEGORY {activeCategory.code}: {activeCategory.name}
           </span>
         </div>
 
@@ -1143,13 +1126,6 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
             })
           );
         }}
-      />
-
-      {/* ImageKit Cloud Folders & Products Sync Modal */}
-      <ImageKitSyncModal
-        isOpen={isImageKitModalOpen}
-        onClose={() => setIsImageKitModalOpen(false)}
-        onCategoriesUpdated={(newCats) => setCategories(newCats)}
       />
     </div>
   );

@@ -156,7 +156,7 @@ export const BrandCustomizationPage: React.FC<PageProps> = ({ onNavigatePage }) 
             <div className="text-xs font-mono text-neutral-400 space-y-2">
               <div className="flex justify-between pb-1 border-b border-white/5">
                 <span>Trims MOQ:</span>
-                <span className="text-white font-bold">100 Sets</span>
+                <span className="text-white font-bold">20 Sets</span>
               </div>
               <div className="flex justify-between pb-1 border-b border-white/5">
                 <span>Sampling Time:</span>

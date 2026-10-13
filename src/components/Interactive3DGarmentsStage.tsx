@@ -97,9 +97,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/sports-wears/01_purple_jersey.png",
           category: "SPORTS WEARS",
           subCategory: "Football Uniforms & Match Kits",
-          description: "Manufactured factory-direct at our Sialkot, Pakistan atelier, the Pro Match Sublimated Jersey is engineered exclusively for pro club tournaments and competitive athletes.\n\nCloth Quality & Fabric Specifications: 180-200 GSM 100% micro-interlock technical polyester with moisture-wicking capillary channels. Anti-microbial, anti-odor silver ion finish with certified Italian zero-fade sublimation inks.\n\nWorkmanship & Product Quality: Reinforced four-thread flatlock seam construction, breathable laser-cut side ventilation mesh panels, and ribbed stretch crew collar designed for tournament-level endurance.\n\nColors & Pattern Finishes: Deep Royal Purple & Electric Gold vector sublimation, sharp graphic contrast, zero peeling or cracking.\n\nB2B Production & OEM Sourcing: Sourced direct from our Sialkot facility. Low MOQ 25 pcs per colorway. 5-7 days sample dispatch, worldwide DDP express shipping to UK, USA, CA, and Europe.",
+          description: "Manufactured factory-direct at our Sialkot, Pakistan atelier, the Pro Match Sublimated Jersey is engineered exclusively for pro club tournaments and competitive athletes.\n\nCloth Quality & Fabric Specifications: 180-200 GSM 100% micro-interlock technical polyester with moisture-wicking capillary channels. Anti-microbial, anti-odor silver ion finish with certified Italian zero-fade sublimation inks.\n\nWorkmanship & Product Quality: Reinforced four-thread flatlock seam construction, breathable laser-cut side ventilation mesh panels, and ribbed stretch crew collar designed for tournament-level endurance.\n\nColors & Pattern Finishes: Deep Royal Purple & Electric Gold vector sublimation, sharp graphic contrast, zero peeling or cracking.\n\nB2B Production & OEM Sourcing: Sourced direct from our Sialkot facility. LOW MOQ 20 pcs per colorway. On-demand pre-production physical sampling, worldwide shipping as per client choice (Air & Sea freight terms).",
           seoTitle: "Pro Match Sublimated Jersey - Custom Football Teamwear Manufacturer | TRY WEARS",
-          seoSummary: "Pro Match Sublimated Jersey manufactured factory-direct in Sialkot, Pakistan. 180 GSM micro-interlock dry-fit polyester, Italian zero-fade inks, low MOQ 25 pcs.",
+          seoSummary: "Pro Match Sublimated Jersey manufactured factory-direct in Sialkot, Pakistan. 180 GSM micro-interlock dry-fit polyester, Italian zero-fade inks, LOW MOQ 20 pcs.",
           seoKeywords: ["custom football jersey manufacturer", "sublimated sportswear supplier", "sports apparel factory", "team kits manufacturer sialkot", "try wears sportswear"]
         }
       },
@@ -119,9 +119,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/sports-wears/02_white_blue_jersey.png",
           category: "SPORTS WEARS",
           subCategory: "Tournament Athletic Kits",
-          description: "Precision engineered athletic kit designed for high-intensity competitive sports and university tournaments.\n\nCloth Quality & Fabric Specifications: 190 GSM high-filament micro-polyester with hydro-mesh underarm panels for optimal body heat regulation and 4-way ergonomic stretch.\n\nWorkmanship & Product Quality: High-tensile bar-tacked stress points, twin-needle hem stitching, customized with silicone 3D club crests and player numbering.\n\nColors & Pattern Finishes: Arctic White & Cyan Blue precision gradient sublimation with fade-resistant dye technology.\n\nB2B Production & OEM Sourcing: Low MOQ 25 pcs, rapid sampling, full OEM customization directly from Sialkot.",
+          description: "Precision engineered athletic kit designed for high-intensity competitive sports and university tournaments.\n\nCloth Quality & Fabric Specifications: 190 GSM high-filament micro-polyester with hydro-mesh underarm panels for optimal body heat regulation and 4-way ergonomic stretch.\n\nWorkmanship & Product Quality: High-tensile bar-tacked stress points, twin-needle hem stitching, customized with silicone 3D club crests and player numbering.\n\nColors & Pattern Finishes: Arctic White & Cyan Blue precision gradient sublimation with fade-resistant dye technology.\n\nB2B Production & OEM Sourcing: LOW MOQ 20 pcs, rapid sampling, full OEM customization directly from Sialkot.",
           seoTitle: "Tournament Athletic Kit - Custom Athletic Uniforms Manufacturer | TRY WEARS",
-          seoSummary: "Tournament Athletic Kit: 190 GSM micro-polyester, Italian dye sublimation, custom silicone badges, low MOQ 25 units.",
+          seoSummary: "Tournament Athletic Kit: 190 GSM micro-polyester, Italian dye sublimation, custom silicone badges, LOW MOQ 20 units.",
           seoKeywords: ["athletic uniforms manufacturer", "custom sports jerseys", "sublimation teamwear sialkot", "wholesale sports apparel", "try wears"]
         }
       },
@@ -131,7 +131,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
         category: "SPORTS WEARS",
         image: "/images/sports-wears/05_navy_jersey.png",
         badge: "HYDROPHILIC DRY-FIT",
-        specs: "Strategic Breathability Zones • 4-Way Ergonomic Stretch • Low MOQ 25 Pcs",
+        specs: "Strategic Breathability Zones • 4-Way Ergonomic Stretch • LOW MOQ 20 Pcs",
         accentColor: "#1E3A8A",
         fileItem: {
           fileId: "hero-sports-3",
@@ -143,7 +143,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           subCategory: "Squad Match Jerseys",
           description: "High-spec teamwear jersey engineered for endurance, speed, and premium retail presentation.\n\nCloth Quality & Fabric Specifications: 185 GSM hydrophobic dry-fit knit with micro-perforated back panels. Quick evaporation keeps players dry under intense heat.\n\nWorkmanship & Product Quality: Seamless shoulder construction reduces friction during full arm motion. Bar-tacked seams and taped interior collar.\n\nColors & Pattern Finishes: Deep Navy & Fluorescent Volt accents with ultra-durable heat-transfer brand branding.\n\nB2B Production & OEM Sourcing: Factory-direct production in Sialkot, low minimum order quantities, bespoke club labeling.",
           seoTitle: "Squad Elite Match Jersey - Performance Sportswear OEM | TRY WEARS",
-          seoSummary: "Squad Elite Match Jersey: 185 GSM hydrophilic knit, micro-perforated back, OEM branding, low MOQ 25 pcs.",
+          seoSummary: "Squad Elite Match Jersey: 185 GSM hydrophilic knit, micro-perforated back, OEM branding, LOW MOQ 20 pcs.",
           seoKeywords: ["teamwear supplier uk", "custom match kit manufacturer", "performance sportswear factory", "sialkot sports exporter"]
         }
       },
@@ -165,7 +165,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           subCategory: "Championship Pro Kits",
           description: "Our flagship tournament match kit engineered for professional clubs and international federation standards.\n\nCloth Quality & Fabric Specifications: 200 GSM heavyweight athletic interlock with ribbed collar and raglan sleeve construction. Ultra-high tensile strength and tear resistance.\n\nWorkmanship & Product Quality: Reinforced triple-needle seams, bar-tacked side splits, bespoke 3D embossed TPU silicone emblems.\n\nColors & Pattern Finishes: Crimson Red & Onyx Black contrast geometric layout with vibrant colorfast pigment.\n\nB2B Production & OEM Sourcing: Produced in Sialkot, Pakistan. Export ready for UK, USA, CA, and EU markets with low MOQ.",
           seoTitle: "Championship Red Match Kit - Pro Sports Apparel Manufacturer | TRY WEARS",
-          seoSummary: "Championship Red Match Kit: 200 GSM athletic interlock, triple-needle seams, 3D TPU emblems, low MOQ 25 pcs.",
+          seoSummary: "Championship Red Match Kit: 200 GSM athletic interlock, triple-needle seams, 3D TPU emblems, LOW MOQ 20 pcs.",
           seoKeywords: ["pro match kit manufacturer", "custom soccer jersey supplier", "sialkot garment factory", "sports apparel exporter"]
         }
       }
@@ -194,9 +194,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/gym-fitness/gym_seamless.png",
           category: "GYM & FITNESS WEARS",
           subCategory: "Seamless Activewear",
-          description: "Artisanal circular-knit seamless construction engineered for zero chafing and targeted body contouring.\n\nCloth Quality & Fabric Specifications: 280 GSM premium 90% technical nylon and 10% spandex blend. Squat-proof opacity, 4-way elastic recovery, and moisture-wicking micro-yarns.\n\nWorkmanship & Product Quality: Circular knitting eliminates side seams entirely. Engineered compression ribs support core musculature during heavy lifts.\n\nColors & Pattern Finishes: Charcoal Heather & Sage Green colorways with high-density silicone branding.\n\nB2B Production & OEM Sourcing: Factory-direct production in Sialkot, Pakistan. Low MOQ 25 units per colorway, custom private labeling.",
+          description: "Artisanal circular-knit seamless construction engineered for zero chafing and targeted body contouring.\n\nCloth Quality & Fabric Specifications: 280 GSM premium 90% technical nylon and 10% spandex blend. Squat-proof opacity, 4-way elastic recovery, and moisture-wicking micro-yarns.\n\nWorkmanship & Product Quality: Circular knitting eliminates side seams entirely. Engineered compression ribs support core musculature during heavy lifts.\n\nColors & Pattern Finishes: Charcoal Heather & Sage Green colorways with high-density silicone branding.\n\nB2B Production & OEM Sourcing: Factory-direct production in Sialkot, Pakistan. LOW MOQ 20 units per colorway, custom private labeling.",
           seoTitle: "Seamless Compression Top - Custom Gym Activewear Manufacturer | TRY WEARS",
-          seoSummary: "Seamless Compression Top: 280 GSM circular knit nylon/spandex, squat-proof opacity, zero-chafe design, low MOQ 25 pcs.",
+          seoSummary: "Seamless Compression Top: 280 GSM circular knit nylon/spandex, squat-proof opacity, zero-chafe design, LOW MOQ 20 pcs.",
           seoKeywords: ["seamless gym wear manufacturer", "activewear factory sialkot", "compression tops supplier", "private label activewear"]
         }
       },
@@ -216,7 +216,7 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/gym-fitness/06_padded_armor.png",
           category: "GYM & FITNESS WEARS",
           subCategory: "Protective Compression Gear",
-          description: "Heavy-duty impact protection top engineered for contact sports, combat training, and aggressive athletic drills.\n\nCloth Quality & Fabric Specifications: 250 GSM high-tensile compression poly-elastane integrated with ergonomic thermoformed EVA foam padding cells.\n\nWorkmanship & Product Quality: Independent flex pads articulate naturally with body mechanics. Flat-locked anti-tear stitching ensures padding stays firmly anchored.\n\nColors & Pattern Finishes: Stealth Matte Black with reflective geometric screen accents.\n\nB2B Production & OEM Sourcing: Direct OEM manufacturing from Sialkot with low MOQ 25 pcs and custom brand packaging.",
+          description: "Heavy-duty impact protection top engineered for contact sports, combat training, and aggressive athletic drills.\n\nCloth Quality & Fabric Specifications: 250 GSM high-tensile compression poly-elastane integrated with ergonomic thermoformed EVA foam padding cells.\n\nWorkmanship & Product Quality: Independent flex pads articulate naturally with body mechanics. Flat-locked anti-tear stitching ensures padding stays firmly anchored.\n\nColors & Pattern Finishes: Stealth Matte Black with reflective geometric screen accents.\n\nB2B Production & OEM Sourcing: Direct OEM manufacturing from Sialkot with LOW MOQ 20 pcs and custom brand packaging.",
           seoTitle: "Impact Padded Armor Top - Protective Fightwear Manufacturer | TRY WEARS",
           seoSummary: "Impact Padded Armor Top: Ergonomic EVA impact pads, 250 GSM compression fabric, flatlock seams, OEM factory Sialkot.",
           seoKeywords: ["padded compression shirt", "combat training gear manufacturer", "impact sportswear supplier", "sialkot fitness factory"]
@@ -238,9 +238,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/gym-fitness/gym_stringer_tank.png",
           category: "GYM & FITNESS WEARS",
           subCategory: "Gym Tanks & Stringers",
-          description: "Classic bodybuilding athletic stringer engineered for physique athletes and fitness lifestyle brands.\n\nCloth Quality & Fabric Specifications: 190 GSM 95% combed cotton / 5% elastane with enzyme silicone wash for an ultra-soft hand feel and zero wash shrinkage.\n\nWorkmanship & Product Quality: Y-back racerback strap cut, deep side dropped armholes, curved scoop bottom hem with bar-tack reinforcement.\n\nColors & Pattern Finishes: Crimson Red, Athletic Heather Grey, and Jet Black with vintage distressed screen-prints.\n\nB2B Production & OEM Sourcing: Factory direct export from Sialkot, low MOQ 25 units, custom woven size tags.",
+          description: "Classic bodybuilding athletic stringer engineered for physique athletes and fitness lifestyle brands.\n\nCloth Quality & Fabric Specifications: 190 GSM 95% combed cotton / 5% elastane with enzyme silicone wash for an ultra-soft hand feel and zero wash shrinkage.\n\nWorkmanship & Product Quality: Y-back racerback strap cut, deep side dropped armholes, curved scoop bottom hem with bar-tack reinforcement.\n\nColors & Pattern Finishes: Crimson Red, Athletic Heather Grey, and Jet Black with vintage distressed screen-prints.\n\nB2B Production & OEM Sourcing: Factory direct export from Sialkot, LOW MOQ 20 units, custom woven size tags.",
           seoTitle: "Bodybuilding Stringer Tank - Wholesale Gym Clothing Manufacturer | TRY WEARS",
-          seoSummary: "Bodybuilding Stringer Tank: 190 GSM combed cotton elastane, deep drop armholes, silicone wash finish, low MOQ 25 pcs.",
+          seoSummary: "Bodybuilding Stringer Tank: 190 GSM combed cotton elastane, deep drop armholes, silicone wash finish, LOW MOQ 20 pcs.",
           seoKeywords: ["gym stringers manufacturer", "bodybuilding apparel supplier", "wholesale activewear", "sialkot garment exporter"]
         }
       },
@@ -260,9 +260,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/gym-fitness/gym_compression_top.png",
           category: "GYM & FITNESS WEARS",
           subCategory: "Compression Rashguards",
-          description: "Professional grade compression top built for BJJ, MMA grapple training, and high-intensity gym performance.\n\nCloth Quality & Fabric Specifications: 260 GSM heavy compression 85% polyester / 15% spandex with UPF 50+ sun protection and rubberized anti-ride waistband.\n\nWorkmanship & Product Quality: 6-thread flatlock stitching with reinforced collar and sleeves, engineered to withstand aggressive mat friction.\n\nColors & Pattern Finishes: Deep Ocean Cyan with sublimation artwork that will never peel, crack, or fade.\n\nB2B Production & OEM Sourcing: Full custom cut & sew in Sialkot, low MOQ 25 pcs, worldwide shipping.",
+          description: "Professional grade compression top built for BJJ, MMA grapple training, and high-intensity gym performance.\n\nCloth Quality & Fabric Specifications: 260 GSM heavy compression 85% polyester / 15% spandex with UPF 50+ sun protection and rubberized anti-ride waistband.\n\nWorkmanship & Product Quality: 6-thread flatlock stitching with reinforced collar and sleeves, engineered to withstand aggressive mat friction.\n\nColors & Pattern Finishes: Deep Ocean Cyan with sublimation artwork that will never peel, crack, or fade.\n\nB2B Production & OEM Sourcing: Full custom cut & sew in Sialkot, LOW MOQ 20 pcs, worldwide shipping.",
           seoTitle: "High-Tensile Rashguard Top - Custom MMA & Fitness Rashguards | TRY WEARS",
-          seoSummary: "High-Tensile Rashguard: 260 GSM compression poly-spandex, 6-thread flatlock seams, anti-slip waistband, low MOQ 25 units.",
+          seoSummary: "High-Tensile Rashguard: 260 GSM compression poly-spandex, 6-thread flatlock seams, anti-slip waistband, LOW MOQ 20 units.",
           seoKeywords: ["custom rashguard manufacturer", "bjj compression top supplier", "fightwear factory sialkot", "gym activewear supplier"]
         }
       }
@@ -291,9 +291,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/street-wears/street_hoodie.png",
           category: "STREET WEARS",
           subCategory: "Heavyweight Hoodies",
-          description: "Ultra-heavyweight luxury streetwear hoodie crafted with dropped shoulders and relaxed boxy drape.\n\nCloth Quality & Fabric Specifications: 480 GSM 100% combed cotton loopback French terry. Pre-shrunk tight weave with zero fleece lint shedding.\n\nWorkmanship & Product Quality: Double-layer hood without cheap drawstrings for modern aesthetic. Bar-tacked kangaroo pocket corners and 2x2 ribbed heavy spandex cuffs.\n\nColors & Pattern Finishes: Desert Sand, Bone White, and Washed Onyx. Compatible with 3D puff print and custom chenille patches.\n\nB2B Production & OEM Sourcing: Manufactured factory-direct in Sialkot, Pakistan. Low MOQ 25 pcs per colorway, custom private label neck tags.",
+          description: "Ultra-heavyweight luxury streetwear hoodie crafted with dropped shoulders and relaxed boxy drape.\n\nCloth Quality & Fabric Specifications: 480 GSM 100% combed cotton loopback French terry. Pre-shrunk tight weave with zero fleece lint shedding.\n\nWorkmanship & Product Quality: Double-layer hood without cheap drawstrings for modern aesthetic. Bar-tacked kangaroo pocket corners and 2x2 ribbed heavy spandex cuffs.\n\nColors & Pattern Finishes: Desert Sand, Bone White, and Washed Onyx. Compatible with 3D puff print and custom chenille patches.\n\nB2B Production & OEM Sourcing: Manufactured factory-direct in Sialkot, Pakistan. LOW MOQ 20 pcs per colorway, custom private label neck tags.",
           seoTitle: "French Terry Boxy Hoodie - Heavyweight Streetwear Manufacturer | TRY WEARS",
-          seoSummary: "French Terry Boxy Hoodie: 480 GSM 100% combed cotton, double-layer hood, drop-shoulder fit, low MOQ 25 pcs.",
+          seoSummary: "French Terry Boxy Hoodie: 480 GSM 100% combed cotton, double-layer hood, drop-shoulder fit, LOW MOQ 20 pcs.",
           seoKeywords: ["heavyweight hoodie manufacturer", "480 gsm hoodie blanks", "streetwear manufacturer uk", "custom streetwear sialkot"]
         }
       },
@@ -313,9 +313,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/street-wears/street_oversized_tee.png",
           category: "STREET WEARS",
           subCategory: "Oversized Tees",
-          description: "Luxury blank t-shirt tailored with a heavyweight drape, wide chest, and premium high-rib collar.\n\nCloth Quality & Fabric Specifications: 260 GSM 100% ring-spun combed cotton single jersey. Hand-treated acid mineral wash finish for vintage texture.\n\nWorkmanship & Product Quality: Heavy 1.25-inch thick 1x1 rib collar that never sags, blind-stitch hems, twin-needle reinforced shoulders.\n\nColors & Pattern Finishes: Vintage Faded Charcoal, Distressed Moss, and Aged Chalk.\n\nB2B Production & OEM Sourcing: Factory direct export from Sialkot, low MOQ 25 units, custom screen-printing and DTG ready.",
+          description: "Luxury blank t-shirt tailored with a heavyweight drape, wide chest, and premium high-rib collar.\n\nCloth Quality & Fabric Specifications: 260 GSM 100% ring-spun combed cotton single jersey. Hand-treated acid mineral wash finish for vintage texture.\n\nWorkmanship & Product Quality: Heavy 1.25-inch thick 1x1 rib collar that never sags, blind-stitch hems, twin-needle reinforced shoulders.\n\nColors & Pattern Finishes: Vintage Faded Charcoal, Distressed Moss, and Aged Chalk.\n\nB2B Production & OEM Sourcing: Factory direct export from Sialkot, LOW MOQ 20 units, custom screen-printing and DTG ready.",
           seoTitle: "Vintage Drop-Shoulder Tee - 260 GSM Oversized T-Shirt Factory | TRY WEARS",
-          seoSummary: "Vintage Drop-Shoulder Tee: 260 GSM combed cotton, acid mineral wash, thick rib collar, low MOQ 25 units.",
+          seoSummary: "Vintage Drop-Shoulder Tee: 260 GSM combed cotton, acid mineral wash, thick rib collar, LOW MOQ 20 units.",
           seoKeywords: ["heavyweight t shirt manufacturer", "vintage washed tee blank", "oversized tee supplier", "sialkot clothing exporter"]
         }
       },
@@ -335,9 +335,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/street-wears/03_red_white_hoodie.png",
           category: "STREET WEARS",
           subCategory: "Raglan Street Hoodies",
-          description: "Contemporary two-tone streetwear pullover featuring cut-and-sew geometric contrast panels.\n\nCloth Quality & Fabric Specifications: 450 GSM brushed cotton-poly fleece for soft thermal insulation and structural bulk.\n\nWorkmanship & Product Quality: Precision color-blocked seams, taped neck seam, matte nickel eyelets with flat braided cotton drawcords.\n\nColors & Pattern Finishes: Crimson Red & Alabaster White split paneling with high-density micro-screen print.\n\nB2B Production & OEM Sourcing: Sialkot OEM factory direct, low MOQ 25 units, sample turnaround 5-7 days.",
+          description: "Contemporary two-tone streetwear pullover featuring cut-and-sew geometric contrast panels.\n\nCloth Quality & Fabric Specifications: 450 GSM brushed cotton-poly fleece for soft thermal insulation and structural bulk.\n\nWorkmanship & Product Quality: Precision color-blocked seams, taped neck seam, matte nickel eyelets with flat braided cotton drawcords.\n\nColors & Pattern Finishes: Crimson Red & Alabaster White split paneling with high-density micro-screen print.\n\nB2B Production & OEM Sourcing: Sialkot OEM factory direct, LOW MOQ 20 units, sample turnaround 5-7 days.",
           seoTitle: "Colorblocked Raglan Hoodie - Custom Cut & Sew Streetwear | TRY WEARS",
-          seoSummary: "Colorblocked Raglan Hoodie: 450 GSM brushed fleece, custom cut & sew paneling, OEM branding, low MOQ 25 units.",
+          seoSummary: "Colorblocked Raglan Hoodie: 450 GSM brushed fleece, custom cut & sew paneling, OEM branding, LOW MOQ 20 units.",
           seoKeywords: ["custom cut and sew manufacturer", "colorblock hoodie factory", "streetwear brand manufacturer", "sialkot hoodie supplier"]
         }
       },
@@ -357,9 +357,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/street-wears/street_tech_jacket.png",
           category: "STREET WEARS",
           subCategory: "Tactical Tech Outerwear",
-          description: "Utilitarian technical outerwear featuring modular pocket architecture and waterproof membrane.\n\nCloth Quality & Fabric Specifications: 220 GSM high-density diamond ripstop nylon with DWR fluorocarbon-free water-resistant coating and breathable mesh lining.\n\nWorkmanship & Product Quality: Taped waterproof seam joints, YKK reverse-coil matte black zippers, modular velcro patch chest panels.\n\nColors & Pattern Finishes: Stealth Blackout & Tactical Slate with reflective trim piping.\n\nB2B Production & OEM Sourcing: Sialkot factory direct, low MOQ 25 units, custom silicone zipper pullers.",
+          description: "Utilitarian technical outerwear featuring modular pocket architecture and waterproof membrane.\n\nCloth Quality & Fabric Specifications: 220 GSM high-density diamond ripstop nylon with DWR fluorocarbon-free water-resistant coating and breathable mesh lining.\n\nWorkmanship & Product Quality: Taped waterproof seam joints, YKK reverse-coil matte black zippers, modular velcro patch chest panels.\n\nColors & Pattern Finishes: Stealth Blackout & Tactical Slate with reflective trim piping.\n\nB2B Production & OEM Sourcing: Sialkot factory direct, LOW MOQ 20 units, custom silicone zipper pullers.",
           seoTitle: "Tactical Oversized Tech Jacket - Techwear Outerwear Factory | TRY WEARS",
-          seoSummary: "Tactical Oversized Tech Jacket: Diamond ripstop nylon, DWR water resistance, YKK zippers, low MOQ 25 units.",
+          seoSummary: "Tactical Oversized Tech Jacket: Diamond ripstop nylon, DWR water resistance, YKK zippers, LOW MOQ 20 units.",
           seoKeywords: ["techwear manufacturer", "tactical jacket supplier", "outerwear factory sialkot", "private label streetwear"]
         }
       }
@@ -388,9 +388,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/leather-jackets/leather_varsity.png",
           category: "JACKETS",
           subCategory: "Varsity & Letterman Jackets",
-          description: "Timeless American collegiate varsity jacket handcrafted with master artisanal leatherwork in Sialkot.\n\nCloth Quality & Fabric Specifications: Heavyweight 24oz 80% Melton wool body matched with 1.2mm top-grain genuine cowhide leather sleeves.\n\nWorkmanship & Product Quality: Diamond quilted thermal poly-satin lining, antique brass snap closures, heavy striped acrylic rib collar and waistband.\n\nColors & Pattern Finishes: Midnight Black wool with Bone White cowhide leather sleeves. Ready for custom high-pile chenille patches and chainstitch embroidery.\n\nB2B Production & OEM Sourcing: Handcrafted in Sialkot, Pakistan. Low MOQ 25 units, bespoke branding and custom trims.",
+          description: "Timeless American collegiate varsity jacket handcrafted with master artisanal leatherwork in Sialkot.\n\nCloth Quality & Fabric Specifications: Heavyweight 24oz 80% Melton wool body matched with 1.2mm top-grain genuine cowhide leather sleeves.\n\nWorkmanship & Product Quality: Diamond quilted thermal poly-satin lining, antique brass snap closures, heavy striped acrylic rib collar and waistband.\n\nColors & Pattern Finishes: Midnight Black wool with Bone White cowhide leather sleeves. Ready for custom high-pile chenille patches and chainstitch embroidery.\n\nB2B Production & OEM Sourcing: Handcrafted in Sialkot, Pakistan. LOW MOQ 20 units, bespoke branding and custom trims.",
           seoTitle: "Heritage Wool Varsity Jacket - Custom Letterman Jacket Manufacturer | TRY WEARS",
-          seoSummary: "Heritage Wool Varsity Jacket: 24oz Melton wool, 1.2mm genuine leather sleeves, chenille embroidery, low MOQ 25 units.",
+          seoSummary: "Heritage Wool Varsity Jacket: 24oz Melton wool, 1.2mm genuine leather sleeves, chenille embroidery, LOW MOQ 20 units.",
           seoKeywords: ["varsity jacket manufacturer sialkot", "leather varsity supplier", "custom letterman jackets", "outerwear factory pakistan"]
         }
       },
@@ -410,9 +410,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/leather-jackets/leather_biker.png",
           category: "JACKETS",
           subCategory: "Motorcycle & Biker Jackets",
-          description: "Rugged motorcycle jacket handcrafted from drum-dyed full-grain leather for maximum abrasion resistance.\n\nCloth Quality & Fabric Specifications: 1.2-1.3mm drum-dyed premium cowhide leather. Waxed oil pull-up finish develops a rich natural patina over time.\n\nWorkmanship & Product Quality: Heavy YKK #10 asymmetric brass zip, bi-swing back shoulder action gussets, snap-down notch collar, and zippered expanding cuffs.\n\nColors & Pattern Finishes: Deep Pitch Black with distressed hand-waxed seam burnishing.\n\nB2B Production & OEM Sourcing: Handcrafted in Sialkot, world capital of leatherwork. Low MOQ 20 units, custom embossed branding.",
+          description: "Rugged motorcycle jacket handcrafted from drum-dyed full-grain leather for maximum abrasion resistance.\n\nCloth Quality & Fabric Specifications: 1.2-1.3mm drum-dyed premium cowhide leather. Waxed oil pull-up finish develops a rich natural patina over time.\n\nWorkmanship & Product Quality: Heavy YKK #10 asymmetric brass zip, bi-swing back shoulder action gussets, snap-down notch collar, and zippered expanding cuffs.\n\nColors & Pattern Finishes: Deep Pitch Black with distressed hand-waxed seam burnishing.\n\nB2B Production & OEM Sourcing: Handcrafted in Sialkot, world capital of leatherwork. LOW MOQ 20 units, custom embossed branding.",
           seoTitle: "Full-Grain Biker Moto Jacket - Handcrafted Leather Jacket Manufacturer | TRY WEARS",
-          seoSummary: "Full-Grain Biker Moto Jacket: 1.2mm cowhide leather, heavy YKK brass zips, action back gussets, low MOQ 20 pcs.",
+          seoSummary: "Full-Grain Biker Moto Jacket: 1.2mm cowhide leather, heavy YKK brass zips, action back gussets, LOW MOQ 20 pcs.",
           seoKeywords: ["leather jacket manufacturer sialkot", "biker jacket supplier", "custom leather outerwear", "pakistan leather exporter"]
         }
       },
@@ -432,9 +432,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/leather-jackets/leather_cafe_racer.png",
           category: "JACKETS",
           subCategory: "Cafe Racer Leather Jackets",
-          description: "Sleek European cafe racer jacket tailored with clean lines, clean chest pockets, and ergonomic motoring silhouette.\n\nCloth Quality & Fabric Specifications: 1.1mm supple semi-aniline lambskin or cowhide leather with a smooth buttery touch.\n\nWorkmanship & Product Quality: Band snap collar, center-front brass zip, zippered chest slash pockets, and breathable twill cotton torso lining.\n\nColors & Pattern Finishes: Rich Cognac Tan with subtle hand-burnished edge highlights.\n\nB2B Production & OEM Sourcing: Manufactured factory direct in Sialkot, low MOQ 20 units, bespoke inner woven branding.",
+          description: "Sleek European cafe racer jacket tailored with clean lines, clean chest pockets, and ergonomic motoring silhouette.\n\nCloth Quality & Fabric Specifications: 1.1mm supple semi-aniline lambskin or cowhide leather with a smooth buttery touch.\n\nWorkmanship & Product Quality: Band snap collar, center-front brass zip, zippered chest slash pockets, and breathable twill cotton torso lining.\n\nColors & Pattern Finishes: Rich Cognac Tan with subtle hand-burnished edge highlights.\n\nB2B Production & OEM Sourcing: Manufactured factory direct in Sialkot, LOW MOQ 20 units, bespoke inner woven branding.",
           seoTitle: "Minimalist Cafe Racer Jacket - Premium Leather Outerwear OEM | TRY WEARS",
-          seoSummary: "Minimalist Cafe Racer Jacket: 1.1mm supple semi-aniline leather, mandarin snap collar, antique brass hardware, low MOQ 20 units.",
+          seoSummary: "Minimalist Cafe Racer Jacket: 1.1mm supple semi-aniline leather, mandarin snap collar, antique brass hardware, LOW MOQ 20 units.",
           seoKeywords: ["cafe racer jacket manufacturer", "leather outerwear supplier", "custom leather jacket factory", "sialkot leather artisan"]
         }
       },
@@ -454,9 +454,9 @@ export const CATEGORIES_3D_DATA: CategoryCollection[] = [
           thumbnail: "/images/leather-jackets/leather_aviator_jacket.png",
           category: "JACKETS",
           subCategory: "Shearling & Aviator Jackets",
-          description: "Heavy winter aviator flight jacket built with plush shearling wool interior for sub-zero thermal insulation.\n\nCloth Quality & Fabric Specifications: Genuine double-face shearling sheepskin leather with 18mm dense wool interior pelt.\n\nWorkmanship & Product Quality: Double leather buckle throat straps, side waist adjustment buckles, heavy brass storm zipper with wind flap.\n\nColors & Pattern Finishes: Vintage Distressed Brown outer shell with warm Cream wool fleece collar.\n\nB2B Production & OEM Sourcing: Sialkot artisanal leather craftsmanship, low MOQ 15 units, bespoke gift packaging.",
+          description: "Heavy winter aviator flight jacket built with plush shearling wool interior for sub-zero thermal insulation.\n\nCloth Quality & Fabric Specifications: Genuine double-face shearling sheepskin leather with 18mm dense wool interior pelt.\n\nWorkmanship & Product Quality: Double leather buckle throat straps, side waist adjustment buckles, heavy brass storm zipper with wind flap.\n\nColors & Pattern Finishes: Vintage Distressed Brown outer shell with warm Cream wool fleece collar.\n\nB2B Production & OEM Sourcing: Sialkot artisanal leather craftsmanship, LOW MOQ 20 units, bespoke gift packaging.",
           seoTitle: "Aviator Shearling Flight Jacket - Luxury Shearling Outerwear Supplier | TRY WEARS",
-          seoSummary: "Aviator Shearling Flight Jacket: Genuine double-face sheepskin shearling, 18mm dense wool pelt, low MOQ 15 units.",
+          seoSummary: "Aviator Shearling Flight Jacket: Genuine double-face sheepskin shearling, 18mm dense wool pelt, LOW MOQ 20 units.",
           seoKeywords: ["shearling jacket manufacturer", "aviator flight jacket supplier", "luxury leather factory sialkot", "winter outerwear manufacturer"]
         }
       }
@@ -509,15 +509,15 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
       className="relative w-full flex flex-col items-center justify-between select-none py-1"
     >
       {/* 1. TOP CATEGORY SELECTOR (SIMPLE, SLEEK PILLS) */}
-      <div className="relative z-20 w-full max-w-5xl mx-auto px-4 mb-2 flex flex-col items-center gap-1.5">
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+      <div className="relative z-20 w-full max-w-5xl mx-auto px-2 sm:px-4 mb-2 flex flex-col items-center gap-1.5">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5">
           {CATEGORIES_3D_DATA.map((cat, idx) => {
             const isActive = activeCategory === idx;
             return (
               <button
                 key={cat.id}
                 onClick={() => changeCategory(idx)}
-                className={`px-3.5 sm:px-4 py-1.5 rounded-full font-mono text-xs sm:text-xs font-bold uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                className={`px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full font-mono text-[10px] sm:text-xs font-bold uppercase transition-all duration-300 cursor-pointer flex items-center gap-1.5 sm:gap-2 ${
                   isActive
                     ? "bg-[#E21D1D] text-white shadow-[0_0_20px_rgba(226,29,29,0.5)] font-black scale-105"
                     : "text-neutral-400 hover:text-white bg-black/60 hover:bg-neutral-900 border border-white/10"
@@ -531,7 +531,7 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
         </div>
 
         {/* Minimal Category Tagline */}
-        <p className="text-[10px] sm:text-[11px] font-mono text-neutral-400 tracking-widest uppercase text-center mt-0.5">
+        <p className="text-[9.5px] sm:text-[11px] font-mono text-neutral-400 tracking-wider sm:tracking-widest uppercase text-center mt-0.5 px-3 line-clamp-1">
           {currentCollection.tagline}
         </p>
       </div>
@@ -669,11 +669,11 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
       </div>
 
       {/* 3. SLEEK MINIMALIST CONTROLS BAR (CLEAN SLOTS & TOUR PLAY/PAUSE) */}
-      <div className="relative z-20 w-full max-w-4xl mx-auto px-4 pt-3 mt-2 border-t border-white/5 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-        <div className="flex items-center gap-2 text-neutral-400">
-          <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />
-          <span className="text-white font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">
-            HOVER ANY PRODUCT TO ZOOM • CLICK FOR B2B TECH PACK
+      <div className="relative z-20 w-full max-w-4xl mx-auto px-3 sm:px-4 pt-2.5 sm:pt-3 mt-1.5 sm:mt-2 border-t border-white/5 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 text-xs font-mono">
+        <div className="flex items-center gap-2 text-neutral-400 min-w-0">
+          <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
+          <span className="text-white font-bold uppercase tracking-wider text-[9px] sm:text-[11px] truncate max-w-[200px] xs:max-w-[280px] sm:max-w-none">
+            TRY WEARS • PREMIER OEM & ODM MANUFACTURER • SIALKOT EXPORT QUALITY GUARANTEED
           </span>
         </div>
 

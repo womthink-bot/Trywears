@@ -118,7 +118,7 @@ export const SamplingPoliciesPage: React.FC<SamplingPoliciesPageProps> = ({ onNa
               100% SAMPLE FEE REFUND
             </h3>
             <p className="text-xs text-neutral-300 font-sans leading-relaxed">
-              When you approve your physical prototype and proceed to your bulk production order (minimum MOQ 50 pcs), your entire sample development fee is directly credited and deducted from your invoice.
+              When you approve your physical prototype and proceed to your bulk production order (minimum MOQ 20 pcs), your entire sample development fee is directly credited and deducted from your invoice.
             </p>
           </div>
 

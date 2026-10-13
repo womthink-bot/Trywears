@@ -151,7 +151,7 @@ const FABRIC_MATERIALS = [
     name: "450–550 GSM Organic French Terry & Loopback Cotton",
     badge: "ULTRA HEAVYWEIGHT",
     desc: "100% combed ring-spun cotton. Carbon-sanded exterior for peach-soft touch with rigid structured drape for oversized hoodies & streetwear fits.",
-    moq: "25 Pcs / Colorway",
+    moq: "20 Pcs / Colorway",
     leadTime: "7-10 Days",
     accent: "#F59E0B"
   },
@@ -160,7 +160,7 @@ const FABRIC_MATERIALS = [
     name: "1.2mm Full-Grain Drum-Dyed Cowhide & Multi-Core EVA",
     badge: "TITLE FIGHT GRADE",
     desc: "Premium Pakistani A-grade leather tanned with zero hazardous metals. Laminated with 4-layer EVA shock-dispersion cores for championship gloves and shin guards.",
-    moq: "15 Pairs / Model",
+    moq: "20 Pairs / Model",
     leadTime: "7-10 Days",
     accent: "#10B981"
   },
@@ -169,7 +169,7 @@ const FABRIC_MATERIALS = [
     name: "180–220 GSM Micro-Interlock Poly with Italian Dri-Fit",
     badge: "ZERO-FADE SUBLIMATION",
     desc: "Moisture-wicking, anti-bacterial 4-way stretch knit. Infused with non-toxic Italian inks at 210°C. Never cracks, fades, or peels.",
-    moq: "25 Sets / Design",
+    moq: "20 Sets / Design",
     leadTime: "6-8 Days",
     accent: "#E21D1D"
   },
@@ -178,7 +178,7 @@ const FABRIC_MATERIALS = [
     name: "280 GSM Poly-Spandex High-Compression Tricot",
     badge: "SQUAT-PROOF COMPRESSION",
     desc: "High-denier spandex blend with 6-thread flatlock stitching. Seamless friction-free seams engineered for extreme athletic range of motion.",
-    moq: "25 Pcs / Colorway",
+    moq: "20 Pcs / Colorway",
     leadTime: "7-10 Days",
     accent: "#3B82F6"
   }
@@ -236,7 +236,7 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
     if (metaDesc) {
       metaDesc.setAttribute(
         "content",
-        "Turn your brand into real custom garments from the pattern up. In-house sublimation, 3D embroidery, screen printing, and laser cutting in Sialkot, Pakistan. Low MOQ 50-100 pcs."
+        "Turn your brand into real custom garments from the pattern up. In-house sublimation, 3D embroidery, screen printing, and laser cutting in Sialkot, Pakistan. Low MOQ 20 Pcs."
       );
     }
   }, []);
@@ -350,7 +350,7 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
             </div>
             <div className="hidden md:flex items-center gap-2 border-l border-neutral-800 pl-4">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span className="text-neutral-200 font-bold">50–100 PCS MOQ • 2,000+ BRANDS</span>
+              <span className="text-neutral-200 font-bold">LOW 20 PCS MOQ • 2,000+ BRANDS</span>
             </div>
           </div>
         </div>
@@ -380,7 +380,7 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
                 <span>OEM / ODM PRIVATE LABEL MANUFACTURING</span>
               </div>
               <span className="text-[11px] sm:text-xs font-mono text-neutral-300 tracking-wider font-bold">
-                Sialkot Direct • Low MOQ 50–100 Pcs
+                Sialkot Direct • Low MOQ 20 Pcs
               </span>
             </div>
 
@@ -416,7 +416,7 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
             {/* Quick Guarantees Grid - Fully responsive columns */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-3 sm:pt-4 border-t border-neutral-800 font-mono text-xs">
               <div className="p-3 sm:p-3.5 rounded-xl bg-[#121218] border border-neutral-700/80 shadow-md flex sm:block items-center justify-between">
-                <span className="text-white font-black text-sm">50–100 PCS</span>
+                <span className="text-white font-black text-sm">20 PCS</span>
                 <span className="text-[10px] text-neutral-300 uppercase font-bold sm:mt-0.5">FLEXIBLE START MOQ</span>
               </div>
               <div className="p-3 sm:p-3.5 rounded-xl bg-[#121218] border border-neutral-700/80 shadow-md flex sm:block items-center justify-between">
@@ -713,7 +713,7 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
               </h2>
 
               <p className="text-sm sm:text-base lg:text-lg text-neutral-100 font-sans leading-relaxed">
-                Most factories set minimums that only make sense once you’re already established. We start at <strong className="text-white underline decoration-[#E21D1D] decoration-2">50–100 pieces per style/colorway</strong> — enough to launch a real product line without the upfront risk of a 500+ piece minimum before you’ve sold a single unit.
+                Most factories set minimums that only make sense once you’re already established. We start at <strong className="text-white underline decoration-[#E21D1D] decoration-2">20 pieces per style/colorway</strong> — enough to launch a real product line without the upfront risk of high factory minimums before you’ve sold a single unit.
               </p>
 
               <p className="text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed">
@@ -724,7 +724,7 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
             <div className="lg:col-span-4 bg-[#0d0d14] backdrop-blur-md rounded-2xl p-5 sm:p-7 border border-neutral-700 space-y-4 sm:space-y-5 font-mono text-xs shadow-2xl">
               <div className="flex items-center justify-between pb-3 border-b border-neutral-800">
                 <span className="text-neutral-400 font-bold">Launch Tier MOQ:</span>
-                <span className="text-white font-black text-sm">50–100 Pcs</span>
+                <span className="text-white font-black text-sm">20 Pcs</span>
               </div>
               <div className="flex items-center justify-between pb-3 border-b border-neutral-800">
                 <span className="text-neutral-400 font-bold">Physical Sampling:</span>
@@ -739,7 +739,7 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
                 onClick={() => onNavigatePage("b2b-quote")}
                 className="w-full py-3.5 sm:py-4 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(226,29,29,0.4)] cursor-pointer hover:scale-102 text-center"
               >
-                Launch Your First 50 Pcs
+                Launch Your First 20 Pcs
               </button>
             </div>
           </div>
@@ -913,15 +913,15 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
                 </div>
                 <input
                   type="range"
-                  min={50}
+                  min={20}
                   max={1000}
-                  step={25}
+                  step={10}
                   value={quantity}
                   onChange={(e) => setQuantity(Number(e.target.value))}
                   className="w-full accent-[#E21D1D] cursor-pointer"
                 />
                 <div className="flex justify-between text-[10px] sm:text-[11px] font-mono text-neutral-400 font-bold">
-                  <span>MOQ 50</span>
+                  <span>MOQ 20</span>
                   <span>100 Units</span>
                   <span>500 Units</span>
                   <span>1000+ Units</span>

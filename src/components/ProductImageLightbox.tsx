@@ -293,9 +293,9 @@ export const ProductImageLightbox: React.FC<ProductImageLightboxProps> = ({
           </div>
 
           {/* Action Tools */}
-          <div className="flex items-center gap-2 shrink-0">
-            {/* Zoom Controls */}
-            <div className="flex items-center gap-1 bg-neutral-900/90 border border-neutral-700 rounded-xl p-1 shadow-lg">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Zoom Controls (Desktop / Tablet) */}
+            <div className="hidden sm:flex items-center gap-1 bg-neutral-900/90 border border-neutral-700 rounded-xl p-1 shadow-lg">
               <button
                 onClick={() => {
                   setZoomLevel((z) => {
@@ -547,11 +547,11 @@ export const ProductImageLightbox: React.FC<ProductImageLightboxProps> = ({
                   <div className="grid grid-cols-2 gap-2 text-[10px]">
                     <div className="p-2.5 rounded-xl bg-neutral-900/80 border border-white/5">
                       <span className="text-neutral-500 block text-[9px]">MINIMUM ORDER:</span>
-                      <span className="text-white font-bold">25 PCS / COLORWAY</span>
+                      <span className="text-white font-bold">20 PCS / COLORWAY</span>
                     </div>
                     <div className="p-2.5 rounded-xl bg-neutral-900/80 border border-white/5">
                       <span className="text-neutral-500 block text-[9px]">PROTOTYPING:</span>
-                      <span className="text-emerald-400 font-bold">5-7 DAYS DISPATCH</span>
+                      <span className="text-emerald-400 font-bold">ON-DEMAND SAMPLING</span>
                     </div>
                     <div className="p-2.5 rounded-xl bg-neutral-900/80 border border-white/5">
                       <span className="text-neutral-500 block text-[9px]">MANUFACTURING:</span>

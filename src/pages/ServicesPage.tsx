@@ -530,7 +530,7 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                       PILLAR 04 • RAPID SAMPLING
                     </span>
                     <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30">
-                      EXPRESS PPS DESK
+                      CUSTOM PROTO SAMPLING ATELIER
                     </span>
                   </div>
                 </div>
@@ -545,25 +545,25 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                 </div>
 
                 <p className="text-neutral-100 text-sm sm:text-base leading-relaxed font-normal">
-                  Never gamble on bulk production. We engineer, cut, print, and sew an exact pre-production prototype sample (PPS) with your custom trims and fabrics in 7 to 10 working days, dispatched via DHL Express DDP directly to your UK address in 3-4 days.
+                  Never gamble on bulk production. We engineer, cut, print, and sew an exact physical pre-production sample (PPS) with your custom trims, custom Pantone colorways, and bespoke fabrics upon order approval, dispatched via client-selected express freight directly to your doorstep.
                 </p>
 
                 {/* Sampling Timeline Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
                   <div className="p-3 rounded-xl bg-[#090910] border border-emerald-500/20 font-mono">
-                    <span className="text-[#34d399] font-bold text-xs block">Days 1 - 3</span>
+                    <span className="text-[#34d399] font-bold text-xs block">Phase 1</span>
                     <span className="text-white text-xs font-bold block mt-1">CAD & Fabric Dye</span>
                     <span className="text-[10px] text-neutral-400 block mt-0.5">Pattern grading & trims</span>
                   </div>
                   <div className="p-3 rounded-xl bg-[#090910] border border-emerald-500/20 font-mono">
-                    <span className="text-[#34d399] font-bold text-xs block">Days 4 - 7</span>
+                    <span className="text-[#34d399] font-bold text-xs block">Phase 2</span>
                     <span className="text-white text-xs font-bold block mt-1">Cut, Sew & Print</span>
                     <span className="text-[10px] text-neutral-400 block mt-0.5">Embroidery & assembly</span>
                   </div>
                   <div className="p-3 rounded-xl bg-[#090910] border border-emerald-500/20 font-mono">
-                    <span className="text-[#34d399] font-bold text-xs block">Days 8 - 10</span>
-                    <span className="text-white text-xs font-bold block mt-1">DHL DDP Flight</span>
-                    <span className="text-[10px] text-neutral-400 block mt-0.5">Doorstep delivery in 3d</span>
+                    <span className="text-[#34d399] font-bold text-xs block">Phase 3</span>
+                    <span className="text-white text-xs font-bold block mt-1">Express Transit</span>
+                    <span className="text-[10px] text-neutral-400 block mt-0.5">Doorstep delivery on client terms</span>
                   </div>
                 </div>
 
@@ -646,19 +646,19 @@ export const ServicesPage: React.FC<PageProps> = ({ onNavigatePage }) => {
                     Bulk Production & Scalable OEM Manufacturing
                   </h2>
                   <p className="text-xs sm:text-sm font-mono font-bold text-[#ff4d4d] uppercase tracking-wider mt-1">
-                    Low MOQ 30 pcs up to 10,000+ Units with Tiered Savings
+                    Low MOQ 20 pcs up to 10,000+ Units with Tiered Savings
                   </p>
                 </div>
 
                 <p className="text-neutral-100 text-sm sm:text-base leading-relaxed font-normal">
-                  Scale your fashion house or gym brand with direct industrial manufacturing. From agile low-MOQ runs (starting at 30 units per colorway) to high-volume container shipments, every single garment is manufactured under ISO 9001:2015 standards with strict AQL 1.0 zero-defect inspection.
+                  Scale your fashion house or gym brand with direct industrial manufacturing. From agile low-MOQ runs (starting at 20 units per colorway) to high-volume container shipments, every single garment is manufactured under ISO 9001:2015 standards with strict AQL 1.0 zero-defect inspection.
                 </p>
 
                 {/* Tiered MOQ Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 font-mono text-center">
                   <div className="p-3 rounded-xl bg-[#090910] border border-neutral-700">
                     <span className="text-white font-bold text-xs block">Low MOQ Run</span>
-                    <span className="text-[#ff4d4d] font-black text-base block mt-0.5">30 - 100 Pcs</span>
+                    <span className="text-[#ff4d4d] font-black text-base block mt-0.5">20 - 100 Pcs</span>
                     <span className="text-[9px] text-neutral-400 block mt-0.5">Ideal for Brand Launch</span>
                   </div>
                   <div className="p-3 rounded-xl bg-[#090910] border border-neutral-700">

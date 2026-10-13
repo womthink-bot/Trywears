@@ -236,11 +236,11 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     <section
       id="hero-slider"
       ref={heroRef}
-      className="relative min-h-[740px] sm:min-h-[820px] bg-neutral-950 overflow-hidden border-b border-neutral-900 select-none"
+      className="relative min-h-[520px] xs:min-h-[580px] sm:min-h-[700px] lg:min-h-[820px] bg-neutral-950 overflow-hidden border-b border-neutral-900 select-none"
     >
       {/* SOLID, HARDWARE-ACCELERATED HERO CONTAINER */}
       <div 
-        className="w-full h-full min-h-[740px] sm:min-h-[820px] relative flex flex-col justify-between py-10"
+        className="w-full h-full min-h-[520px] xs:min-h-[580px] sm:min-h-[700px] lg:min-h-[820px] relative flex flex-col justify-between py-2 sm:py-6 lg:py-10"
       >
         {/* ================= BACKGROUND LAYER (SMOOTH 60FPS VIDEO / HOLOGRAPHIC / SLIDES) ================= */}
         <div 
@@ -352,25 +352,25 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
         </div>
 
         {/* ================= FOREGROUND CONTENT LAYER (HERO STAGE + 4 3D VIDEO BOXES) ================= */}
-        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full flex flex-col justify-between flex-1 pointer-events-auto">
+        <div className="relative z-20 max-w-7xl mx-auto px-3 sm:px-6 w-full flex flex-col justify-between flex-1 pointer-events-auto">
           
           {/* TOP HUD CONTROLS BAR */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+          <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 pt-1 sm:pt-2">
             
             {/* Left Status Badges */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="inline-flex items-center gap-3 bg-black/75 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full text-[10px] font-mono text-neutral-300 shadow-xl">
-                <span className="flex h-2 w-2 relative">
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 sm:gap-3 bg-black/75 backdrop-blur-md border border-white/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[9px] sm:text-[10px] font-mono text-neutral-300 shadow-xl">
+                <span className="flex h-2 w-2 relative shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E21D1D] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E21D1D]" />
                 </span>
-                <span className="font-black text-white tracking-widest uppercase">
+                <span className="font-black text-white tracking-wider sm:tracking-widest uppercase">
                   B2B COMBAT FACTORY ACTIVE
                 </span>
                 <span className="text-neutral-600 hidden sm:inline">|</span>
                 <span className="hidden sm:inline text-neutral-400">SIALKOT & NY EXPORT DIVISIONS</span>
                 <span className="text-neutral-600 hidden md:inline">|</span>
-                <span className="hidden md:inline text-emerald-400 font-bold">LOW MOQ 25 PCS</span>
+                <span className="hidden md:inline text-emerald-400 font-bold">LOW MOQ 20 PCS</span>
               </div>
 
               {/* Mode Indicator Badge */}

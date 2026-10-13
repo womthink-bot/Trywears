@@ -29,7 +29,7 @@ export const BulkProductionPage: React.FC<PageProps> = ({ onNavigatePage }) => {
   const BULK_TIERS = [
     {
       tier: "Starter Batch",
-      qty: "30 - 99 Pcs / Colorway",
+      qty: "20 - 99 Pcs / Colorway",
       leadTime: "14 - 18 Days",
       bestFor: "Emerging UK Streetwear & Startup Activewear Labels",
       features: [
@@ -87,7 +87,7 @@ export const BulkProductionPage: React.FC<PageProps> = ({ onNavigatePage }) => {
               BULK PRODUCTION & <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-white to-neutral-400">OEM MANUFACTURING</span>
             </h1>
             <p className="text-xs sm:text-sm font-mono text-neutral-300 leading-relaxed">
-              Scale your clothing brand with direct industrial manufacturing. From agile low-MOQ runs (starting at 30 units per design) to commercial high-volume container shipments for British fashion brands, gym chains, and combat academies.
+              Scale your clothing brand with direct industrial manufacturing. From agile low-MOQ runs (starting at 20 units per design) to commercial high-volume container shipments for British fashion brands, gym chains, and combat academies.
             </p>
           </div>
 

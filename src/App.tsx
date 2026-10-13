@@ -27,20 +27,20 @@ import {
   Sliders, 
   Check, 
   ArrowRight,
-  Plus
+  Plus,
+  Home,
+  MessageSquare
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { SportsHeroSlider, HeroSlide } from "./components/SportsHeroSlider";
 import { SportsB2BMarquee } from "./components/SportsB2BMarquee";
 import { CustomProductsShowcase } from "./components/CustomProductsShowcase";
 import { ScrollDeconstructed3DGarment } from "./components/ScrollDeconstructed3DGarment";
-import { B2BFactoryCapabilities } from "./components/B2BFactoryCapabilities";
 import { BrandLogosMarqueeSection } from "./components/BrandLogosMarqueeSection";
 import { FactoryLiveVideoShowcase } from "./components/FactoryLiveVideoShowcase";
 import { FashionWearCustomVideoSection } from "./components/FashionWearCustomVideoSection";
 import { TShirtCustomizer, DEFAULT_CUSTOMIZER_PRODUCT } from "./components/TShirtCustomizer";
 import { CartDrawer } from "./components/CartDrawer";
-import { ThemeToggle } from "./components/ThemeToggle";
 import { SportsMotionFX } from "./components/SportsMotionFX";
 import { SecurityAlerts } from "./components/SecurityAlerts";
 import { SocialLinks } from "./components/SocialLinks";
@@ -108,7 +108,7 @@ export function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [bannerText, setBannerText] = useState<string>(
-    "★ FACTORY DIRECT B2B COMBAT WEAR & SPORTS APPAREL • LOW MOQ 30-50 PCS • EXPRESS UK & WORLDWIDE DDP AIR DISPATCH"
+    "★ FACTORY DIRECT B2B COMBAT WEAR & SPORTS APPAREL • LOW MOQ 20 PCS • WORLDWIDE SHIPPING AS PER CLIENT'S CHOICE (AIR & SEA)"
   );
 
   // Catalog Navigation State
@@ -321,11 +321,11 @@ export function App() {
       <SecurityAlerts />
 
       {/* 1. TOP NOTIFICATION RUNNER (FULL SCREEN WIDTH) */}
-      <div className="bg-[#08080c] text-white py-2 px-4 sm:px-6 lg:px-10 xl:px-14 border-b border-neutral-800/80 overflow-hidden relative z-50">
-        <div className="w-full flex items-center justify-between text-[9.5px] sm:text-[10px] font-mono tracking-widest font-black uppercase">
-          <div className="flex items-center gap-2">
+      <div className="bg-[#08080c] text-white py-1.5 sm:py-2 px-3 sm:px-6 lg:px-10 xl:px-14 border-b border-neutral-800/80 overflow-hidden relative z-50">
+        <div className="w-full flex items-center justify-between text-[9px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest font-black uppercase">
+          <div className="flex items-center gap-2 min-w-0">
             <span className="h-2 w-2 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
-            <span className="truncate max-w-[280px] sm:max-w-none text-neutral-200">
+            <span className="truncate flex-1 min-w-0 text-neutral-200">
               {bannerText}
             </span>
           </div>
@@ -335,7 +335,7 @@ export function App() {
               className="hover:text-white transition-colors text-emerald-400 font-bold cursor-pointer flex items-center gap-1.5"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span>EXPRESS 7-DAY SAMPLE DESK</span>
+              <span>CUSTOM SAMPLE DEVELOPMENT ON DEMAND</span>
             </button>
             <span className="text-neutral-700">|</span>
             <span className="text-[#ff3b3b] font-bold tracking-wider">ISO 9001:2015 & CE CERTIFIED FACTORY</span>
@@ -344,15 +344,15 @@ export function App() {
       </div>
 
       {/* 2. EXECUTIVE FULL-SCREEN NAVIGATION HEADER */}
-      <header className="sticky top-0 z-40 bg-[#07070b]/95 backdrop-blur-2xl border-b border-neutral-800 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all">
-        <div className="w-full px-4 sm:px-6 lg:px-10 xl:px-14 py-3 sm:py-3.5 flex items-center justify-between gap-4 lg:gap-8">
+      <header className="sticky top-0 z-50 bg-[#07070b]/98 backdrop-blur-2xl border-b border-neutral-800 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all">
+        <div className="w-full px-3 sm:px-6 lg:px-10 xl:px-14 py-2.5 sm:py-3.5 flex items-center justify-between gap-2.5 sm:gap-4 lg:gap-8">
           
           {/* Branded Logo */}
           <button
             onClick={() => navigateTo("home")}
-            className="flex items-center gap-3.5 group text-left cursor-pointer shrink-0"
+            className="flex items-center gap-2.5 sm:gap-3.5 group text-left cursor-pointer shrink-0 min-w-0"
           >
-            <div className="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl bg-neutral-900/60 p-1 border border-neutral-800 group-hover:border-[#E21D1D]/60 flex items-center justify-center shrink-0 transition-all duration-300 shadow-md">
+            <div className="h-10 w-10 xs:h-12 xs:w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl bg-neutral-900/60 p-1 border border-neutral-800 group-hover:border-[#E21D1D]/60 flex items-center justify-center shrink-0 transition-all duration-300 shadow-md">
               <img 
                 src={config?.global?.logo || "/images/trylogo.png"} 
                 alt="Try Wears Logo" 
@@ -360,11 +360,11 @@ export function App() {
                 referrerPolicy="no-referrer" 
               />
             </div>
-            <div>
-              <span className="font-display font-black text-lg sm:text-xl lg:text-2xl tracking-[0.14em] text-white block uppercase leading-none group-hover:text-[#ff3b3b] transition-colors">
+            <div className="min-w-0">
+              <span className="font-display font-black text-base xs:text-lg sm:text-xl lg:text-2xl tracking-[0.14em] text-white block uppercase leading-none group-hover:text-[#ff3b3b] transition-colors">
                 {config?.global?.brandName || "TRY WEARS"}
               </span>
-              <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-[#ff3b3b] block uppercase mt-1 whitespace-nowrap">
+              <span className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] font-mono font-bold tracking-wider sm:tracking-widest text-[#ff3b3b] block uppercase mt-0.5 sm:mt-1 truncate max-w-[130px] xs:max-w-[200px] sm:max-w-none">
                 {config?.global?.tagline || "OEM/ODM COMBAT SPORTS & ATHLETIC APPAREL FACTORY"}
               </span>
             </div>
@@ -528,12 +528,11 @@ export function App() {
           </nav>
 
           {/* Header Controls & Unified B2B Quote Action */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            
-            {/* High-Impact B2B Quote Action Button */}
+          <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
+            {/* High-Impact B2B Quote Action Button (Visible on sm and up) */}
             <button
               onClick={() => navigateTo("b2b-quote")}
-              className={`hidden sm:inline-flex items-center gap-2.5 px-5 py-2.5 sm:py-3 rounded-xl font-mono text-xs font-black uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-lg whitespace-nowrap active:scale-95 ${
+              className={`hidden sm:inline-flex items-center gap-2 px-4 py-2 sm:py-2.5 rounded-xl font-mono text-xs font-black uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-lg whitespace-nowrap active:scale-95 ${
                 activePage === "b2b-quote"
                   ? "bg-red-700 text-white ring-2 ring-white shadow-[0_0_25px_rgba(226,29,29,0.6)]"
                   : "bg-gradient-to-r from-[#E21D1D] to-[#b91313] hover:from-red-600 hover:to-red-700 text-white shadow-[0_0_20px_rgba(226,29,29,0.4)] hover:shadow-[0_0_30px_rgba(226,29,29,0.6)] hover:scale-102"
@@ -543,67 +542,115 @@ export function App() {
               <span>GET B2B QUOTE</span>
             </button>
 
-            {/* Theme Toggle Switcher */}
-            <ThemeToggle theme={theme} onToggle={toggleTheme} />
-
-            {/* Shopping Bag */}
-            <button
-              id="shopping-cart-button"
-              onClick={() => setIsCartOpen(true)}
-              className="relative p-2.5 sm:p-3 rounded-xl border border-neutral-700 bg-neutral-900/80 hover:bg-neutral-800 hover:border-neutral-600 transition-all cursor-pointer group shadow-md"
-              title="Open Shipment Bag Inventory"
-            >
-              <ShoppingBag className="w-4 h-4 text-neutral-200 group-hover:text-white group-hover:scale-108 transition-transform" />
-              {cart && cart.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#E21D1D] text-white font-mono font-black text-[9px] h-5 w-5 rounded-full flex items-center justify-center shadow-lg ring-2 ring-[#07070b]">
-                  {(cart || []).reduce((sum, i) => sum + (i?.quantity || 1), 0)}
-                </span>
-              )}
-            </button>
-
-            {/* Mobile Menu Toggle */}
+            {/* Mobile / Tablet Menu Button - Highly visible, clear, and prominent */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="xl:hidden p-2.5 rounded-xl bg-neutral-900 border border-neutral-700 text-white hover:bg-neutral-800 transition-colors cursor-pointer"
+              className={`xl:hidden flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border-2 transition-all duration-200 cursor-pointer shadow-lg active:scale-95 ${
+                isMobileMenuOpen
+                  ? "bg-[#E21D1D] border-red-400 text-white shadow-[0_0_20px_rgba(226,29,29,0.5)] ring-2 ring-red-500/40"
+                  : "bg-neutral-900/95 border-[#E21D1D] text-white hover:bg-neutral-800 shadow-[0_0_15px_rgba(226,29,29,0.35)] hover:border-red-400"
+              }`}
               aria-label="Toggle navigation menu"
+              aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMobileMenuOpen ? (
+                <>
+                  <X className="w-5 h-5 text-white" />
+                  <span className="font-mono text-xs font-black uppercase tracking-wider text-white">CLOSE</span>
+                </>
+              ) : (
+                <>
+                  <Menu className="w-5 h-5 text-[#ff4d4d]" />
+                  <span className="font-mono text-xs font-black uppercase tracking-wider text-white">MENU</span>
+                </>
+              )}
             </button>
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown Menu Drawer */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="xl:hidden border-t border-neutral-800 bg-[#0a0a10] px-5 py-5 space-y-4 shadow-2xl max-h-[80vh] overflow-y-auto"
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="xl:hidden border-t border-neutral-800 bg-[#090912]/98 backdrop-blur-2xl px-3.5 sm:px-6 py-4 sm:py-6 space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-h-[82vh] overflow-y-auto overscroll-contain"
             >
-              {/* Main Links */}
-              <div className="flex flex-col space-y-1">
+              {/* Top CTA: Get B2B Factory Quote */}
+              <button
+                onClick={() => navigateTo("b2b-quote")}
+                className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#E21D1D] via-red-600 to-[#b91313] hover:from-red-600 hover:to-red-700 text-white font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-[0_0_25px_rgba(226,29,29,0.5)] cursor-pointer active:scale-98 transition-all"
+              >
+                <FileCheck className="w-4 h-4 shrink-0" />
+                <span>REQUEST B2B FACTORY QUOTE / TECH PACK</span>
+              </button>
+
+              {/* Section 1: Main Pages */}
+              <div className="space-y-1 bg-black/40 p-2.5 rounded-2xl border border-neutral-800/80">
+                <div className="text-[10px] font-mono font-black text-neutral-400 uppercase tracking-widest px-2.5 py-1">
+                  NAVIGATION
+                </div>
+
+                {/* Home */}
                 <button
                   onClick={() => navigateTo("home")}
-                  className={`text-left py-2 px-3 rounded-xl text-xs font-mono font-bold uppercase transition-colors flex items-center justify-between cursor-pointer ${
-                    activePage === "home" ? "bg-[#E21D1D]/20 text-[#ff4d4d]" : "text-neutral-200"
+                  className={`w-full text-left py-2.5 px-3 rounded-xl text-xs font-mono font-bold uppercase transition-all flex items-center justify-between cursor-pointer ${
+                    activePage === "home"
+                      ? "bg-[#E21D1D]/20 text-[#ff4d4d] border border-[#E21D1D]/40 font-black"
+                      : "text-neutral-200 hover:bg-neutral-800/80 hover:text-white"
                   }`}
                 >
-                  <span>Home</span>
-                  {activePage === "home" && <span className="w-2 h-2 rounded-full bg-[#E21D1D]" />}
+                  <span className="flex items-center gap-2.5">
+                    <Home className="w-4 h-4 text-[#ff4d4d]" />
+                    <span>Home</span>
+                  </span>
+                  {activePage === "home" && <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />}
                 </button>
 
+                {/* About Us */}
                 <button
                   onClick={() => navigateTo("about-us")}
-                  className={`text-left py-2 px-3 rounded-xl text-xs font-mono font-bold uppercase transition-colors flex items-center justify-between cursor-pointer ${
-                    activePage === "about-us" ? "bg-[#E21D1D]/20 text-[#ff4d4d]" : "text-neutral-200"
+                  className={`w-full text-left py-2.5 px-3 rounded-xl text-xs font-mono font-bold uppercase transition-all flex items-center justify-between cursor-pointer ${
+                    activePage === "about-us"
+                      ? "bg-[#E21D1D]/20 text-[#ff4d4d] border border-[#E21D1D]/40 font-black"
+                      : "text-neutral-200 hover:bg-neutral-800/80 hover:text-white"
                   }`}
                 >
-                  <span>About Us</span>
-                  {activePage === "about-us" && <span className="w-2 h-2 rounded-full bg-[#E21D1D]" />}
+                  <span className="flex items-center gap-2.5">
+                    <Building className="w-4 h-4 text-[#ff4d4d]" />
+                    <span>About Us</span>
+                  </span>
+                  {activePage === "about-us" && <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />}
                 </button>
 
-                {/* Mobile TRY PRODUCTS CATALOG ACCORDION */}
+                {/* Quality & Process */}
+                <button
+                  onClick={() => navigateTo("quality-process")}
+                  className={`w-full text-left py-2.5 px-3 rounded-xl text-xs font-mono font-bold uppercase transition-all flex items-center justify-between cursor-pointer ${
+                    activePage === "quality-process"
+                      ? "bg-[#E21D1D]/20 text-[#ff4d4d] border border-[#E21D1D]/40 font-black"
+                      : "text-neutral-200 hover:bg-neutral-800/80 hover:text-white"
+                  }`}
+                >
+                  <span className="flex items-center gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-[#ff4d4d]" />
+                    <span>Quality & Process</span>
+                  </span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono font-bold border border-emerald-500/30">
+                    ISO 9001
+                  </span>
+                </button>
+              </div>
+
+              {/* Section 2: Mobile TRY PRODUCTS CATALOG ACCORDION */}
+              <div className="bg-black/40 p-2.5 rounded-2xl border border-neutral-800/80 space-y-2">
+                <div className="text-[10px] font-mono font-black text-neutral-400 uppercase tracking-widest px-2.5 py-1 flex items-center justify-between">
+                  <span>PRODUCTS CATALOG</span>
+                  <span className="text-[#ff4d4d]">2,372 SAMPLES</span>
+                </div>
+
                 <TryProductsMobileAccordion
                   onNavigateToCatalog={navigateToCatalog}
                   onOpenFolderModal={(node) => {
@@ -612,88 +659,140 @@ export function App() {
                 />
               </div>
 
-              {/* Mobile SERVICES Section */}
-              <div className="pt-2 border-t border-neutral-800 space-y-1.5">
+              {/* Section 3: Mobile SERVICES Section */}
+              <div className="bg-black/40 p-2.5 rounded-2xl border border-neutral-800/80 space-y-1">
                 <button
                   onClick={() => navigateTo("services")}
-                  className="w-full text-left px-3 py-1 flex items-center justify-between group cursor-pointer"
+                  className="w-full text-left px-2.5 py-1.5 flex items-center justify-between group cursor-pointer hover:bg-neutral-800/40 rounded-xl"
                 >
                   <div>
                     <span className="text-[11px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
                       SERVICES (ALL OVERVIEW)
                     </span>
-                    <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                    <div className="w-8 h-0.5 bg-[#d946ef] rounded-full mt-1" />
                   </div>
-                  <span className="text-[10px] font-mono text-neutral-400 group-hover:text-white">View Page →</span>
+                  <span className="text-[10px] font-mono text-neutral-400 group-hover:text-white flex items-center gap-1">
+                    <span>View Page</span>
+                    <ArrowRight className="w-3 h-3 text-[#d946ef]" />
+                  </span>
                 </button>
 
-                {SERVICES_MENU_ITEMS.map((item) => (
-                  <button
-                    key={item.page}
-                    onClick={() => navigateTo(item.page)}
-                    className={`w-full text-left py-2 px-3 rounded-xl text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
-                      activePage === item.page
-                        ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                        : "text-neutral-200 hover:bg-white/5"
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    <ChevronRight className="w-3.5 h-3.5 opacity-40" />
-                  </button>
-                ))}
+                <div className="pt-1 space-y-0.5">
+                  {SERVICES_MENU_ITEMS.map((item) => (
+                    <button
+                      key={item.page}
+                      onClick={() => navigateTo(item.page)}
+                      className={`w-full text-left py-2 px-2.5 rounded-xl text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
+                        activePage === item.page
+                          ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold border border-[#E21D1D]/30"
+                          : "text-neutral-300 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      <ChevronRight className="w-3.5 h-3.5 opacity-40" />
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              {/* Mobile SUPPORT Section */}
-              <div className="pt-2 border-t border-neutral-800 space-y-1.5">
+              {/* Section 4: Mobile SUPPORT & POLICIES Section */}
+              <div className="bg-black/40 p-2.5 rounded-2xl border border-neutral-800/80 space-y-1">
                 <button
                   onClick={() => navigateTo("support")}
-                  className="w-full text-left px-3 py-1 flex items-center justify-between group cursor-pointer"
+                  className="w-full text-left px-2.5 py-1.5 flex items-center justify-between group cursor-pointer hover:bg-neutral-800/40 rounded-xl"
                 >
                   <div>
                     <span className="text-[11px] font-mono font-black text-[#d946ef] tracking-widest uppercase block">
                       SUPPORT & POLICIES (OVERVIEW)
                     </span>
-                    <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                    <div className="w-8 h-0.5 bg-[#d946ef] rounded-full mt-1" />
                   </div>
-                  <span className="text-[10px] font-mono text-neutral-400 group-hover:text-white">View Page →</span>
+                  <span className="text-[10px] font-mono text-neutral-400 group-hover:text-white flex items-center gap-1">
+                    <span>View Page</span>
+                    <ArrowRight className="w-3 h-3 text-[#d946ef]" />
+                  </span>
                 </button>
 
-                {SUPPORT_MENU_ITEMS.map((item) => (
-                  <button
-                    key={item.page}
-                    onClick={() => navigateTo(item.page)}
-                    className={`w-full text-left py-2 px-3 rounded-xl text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
-                      activePage === item.page
-                        ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                        : "text-neutral-200 hover:bg-white/5"
-                    }`}
+                <div className="pt-1 space-y-0.5">
+                  {SUPPORT_MENU_ITEMS.map((item) => (
+                    <button
+                      key={item.page}
+                      onClick={() => navigateTo(item.page)}
+                      className={`w-full text-left py-2 px-2.5 rounded-xl text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
+                        activePage === item.page
+                          ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold border border-[#E21D1D]/30"
+                          : "text-neutral-300 hover:bg-white/5 hover:text-white"
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <span>{item.label}</span>
+                        {item.hasBadge && (
+                          <span className="w-4 h-4 rounded-full bg-[#d946ef]/20 border border-[#d946ef]/40 text-[#d946ef] flex items-center justify-center text-[9px] font-bold">
+                            +
+                          </span>
+                        )}
+                      </span>
+                      <ChevronRight className="w-3.5 h-3.5 opacity-40" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Section 5: Direct Fast Contact & Assistance */}
+              <div className="p-3 rounded-2xl bg-gradient-to-r from-[#141424] to-[#0d0d18] border border-neutral-800 space-y-2.5">
+                <div className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-wider">
+                  DIRECT FACTORY CONTACT (SIALKOT, PK)
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                  <a
+                    href="https://wa.me/923001234567"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-600/40 hover:bg-emerald-900/40 text-emerald-400 font-bold flex items-center justify-center gap-1.5 transition-colors"
                   >
-                    <span className="flex items-center gap-1.5">
-                      <span>{item.label}</span>
-                      {item.hasBadge && (
-                        <span className="w-4 h-4 rounded-full bg-[#d946ef]/20 border border-[#d946ef]/40 text-[#d946ef] flex items-center justify-center text-[9px] font-bold">
-                          +
-                        </span>
-                      )}
-                    </span>
-                    <ChevronRight className="w-3.5 h-3.5 opacity-40" />
-                  </button>
-                ))}
+                    <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>WhatsApp</span>
+                  </a>
+                  <a
+                    href="mailto:info@trywears.com"
+                    className="p-2.5 rounded-xl bg-neutral-900 border border-neutral-700 hover:bg-neutral-800 text-white font-bold flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-red-400" />
+                    <span>Email Us</span>
+                  </a>
+                </div>
+                <div className="text-[10px] font-mono text-neutral-400 text-center pt-1">
+                  Low MOQ 20 Pcs • Worldwide DDP Express Shipping
+                </div>
               </div>
 
-              <div className="pt-2 border-t border-neutral-800">
-                <button
-                  onClick={() => navigateTo("b2b-quote")}
-                  className="w-full py-3.5 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono text-xs font-black uppercase text-center cursor-pointer shadow-[0_0_20px_rgba(226,29,29,0.4)] flex items-center justify-center gap-2"
-                >
-                  <FileCheck className="w-4 h-4" />
-                  <span>GET B2B QUOTATION / TECH PACK</span>
-                </button>
-              </div>
+              {/* Bottom Quick Close Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-full py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-neutral-300 hover:text-white font-mono text-xs font-bold uppercase flex items-center justify-center gap-2 cursor-pointer transition-colors"
+              >
+                <X className="w-4 h-4 text-red-400" />
+                <span>CLOSE NAVIGATION MENU</span>
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
       </header>
+
+      {/* Mobile Menu Tap-Outside Backdrop Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="xl:hidden fixed inset-0 top-14 sm:top-20 bg-black/75 backdrop-blur-xs z-40 pointer-events-auto"
+            aria-hidden="true"
+          />
+        )}
+      </AnimatePresence>
 
       {/* 3. MAIN DYNAMIC PAGE CONTENT SWITCHER */}
       <main>
@@ -733,10 +832,7 @@ export function App() {
               </div>
             </section>
 
-            {/* 6. B2B Factory Lifecycle & Private Label Capabilities */}
-            <B2BFactoryCapabilities onNavigatePage={navigateTo} />
-
-            {/* 7. Global Brands & Federations Trust Marquee */}
+            {/* 6. Global Brands & Federations Trust Marquee */}
             <BrandLogosMarqueeSection />
 
             {/* 8. Factory Live Video Showcase */}

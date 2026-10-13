@@ -73,7 +73,7 @@ export const CP_PRODUCTS: CustomClientProduct[] = [
       "Double-Reinforced 4-Needle Flatlock Seams"
     ],
     specs: [
-      { label: "MINIMUM ORDER", val: "25 PCS / COLOR" },
+      { label: "MINIMUM ORDER", val: "20 PCS / COLOR" },
       { label: "SAMPLE PROTOTYPE", val: "5-7 DAYS" },
       { label: "FABRIC TECH", val: "400 GSM DOUBLE-KNIT" },
       { label: "CUSTOMIZATION", val: "SILICONE + WOVEN" }
@@ -123,7 +123,7 @@ export const CP_PRODUCTS: CustomClientProduct[] = [
       "Custom Heavy Ribbed Hem & Cuffs"
     ],
     specs: [
-      { label: "MINIMUM ORDER", val: "25 PCS / STYLE" },
+      { label: "MINIMUM ORDER", val: "20 PCS / STYLE" },
       { label: "SAMPLE PROTOTYPE", val: "6-8 DAYS" },
       { label: "FABRIC TECH", val: "480 GSM COTTON" },
       { label: "TRIMS", val: "DAMASK WOVEN TAGS" }
@@ -148,7 +148,7 @@ export const CP_PRODUCTS: CustomClientProduct[] = [
       "Heat-Sealed Reflective Brand Accents"
     ],
     specs: [
-      { label: "MINIMUM ORDER", val: "25 SETS / MODEL" },
+      { label: "MINIMUM ORDER", val: "20 SETS / MODEL" },
       { label: "SAMPLE PROTOTYPE", val: "5-6 DAYS" },
       { label: "FABRIC TECH", val: "320 GSM NYLON-SPANDEX" },
       { label: "STITCHING", val: "SEAMLESS CIRCULAR" }
@@ -173,7 +173,7 @@ export const CP_PRODUCTS: CustomClientProduct[] = [
       "Hydraulic Heat-Debossed Back Panel Emblem"
     ],
     specs: [
-      { label: "MINIMUM ORDER", val: "15 PCS (1 PC PROTO)" },
+      { label: "MINIMUM ORDER", val: "20 PCS (1 PC PROTO)" },
       { label: "SAMPLE PROTOTYPE", val: "7-10 DAYS" },
       { label: "LEATHER GRADE", val: "1.2MM TOP-GRAIN" },
       { label: "HARDWARE", val: "CORROSION-PROOF BRASS" }
@@ -223,7 +223,7 @@ export const CP_PRODUCTS: CustomClientProduct[] = [
       "Custom Engraved Matte Snap Hardware"
     ],
     specs: [
-      { label: "MINIMUM ORDER", val: "25 SETS / RUN" },
+      { label: "MINIMUM ORDER", val: "20 SETS / RUN" },
       { label: "SAMPLE PROTOTYPE", val: "6-8 DAYS" },
       { label: "FABRIC TECH", val: "300 GSM JERSEY+RIPSTOP" },
       { label: "LABELING", val: "WOVEN NECK & FLAGGED" }
@@ -286,7 +286,7 @@ export function CustomProductsShowcase() {
     name: "",
     contact: "",
     productName: currentProduct.name,
-    quantity: "25-50 Pcs (Team / Small Batch)",
+    quantity: "20-50 Pcs (Team / Small Batch)",
     notes: ""
   });
   const [submitted, setSubmitted] = useState(false);
@@ -313,7 +313,7 @@ export function CustomProductsShowcase() {
         name: "",
         contact: "",
         productName: currentProduct.name,
-        quantity: "25-50 Pcs (Team / Small Batch)",
+        quantity: "20-50 Pcs (Team / Small Batch)",
         notes: ""
       });
     }, 2500);
@@ -760,7 +760,7 @@ export function CustomProductsShowcase() {
                 ANY PRODUCT, ANY CUT
               </h4>
               <p className="text-[11px] font-sans text-neutral-300 mt-0.5">
-                Send your tech pack or sketch — we deliver exact physical prototypes in 7 days.
+                Send your tech pack or sketch — custom physical proto sampling engineered to your exact specifications.
               </p>
             </div>
           </div>
@@ -771,7 +771,7 @@ export function CustomProductsShowcase() {
             </div>
             <div>
               <h4 className="text-xs font-mono font-black text-white uppercase">
-                LOW 50–100 PCS MOQ
+                LOW 20 PCS MOQ
               </h4>
               <p className="text-[11px] font-sans text-neutral-300 mt-0.5">
                 Flexible low-minimum production runs tailored for startups and pro gyms.
@@ -819,10 +819,10 @@ export function CustomProductsShowcase() {
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <h3 className="text-xl font-mono font-black uppercase text-white">
-                    INQUIRY MOOSOOL HO GAYI!
+                    INQUIRY SUBMITTED SUCCESSFULLY!
                   </h3>
                   <p className="text-xs sm:text-sm text-neutral-200 font-sans max-w-sm mx-auto leading-relaxed">
-                    Try Wears production team aapki custom design requirements check kar ke 12 ghanton ke andar WhatsApp ya email par rabta karegi.
+                    The Try Wears production engineering team will review your custom design specifications and get back to you within 12 hours via WhatsApp or email with an official quotation.
                   </p>
                 </div>
               ) : (
@@ -835,7 +835,7 @@ export function CustomProductsShowcase() {
                       CUSTOM PRODUCT ORDER ESTIMATE
                     </h3>
                     <p className="text-xs text-neutral-300 font-sans mt-1">
-                      Batayein aapko kis tarah ki custom tailoring ya private label manufacturing chahiye.
+                      Please specify your custom tailoring and private label manufacturing requirements below.
                     </p>
                   </div>
 
@@ -896,7 +896,7 @@ export function CustomProductsShowcase() {
                         className="w-full bg-[#1a1a24] border border-neutral-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#E21D1D]"
                       >
                         <option>1-5 Pcs (Sample Prototype)</option>
-                        <option>25-50 Pcs (Team Order / Small Run)</option>
+                        <option>20-50 Pcs (Team Order / Small Run)</option>
                         <option>100-300 Pcs (Commercial Production)</option>
                         <option>500+ Pcs (Large Wholesale)</option>
                       </select>

@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   motion,
-  AnimatePresence,
   useSpring,
   useMotionValue,
   useTransform
@@ -10,19 +9,12 @@ import {
   Play,
   Youtube,
   Film,
-  Plus,
-  Edit3,
   Factory,
   ShieldCheck,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
-  ExternalLink,
-  X,
-  RotateCcw,
-  Sparkles,
-  Award,
-  Box
+  ExternalLink
 } from "lucide-react";
 
 export interface FactoryVideoItem {
@@ -154,12 +146,6 @@ export function FactoryLiveVideoShowcase() {
   const activeVideo = videoList[activeVideoIdx] || videoList[0];
   const youtubeId = extractYouTubeId(activeVideo.youtubeUrlOrId);
 
-  // Edit Modal states
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editUrl, setEditUrl] = useState(activeVideo.youtubeUrlOrId);
-  const [editTitle, setEditTitle] = useState(activeVideo.title);
-  const [editDesc, setEditDesc] = useState(activeVideo.description);
-
   // 3D Perspective Tilt Physics with mouse
   const stageRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
@@ -188,56 +174,6 @@ export function FactoryLiveVideoShowcase() {
     mouseY.set(0);
   };
 
-  const handleSaveVideo = (e: React.FormEvent) => {
-    e.preventDefault();
-    const updatedList = [...videoList];
-    updatedList[activeVideoIdx] = {
-      ...activeVideo,
-      youtubeUrlOrId: editUrl,
-      title: editTitle || activeVideo.title,
-      description: editDesc || activeVideo.description
-    };
-    setVideoList(updatedList);
-    try {
-      localStorage.setItem("trywears_factory_videos", JSON.stringify(updatedList));
-    } catch (e) {
-      // Ignore
-    }
-    setIsModalOpen(false);
-  };
-
-  const handleResetDefaults = () => {
-    setVideoList(DEFAULT_FACTORY_VIDEOS);
-    try {
-      localStorage.removeItem("trywears_factory_videos");
-    } catch (e) {
-      // Ignore
-    }
-    setIsModalOpen(false);
-  };
-
-  const handleAddNewVideo = () => {
-    const newVideo: FactoryVideoItem = {
-      id: `fac-vid-${Date.now()}`,
-      youtubeUrlOrId: "jfKfPfyJRdk",
-      title: "New Factory Live Production Line Video",
-      stageName: "LIVE PROD LINE",
-      stageCode: `0${videoList.length + 1}`,
-      duration: "4K UHD",
-      description: "Direct live recording from our Sialkot sports manufacturing line.",
-      factoryLocation: "Sialkot Export Manufacturing Unit",
-      equipmentUsed: "Factory Direct Machinery",
-      highlights: ["100% Bespoke Custom Orders", "Factory Direct Quality Assurance"]
-    };
-    const updated = [...videoList, newVideo];
-    setVideoList(updated);
-    setActiveVideoIdx(updated.length - 1);
-    setEditUrl(newVideo.youtubeUrlOrId);
-    setEditTitle(newVideo.title);
-    setEditDesc(newVideo.description);
-    setIsModalOpen(true);
-  };
-
   return (
     <section
       id="factory-capabilities"
@@ -264,40 +200,27 @@ export function FactoryLiveVideoShowcase() {
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />
               <span className="text-[10px] font-mono font-black text-[#E21D1D] tracking-[0.2em] uppercase">
-                TRY WEARS LIVE FACTORY FEED • DIRECT YOUTUBE STREAM
+                TRY WEARS LIVE FACTORY FEED • DIRECT PRODUCTION STREAM
               </span>
             </div>
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-display font-black uppercase tracking-tight text-white leading-none">
-              PRODUCTS READY HOTI HUE{" "}
+              LIVE ATELIER &{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E21D1D] via-red-500 to-amber-500">
                 FACTORY VIDEOS
               </span>
             </h2>
           </div>
 
-          {/* Action Buttons: Instant Edit / Add Video */}
-          <div className="flex items-center gap-2.5 shrink-0">
-            <button
-              onClick={() => {
-                setEditUrl(activeVideo.youtubeUrlOrId);
-                setEditTitle(activeVideo.title);
-                setEditDesc(activeVideo.description);
-                setIsModalOpen(true);
-              }}
-              className="px-4 py-2 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono font-black text-[11px] uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(226,29,29,0.35)] flex items-center gap-1.5 cursor-pointer active:scale-95"
-            >
-              <Youtube className="w-3.5 h-3.5" />
-              <span>APNI VIDEO KA LINK DALEIN</span>
-            </button>
-
-            <button
-              onClick={handleAddNewVideo}
-              className="px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 font-mono font-bold text-[11px] uppercase tracking-wider transition-colors cursor-pointer flex items-center gap-1.5"
-              title="Nayi Video Add Karein"
-            >
-              <Plus className="w-3.5 h-3.5 text-[#E21D1D]" />
-              <span className="hidden sm:inline">NAYI VIDEO</span>
-            </button>
+          {/* Section Badges */}
+          <div className="flex items-center gap-2 shrink-0">
+            <div className="px-3.5 py-1.5 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300 font-mono text-[10.5px] font-bold uppercase tracking-wider flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>4K FACTORY FEEDS ({videoList.length})</span>
+            </div>
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#E21D1D]/10 border border-[#E21D1D]/30 text-[#ff4d4d] font-mono text-[10.5px] font-bold uppercase tracking-wider">
+              <Youtube className="w-3.5 h-3.5 text-[#E21D1D]" />
+              <span>OFFICIAL PRODUCTION REELS</span>
+            </div>
           </div>
         </div>
 
@@ -512,10 +435,10 @@ export function FactoryLiveVideoShowcase() {
                         prev === 0 ? videoList.length - 1 : prev - 1
                       );
                     }}
-                    className="p-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white border border-neutral-800 hover:border-[#E21D1D] transition-colors cursor-pointer shrink-0"
-                    title="Pichli Video"
+                    className="flex-1 py-2.5 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white border border-neutral-800 hover:border-[#E21D1D] transition-colors cursor-pointer flex items-center justify-center gap-2 text-[10.5px] font-mono font-bold active:scale-95"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="w-4 h-4 text-[#E21D1D]" />
+                    <span>PREVIOUS VIDEO</span>
                   </button>
 
                   <button
@@ -524,23 +447,10 @@ export function FactoryLiveVideoShowcase() {
                         (prev + 1) % videoList.length
                       );
                     }}
-                    className="p-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white border border-neutral-800 hover:border-[#E21D1D] transition-colors cursor-pointer shrink-0"
-                    title="Agli Video"
+                    className="flex-1 py-2.5 px-3 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white transition-colors cursor-pointer flex items-center justify-center gap-2 text-[10.5px] font-mono font-bold shadow-[0_0_15px_rgba(226,29,29,0.3)] active:scale-95"
                   >
+                    <span>NEXT FACTORY VIDEO</span>
                     <ChevronRight className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setEditUrl(activeVideo.youtubeUrlOrId);
-                      setEditTitle(activeVideo.title);
-                      setEditDesc(activeVideo.description);
-                      setIsModalOpen(true);
-                    }}
-                    className="flex-1 py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-mono font-bold text-[10.5px] uppercase tracking-wider transition-colors border border-neutral-800 hover:border-[#E21D1D] flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <Edit3 className="w-3.5 h-3.5 text-[#E21D1D]" />
-                    <span>YOUTUBE LINK EDIT KAREIN</span>
                   </button>
                 </div>
 
@@ -559,106 +469,6 @@ export function FactoryLiveVideoShowcase() {
         </div>
 
       </div>
-
-      {/* ✦ POPUP MODAL: EDIT YA NAYA YOUTUBE LINK DALEIN */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="bg-[#0e0e13] border border-neutral-800 rounded-3xl p-5 sm:p-7 max-w-lg w-full text-white shadow-2xl relative"
-            >
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="absolute top-5 right-5 p-2 rounded-full bg-neutral-900 text-neutral-400 hover:text-white transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-
-              <div className="space-y-4">
-                <div>
-                  <span className="text-[10px] font-mono text-[#E21D1D] font-black uppercase tracking-widest block">
-                    TRY WEARS FACTORY VIDEO MANAGER
-                  </span>
-                  <h3 className="text-lg sm:text-xl font-mono font-black uppercase mt-1 text-white">
-                    APNI YOUTUBE VIDEO KA LINK DALEIN
-                  </h3>
-                  <p className="text-xs text-neutral-400 font-sans mt-0.5">
-                    Kisi bhi YouTube video ka link ya Video ID yahan paste karein, yeh direct player mein chal jaye gi.
-                  </p>
-                </div>
-
-                <form onSubmit={handleSaveVideo} className="space-y-3">
-                  <div>
-                    <label className="text-[10px] font-mono text-neutral-400 uppercase font-bold block mb-1">
-                      YouTube URL ya Video ID *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. https://www.youtube.com/watch?v=... ya jfKfPfyJRdk"
-                      value={editUrl}
-                      onChange={(e) => setEditUrl(e.target.value)}
-                      className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-[#E21D1D]"
-                    />
-                    <span className="text-[9px] font-mono text-neutral-500 mt-1 block">
-                      Recognized ID: <strong className="text-white">{extractYouTubeId(editUrl) || "Invalid"}</strong>
-                    </span>
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] font-mono text-neutral-400 uppercase font-bold block mb-1">
-                      Video Title *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Boxing Gloves Leather Stitching & Shaping in Factory"
-                      value={editTitle}
-                      onChange={(e) => setEditTitle(e.target.value)}
-                      className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-[#E21D1D]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] font-mono text-neutral-400 uppercase font-bold block mb-1">
-                      Description / Factory Details
-                    </label>
-                    <textarea
-                      rows={2}
-                      placeholder="Describe what products are being ready in this video..."
-                      value={editDesc}
-                      onChange={(e) => setEditDesc(e.target.value)}
-                      className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-[#E21D1D] resize-none"
-                    />
-                  </div>
-
-                  <div className="flex items-center gap-2.5 pt-1.5">
-                    <button
-                      type="submit"
-                      className="flex-1 py-2.5 rounded-xl bg-[#E21D1D] hover:bg-red-700 text-white font-mono font-black text-xs uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(226,29,29,0.3)]"
-                    >
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span>VIDEO SAVE KAREIN</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={handleResetDefaults}
-                      className="px-3.5 py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-400 hover:text-white font-mono text-xs uppercase tracking-wider transition-colors cursor-pointer border border-neutral-800"
-                      title="Reset Default Videos"
-                    >
-                      <RotateCcw className="w-4 h-4" />
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

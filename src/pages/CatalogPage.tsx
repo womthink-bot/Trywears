@@ -699,7 +699,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-6">
                 {paginatedFiles.map((file, idx) => {
                   const cleanName = file.name
                     .replace(/\.[^/.]+$/, "")

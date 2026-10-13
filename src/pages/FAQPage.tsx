@@ -30,7 +30,7 @@ const FAQ_DATA: FAQItem[] = [
   {
     category: "MOQ & Orders",
     question: "What is your Minimum Order Quantity (MOQ) per style and colorway?",
-    answer: "Our standard B2B production MOQ is 25–30 pieces per model/colorway for luxury hoodies, combat boxing gloves, and sublimated athletic kits. For large customized runs, tiered volume discounts apply at 50, 100, 250, and 500+ units."
+    answer: "Our standard B2B production MOQ is 20 pieces per model/colorway for luxury hoodies, combat boxing gloves, and sublimated athletic kits. For large customized runs, tiered volume discounts apply at 50, 100, 250, and 500+ units."
   },
   {
     category: "MOQ & Orders",
