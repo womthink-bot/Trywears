@@ -321,10 +321,10 @@ export function App() {
       <SecurityAlerts />
 
       {/* 1. TOP NOTIFICATION RUNNER (FULL SCREEN WIDTH) */}
-      <div className="bg-[#08080c] text-white py-1.5 sm:py-2 px-3 sm:px-6 lg:px-10 xl:px-14 border-b border-neutral-800/80 overflow-hidden relative z-50">
-        <div className="w-full flex items-center justify-between text-[9px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest font-black uppercase">
-          <div className="flex items-center gap-2 min-w-0">
-            <span className="h-2 w-2 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
+      <div className="bg-[#08080c] text-white py-1.5 sm:py-2 px-2.5 xs:px-4 sm:px-6 lg:px-10 xl:px-14 border-b border-neutral-800/80 overflow-hidden relative z-50">
+        <div className="w-full flex items-center justify-between text-[8px] xs:text-[9px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest font-black uppercase">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 pr-2">
+            <span className="h-1.5 w-1.5 xs:h-2 xs:w-2 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
             <span className="truncate flex-1 min-w-0 text-neutral-200">
               {bannerText}
             </span>
@@ -345,14 +345,14 @@ export function App() {
 
       {/* 2. EXECUTIVE FULL-SCREEN NAVIGATION HEADER */}
       <header className="sticky top-0 z-50 bg-[#07070b]/98 backdrop-blur-2xl border-b border-neutral-800 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all">
-        <div className="w-full px-3 sm:px-6 lg:px-10 xl:px-14 py-2.5 sm:py-3.5 flex items-center justify-between gap-2.5 sm:gap-4 lg:gap-8">
+        <div className="w-full px-2.5 xs:px-4 sm:px-6 lg:px-10 xl:px-14 py-2 sm:py-3 flex items-center justify-between gap-2 sm:gap-4 lg:gap-8">
           
           {/* Branded Logo */}
           <button
             onClick={() => navigateTo("home")}
-            className="flex items-center gap-2.5 sm:gap-3.5 group text-left cursor-pointer shrink-0 min-w-0"
+            className="flex items-center gap-2 xs:gap-2.5 sm:gap-3.5 group text-left cursor-pointer flex-1 min-w-0 mr-1 sm:mr-4"
           >
-            <div className="h-10 w-10 xs:h-12 xs:w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl bg-neutral-900/60 p-1 border border-neutral-800 group-hover:border-[#E21D1D]/60 flex items-center justify-center shrink-0 transition-all duration-300 shadow-md">
+            <div className="h-9 w-9 xs:h-11 xs:w-11 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl bg-neutral-900/60 p-1 border border-neutral-800 group-hover:border-[#E21D1D]/60 flex items-center justify-center shrink-0 transition-all duration-300 shadow-md">
               <img 
                 src={config?.global?.logo || "/images/trylogo.png"} 
                 alt="Try Wears Logo" 
@@ -360,13 +360,15 @@ export function App() {
                 referrerPolicy="no-referrer" 
               />
             </div>
-            <div className="min-w-0">
-              <span className="font-display font-black text-base xs:text-lg sm:text-xl lg:text-2xl tracking-[0.14em] text-white block uppercase leading-none group-hover:text-[#ff3b3b] transition-colors">
+            <div className="min-w-0 flex-1">
+              <span className="font-display font-black text-sm xs:text-base sm:text-xl lg:text-2xl tracking-[0.1em] sm:tracking-[0.14em] text-white block uppercase leading-none group-hover:text-[#ff3b3b] transition-colors">
                 {config?.global?.brandName || "TRY WEARS"}
               </span>
-              <span className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] font-mono font-bold tracking-wider sm:tracking-widest text-[#ff3b3b] block uppercase mt-0.5 sm:mt-1 truncate max-w-[130px] xs:max-w-[200px] sm:max-w-none">
-                {config?.global?.tagline || "OEM/ODM COMBAT SPORTS & ATHLETIC APPAREL FACTORY"}
-              </span>
+              {/* Full tagline on mobile broken into two lines as requested, single line on tablet/desktop */}
+              <div className="text-[7px] xs:text-[8px] sm:text-[10px] font-mono font-bold tracking-wider sm:tracking-widest text-[#ff3b3b] uppercase mt-0.5 sm:mt-1 leading-tight sm:leading-normal">
+                <span className="block sm:inline">OEM/ODM COMBAT SPORTS &amp;</span>{" "}
+                <span className="block sm:inline">ATHLETIC APPAREL FACTORY</span>
+              </div>
             </div>
           </button>
 
@@ -542,10 +544,10 @@ export function App() {
               <span>GET B2B QUOTE</span>
             </button>
 
-            {/* Mobile / Tablet Menu Button - Highly visible, clear, and prominent */}
+            {/* Mobile / Tablet Menu Button - Highly visible, clear, and perfectly fitted on all devices */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`xl:hidden flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border-2 transition-all duration-200 cursor-pointer shadow-lg active:scale-95 ${
+              className={`xl:hidden flex items-center gap-1.5 xs:gap-2 px-2.5 py-1.5 xs:px-3.5 xs:py-2 sm:px-4 sm:py-2.5 rounded-xl border-2 transition-all duration-200 cursor-pointer shadow-lg active:scale-95 shrink-0 ${
                 isMobileMenuOpen
                   ? "bg-[#E21D1D] border-red-400 text-white shadow-[0_0_20px_rgba(226,29,29,0.5)] ring-2 ring-red-500/40"
                   : "bg-neutral-900/95 border-[#E21D1D] text-white hover:bg-neutral-800 shadow-[0_0_15px_rgba(226,29,29,0.35)] hover:border-red-400"
@@ -555,13 +557,13 @@ export function App() {
             >
               {isMobileMenuOpen ? (
                 <>
-                  <X className="w-5 h-5 text-white" />
-                  <span className="font-mono text-xs font-black uppercase tracking-wider text-white">CLOSE</span>
+                  <X className="w-4 h-4 xs:w-5 xs:h-5 text-white shrink-0" />
+                  <span className="font-mono text-[11px] xs:text-xs font-black uppercase tracking-wider text-white">CLOSE</span>
                 </>
               ) : (
                 <>
-                  <Menu className="w-5 h-5 text-[#ff4d4d]" />
-                  <span className="font-mono text-xs font-black uppercase tracking-wider text-white">MENU</span>
+                  <Menu className="w-4 h-4 xs:w-5 xs:h-5 text-[#ff4d4d] shrink-0" />
+                  <span className="font-mono text-[11px] xs:text-xs font-black uppercase tracking-wider text-white">MENU</span>
                 </>
               )}
             </button>
