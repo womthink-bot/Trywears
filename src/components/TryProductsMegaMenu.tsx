@@ -148,10 +148,16 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
   };
 
   // Pre-fill quote form
-  const handleRequestQuote = (info: { name: string; image: string; path: string }) => {
+  const handleRequestQuote = (info: any) => {
+    setIsLightboxOpen(false);
     if (onNavigateToQuote) {
-      onNavigateToQuote(info.name);
+      onNavigateToQuote(info);
     }
+    window.dispatchEvent(
+      new CustomEvent("open-quote-page", {
+        detail: info
+      })
+    );
   };
 
   // Quick Search Matches

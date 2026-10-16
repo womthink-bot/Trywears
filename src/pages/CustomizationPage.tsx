@@ -54,6 +54,7 @@ interface CustomizationPageProps {
   customizerProduct: Product | null;
   onAddToCart: (item: any) => void;
   onNavigatePage: (page: string) => void;
+  onNavigateToQuote?: (productInfo?: any) => void;
 }
 
 // ✦ 4 IN-HOUSE INDUSTRIAL CUSTOMIZATION METHODS (HIGH CONTRAST & BRIGHT)
@@ -210,7 +211,8 @@ const PRIVATE_LABEL_TRIMS = [
 export const CustomizationPage: React.FC<CustomizationPageProps> = ({
   customizerProduct,
   onAddToCart,
-  onNavigatePage
+  onNavigatePage,
+  onNavigateToQuote
 }) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -854,18 +856,29 @@ export const CustomizationPage: React.FC<CustomizationPageProps> = ({
       <section className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-12 sm:py-20 border-b border-neutral-800 space-y-6 sm:space-y-8">
         <div className="text-center space-y-2">
           <span className="text-[10px] sm:text-xs font-mono font-black text-[#ff4d4d] uppercase tracking-widest">
-            INTERACTIVE COLORWAY & TEXTURE SIMULATOR
+            INTERACTIVE 2D / 3D EXPORT ATELIER
           </span>
           <h2 className="text-2xl sm:text-4xl font-display font-black text-white uppercase tracking-tight">
-            3D DIGITAL PROTOTYPING LAB
+            TRY WEARS SPORTSWEAR &amp; GEAR DESIGN STUDIO
           </h2>
           <p className="text-xs sm:text-sm text-neutral-300 font-mono max-w-xl mx-auto uppercase font-bold">
-            Test custom colorways, metallic accents, and private label trims before placing your physical production run.
+            Live multi-panel pixel shading customizer for Compression Sets, Varsity Jackets, Bomber Jackets, Bra Sets, Crop Sets, and Tracksuits with custom text, numbers, and draggable logo graphics.
           </p>
         </div>
 
-        <div className="rounded-3xl bg-[#121219] border border-neutral-700 p-4 sm:p-8 shadow-2xl">
-          <TShirtCustomizer product={customizerProduct} onAddToCart={onAddToCart} />
+        <div className="rounded-3xl bg-[#121219] border border-neutral-700 p-2 sm:p-6 shadow-2xl">
+          <TShirtCustomizer 
+            product={customizerProduct} 
+            onAddToCart={onAddToCart}
+            onNavigateToQuote={(prodInfo) => {
+              if (onNavigateToQuote) {
+                onNavigateToQuote(prodInfo);
+              } else {
+                window.dispatchEvent(new CustomEvent("open-quote-page", { detail: prodInfo }));
+                if (onNavigatePage) onNavigatePage("b2b-quote");
+              }
+            }}
+          />
         </div>
       </section>
 

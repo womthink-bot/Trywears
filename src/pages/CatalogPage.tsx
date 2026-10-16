@@ -29,6 +29,7 @@ import { FolderNode, FolderFileItem } from "../types/folderTree";
 import defaultTreeData from "../data/imagekit_folder_tree.json";
 import { ProductImageLightbox } from "../components/ProductImageLightbox";
 import { getWhatsAppUrl } from "../components/WhatsAppChatWidget";
+import { CATEGORIES_DATA, WholesalePricing } from "../data/categoriesData";
 
 // Category configuration
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
@@ -90,6 +91,21 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
   const [lightboxFolderName, setLightboxFolderName] = useState<string>("");
   const [lightboxFolderPath, setLightboxFolderPath] = useState<string>("");
+
+  // Product wholesale pricing lookup map
+  const productPriceMap = useMemo(() => {
+    const map = new Map<string, WholesalePricing>();
+    for (const cat of CATEGORIES_DATA) {
+      for (const prod of cat.products || []) {
+        if (prod.pricing) {
+          map.set(prod.image, prod.pricing);
+          map.set(prod.id, prod.pricing);
+          map.set(prod.name.trim().toLowerCase(), prod.pricing);
+        }
+      }
+    }
+    return map;
+  }, []);
 
   // Sync latest tree data if server has new sync
   useEffect(() => {
@@ -705,6 +721,12 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                     .replace(/\.[^/.]+$/, "")
                     .replace(/[-_]/g, " ")
                     .toUpperCase();
+                  const rawBaseName = file.name.replace(/\.[^/.]+$/, "").trim().toLowerCase();
+                  const filePricing = file.pricing ||
+                    productPriceMap.get(file.url) ||
+                    productPriceMap.get(file.fileId) ||
+                    productPriceMap.get(cleanName.toLowerCase()) ||
+                    productPriceMap.get(rawBaseName);
 
                   return (
                     <motion.div
@@ -749,8 +771,51 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                         </span>
                       </div>
 
-                      {/* Product Metadata Info - Actions: Request Quote & WhatsApp */}
+                      {/* Product Metadata Info - Real Wholesale FOB Pricing */}
                       <div className="space-y-2">
+                        <div className="space-y-1 pt-1 font-mono text-[10px]">
+                          <div className="flex items-center justify-between">
+                            <span className="text-neutral-400 flex items-center gap-1 text-[9px]">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                              <span className="font-bold">FOB WHOLESALE:</span>
+                            </span>
+                            <span className="px-1.5 py-0.2 rounded text-[7.5px] uppercase font-bold bg-neutral-900 border border-neutral-700 text-neutral-300">
+                              {filePricing?.unitType === "set" ? `${filePricing.piecesInSet || 2}-Pc Set` : "1-Pc"}
+                            </span>
+                          </div>
+
+                          <div className="flex items-baseline justify-between">
+                            <div>
+                              <span className="font-display font-black text-sm text-white">
+                                ${(filePricing?.startingWholesalePrice || 7.5).toFixed(2)}
+                              </span>
+                              <span className="text-[8.5px] text-neutral-400 ml-1">
+                                /{filePricing?.unitType || "pc"} (500+)
+                              </span>
+                            </div>
+                            <span className="text-[8.5px] text-neutral-400">
+                              Tier 1: <strong className="text-white">${(filePricing?.tier1Price || 12).toFixed(2)}</strong>
+                            </span>
+                          </div>
+
+                          {/* 5-Tier Mini Rate Strip */}
+                          {filePricing?.tiers && filePricing.tiers.length > 0 && (
+                            <div className="grid grid-cols-5 gap-1 pt-1 text-center font-mono text-[7px]">
+                              {filePricing.tiers.map((t: any, tIdx: number) => (
+                                <div
+                                  key={tIdx}
+                                  className="bg-black/80 rounded px-0.5 py-0.5 border border-neutral-800"
+                                  title={`${t.tierName} (${t.minQty}${t.maxQty ? `-${t.maxQty}` : "+"} ${filePricing?.unitType || "pcs"}): $${t.unitPrice.toFixed(2)}`}
+                                >
+                                  <span className="block text-neutral-500 text-[6.5px]">T{tIdx + 1}</span>
+                                  <span className="block text-emerald-400 font-bold">${t.unitPrice.toFixed(1)}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Action Buttons: Request Quote & WhatsApp */}
                         <div className="grid grid-cols-2 gap-2 pt-1 border-t border-neutral-800/80 font-mono text-[10px]">
                           <button
                             onClick={() => {
@@ -871,8 +936,13 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
         onRequestQuote={(prod) => {
           setIsLightboxOpen(false);
           if (onNavigateToQuote) {
-            onNavigateToQuote(prod.name);
+            onNavigateToQuote(prod);
           }
+          window.dispatchEvent(
+            new CustomEvent("open-quote-page", {
+              detail: prod
+            })
+          );
         }}
       />
     </div>

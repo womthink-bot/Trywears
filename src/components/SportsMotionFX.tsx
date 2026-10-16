@@ -43,7 +43,7 @@ export const SportsMotionFX: React.FC = () => {
     <>
       {/* 1. TOP SCROLL PROGRESS BAR WITH METALLIC SHEEN */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#E21D1D] via-red-500 to-[#E21D1D] origin-left z-50 shadow-[0_0_12px_#E21D1D]"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#E21D1D] via-red-500 to-[#E21D1D] origin-left z-50 shadow-[0_0_12px_#E21D1D] pointer-events-none"
         style={{ scaleX: scrollYProgress }}
       />
 

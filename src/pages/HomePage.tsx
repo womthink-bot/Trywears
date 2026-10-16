@@ -50,26 +50,22 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* 3. 3D DECONSTRUCTED GARMENT STAGE */}
       <ScrollDeconstructed3DGarment />
 
-      {/* 4. BESPOKE 3D GLOVE / T-SHIRT CUSTOMIZER */}
-      <section id="customizer" className="py-24 px-4 sm:px-6 bg-neutral-900/40 dark:bg-black/80 border-y border-neutral-200/60 dark:border-neutral-800 transition-colors">
+      {/* 4. REAL ARTISAN LEATHER & WOOL VARSITY JACKET CUSTOMIZER */}
+      <section id="customizer" className="py-24 px-3 xs:px-4 sm:px-6 bg-neutral-900/40 dark:bg-black/80 border-y border-neutral-200/60 dark:border-neutral-800 transition-colors">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="text-center space-y-3">
             <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block uppercase">
-              INTERACTIVE BESPOKE ENGINEERING
+              INTERACTIVE 2D / 3D EXPORT ATELIER
             </span>
             <h2 className="text-3xl sm:text-4xl font-display font-black tracking-tight dark:text-white uppercase leading-none">
-              3D BESPOKE PROTOTYPE LAB
+              TRY WEARS SPORTSWEAR &amp; GEAR DESIGN STUDIO
             </h2>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono uppercase max-w-md mx-auto">
-              Simulate colorways, custom leather paneling, embossed brand crests, and metallic piping with real-time B2B tech pack estimation.
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono uppercase max-w-xl mx-auto">
+              Multi-product customizer for Compression Sets, Varsity Jackets, Bomber Jackets, Bra Sets, Crop Sets, and Retro Tracksuits with live canvas pixel recoloring, custom text, numbers, and draggable logo graphics.
             </p>
           </div>
 
-          {customizerProduct ? (
-            <TShirtCustomizer product={customizerProduct} onAddToCart={onAddToCart} />
-          ) : (
-            <div className="text-center py-8 font-mono text-neutral-500 text-xs">No customizable assets active.</div>
-          )}
+          <TShirtCustomizer product={customizerProduct} onAddToCart={onAddToCart} />
         </div>
       </section>
 

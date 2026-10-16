@@ -131,6 +131,18 @@ export function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Quote Navigation Product State
+  const [selectedProductForQuote, setSelectedProductForQuote] = useState<any>(null);
+
+  // Dedicated quote navigation helper
+  const navigateToQuote = (productInfo?: any) => {
+    setSelectedProductForQuote(productInfo || null);
+    setActivePage("b2b-quote");
+    setIsMobileMenuOpen(false);
+    setActiveDropdown(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   // Dedicated catalog navigation helper (routes to separate catalog page)
   const navigateToCatalog = (folder?: FolderNode, categoryName?: string) => {
     setCatalogInitialFolder(folder || null);
@@ -156,12 +168,43 @@ export function App() {
 
   // Global event listener for opening quote page from anywhere
   useEffect(() => {
-    const handleOpenQuote = () => {
-      navigateTo("b2b-quote");
+    const handleOpenQuote = (e: any) => {
+      if (e && e.detail) {
+        navigateToQuote(e.detail);
+      } else {
+        navigateTo("b2b-quote");
+      }
     };
     window.addEventListener("open-quote-page", handleOpenQuote);
     return () => window.removeEventListener("open-quote-page", handleOpenQuote);
   }, []);
+
+  // Global event listener for adding to cart from anywhere
+  useEffect(() => {
+    const handleGlobalAddToCart = (e: any) => {
+      if (e && e.detail) {
+        handleAddToCart(e.detail);
+      }
+    };
+    window.addEventListener("add-to-cart", handleGlobalAddToCart);
+    return () => window.removeEventListener("add-to-cart", handleGlobalAddToCart);
+  }, [cart]);
+
+  // Close nav dropdowns (Services/Support) on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('[data-dropdown="services"]') && !target.closest('[data-dropdown="support"]')) {
+        setActiveDropdown(null);
+      }
+    };
+    if (activeDropdown) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [activeDropdown]);
 
   // Sync document title on page navigation to always show Try Wears
   useEffect(() => {
@@ -406,113 +449,149 @@ export function App() {
               onNavigateToCatalog={navigateToCatalog}
             />
 
-            {/* SERVICES Button (Clickable -> Services Page, Hover -> Dropdown) */}
-            <div 
-              className="relative group"
-              onMouseEnter={() => setActiveDropdown("services")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
+            {/* SERVICES Dropdown (Click to Open, Closes on outside click - Never opens accidentally on hover) */}
+            <div className="relative" data-dropdown="services">
               <button
-                onClick={() => navigateTo("services")}
+                type="button"
+                onClick={() => setActiveDropdown(activeDropdown === "services" ? null : "services")}
                 className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                  isServicesActive
+                  isServicesActive || activeDropdown === "services"
                     ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
                     : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
                 }`}
+                title="Click to view Services"
               >
                 <span>Services</span>
-                <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    activeDropdown === "services" ? "rotate-180 text-[#ff3b3b]" : "text-neutral-400"
+                  }`}
+                />
               </button>
 
-              <div className="absolute top-full left-0 pt-2 w-64 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
-                <div className="p-3 bg-[#0a0a12] border border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1">
-                  <button
-                    onClick={() => navigateTo("services")}
-                    className="w-full text-left px-3 py-1.5 border-b border-neutral-800 mb-1 flex items-center justify-between hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
+              <AnimatePresence>
+                {activeDropdown === "services" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
+                    className="absolute top-full left-0 pt-2 w-64 z-50"
                   >
-                    <div>
-                      <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-white">
-                        SERVICES OVERVIEW
-                      </span>
-                      <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
-                    </div>
-                    <span className="text-[9px] font-mono text-neutral-400 group-hover/title:text-white">View All →</span>
-                  </button>
+                    <div className="p-3 bg-[#0a0a12] border border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1 backdrop-blur-xl">
+                      <button
+                        onClick={() => {
+                          setActiveDropdown(null);
+                          navigateTo("services");
+                        }}
+                        className="w-full text-left px-3 py-1.5 border-b border-neutral-800 mb-1 flex items-center justify-between hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
+                      >
+                        <div>
+                          <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-white">
+                            SERVICES OVERVIEW
+                          </span>
+                          <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                        </div>
+                        <span className="text-[9px] font-mono text-neutral-400 group-hover/title:text-white">View All →</span>
+                      </button>
 
-                  {SERVICES_MENU_ITEMS.map((item) => (
-                    <button
-                      key={item.page}
-                      onClick={() => navigateTo(item.page)}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
-                        activePage === item.page
-                          ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                          : "text-neutral-300 hover:bg-white/10 hover:text-white"
-                      }`}
-                    >
-                      <span>{item.label}</span>
-                      <ChevronRight className="w-3.5 h-3.5 opacity-50" />
-                    </button>
-                  ))}
-                </div>
-              </div>
+                      {SERVICES_MENU_ITEMS.map((item) => (
+                        <button
+                          key={item.page}
+                          onClick={() => {
+                            setActiveDropdown(null);
+                            navigateTo(item.page);
+                          }}
+                          className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
+                            activePage === item.page
+                              ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
+                              : "text-neutral-300 hover:bg-white/10 hover:text-white"
+                          }`}
+                        >
+                          <span>{item.label}</span>
+                          <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            {/* SUPPORT Button (Clickable -> Support Page, Hover -> Dropdown) */}
-            <div 
-              className="relative group"
-              onMouseEnter={() => setActiveDropdown("support")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
+            {/* SUPPORT Dropdown (Click to Open, Closes on outside click - Never opens accidentally on hover) */}
+            <div className="relative" data-dropdown="support">
               <button
-                onClick={() => navigateTo("support")}
+                type="button"
+                onClick={() => setActiveDropdown(activeDropdown === "support" ? null : "support")}
                 className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                  isSupportActive
+                  isSupportActive || activeDropdown === "support"
                     ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
                     : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
                 }`}
+                title="Click to view Support & Policies"
               >
                 <span>Support</span>
-                <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    activeDropdown === "support" ? "rotate-180 text-[#ff3b3b]" : "text-neutral-400"
+                  }`}
+                />
               </button>
 
-              <div className="absolute top-full left-0 pt-2 w-64 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
-                <div className="p-3 bg-[#0a0a12] border border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1">
-                  <button
-                    onClick={() => navigateTo("support")}
-                    className="w-full text-left px-3 py-1.5 border-b border-neutral-800 mb-1 flex items-center justify-between hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
+              <AnimatePresence>
+                {activeDropdown === "support" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
+                    className="absolute top-full left-0 pt-2 w-64 z-50"
                   >
-                    <div>
-                      <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-white">
-                        SUPPORT & POLICIES
-                      </span>
-                      <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
-                    </div>
-                    <span className="text-[9px] font-mono text-neutral-400 group-hover/title:text-white">View All →</span>
-                  </button>
-
-                  {SUPPORT_MENU_ITEMS.map((item) => (
-                    <button
-                      key={item.page}
-                      onClick={() => navigateTo(item.page)}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
-                        activePage === item.page
-                          ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                          : "text-neutral-300 hover:bg-white/10 hover:text-white"
-                      }`}
-                    >
-                      <span className="flex items-center gap-1.5">
-                        <span>{item.label}</span>
-                        {item.hasBadge && (
-                          <span className="w-4 h-4 rounded-full bg-[#d946ef]/20 border border-[#d946ef]/40 text-[#d946ef] flex items-center justify-center text-[10px] font-bold">
-                            +
+                    <div className="p-3 bg-[#0a0a12] border border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1 backdrop-blur-xl">
+                      <button
+                        onClick={() => {
+                          setActiveDropdown(null);
+                          navigateTo("support");
+                        }}
+                        className="w-full text-left px-3 py-1.5 border-b border-neutral-800 mb-1 flex items-center justify-between hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
+                      >
+                        <div>
+                          <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-white">
+                            SUPPORT & POLICIES
                           </span>
-                        )}
-                      </span>
-                      <ChevronRight className="w-3.5 h-3.5 opacity-50" />
-                    </button>
-                  ))}
-                </div>
-              </div>
+                          <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
+                        </div>
+                        <span className="text-[9px] font-mono text-neutral-400 group-hover/title:text-white">View All →</span>
+                      </button>
+
+                      {SUPPORT_MENU_ITEMS.map((item) => (
+                        <button
+                          key={item.page}
+                          onClick={() => {
+                            setActiveDropdown(null);
+                            navigateTo(item.page);
+                          }}
+                          className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
+                            activePage === item.page
+                              ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
+                              : "text-neutral-300 hover:bg-white/10 hover:text-white"
+                          }`}
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <span>{item.label}</span>
+                            {item.hasBadge && (
+                              <span className="w-4 h-4 rounded-full bg-[#d946ef]/20 border border-[#d946ef]/40 text-[#d946ef] flex items-center justify-center text-[10px] font-bold">
+                                +
+                              </span>
+                            )}
+                          </span>
+                          <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Quality & Process */}
@@ -812,24 +891,25 @@ export function App() {
             {/* 4. Real Bespoke Wholesale Products */}
             <CustomProductsShowcase />
 
-            {/* 5. 3D Bespoke Prototype Lab & Customizer */}
-            <section id="customizer" className="py-20 px-4 sm:px-6 bg-neutral-900/40 dark:bg-black/80 border-y border-neutral-200/60 dark:border-neutral-800 transition-colors">
+            {/* 5. Real Artisan Leather & Wool Varsity Jacket Customizer Lab */}
+            <section id="customizer" className="py-20 px-3 xs:px-4 sm:px-6 bg-neutral-900/40 dark:bg-black/80 border-y border-neutral-200/60 dark:border-neutral-800 transition-colors">
               <div className="max-w-7xl mx-auto space-y-10">
                 <div className="text-center space-y-2">
                   <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block uppercase">
-                    INTERACTIVE BESPOKE ENGINEERING
+                    INTERACTIVE 2D / 3D EXPORT ATELIER
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-display font-black tracking-tight dark:text-white uppercase leading-none">
-                    3D BESPOKE PROTOTYPE LAB
+                    TRY WEARS SPORTSWEAR &amp; GEAR DESIGN STUDIO
                   </h2>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono uppercase max-w-md mx-auto">
-                    Simulate colorways, custom leather paneling, embossed brand crests, and metallic piping with real-time B2B tech pack estimation.
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono uppercase max-w-xl mx-auto">
+                    Multi-product customizer for Compression Sets, Varsity Jackets, Bomber Jackets, Bra Sets, Crop Sets, and Retro Tracksuits with live canvas pixel recoloring, custom text, numbers, and draggable logo graphics.
                   </p>
                 </div>
 
                 <TShirtCustomizer
                   product={DEFAULT_CUSTOMIZER_PRODUCT}
                   onAddToCart={handleAddToCart}
+                  onNavigateToQuote={(prodInfo) => navigateToQuote(prodInfo)}
                 />
               </div>
             </section>
@@ -851,8 +931,8 @@ export function App() {
             initialFolder={catalogInitialFolder}
             initialCategoryName={catalogInitialCategory}
             onNavigatePage={navigateTo}
-            onNavigateToQuote={(prodName) => {
-              navigateTo("b2b-quote");
+            onNavigateToQuote={(prodInfo) => {
+              navigateToQuote(typeof prodInfo === "object" ? prodInfo : { name: prodInfo });
             }}
           />
         )}
@@ -864,13 +944,19 @@ export function App() {
             customizerProduct={DEFAULT_CUSTOMIZER_PRODUCT}
             onAddToCart={handleAddToCart}
             onNavigatePage={navigateTo}
+            onNavigateToQuote={(prodInfo) => navigateToQuote(prodInfo)}
           />
         )}
         {activePage === "quality-process" && <QualityProcessPage onNavigatePage={navigateTo} />}
         {activePage === "sampling-policies" && <SamplingPoliciesPage onNavigatePage={navigateTo} />}
         {activePage === "privacy-policy" && <PrivacyPolicyPage onNavigatePage={navigateTo} />}
         {activePage === "faq" && <FAQPage onNavigatePage={navigateTo} />}
-        {activePage === "b2b-quote" && <B2BQuotationPage onNavigatePage={navigateTo} />}
+        {activePage === "b2b-quote" && (
+          <B2BQuotationPage
+            onNavigatePage={navigateTo}
+            preselectedProduct={selectedProductForQuote}
+          />
+        )}
 
         {/* Master Hub Pages */}
         {activePage === "services" && <ServicesPage onNavigatePage={navigateTo} />}

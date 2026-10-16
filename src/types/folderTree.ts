@@ -14,6 +14,10 @@ export interface FolderFileItem {
   category?: string;
   subCategory?: string;
   tags?: string[];
+  pricing?: any;
+  gsm?: string;
+  fabric?: string;
+  moq?: string;
 }
 
 export interface FolderNode {

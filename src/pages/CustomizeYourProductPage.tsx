@@ -238,6 +238,10 @@ export const CustomizeYourProductPage: React.FC<PageProps> = ({ onNavigatePage, 
           <TShirtCustomizer
             product={DEFAULT_CUSTOMIZER_PRODUCT}
             onAddToCart={onAddToCart}
+            onNavigateToQuote={(prodInfo) => {
+              window.dispatchEvent(new CustomEvent("open-quote-page", { detail: prodInfo }));
+              onNavigatePage("b2b-quote");
+            }}
           />
         </div>
       </div>

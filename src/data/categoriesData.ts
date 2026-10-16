@@ -6,6 +6,31 @@ export interface SubCategoryItem {
   tagline?: string;
 }
 
+export interface WholesaleTier {
+  tierIndex: number;
+  tierName: string;
+  minQty: number;
+  maxQty: number | null;
+  unitPrice: number;
+  savingsPercent: number;
+}
+
+export interface WholesalePricing {
+  unitType: "piece" | "set";
+  piecesInSet: number;
+  setInclusions: string;
+  complexity: "Basic" | "Mid-Range" | "Premium Bespoke";
+  complexityFactors: string[];
+  currency: "USD";
+  fobLocation: string;
+  samplePriceUSD: number;
+  estimatedBulkDays: string;
+  estimatedSampleDays: string;
+  startingWholesalePrice: number;
+  tier1Price: number;
+  tiers: WholesaleTier[];
+}
+
 export interface CategoryProduct {
   id: string;
   sampleNum: number;
@@ -25,6 +50,7 @@ export interface CategoryProduct {
   seoTitle?: string;
   seoSummary?: string;
   seoKeywords?: string[];
+  pricing?: WholesalePricing;
 }
 
 export interface CategoryData {

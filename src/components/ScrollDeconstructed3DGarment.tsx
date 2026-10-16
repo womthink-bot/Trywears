@@ -66,7 +66,11 @@ function getFolderFileItem(p: any, categoryName: string): FolderFileItem {
       description: found.description || p.description,
       seoKeywords: found.seoKeywords || p.seoKeywords,
       subCategory: found.subCategory || p.subCategory || categoryName,
-      category: found.category || categoryName
+      category: found.category || categoryName,
+      pricing: p.pricing || (found as any).pricing,
+      gsm: p.gsm || (found as any).gsm,
+      fabric: p.fabric || (found as any).fabric,
+      moq: p.moq || (found as any).moq
     };
   }
   const cleanName = (p.name || "").endsWith(".webp") ? p.name : `${p.name}.webp`;
@@ -83,7 +87,11 @@ function getFolderFileItem(p: any, categoryName: string): FolderFileItem {
     seoKeywords: p.seoKeywords,
     category: categoryName,
     subCategory: p.subCategory,
-    tags: Array.isArray(p.specs) ? p.specs : [p.specs || ""]
+    tags: Array.isArray(p.specs) ? p.specs : [p.specs || ""],
+    pricing: p.pricing,
+    gsm: p.gsm,
+    fabric: p.fabric,
+    moq: p.moq
   };
 }
 
@@ -204,16 +212,50 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
 
-      {/* Bottom Card Meta */}
-      <div className="z-10 space-y-1 pt-1.5 border-t border-neutral-800">
-        <p className="font-mono text-[8px] text-neutral-400 line-clamp-1">
-          {product.fabric}
-        </p>
-
+      {/* Bottom Card Meta with Real Wholesale Pricing */}
+      <div className="z-10 space-y-1.5 pt-2 border-t border-neutral-800">
         <div className="flex items-center justify-between font-mono text-[8px]">
-          <span className="text-neutral-500">MOQ: {product.moq}</span>
+          <span className="text-neutral-400 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-bold">FOB WHOLESALE:</span>
+          </span>
+          <span className="px-1.5 py-0.5 rounded font-black text-[7px] uppercase tracking-wider bg-neutral-900 border border-neutral-700 text-neutral-300">
+            {product.pricing?.unitType === "set" ? `${product.pricing?.piecesInSet || 2}-PIECE SET` : "1-PIECE"}
+          </span>
+        </div>
+
+        <div className="flex items-baseline justify-between">
+          <div>
+            <span className="font-display font-black text-sm sm:text-base text-white tracking-tight">
+              ${(product.pricing?.startingWholesalePrice || product.pricing?.tiers?.[4]?.unitPrice || 7.5).toFixed(2)}
+            </span>
+            <span className="font-mono text-[8px] text-neutral-400 ml-1">
+              /{product.pricing?.unitType || "pc"} (500+)
+            </span>
+          </div>
+          <span className="font-mono text-[8px] text-neutral-400">
+            Tier 1: <strong className="text-white">${(product.pricing?.tier1Price || product.pricing?.tiers?.[0]?.unitPrice || 12).toFixed(2)}</strong>
+          </span>
+        </div>
+
+        {/* 5-Tier Mini Breakdown Strip */}
+        <div className="grid grid-cols-5 gap-1 pt-0.5 text-center font-mono text-[7px]">
+          {(product.pricing?.tiers || []).map((t, tIdx) => (
+            <div
+              key={tIdx}
+              className="bg-black/70 rounded px-0.5 py-0.5 border border-neutral-800 group-hover:border-neutral-700 transition-colors"
+              title={`${t.tierName} (${t.minQty}${t.maxQty ? `-${t.maxQty}` : "+"} ${product.pricing?.unitType || "pcs"}): $${t.unitPrice.toFixed(2)}`}
+            >
+              <span className="block text-neutral-500 text-[6.5px]">T{tIdx + 1}</span>
+              <span className="block text-white font-bold">${t.unitPrice.toFixed(1)}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between font-mono text-[8px] pt-0.5">
+          <span className="text-neutral-500">MOQ: 25 {product.pricing?.unitType === "set" ? "SETS" : "PCS"}</span>
           <span className="flex items-center gap-1 font-bold text-white group-hover:text-[#E21D1D] transition-colors">
-            <span>3D SPECS</span>
+            <span>INSPECT & TIERS</span>
             <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
           </span>
         </div>
@@ -1122,7 +1164,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
           setIsLightboxOpen(false);
           window.dispatchEvent(
             new CustomEvent("open-quote-page", {
-              detail: { productName: info.name }
+              detail: info
             })
           );
         }}
