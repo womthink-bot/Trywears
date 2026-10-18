@@ -28,8 +28,11 @@ import {
   PackageCheck,
   Tag,
   Eye,
-  Check
+  Check,
+  Lock,
+  Unlock
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 // ============================================================================
 // ✦ TRY WEARS REAL BESPOKE WHOLESALE PRODUCTS (CP1 TO CP7)
@@ -232,10 +235,12 @@ export const CP_PRODUCTS: CustomClientProduct[] = [
 ];
 
 export function CustomProductsShowcase() {
+  const { isAuthenticated, openAuthModal } = useAuth();
   const [products] = useState<CustomClientProduct[]>(CP_PRODUCTS);
   const [currentProductIdx, setCurrentProductIdx] = useState(0);
   const [isAutoCycling, setIsAutoCycling] = useState(true);
   const currentProduct = products[currentProductIdx] || products[0];
+  const isCurrentProductLocked = !isAuthenticated && currentProductIdx >= 5;
 
   const [viewPreset, setViewPreset] = useState<"standard" | "zoom">("standard");
   const [isHovered, setIsHovered] = useState(false);
@@ -322,7 +327,7 @@ export function CustomProductsShowcase() {
   return (
     <section
       id="collections"
-      className="relative py-12 sm:py-20 lg:py-28 px-3.5 sm:px-6 lg:px-8 bg-[#050505] text-white overflow-hidden select-none border-b border-neutral-800/80"
+      className="relative py-8 sm:py-14 lg:py-20 px-2 sm:px-4 lg:px-6 bg-[#050505] text-white overflow-hidden select-none border-b border-neutral-800/80 w-full"
     >
       {/* Dynamic Background Ambience - Try Wears Red Brand Aura */}
       <div className="absolute top-1/3 left-1/4 w-[350px] sm:w-[750px] h-[300px] sm:h-[500px] bg-[#E21D1D]/15 rounded-full blur-[140px] sm:blur-[180px] pointer-events-none" />
@@ -337,7 +342,7 @@ export function CustomProductsShowcase() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto relative z-10 space-y-6 sm:space-y-8">
+      <div className="w-full max-w-full mx-auto relative z-10 space-y-6 sm:space-y-8 px-1 sm:px-3 lg:px-4">
         
         {/* TOP SECTION HEADER */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 border-b border-neutral-800/80 pb-5 sm:pb-6">
@@ -539,9 +544,38 @@ export function CustomProductsShowcase() {
                         <img
                           src={currentProduct.image}
                           alt={currentProduct.alt}
-                          className="h-[280px] sm:h-[400px] lg:h-[490px] w-auto max-w-[94%] object-contain filter drop-shadow-[0_20px_45px_rgba(0,0,0,0.95)] select-none transition-transform duration-300 hover:scale-105"
+                          className={`h-[320px] sm:h-[450px] lg:h-[560px] xl:h-[620px] w-auto max-w-[96%] object-contain filter drop-shadow-[0_20px_45px_rgba(0,0,0,0.95)] select-none transition-all duration-300 ${
+                            isCurrentProductLocked ? "blur-md opacity-75 scale-105" : "hover:scale-105"
+                          }`}
                           draggable={false}
                         />
+
+                        {/* Lock Overlay for non-members on products 5+ */}
+                        {isCurrentProductLocked && (
+                          <div
+                            onClick={openAuthModal}
+                            className="absolute inset-0 bg-black/60 backdrop-blur-[2px] rounded-2xl flex flex-col items-center justify-center p-4 text-center z-20 cursor-pointer"
+                          >
+                            <div className="p-4 rounded-2xl bg-black/85 border border-red-500/60 shadow-[0_0_40px_rgba(226,29,29,0.5)] flex flex-col items-center gap-2 max-w-xs">
+                              <div className="w-10 h-10 rounded-xl bg-red-600/20 border border-red-500/60 flex items-center justify-center text-red-500">
+                                <Lock className="w-5 h-5 animate-pulse" />
+                              </div>
+                              <span className="font-display font-black text-xs uppercase text-white tracking-wider">
+                                Bespoke Client Design
+                              </span>
+                              <span className="font-mono text-[10px] text-neutral-300">
+                                Sign up free to unblur export photos &amp; inspect factory construction specs
+                              </span>
+                              <button
+                                onClick={openAuthModal}
+                                className="mt-1 px-4 py-1.5 rounded-lg bg-[#E21D1D] hover:bg-red-600 text-white font-mono text-[10px] font-black uppercase tracking-wider shadow-lg transition active:scale-95 cursor-pointer flex items-center gap-1.5"
+                              >
+                                <Unlock className="w-3 h-3" />
+                                <span>UNLOCK FREE</span>
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </motion.div>
                   </AnimatePresence>
@@ -585,6 +619,11 @@ export function CustomProductsShowcase() {
                           <span className="text-[8px] font-mono font-black text-neutral-200 block truncate w-full mt-0.5">
                             0{pIdx + 1}
                           </span>
+                          {pIdx >= 5 && !isAuthenticated && (
+                            <span className="absolute top-1 left-1 w-3.5 h-3.5 rounded-full bg-red-600/90 text-white flex items-center justify-center">
+                              <Lock className="w-2 h-2" />
+                            </span>
+                          )}
                           {isSelected && (
                             <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping" />
                           )}

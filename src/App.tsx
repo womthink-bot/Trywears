@@ -29,8 +29,16 @@ import {
   ArrowRight,
   Plus,
   Home,
-  MessageSquare
+  MessageSquare,
+  LogOut,
+  Unlock,
+  UserCheck,
+  UserPlus,
+  User
 } from "lucide-react";
+import { useAuth } from "./context/AuthContext";
+import { AuthModal } from "./components/AuthModal";
+import { AdminLeadsModal } from "./components/AdminLeadsModal";
 import { motion, AnimatePresence } from "motion/react";
 import { SportsHeroSlider, HeroSlide } from "./components/SportsHeroSlider";
 import { SportsB2BMarquee } from "./components/SportsB2BMarquee";
@@ -102,6 +110,7 @@ export type AppPage =
 
 export function App() {
   const [activePage, setActivePage] = useState<AppPage>("home");
+  const { isAuthenticated, user, openAuthModal, logout, openAdminModal } = useAuth();
   const [config, setConfig] = useState<any>(null);
   const [cart, setCart] = useState<any[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
@@ -609,7 +618,39 @@ export function App() {
           </nav>
 
           {/* Header Controls & Unified B2B Quote Action */}
-          <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Free B2B Sign Up / Member Unlock Status */}
+            {!isAuthenticated ? (
+              <button
+                onClick={openAuthModal}
+                className="flex items-center gap-1.5 px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl font-mono text-xs font-black uppercase tracking-wider bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/40 shadow-lg shadow-emerald-950/40 transition-all cursor-pointer whitespace-nowrap active:scale-95"
+                title="Sign Up Free to Unlock Full Catalog & FOB Wholesale Rates"
+              >
+                <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span className="hidden md:inline">FREE SIGN UP</span>
+                <span className="md:hidden">SIGN UP</span>
+              </button>
+            ) : (
+              <div className="flex items-center gap-2 bg-[#0e1422] border border-neutral-700/80 rounded-xl px-2.5 sm:px-3 py-1.5 font-mono text-xs shadow-lg">
+                <div className="flex items-center gap-1.5 text-neutral-200">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="font-bold truncate max-w-[85px] sm:max-w-[120px] text-white">
+                    {user?.name.split(" ")[0]}
+                  </span>
+                  <span className="hidden lg:inline text-[9px] px-1.5 py-0.5 rounded bg-emerald-950/90 text-emerald-300 border border-emerald-800">
+                    UNLOCKED
+                  </span>
+                </div>
+                <button
+                  onClick={logout}
+                  className="p-1 text-neutral-400 hover:text-red-400 transition cursor-pointer"
+                  title="Sign Out / Lock Catalog"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
             {/* High-Impact B2B Quote Action Button (Visible on sm and up) */}
             <button
               onClick={() => navigateTo("b2b-quote")}
@@ -659,6 +700,57 @@ export function App() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="xl:hidden border-t border-neutral-800 bg-[#090912]/98 backdrop-blur-2xl px-3.5 sm:px-6 py-4 sm:py-6 space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-h-[82vh] overflow-y-auto overscroll-contain"
             >
+              {/* Mobile Auth Banner */}
+              {!isAuthenticated ? (
+                <div className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/60 to-black border border-emerald-500/40 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Lock className="w-4 h-4 text-emerald-400" />
+                      <span className="font-mono text-xs font-black text-white uppercase tracking-wider">
+                        FREE B2B WHOLESALE ACCESS
+                      </span>
+                    </div>
+                    <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-600/30 text-emerald-300">
+                      FREE
+                    </span>
+                  </div>
+                  <p className="text-[11px] font-mono text-neutral-300 leading-snug">
+                    Sign up free to unblur all 2,372 factory samples and inspect FOB wholesale tier rates.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      openAuthModal();
+                    }}
+                    className="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg cursor-pointer active:scale-98 transition"
+                  >
+                    <Unlock className="w-3.5 h-3.5" />
+                    <span>SIGN UP FREE / SIGN IN</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="p-3 rounded-2xl bg-[#101726] border border-neutral-700 flex items-center justify-between text-xs font-mono">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-1.5 text-white font-bold">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span>{user?.name}</span>
+                    </div>
+                    <div className="text-[10px] text-emerald-400">
+                      B2B Member Active • All Products Unlocked
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-red-950 hover:text-red-300 text-neutral-300 text-[11px] font-bold border border-neutral-700 transition cursor-pointer"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+
               {/* Top CTA: Get B2B Factory Quote */}
               <button
                 onClick={() => navigateTo("b2b-quote")}
@@ -893,7 +985,7 @@ export function App() {
 
             {/* 5. Real Artisan Leather & Wool Varsity Jacket Customizer Lab */}
             <section id="customizer" className="py-20 px-3 xs:px-4 sm:px-6 bg-neutral-900/40 dark:bg-black/80 border-y border-neutral-200/60 dark:border-neutral-800 transition-colors">
-              <div className="max-w-7xl mx-auto space-y-10">
+              <div className="w-full max-w-[2160px] mx-auto space-y-10 px-3 sm:px-6 lg:px-8 xl:px-10 2xl:px-14">
                 <div className="text-center space-y-2">
                   <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block uppercase">
                     INTERACTIVE 2D / 3D EXPORT ATELIER
@@ -1130,7 +1222,13 @@ export function App() {
           </div>
           <div className="flex items-center gap-4 text-white font-bold">
             <span>SIALKOT INDUSTRIAL DIVISION</span>
-            <span>•</span>
+            <span
+              onClick={openAdminModal}
+              className="cursor-default select-none hover:text-red-500/70 transition-colors"
+              title=""
+            >
+              •
+            </span>
             <span>UK & EUROPE DDP LOGISTICS</span>
           </div>
         </div>
@@ -1150,6 +1248,12 @@ export function App() {
           navigateTo("b2b-quote");
         }}
       />
+
+      {/* B2B Free Sign Up / Member Unlock Modal */}
+      <AuthModal />
+
+      {/* Hidden B2B Buyer Leads Admin Vault (Accessed via Ctrl+Shift+A or #admin) */}
+      <AdminLeadsModal />
 
       {/* Persistent Live WhatsApp Chat Widget */}
       <WhatsAppChatWidget />

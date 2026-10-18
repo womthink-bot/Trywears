@@ -23,8 +23,13 @@ import {
   PackageCheck,
   ExternalLink,
   SlidersHorizontal,
-  RefreshCw
+  RefreshCw,
+  Lock,
+  Unlock,
+  Eye,
+  UserPlus
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 import { FolderNode, FolderFileItem } from "../types/folderTree";
 import defaultTreeData from "../data/imagekit_folder_tree.json";
 import { ProductImageLightbox } from "../components/ProductImageLightbox";
@@ -74,6 +79,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
   onNavigatePage,
   onNavigateToQuote
 }) => {
+  const { isAuthenticated, openAuthModal, user } = useAuth();
   const [tree, setTree] = useState<FolderNode>(defaultTreeData as unknown as FolderNode);
   const [selectedFolder, setSelectedFolder] = useState<FolderNode | null>(initialFolder || null);
   const [selectedCategoryName, setSelectedCategoryName] = useState<string>(
@@ -256,7 +262,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
         {/* Ambient Glows */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto relative z-10 space-y-3.5">
+        <div className="w-full max-w-[2160px] mx-auto relative z-10 space-y-3.5">
           {/* Breadcrumbs Trail */}
           <div className="flex items-center gap-2 text-xs font-mono text-neutral-400 overflow-x-auto no-scrollbar">
             <button
@@ -362,7 +368,7 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
       </section>
 
       {/* 3. MAIN CATALOG BODY (2-COLUMN: SIDEBAR FOLDERS + PRODUCTS GRID) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+      <div className="w-full max-w-[2160px] mx-auto px-3 sm:px-6 lg:px-8 xl:px-10 2xl:px-14 py-5">
         {/* Mobile Filter Toggle & Search Bar Bar */}
         <div className="lg:hidden mb-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-neutral-900/90 border border-neutral-800 p-3 rounded-2xl">
           <button
@@ -691,6 +697,47 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
               </div>
             </div>
 
+            {/* B2B PREVIEW & UNLOCK STATUS BANNER */}
+            {!isAuthenticated ? (
+              <div className="p-3.5 sm:p-5 rounded-2xl bg-gradient-to-r from-red-950/50 via-[#0e1424] to-black border-2 border-red-500/50 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xl shadow-red-950/30">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-2xl bg-red-600/20 border border-red-500/60 flex items-center justify-center text-red-400 shrink-0 shadow-lg shadow-red-950/50">
+                    <Lock className="w-5 h-5 text-red-500 animate-pulse" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-display font-black text-sm uppercase tracking-wider text-white">
+                        CATALOG PREVIEW MODE
+                      </span>
+                      <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-emerald-600/30 text-emerald-300 font-bold border border-emerald-500/40">
+                        FIRST 5 UNLOCKED
+                      </span>
+                    </div>
+                    <p className="text-[11px] font-mono text-neutral-300 mt-0.5">
+                      First 5 factory products are unlocked for free preview. Sign up 100% free to unblur all remaining factory samples, high-res photos &amp; FOB wholesale rate tiers.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={openAuthModal}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#E21D1D] hover:bg-red-600 text-white font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(226,29,29,0.5)] transition-all cursor-pointer shrink-0 active:scale-95"
+                >
+                  <Unlock className="w-4 h-4" />
+                  <span>SIGN UP FREE TO UNBLUR ALL</span>
+                </button>
+              </div>
+            ) : (
+              <div className="p-3 sm:p-3.5 rounded-2xl bg-[#091a14] border border-emerald-500/40 flex items-center justify-between gap-2 text-xs font-mono shadow-lg">
+                <div className="flex items-center gap-2.5 text-emerald-300 font-bold">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>B2B WHOLESALE ACCESS UNLOCKED: All 2,372 export samples &amp; FOB rates active for {user?.name}.</span>
+                </div>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 hidden sm:inline">
+                  Export Access 100% Active
+                </span>
+              </div>
+            )}
+
             {/* PRODUCT GRID */}
             {paginatedFiles.length === 0 ? (
               <div className="py-24 text-center bg-[#090910] border border-neutral-800 rounded-3xl space-y-4">
@@ -736,84 +783,125 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                       transition={{ duration: 0.15, delay: Math.min(idx * 0.015, 0.2) }}
                       className="group bg-[#0b0b14] hover:bg-neutral-900 border border-neutral-800/90 hover:border-red-500/70 rounded-2xl p-3 sm:p-4 flex flex-col justify-between transition-all duration-200 shadow-lg hover:shadow-2xl hover:shadow-red-950/40"
                     >
-                      {/* Product Thumbnail Container with Zoom Overlay - Large & Clear */}
-                      <div
-                        onClick={() => handleOpenLightbox(idx)}
-                        className="relative w-full aspect-[4/5] sm:aspect-square rounded-xl overflow-hidden bg-gradient-to-b from-neutral-900/90 to-black flex items-center justify-center mb-3 cursor-pointer"
-                      >
-                        <img
-                          src={file.thumbnail || file.url}
-                          alt={cleanName}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-cover sm:object-contain group-hover:scale-106 transition-transform duration-300 drop-shadow-lg"
-                          onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = file.url;
-                          }}
-                        />
+                      {/* Product Thumbnail Container with Zoom Overlay - First 5 products unlocked for all visitors */}
+                      {(() => {
+                        const isProductLocked = !isAuthenticated && idx >= 5;
+                        return (
+                          <>
+                            <div
+                              onClick={() => {
+                                if (isProductLocked) {
+                                  openAuthModal();
+                                } else {
+                                  handleOpenLightbox(idx);
+                                }
+                              }}
+                              className="relative w-full aspect-[4/5] sm:aspect-square rounded-xl overflow-hidden bg-gradient-to-b from-neutral-900/90 to-black flex items-center justify-center mb-3 cursor-pointer"
+                            >
+                              <img
+                                src={file.thumbnail || file.url}
+                                alt={cleanName}
+                                loading="lazy"
+                                decoding="async"
+                                className={`w-full h-full object-cover sm:object-contain transition-all duration-300 drop-shadow-lg ${
+                                  isProductLocked
+                                    ? "filter blur-[10px] scale-110 opacity-75"
+                                    : "group-hover:scale-106"
+                                }`}
+                                onError={(e) => {
+                                  (e.currentTarget as HTMLImageElement).src = file.url;
+                                }}
+                              />
 
-                        {/* Hover Zoom Prompt */}
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <span className="p-3 rounded-full bg-red-600 text-white shadow-2xl scale-75 group-hover:scale-100 transition-transform flex items-center gap-1.5 font-mono text-xs font-bold px-4 py-2">
-                            <ZoomIn className="w-4 h-4" />
-                            <span>INSPECT</span>
-                          </span>
-                        </div>
-
-                        {/* Item Code Badge overlaid on the image */}
-                        <span className="absolute bottom-2.5 left-2.5 font-mono text-[11px] font-black px-2.5 py-1 rounded-lg bg-black/90 text-white border border-neutral-700/80 shadow-xl backdrop-blur-md">
-                          {cleanName}
-                        </span>
-
-                        {/* OEM Ready Quality Badge */}
-                        <span className="absolute bottom-2.5 right-2.5 font-mono text-[9px] font-bold px-2 py-0.5 rounded-lg bg-red-600/90 text-white shadow-lg">
-                          OEM READY
-                        </span>
-                      </div>
-
-                      {/* Product Metadata Info - Real Wholesale FOB Pricing */}
-                      <div className="space-y-2">
-                        <div className="space-y-1 pt-1 font-mono text-[10px]">
-                          <div className="flex items-center justify-between">
-                            <span className="text-neutral-400 flex items-center gap-1 text-[9px]">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                              <span className="font-bold">FOB WHOLESALE:</span>
-                            </span>
-                            <span className="px-1.5 py-0.2 rounded text-[7.5px] uppercase font-bold bg-neutral-900 border border-neutral-700 text-neutral-300">
-                              {filePricing?.unitType === "set" ? `${filePricing.piecesInSet || 2}-Pc Set` : "1-Pc"}
-                            </span>
-                          </div>
-
-                          <div className="flex items-baseline justify-between">
-                            <div>
-                              <span className="font-display font-black text-sm text-white">
-                                ${(filePricing?.startingWholesalePrice || 7.5).toFixed(2)}
-                              </span>
-                              <span className="text-[8.5px] text-neutral-400 ml-1">
-                                /{filePricing?.unitType || "pc"} (500+)
-                              </span>
-                            </div>
-                            <span className="text-[8.5px] text-neutral-400">
-                              Tier 1: <strong className="text-white">${(filePricing?.tier1Price || 12).toFixed(2)}</strong>
-                            </span>
-                          </div>
-
-                          {/* 5-Tier Mini Rate Strip */}
-                          {filePricing?.tiers && filePricing.tiers.length > 0 && (
-                            <div className="grid grid-cols-5 gap-1 pt-1 text-center font-mono text-[7px]">
-                              {filePricing.tiers.map((t: any, tIdx: number) => (
+                              {/* If product is locked (index >= 5 and non-member): Lock Overlay */}
+                              {isProductLocked && (
                                 <div
-                                  key={tIdx}
-                                  className="bg-black/80 rounded px-0.5 py-0.5 border border-neutral-800"
-                                  title={`${t.tierName} (${t.minQty}${t.maxQty ? `-${t.maxQty}` : "+"} ${filePricing?.unitType || "pcs"}): $${t.unitPrice.toFixed(2)}`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openAuthModal();
+                                  }}
+                                  className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex flex-col items-center justify-center p-3 text-center z-20 cursor-pointer group-hover:bg-black/50 transition-colors"
                                 >
-                                  <span className="block text-neutral-500 text-[6.5px]">T{tIdx + 1}</span>
-                                  <span className="block text-emerald-400 font-bold">${t.unitPrice.toFixed(1)}</span>
+                                  <div className="w-10 h-10 rounded-2xl bg-red-600/25 border border-red-500/60 flex items-center justify-center text-red-400 mb-2 shadow-xl shadow-red-950/60 group-hover:scale-110 transition-transform">
+                                    <Lock className="w-5 h-5 text-red-500 animate-pulse" />
+                                  </div>
+                                  <span className="font-display font-black text-xs text-white uppercase tracking-wider mb-0.5">
+                                    EXCLUSIVE PRODUCT
+                                  </span>
+                                  <span className="font-mono text-[9px] text-neutral-300 max-w-[140px] leading-tight mb-2.5">
+                                    Free sign-up required to unblur photo &amp; inspect sample
+                                  </span>
+                                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#E21D1D] hover:bg-red-600 text-white font-mono text-[9.5px] font-black uppercase tracking-wider shadow-lg transition">
+                                    <Unlock className="w-3 h-3" />
+                                    <span>UNLOCK FREE</span>
+                                  </span>
                                 </div>
-                              ))}
+                              )}
+
+                              {/* Free Preview Tag for Unlocked First 5 Products when not signed up */}
+                              {!isAuthenticated && idx < 5 && (
+                                <span className="absolute top-2.5 left-2.5 font-mono text-[8.5px] font-black px-2.5 py-0.5 rounded-full bg-emerald-600/90 text-white shadow-lg z-10 flex items-center gap-1 backdrop-blur-md">
+                                  <Unlock className="w-2.5 h-2.5" />
+                                  <span>PREVIEW</span>
+                                </span>
+                              )}
+
+                              {/* Hover Zoom Prompt (When Unlocked) */}
+                              {!isProductLocked && (
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                  <span className="p-3 rounded-full bg-red-600 text-white shadow-2xl scale-75 group-hover:scale-100 transition-transform flex items-center gap-1.5 font-mono text-xs font-bold px-4 py-2">
+                                    <ZoomIn className="w-4 h-4" />
+                                    <span>INSPECT</span>
+                                  </span>
+                                </div>
+                              )}
+
+                              {/* Item Code Badge overlaid on the image */}
+                              <span className="absolute bottom-2.5 left-2.5 font-mono text-[11px] font-black px-2.5 py-1 rounded-lg bg-black/90 text-white border border-neutral-700/80 shadow-xl backdrop-blur-md z-10">
+                                {cleanName}
+                              </span>
                             </div>
-                          )}
-                        </div>
+
+                            {/* Product Metadata Info - Clean Wholesale Pricing */}
+                            <div className="space-y-1.5 pt-1">
+                              {/* Price Display: Blurred if locked, clear if unlocked */}
+                              {isProductLocked ? (
+                                <div className="flex items-baseline justify-between py-0.5">
+                                  <div>
+                                    <span className="font-display font-black text-sm text-neutral-400 filter blur-[3px] select-none">
+                                      $14.50
+                                    </span>
+                                    <span className="text-[8.5px] text-neutral-400 ml-1">
+                                      /{filePricing?.unitType || "pc"}
+                                    </span>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      openAuthModal();
+                                    }}
+                                    className="text-[9px] font-mono text-emerald-400 hover:text-emerald-300 underline font-bold cursor-pointer"
+                                  >
+                                    Sign Up to View
+                                  </button>
+                                </div>
+                              ) : (
+                                <div className="flex items-baseline justify-between">
+                                  <div>
+                                    <span className="font-display font-black text-base text-white">
+                                      ${(filePricing?.startingWholesalePrice || 7.5).toFixed(2)}
+                                    </span>
+                                    <span className="text-[8.5px] text-neutral-400 ml-1">
+                                      /{filePricing?.unitType || "pc"}
+                                    </span>
+                                  </div>
+                                  <span className="text-[8px] font-mono text-emerald-400 font-bold uppercase">
+                                    WHOLESALE
+                                  </span>
+                                </div>
+                              )}
+                            </div>
 
                         {/* Action Buttons: Request Quote & WhatsApp */}
                         <div className="grid grid-cols-2 gap-2 pt-1 border-t border-neutral-800/80 font-mono text-[10px]">
@@ -841,8 +929,10 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                             <span>CHAT</span>
                           </a>
                         </div>
-                      </div>
-                    </motion.div>
+                    </>
+                  );
+                })()}
+              </motion.div>
                   );
                 })}
               </div>

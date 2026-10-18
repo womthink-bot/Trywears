@@ -35,8 +35,11 @@ import {
   TrendingUp,
   Percent,
   BadgeCheck,
-  ShoppingBag
+  ShoppingBag,
+  Lock,
+  Unlock
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 import { FolderFileItem } from "../types/folderTree";
 import { CATEGORIES_DATA, WholesalePricing, WholesaleTier, CategoryProduct } from "../data/categoriesData";
 import { getWhatsAppUrl } from "./WhatsAppChatWidget";
@@ -69,6 +72,8 @@ export const ProductImageLightbox: React.FC<ProductImageLightboxProps> = ({
   folderName,
   onRequestQuote
 }) => {
+  const { isAuthenticated, openAuthModal } = useAuth();
+  const isImageLocked = !isAuthenticated && currentIndex >= 5;
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -517,9 +522,38 @@ export const ProductImageLightbox: React.FC<ProductImageLightboxProps> = ({
                       src={currentImage.url}
                       alt={displayName}
                       draggable={false}
-                      className="max-w-full max-h-full object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.95)] pointer-events-none select-none transition-transform"
+                      className={`max-w-full max-h-full object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.95)] pointer-events-none select-none transition-transform ${
+                        isImageLocked ? "filter blur-[16px] opacity-60 scale-105" : ""
+                      }`}
                     />
                   </div>
+
+                  {/* Lock Overlay if locked */}
+                  {isImageLocked && (
+                    <div
+                      onClick={openAuthModal}
+                      className="absolute inset-0 bg-black/60 backdrop-blur-sm z-30 flex flex-col items-center justify-center p-6 text-center cursor-pointer"
+                    >
+                      <div className="p-4 sm:p-6 rounded-3xl bg-[#090d16]/95 border-2 border-red-500/60 shadow-[0_0_50px_rgba(226,29,29,0.4)] flex flex-col items-center gap-3 max-w-sm">
+                        <div className="w-12 h-12 rounded-2xl bg-red-600/20 border border-red-500/60 flex items-center justify-center text-red-500">
+                          <Lock className="w-6 h-6 animate-pulse" />
+                        </div>
+                        <h4 className="font-display font-black text-base uppercase text-white tracking-wider">
+                          Full Spec &amp; Zoom Locked
+                        </h4>
+                        <p className="font-mono text-xs text-neutral-300 leading-relaxed">
+                          This high-definition export sample photo and FOB tier pricing are reserved for verified buyers. Sign up free in 10 seconds to unlock.
+                        </p>
+                        <button
+                          onClick={openAuthModal}
+                          className="w-full py-3 px-4 rounded-xl bg-[#E21D1D] hover:bg-red-600 text-white font-mono text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition active:scale-95 cursor-pointer"
+                        >
+                          <Unlock className="w-4 h-4" />
+                          <span>SIGN UP FREE TO UNLOCK FULL SAMPLE</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Bottom-Left Unit Badge */}
                   <div className="absolute bottom-4 left-4 z-20 pointer-events-none">
@@ -606,17 +640,13 @@ export const ProductImageLightbox: React.FC<ProductImageLightboxProps> = ({
                 <div className="space-y-3 pb-5 border-b border-neutral-800">
                   <div className="flex items-center justify-between gap-2 flex-wrap font-mono text-xs">
                     <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-1 rounded-md bg-neutral-900 border border-neutral-700 text-neutral-300 font-bold uppercase text-[10px]">
-                        SAMPLE #{resolvedProduct?.sampleNum || currentIndex + 1}
-                      </span>
-                      <span className="text-neutral-600">•</span>
-                      <span className="text-[#ff4d4d] font-bold uppercase tracking-wider text-[11px]">
+                      <span className="px-3 py-1 rounded-full bg-red-950/70 border border-red-500/40 text-[#ff4d4d] font-bold uppercase tracking-wider text-[11px]">
                         {displayCategory}
                       </span>
                     </div>
 
                     <span className="px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 font-bold text-xs">
-                      MIN. ORDER (MOQ): 25 {unitLabelPlural.toUpperCase()}
+                      MIN. ORDER (MOQ): 20 {unitLabelPlural.toUpperCase()}
                     </span>
                   </div>
 

@@ -23,9 +23,12 @@ import {
   Sliders,
   Play,
   Pause,
-  Maximize2
+  Maximize2,
+  Lock,
+  Unlock
 } from "lucide-react";
 
+import { useAuth } from "../context/AuthContext";
 import { ProductImageLightbox } from "./ProductImageLightbox";
 import { FolderFileItem } from "../types/folderTree";
 import defaultTreeData from "../data/imagekit_folder_tree.json";
@@ -107,16 +110,25 @@ interface ProductCardProps {
 
 const Interactive3DProductCard: React.FC<ProductCardProps> = ({
   product,
+  index,
   onInspect
 }) => {
+  const { isAuthenticated, openAuthModal } = useAuth();
   const [isHovered, setIsHovered] = useState(false);
+  const isLocked = !isAuthenticated && index >= 5;
 
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => onInspect(product)}
-      className="relative h-full rounded-2xl border border-neutral-800 hover:border-[#E21D1D]/80 bg-neutral-950/85 hover:bg-neutral-900/95 p-3 sm:p-3.5 flex flex-col justify-between cursor-pointer group transition-all duration-300 ease-out hover:shadow-[0_20px_45px_rgba(0,0,0,0.95)] hover:-translate-y-1 select-none"
+      onClick={() => {
+        if (isLocked) {
+          openAuthModal();
+        } else {
+          onInspect(product);
+        }
+      }}
+      className="relative h-full min-h-[300px] xs:min-h-[340px] sm:min-h-[380px] md:min-h-[420px] xl:min-h-[460px] rounded-2xl sm:rounded-3xl border border-neutral-800/90 hover:border-[#E21D1D] bg-neutral-950/90 hover:bg-neutral-900/95 p-3 sm:p-4 flex flex-col justify-between cursor-pointer group transition-all duration-300 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.95)] hover:-translate-y-1.5 select-none overflow-hidden"
       style={{
         transform: "translate3d(0, 0, 0)",
         willChange: "transform, border-color, background-color"
@@ -124,140 +136,66 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
     >
       {/* Ambient Backlight Glow matching product accent */}
       <div
-        className="absolute -top-12 -right-12 w-28 h-28 rounded-full blur-[50px] pointer-events-none transition-opacity duration-300"
+        className="absolute -top-12 -right-12 w-36 h-36 rounded-full blur-[60px] pointer-events-none transition-opacity duration-300"
         style={{
-          backgroundColor: product.accentColor,
-          opacity: isHovered ? 0.35 : 0.05
+          backgroundColor: product.accentColor || "#E21D1D",
+          opacity: isHovered ? 0.45 : 0.08
         }}
       />
 
-      {/* Top Card Info */}
-      <div className="z-10 flex items-start justify-between gap-1 mb-1">
-        <div className="truncate">
-          <div className="flex items-center gap-1.5 mb-0.5">
-            <span className="font-mono text-[8px] font-bold text-neutral-500 uppercase">
-              SAMPLE #{product.sampleNum < 10 ? `0${product.sampleNum}` : product.sampleNum}
-            </span>
-            {product.subCategory && (
-              <>
-                <span className="text-neutral-600 font-mono text-[8px]">•</span>
-                <span 
-                  className="font-mono text-[7.5px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded truncate max-w-[125px]"
-                  style={{
-                    backgroundColor: `${product.accentColor}20`,
-                    color: product.accentColor,
-                    border: `1px solid ${product.accentColor}40`
-                  }}
-                >
-                  {product.subCategory}
-                </span>
-              </>
-            )}
-          </div>
-          <h5 className="font-display font-black text-xs text-white uppercase tracking-tight line-clamp-1 group-hover:text-[#E21D1D] transition-colors">
-            {product.name}
-          </h5>
-          <span className="font-mono text-[8px] text-neutral-400 block truncate">
-            {product.subtitle}
+      {/* Subtle First 5 Preview Indicator Tag (Only if not logged in) */}
+      {!isAuthenticated && index < 5 && (
+        <div className="absolute top-3 left-3 z-20">
+          <span className="font-mono text-[8.5px] font-black px-2.5 py-0.5 rounded-full bg-emerald-600/90 text-white shadow-lg flex items-center gap-1 backdrop-blur-md">
+            <Unlock className="w-2.5 h-2.5" />
+            <span>PREVIEW</span>
           </span>
         </div>
+      )}
 
-        <span
-          className="font-mono text-[8px] font-black px-1.5 py-0.5 rounded border uppercase shrink-0"
-          style={{
-            borderColor: `${product.accentColor}66`,
-            color: product.accentColor,
-            backgroundColor: `${product.accentColor}15`
-          }}
-        >
-          {product.gsm}
-        </span>
-      </div>
-
-      {/* 100% TRANSPARENT PNG GARMENT CUTOUT WITH SMOOTH HOVER ZOOM */}
-      <div className="relative w-full h-[130px] xs:h-[150px] sm:h-[170px] flex items-center justify-center my-1.5 overflow-visible">
+      {/* HUGE 100% VISIBLE PRODUCT IMAGE - MAXIMIZED TO FULLY FILL THE BOX */}
+      <div className="relative w-full flex-1 flex items-center justify-center my-auto overflow-hidden p-1 sm:p-2">
         {/* Soft ground contact shadow */}
         <div
-          className={`absolute bottom-1 w-3/4 h-3.5 rounded-full blur-[6px] bg-black/80 transition-all duration-300 pointer-events-none ${
-            isHovered ? "scale-110 opacity-90" : "scale-95 opacity-60"
+          className={`absolute bottom-1 w-4/5 h-4 rounded-full blur-[12px] bg-black/90 transition-all duration-300 pointer-events-none ${
+            isHovered ? "scale-110 opacity-95" : "scale-95 opacity-70"
           }`}
         />
 
-        {/* Product Image with smooth 60fps CSS transform */}
-        <div className="relative z-20 max-w-full max-h-full flex items-center justify-center pointer-events-none">
-          <img
-            src={product.image}
-            alt={product.name}
-            className={`max-w-full max-h-[120px] xs:max-h-[140px] sm:max-h-[160px] object-contain transition-transform duration-300 ease-out transform-gpu will-change-transform ${
-              isHovered
-                ? "scale-110 drop-shadow-[0_20px_35px_rgba(0,0,0,0.95)] brightness-105"
-                : "scale-100 drop-shadow-[0_10px_18px_rgba(0,0,0,0.75)] opacity-95"
-            }`}
-            loading="lazy"
-            decoding="async"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&q=80&auto=format&fit=crop";
-            }}
-          />
-        </div>
-
-        {/* Inspect Indicator button */}
-        <div
-          className={`absolute top-1 right-1 bg-black/80 border border-white/20 text-white p-1.5 rounded-full transition-all duration-200 z-30 ${
-            isHovered ? "opacity-100 scale-100" : "opacity-0 scale-75"
+        {/* Big Product Image fitting the box */}
+        <img
+          src={product.image}
+          alt={product.name || "Factory Apparel Sample"}
+          className={`w-full h-full max-h-[260px] xs:max-h-[300px] sm:max-h-[340px] md:max-h-[380px] xl:max-h-[420px] object-contain transition-all duration-300 ease-out transform-gpu will-change-transform ${
+            isLocked
+              ? "filter blur-[8px] opacity-70 scale-105"
+              : isHovered
+              ? "scale-108 drop-shadow-[0_25px_45px_rgba(0,0,0,0.98)] brightness-105"
+              : "scale-100 drop-shadow-[0_15px_25px_rgba(0,0,0,0.85)] opacity-95"
           }`}
-          title="Click to Inspect 3D Fabric Details"
-        >
-          <ZoomIn className="w-3.5 h-3.5 text-[#E21D1D]" />
-        </div>
-      </div>
+          loading="lazy"
+          decoding="async"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src =
+              "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&q=80&auto=format&fit=crop";
+          }}
+        />
 
-      {/* Bottom Card Meta with Real Wholesale Pricing */}
-      <div className="z-10 space-y-1.5 pt-2 border-t border-neutral-800">
-        <div className="flex items-center justify-between font-mono text-[8px]">
-          <span className="text-neutral-400 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-bold">FOB WHOLESALE:</span>
-          </span>
-          <span className="px-1.5 py-0.5 rounded font-black text-[7px] uppercase tracking-wider bg-neutral-900 border border-neutral-700 text-neutral-300">
-            {product.pricing?.unitType === "set" ? `${product.pricing?.piecesInSet || 2}-PIECE SET` : "1-PIECE"}
-          </span>
-        </div>
-
-        <div className="flex items-baseline justify-between">
-          <div>
-            <span className="font-display font-black text-sm sm:text-base text-white tracking-tight">
-              ${(product.pricing?.startingWholesalePrice || product.pricing?.tiers?.[4]?.unitPrice || 7.5).toFixed(2)}
-            </span>
-            <span className="font-mono text-[8px] text-neutral-400 ml-1">
-              /{product.pricing?.unitType || "pc"} (500+)
+        {/* Lock Overlay for index >= 5 when not authenticated */}
+        {isLocked && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none bg-black/40 backdrop-blur-[2px] rounded-2xl">
+            <span className="px-4 py-2 rounded-xl bg-black/90 border border-red-500/80 text-xs font-mono font-black text-white flex items-center gap-2 shadow-2xl">
+              <Lock className="w-4 h-4 text-red-500 animate-pulse" />
+              <span>UNLOCK FREE</span>
             </span>
           </div>
-          <span className="font-mono text-[8px] text-neutral-400">
-            Tier 1: <strong className="text-white">${(product.pricing?.tier1Price || product.pricing?.tiers?.[0]?.unitPrice || 12).toFixed(2)}</strong>
-          </span>
-        </div>
+        )}
+      </div>
 
-        {/* 5-Tier Mini Breakdown Strip */}
-        <div className="grid grid-cols-5 gap-1 pt-0.5 text-center font-mono text-[7px]">
-          {(product.pricing?.tiers || []).map((t, tIdx) => (
-            <div
-              key={tIdx}
-              className="bg-black/70 rounded px-0.5 py-0.5 border border-neutral-800 group-hover:border-neutral-700 transition-colors"
-              title={`${t.tierName} (${t.minQty}${t.maxQty ? `-${t.maxQty}` : "+"} ${product.pricing?.unitType || "pcs"}): $${t.unitPrice.toFixed(2)}`}
-            >
-              <span className="block text-neutral-500 text-[6.5px]">T{tIdx + 1}</span>
-              <span className="block text-white font-bold">${t.unitPrice.toFixed(1)}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-between font-mono text-[8px] pt-0.5">
-          <span className="text-neutral-500">MOQ: 25 {product.pricing?.unitType === "set" ? "SETS" : "PCS"}</span>
-          <span className="flex items-center gap-1 font-bold text-white group-hover:text-[#E21D1D] transition-colors">
-            <span>INSPECT & TIERS</span>
-            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-          </span>
+      {/* Bottom Area: ONLY the Arrow Icon Button ("just arrow ka neshan rehny do") */}
+      <div className="z-10 pt-2 flex items-center justify-end w-full">
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-neutral-900/90 group-hover:bg-[#E21D1D] border border-neutral-800 group-hover:border-[#E21D1D] text-white flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
+          <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 group-hover:translate-x-0.5 transition-transform" />
         </div>
       </div>
     </div>
@@ -451,7 +389,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
     <section
       ref={sectionRef}
       id={`cat-section-${category.id}`}
-      className="relative py-12 sm:py-20 lg:py-24 px-3 sm:px-6 overflow-hidden min-h-auto select-none"
+      className="relative py-6 sm:py-10 lg:py-14 px-1.5 sm:px-3 md:px-4 lg:px-5 overflow-hidden min-h-auto select-none w-full"
     >
       {/* ============================================================== */}
       {/* 1. DYNAMIC CATEGORY-SPECIFIC LIVING BACKGROUND SYSTEM          */}
@@ -522,21 +460,21 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
       </div>
 
       {/* ============================================================== */}
-      {/* 2. FOREGROUND CONTENT: 5-COL HERO + 7-COL 3x3 PRODUCT GRID     */}
+      {/* 2. FOREGROUND CONTENT: FULL-PAGE FLUID HERO + 3x3 PRODUCT GRID */}
       {/* ============================================================== */}
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+      <div className="relative z-10 w-full max-w-full mx-auto px-1 sm:px-2 md:px-3">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5 items-stretch">
           
           {/* ============================================================== */}
           {/* BIG CONTEXTUAL HERO IMAGE BLOCK */}
           {/* ============================================================== */}
           <div
-            className={`lg:col-span-5 flex flex-col h-full ${
+            className={`lg:col-span-4 xl:col-span-3 2xl:col-span-3 flex flex-col h-full ${
               isLeftImage ? "lg:order-1" : "lg:order-2"
             }`}
           >
             <div
-              className="relative rounded-3xl overflow-hidden border border-neutral-700/80 bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[440px] sm:min-h-[520px] lg:min-h-[580px]"
+              className="relative rounded-3xl overflow-hidden border border-neutral-700/80 bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] xl:min-h-[780px] 2xl:min-h-[840px]"
             >
               {/* Big High-Resolution 3D Model / Garment Image or Seamless Video Loop */}
               <div className="absolute inset-0 overflow-hidden" style={{ transform: "translate3d(0, 0, 0)" }}>
@@ -686,7 +624,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
           {/* WITH CLEAN LEFT/RIGHT NAVIGATION AND SMOOTH HOVER ZOOM         */}
           {/* ============================================================== */}
           <div
-            className={`lg:col-span-7 flex flex-col justify-between h-full relative ${
+            className={`lg:col-span-8 xl:col-span-9 2xl:col-span-9 flex flex-col justify-between h-full relative ${
               isLeftImage ? "lg:order-2" : "lg:order-1"
             }`}
           >
@@ -718,20 +656,20 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             </div>
 
             {/* Header Bar above products with clean, intuitive navigation */}
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-2 pb-2 border-b border-neutral-800/80">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-xs font-black text-[#E21D1D]">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-2.5 pb-2.5 border-b border-neutral-800/80">
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <span className="font-mono text-xs sm:text-sm font-black text-[#E21D1D]">
                   [SAMPLE LINEUP]
                 </span>
-                <h4 className="font-display font-black text-sm sm:text-base text-white uppercase tracking-tight">
+                <h4 className="font-display font-black text-base sm:text-lg lg:text-xl text-white uppercase tracking-tight">
                   {category.name}
                   {selectedSubCategory !== "all" && (
-                    <span className="text-[#E21D1D] font-mono text-xs ml-2 normal-case font-bold">
+                    <span className="text-[#E21D1D] font-mono text-xs sm:text-sm ml-2 normal-case font-bold">
                       / {category.subCategories.find((s) => s.id === selectedSubCategory)?.name}
                     </span>
                   )}
                 </h4>
-                <span className="font-mono text-[10px] text-neutral-400 bg-neutral-900/90 px-2.5 py-0.5 rounded-full border border-neutral-800">
+                <span className="font-mono text-[10.5px] sm:text-xs text-neutral-300 bg-neutral-900/90 px-3 py-0.5 rounded-full border border-neutral-800">
                   {filteredProducts.length > 0 ? currentPage * pageSize + 1 : 0}-{Math.min((currentPage + 1) * pageSize, filteredProducts.length)} OF {filteredProducts.length}
                 </span>
 
@@ -743,7 +681,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                       })
                     )
                   }
-                  className="hidden sm:inline-flex font-mono text-[10px] font-bold text-[#ff4d4d] hover:text-white hover:underline items-center gap-1 cursor-pointer ml-1"
+                  className="inline-flex font-mono text-[11px] sm:text-xs font-black text-[#ff4d4d] hover:text-white hover:underline items-center gap-1 cursor-pointer ml-1"
                   title="Open All Products in Dedicated Catalog Page"
                 >
                   <span>VIEW FULL CATALOG ➔</span>
@@ -753,23 +691,23 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
               {/* Clean Left/Right Controls with Page Indicator */}
               <div className="flex items-center gap-2">
                 {totalPages > 1 && (
-                  <div className="flex items-center gap-1.5 bg-black/85 border border-neutral-700/80 rounded-xl p-1 shadow-lg backdrop-blur-md">
+                  <div className="flex items-center gap-2 bg-black/85 border border-neutral-700/80 rounded-xl p-1 shadow-lg backdrop-blur-md">
                     <button
                       onClick={handlePrevPage}
                       aria-label="Previous Products (Left)"
                       title="Previous Products"
-                      className="p-1.5 rounded-lg hover:bg-neutral-800 text-neutral-300 hover:text-white transition-colors cursor-pointer active:scale-90"
+                      className="p-2 rounded-lg hover:bg-neutral-800 text-neutral-300 hover:text-white transition-colors cursor-pointer active:scale-90"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
-                    <span className="font-mono text-[10px] font-bold text-white px-2 tracking-wider">
+                    <span className="font-mono text-xs font-bold text-white px-2.5 tracking-wider">
                       {currentPage + 1} / {totalPages}
                     </span>
                     <button
                       onClick={handleNextPage}
                       aria-label="Next Products (Right)"
                       title="Next Products"
-                      className="p-1.5 rounded-lg hover:bg-neutral-800 text-neutral-300 hover:text-white transition-colors cursor-pointer active:scale-90"
+                      className="p-2 rounded-lg hover:bg-neutral-800 text-neutral-300 hover:text-white transition-colors cursor-pointer active:scale-90"
                     >
                       <ChevronRight className="w-4 h-4" />
                     </button>
@@ -779,22 +717,22 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             </div>
 
             {/* HIGH-TECH SUB-CATEGORY SELECTOR TABS */}
-            <div className="flex flex-wrap items-center gap-1.5 mb-3 bg-black/60 p-1.5 sm:p-2 rounded-2xl border border-neutral-800/80 backdrop-blur-md max-h-36 overflow-y-auto pr-1">
-              <div className="flex items-center gap-1.5 mr-1 font-mono text-[9px] font-black text-neutral-400 uppercase tracking-wider pl-1">
-                <Layers className="w-3.5 h-3.5 text-[#E21D1D]" />
+            <div className="flex flex-wrap items-center gap-2 mb-3.5 bg-black/70 p-2 sm:p-2.5 rounded-2xl border border-neutral-800/90 backdrop-blur-md max-h-40 overflow-y-auto pr-1">
+              <div className="flex items-center gap-1.5 mr-1 font-mono text-[10px] sm:text-xs font-black text-neutral-300 uppercase tracking-wider pl-1">
+                <Layers className="w-4 h-4 text-[#E21D1D]" />
                 <span className="hidden sm:inline">SUB-CATEGORIES:</span>
               </div>
 
               <button
                 onClick={() => handleSelectSubCategory("all")}
-                className={`px-3 py-1.5 rounded-xl font-mono text-[10px] font-black uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`px-3.5 py-2 rounded-xl font-mono text-[11px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-2 ${
                   selectedSubCategory === "all"
                     ? "bg-[#E21D1D] text-white shadow-lg shadow-[#E21D1D]/30 scale-102"
                     : "bg-neutral-900/80 hover:bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-800"
                 }`}
               >
                 <span>ALL SAMPLES</span>
-                <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-full ${
+                <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${
                   selectedSubCategory === "all" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"
                 }`}>
                   {(category.products || []).length}
@@ -808,14 +746,14 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   <button
                     key={sub.id}
                     onClick={() => handleSelectSubCategory(sub.id)}
-                    className={`px-3 py-1.5 rounded-xl font-mono text-[10px] font-black uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
+                    className={`px-3.5 py-2 rounded-xl font-mono text-[11px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-2 ${
                       isSubActive
                         ? "bg-white text-black shadow-lg shadow-white/20 font-black scale-102"
                         : "bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
                     }`}
                   >
                     <span>{sub.name}</span>
-                    <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-full ${
+                    <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${
                       isSubActive ? "bg-black text-white" : "bg-neutral-800 text-neutral-400"
                     }`}>
                       {count}
@@ -853,7 +791,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   initial="enter"
                   animate="center"
                   exit="exit"
-                  className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-3.5 flex-1 relative z-10"
+                  className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 xl:gap-4.5 2xl:gap-5 flex-1 relative z-10"
                 >
                   {currentProducts.map((product, pIdx) => (
                     <Interactive3DProductCard
@@ -1017,7 +955,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
       className="relative w-full bg-black text-white selection:bg-[#E21D1D] selection:text-white"
     >
       {/* ================= 1. SECTION INTRO HEADER & QUICK JUMP BAR ================= */}
-      <div className="relative pt-24 pb-8 px-4 sm:px-6 max-w-7xl mx-auto border-b border-neutral-800">
+      <div className="relative pt-20 sm:pt-24 pb-8 px-3 sm:px-6 lg:px-8 xl:px-10 2xl:px-14 w-full max-w-[2160px] mx-auto border-b border-neutral-800">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-3">

@@ -52,7 +52,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* 4. REAL ARTISAN LEATHER & WOOL VARSITY JACKET CUSTOMIZER */}
       <section id="customizer" className="py-24 px-3 xs:px-4 sm:px-6 bg-neutral-900/40 dark:bg-black/80 border-y border-neutral-200/60 dark:border-neutral-800 transition-colors">
-        <div className="max-w-7xl mx-auto space-y-12">
+        <div className="w-full max-w-[2160px] mx-auto space-y-12 px-3 sm:px-6 lg:px-8 xl:px-10 2xl:px-14">
           <div className="text-center space-y-3">
             <span className="text-xs font-mono font-bold text-[#E21D1D] tracking-widest block uppercase">
               INTERACTIVE 2D / 3D EXPORT ATELIER

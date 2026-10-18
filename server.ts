@@ -21,6 +21,7 @@ const CONFIG_FILE_PATH = path.join(process.cwd(), "src", "data", "website_config
 const CATEGORIES_OVERRIDE_PATH = path.join(process.cwd(), "src", "data", "custom_categories_override.json");
 const IMAGEKIT_CONFIG_PATH = path.join(process.cwd(), "src", "data", "imagekit_config.json");
 const IMAGEKIT_TREE_PATH = path.join(process.cwd(), "src", "data", "imagekit_folder_tree.json");
+const LEADS_FILE_PATH = path.join(process.cwd(), "src", "data", "b2b_signups.json");
 const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
 const MEDIA_DIR = path.join(process.cwd(), "public", "media");
 const PRODUCTS_DIR = path.join(process.cwd(), "public", "products");
@@ -542,6 +543,97 @@ app.get("/api/categories", (req, res) => {
   } catch (error) {
     console.error("Error loading categories override:", error);
     return res.status(500).json({ error: "Failed to load categories override." });
+  }
+});
+
+// ============================================================================
+// ✦ B2B LEADS & BUYER SIGNUPS (HIDDEN ADMIN DATA STORAGE)
+// ============================================================================
+// POST /api/leads: Record new B2B Buyer Signup
+app.post("/api/leads", (req, res) => {
+  try {
+    const { name, phone, email, company, interests, orderVolume } = req.body;
+    if (!name || !email) {
+      return res.status(400).json({ error: "Name and email are required" });
+    }
+
+    let leads: any[] = [];
+    if (fs.existsSync(LEADS_FILE_PATH)) {
+      try {
+        leads = JSON.parse(fs.readFileSync(LEADS_FILE_PATH, "utf-8"));
+      } catch (e) {
+        leads = [];
+      }
+    }
+
+    const newLead = {
+      id: `lead_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      name: String(name).trim(),
+      phone: String(phone || "").trim(),
+      email: String(email).trim().toLowerCase(),
+      company: String(company || "").trim(),
+      interests: Array.isArray(interests) ? interests : [],
+      orderVolume: String(orderVolume || "").trim(),
+      createdAt: new Date().toISOString()
+    };
+
+    // Prepend to top so newest is first
+    leads.unshift(newLead);
+    fs.writeFileSync(LEADS_FILE_PATH, JSON.stringify(leads, null, 2), "utf-8");
+
+    res.json({ success: true, lead: newLead, count: leads.length });
+  } catch (err: any) {
+    console.error("Error saving lead:", err);
+    res.status(500).json({ error: "Failed to save lead" });
+  }
+});
+
+// GET /api/leads: Secret Admin Retrieval of B2B Leads
+app.get("/api/leads", (req, res) => {
+  try {
+    const adminPin = req.headers["x-admin-pin"] || req.query.pin;
+    const validPins = ["admin786", "trywears@2026", "trywears786", "admin2026", "786", "admin", "trywear", "trywears", "1234", "8824"];
+    if (!adminPin || !validPins.includes(String(adminPin))) {
+      return res.status(401).json({ error: "Unauthorized access: invalid admin PIN" });
+    }
+
+    let leads: any[] = [];
+    if (fs.existsSync(LEADS_FILE_PATH)) {
+      try {
+        leads = JSON.parse(fs.readFileSync(LEADS_FILE_PATH, "utf-8"));
+      } catch (e) {
+        leads = [];
+      }
+    }
+
+    res.json({ success: true, leads, total: leads.length });
+  } catch (err: any) {
+    console.error("Error reading leads:", err);
+    res.status(500).json({ error: "Failed to read leads" });
+  }
+});
+
+// DELETE /api/leads/:id: Delete a lead by ID
+app.delete("/api/leads/:id", (req, res) => {
+  try {
+    const adminPin = req.headers["x-admin-pin"] || req.query.pin;
+    const validPins = ["admin786", "trywears@2026", "trywears786", "admin2026", "786", "admin", "trywear", "trywears", "1234", "8824"];
+    if (!adminPin || !validPins.includes(String(adminPin))) {
+      return res.status(401).json({ error: "Unauthorized access" });
+    }
+
+    const { id } = req.params;
+    let leads: any[] = [];
+    if (fs.existsSync(LEADS_FILE_PATH)) {
+      leads = JSON.parse(fs.readFileSync(LEADS_FILE_PATH, "utf-8"));
+    }
+    leads = leads.filter((l) => l.id !== id);
+    fs.writeFileSync(LEADS_FILE_PATH, JSON.stringify(leads, null, 2), "utf-8");
+
+    res.json({ success: true, count: leads.length });
+  } catch (err: any) {
+    console.error("Error deleting lead:", err);
+    res.status(500).json({ error: "Failed to delete lead" });
   }
 });
 
