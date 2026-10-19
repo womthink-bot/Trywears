@@ -261,7 +261,7 @@ export function App() {
             brandName: "TRY WEARS",
             tagline: "OEM/ODM COMBAT SPORTS & ATHLETIC APPAREL FACTORY",
             announcement: "FACTORY DIRECT B2B WHOLESALE & CUSTOM CLOTHING MANUFACTURING",
-            logo: "/images/trylogo.png",
+            logo: "/media/home/images/trymenulogo_transparent.png",
             contactEmail: "info@trywears.com",
             phone: "+92 300 1234567"
           }
@@ -372,66 +372,94 @@ export function App() {
       {/* Security Protection Layer */}
       <SecurityAlerts />
 
-      {/* 1. TOP NOTIFICATION RUNNER (FULL SCREEN WIDTH) */}
-      <div className="bg-[#08080c] text-white py-1.5 sm:py-2 px-2.5 xs:px-4 sm:px-6 lg:px-10 xl:px-14 border-b border-neutral-800/80 overflow-hidden relative z-50">
+      {/* 1. TOP NOTIFICATION RUNNER (FULL SCREEN WIDTH) WITH VISITOR NAME IN TOP RIGHT CORNER */}
+      <div className="bg-[#08080c] text-white py-1.5 sm:py-2 px-3 sm:px-6 lg:px-8 border-b border-neutral-800/80 overflow-hidden relative z-50">
         <div className="w-full flex items-center justify-between text-[8px] xs:text-[9px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest font-black uppercase">
+          {/* Ticker on Left */}
           <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 pr-2">
             <span className="h-1.5 w-1.5 xs:h-2 xs:w-2 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
             <span className="truncate flex-1 min-w-0 text-neutral-200">
               {bannerText}
             </span>
           </div>
-          <div className="hidden md:flex items-center gap-5 shrink-0">
-            <button
-              onClick={() => navigateTo("sample-development")}
-              className="hover:text-white transition-colors text-emerald-400 font-bold cursor-pointer flex items-center gap-1.5"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span>CUSTOM SAMPLE DEVELOPMENT ON DEMAND</span>
-            </button>
-            <span className="text-neutral-700">|</span>
-            <span className="text-[#ff3b3b] font-bold tracking-wider">ISO 9001:2015 & CE CERTIFIED FACTORY</span>
+
+          {/* Right Corner: Factory Badges + Visitor Name / Auth Status */}
+          <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
+            <div className="hidden lg:flex items-center gap-3.5 text-neutral-400">
+              <button
+                onClick={() => navigateTo("sample-development")}
+                className="hover:text-white transition-colors text-emerald-400 font-bold cursor-pointer flex items-center gap-1.5"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span>SAMPLE ON DEMAND</span>
+              </button>
+              <span className="text-neutral-700">|</span>
+              <span className="text-[#ff3b3b] font-bold">ISO 9001:2015 FACTORY</span>
+            </div>
+
+            {/* VISITOR NAME / MEMBER STATUS SHIFTED TO TOP RIGHT CORNER */}
+            <div className="border-l border-neutral-800 pl-2 sm:pl-3 flex items-center">
+              {!isAuthenticated ? (
+                <button
+                  onClick={openAuthModal}
+                  className="flex items-center gap-1 px-2 sm:px-2.5 py-0.5 rounded-md font-mono text-[9px] xs:text-[10px] font-black uppercase tracking-wider bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/40 shadow transition-all cursor-pointer whitespace-nowrap active:scale-95"
+                  title="Sign Up Free to Unlock Full Catalog & FOB Wholesale Rates"
+                >
+                  <Lock className="w-3 h-3 text-emerald-400 shrink-0" />
+                  <span>FREE SIGN UP</span>
+                </button>
+              ) : (
+                <div className="flex items-center gap-1.5 bg-[#0e1422] border border-neutral-700/80 rounded-md px-2 py-0.5 font-mono text-[9px] xs:text-[10px] shadow">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="font-bold text-white tracking-wide">
+                    {user?.name.split(" ")[0]}
+                  </span>
+                  <span className="text-[7.5px] px-1 py-0.2 rounded bg-emerald-950/90 text-emerald-300 border border-emerald-800 font-mono">
+                    UNLOCKED
+                  </span>
+                  <button
+                    onClick={logout}
+                    className="p-0.5 text-neutral-400 hover:text-red-400 transition cursor-pointer ml-0.5"
+                    title="Sign Out / Lock Catalog"
+                  >
+                    <LogOut className="w-3 h-3" />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       {/* 2. EXECUTIVE FULL-SCREEN NAVIGATION HEADER */}
       <header className="sticky top-0 z-50 bg-[#07070b]/98 backdrop-blur-2xl border-b border-neutral-800 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all">
-        <div className="w-full px-2.5 xs:px-4 sm:px-6 lg:px-10 xl:px-14 py-2 sm:py-3 flex items-center justify-between gap-2 sm:gap-4 lg:gap-8">
+        <div className="w-full px-2.5 xs:px-3 sm:px-5 lg:px-6 xl:px-8 py-2 sm:py-3 flex items-center justify-between gap-3 lg:gap-4 xl:gap-6">
           
-          {/* Branded Logo */}
+          {/* Branded Logo - trymenulogo.png - Big, Bold, Clean & Clear */}
           <button
             onClick={() => navigateTo("home")}
-            className="flex items-center gap-2 xs:gap-2.5 sm:gap-3.5 group text-left cursor-pointer flex-1 min-w-0 mr-1 sm:mr-4"
+            className="flex items-center group text-left cursor-pointer shrink-0 py-0.5"
+            title="Try Wears Home"
           >
-            <div className="h-9 w-9 xs:h-11 xs:w-11 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl bg-neutral-900/60 p-1 border border-neutral-800 group-hover:border-[#E21D1D]/60 flex items-center justify-center shrink-0 transition-all duration-300 shadow-md">
-              <img 
-                src={config?.global?.logo || "/images/trylogo.png"} 
-                alt="Try Wears Logo" 
-                className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-300 drop-shadow-[0_2px_10px_rgba(226,29,29,0.3)]" 
-                referrerPolicy="no-referrer" 
-              />
-            </div>
-            <div className="min-w-0 flex-1">
-              <span className="font-display font-black text-sm xs:text-base sm:text-xl lg:text-2xl tracking-[0.1em] sm:tracking-[0.14em] text-white block uppercase leading-none group-hover:text-[#ff3b3b] transition-colors">
-                {config?.global?.brandName || "TRY WEARS"}
-              </span>
-              {/* Full tagline on mobile broken into two lines as requested, single line on tablet/desktop */}
-              <div className="text-[7px] xs:text-[8px] sm:text-[10px] font-mono font-bold tracking-wider sm:tracking-widest text-[#ff3b3b] uppercase mt-0.5 sm:mt-1 leading-tight sm:leading-normal">
-                <span className="block sm:inline">OEM/ODM COMBAT SPORTS &amp;</span>{" "}
-                <span className="block sm:inline">ATHLETIC APPAREL FACTORY</span>
-              </div>
-            </div>
+            <img 
+              src="/trymenulogo.png?v=transparent" 
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = "/media/home/images/trymenulogo.png";
+              }}
+              alt="Try Wears Logo" 
+              className="h-10 xs:h-12 sm:h-14 md:h-16 lg:h-18 xl:h-20 w-auto max-w-[210px] xs:max-w-[240px] sm:max-w-[300px] md:max-w-[340px] lg:max-w-[380px] xl:max-w-[420px] object-contain group-hover:scale-102 transition-transform duration-300 drop-shadow-[0_2px_16px_rgba(226,29,29,0.4)]" 
+              referrerPolicy="no-referrer" 
+            />
           </button>
 
-          {/* Clean Executive Navbar with SERVICES & SUPPORT Clickable Hubs & Dropdowns */}
-          <nav className="hidden xl:flex items-center gap-2 2xl:gap-3">
+          {/* Clean Executive Navbar - Perfectly Adjusted & Balanced */}
+          <nav className="hidden xl:flex items-center gap-1.5 xl:gap-2 2xl:gap-3">
             {/* Home */}
             <button
               onClick={() => navigateTo("home")}
-              className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+              className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                 activePage === "home"
-                  ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                  ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
                   : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
               }`}
             >
@@ -442,9 +470,9 @@ export function App() {
             {/* About Us */}
             <button
               onClick={() => navigateTo("about-us")}
-              className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+              className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                 activePage === "about-us"
-                  ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                  ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
                   : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
               }`}
             >
@@ -458,14 +486,14 @@ export function App() {
               onNavigateToCatalog={navigateToCatalog}
             />
 
-            {/* SERVICES Dropdown (Click to Open, Closes on outside click - Never opens accidentally on hover) */}
+            {/* SERVICES Dropdown */}
             <div className="relative" data-dropdown="services">
               <button
                 type="button"
                 onClick={() => setActiveDropdown(activeDropdown === "services" ? null : "services")}
-                className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                   isServicesActive || activeDropdown === "services"
-                    ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                    ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
                     : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
                 }`}
                 title="Click to view Services"
@@ -527,14 +555,14 @@ export function App() {
               </AnimatePresence>
             </div>
 
-            {/* SUPPORT Dropdown (Click to Open, Closes on outside click - Never opens accidentally on hover) */}
+            {/* SUPPORT Dropdown */}
             <div className="relative" data-dropdown="support">
               <button
                 type="button"
                 onClick={() => setActiveDropdown(activeDropdown === "support" ? null : "support")}
-                className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                   isSupportActive || activeDropdown === "support"
-                    ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                    ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
                     : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
                 }`}
                 title="Click to view Support & Policies"
@@ -606,9 +634,9 @@ export function App() {
             {/* Quality & Process */}
             <button
               onClick={() => navigateTo("quality-process")}
-              className={`relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+              className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                 activePage === "quality-process"
-                  ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_15px_rgba(226,29,29,0.2)] font-black"
+                  ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
                   : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
               }`}
             >
@@ -617,50 +645,19 @@ export function App() {
             </button>
           </nav>
 
-          {/* Header Controls & Unified B2B Quote Action */}
+          {/* Header Controls: Clean B2B Quote Action & Mobile Toggle */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Free B2B Sign Up / Member Unlock Status */}
-            {!isAuthenticated ? (
-              <button
-                onClick={openAuthModal}
-                className="flex items-center gap-1.5 px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl font-mono text-xs font-black uppercase tracking-wider bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/40 shadow-lg shadow-emerald-950/40 transition-all cursor-pointer whitespace-nowrap active:scale-95"
-                title="Sign Up Free to Unlock Full Catalog & FOB Wholesale Rates"
-              >
-                <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span className="hidden md:inline">FREE SIGN UP</span>
-                <span className="md:hidden">SIGN UP</span>
-              </button>
-            ) : (
-              <div className="flex items-center gap-2 bg-[#0e1422] border border-neutral-700/80 rounded-xl px-2.5 sm:px-3 py-1.5 font-mono text-xs shadow-lg">
-                <div className="flex items-center gap-1.5 text-neutral-200">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="font-bold truncate max-w-[85px] sm:max-w-[120px] text-white">
-                    {user?.name.split(" ")[0]}
-                  </span>
-                  <span className="hidden lg:inline text-[9px] px-1.5 py-0.5 rounded bg-emerald-950/90 text-emerald-300 border border-emerald-800">
-                    UNLOCKED
-                  </span>
-                </div>
-                <button
-                  onClick={logout}
-                  className="p-1 text-neutral-400 hover:text-red-400 transition cursor-pointer"
-                  title="Sign Out / Lock Catalog"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            )}
 
             {/* High-Impact B2B Quote Action Button (Visible on sm and up) */}
             <button
               onClick={() => navigateTo("b2b-quote")}
-              className={`hidden sm:inline-flex items-center gap-2 px-4 py-2 sm:py-2.5 rounded-xl font-mono text-xs font-black uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-lg whitespace-nowrap active:scale-95 ${
+              className={`hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-lg font-mono text-[11px] 2xl:text-xs font-black uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-lg whitespace-nowrap active:scale-95 ${
                 activePage === "b2b-quote"
-                  ? "bg-red-700 text-white ring-2 ring-white shadow-[0_0_25px_rgba(226,29,29,0.6)]"
-                  : "bg-gradient-to-r from-[#E21D1D] to-[#b91313] hover:from-red-600 hover:to-red-700 text-white shadow-[0_0_20px_rgba(226,29,29,0.4)] hover:shadow-[0_0_30px_rgba(226,29,29,0.6)] hover:scale-102"
+                  ? "bg-red-700 text-white ring-2 ring-white shadow-[0_0_20px_rgba(226,29,29,0.6)]"
+                  : "bg-gradient-to-r from-[#E21D1D] to-[#b91313] hover:from-red-600 hover:to-red-700 text-white shadow-[0_0_15px_rgba(226,29,29,0.4)] hover:shadow-[0_0_25px_rgba(226,29,29,0.6)] hover:scale-102"
               }`}
             >
-              <FileCheck className="w-4 h-4" />
+              <FileCheck className="w-3.5 h-3.5" />
               <span>GET B2B QUOTE</span>
             </button>
 
@@ -1077,14 +1074,14 @@ export function App() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img 
-                src={config?.global?.logo || "/images/trylogo.png"} 
+                src="/trymenulogo.png?v=transparent" 
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = "/media/home/images/trymenulogo.png";
+                }}
                 alt="Try Wears Logo" 
-                className="h-10 w-10 object-contain"
+                className="h-12 sm:h-14 w-auto max-w-[260px] object-contain drop-shadow-[0_2px_10px_rgba(226,29,29,0.3)]" 
                 referrerPolicy="no-referrer" 
               />
-              <span className="font-display font-black text-xl text-white tracking-widest uppercase">
-                {config?.global?.brandName || "TRY WEARS"}
-              </span>
             </div>
             <p className="text-sm font-sans leading-relaxed text-neutral-100 font-normal">
               Direct OEM/ODM industrial manufacturing facility for world championship fight gear, heavyweight luxury streetwear, sublimated sportswear, and bespoke private label collections.

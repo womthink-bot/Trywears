@@ -453,9 +453,11 @@ app.get("/api/config", (req, res) => {
       });
     }
 
-    // 3. Branding Section: Auto-sync brand logo
+    // 3. Branding Section: Auto-sync brand logo (prioritize trymenulogo)
     const brandingFiles = media["home-page/branding"] || [];
-    const logoFile = brandingFiles.find((f) => f.name.includes("trylogo") || f.name.includes("logo"));
+    const logoFile =
+      brandingFiles.find((f) => f.name.includes("trymenulogo")) ||
+      brandingFiles.find((f) => f.name.includes("trylogo") || f.name.includes("logo"));
     if (logoFile && config.global) {
       config.global.logo = logoFile.relativePath;
     }

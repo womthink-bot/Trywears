@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   motion,
   AnimatePresence
@@ -25,7 +25,8 @@ import {
   Pause,
   Maximize2,
   Lock,
-  Unlock
+  Unlock,
+  Users
 } from "lucide-react";
 
 import { useAuth } from "../context/AuthContext";
@@ -128,50 +129,42 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
           onInspect(product);
         }
       }}
-      className="relative h-full min-h-[300px] xs:min-h-[340px] sm:min-h-[380px] md:min-h-[420px] xl:min-h-[460px] rounded-2xl sm:rounded-3xl border border-neutral-800/90 hover:border-[#E21D1D] bg-neutral-950/90 hover:bg-neutral-900/95 p-3 sm:p-4 flex flex-col justify-between cursor-pointer group transition-all duration-300 ease-out hover:shadow-[0_25px_50px_rgba(0,0,0,0.95)] hover:-translate-y-1.5 select-none overflow-hidden"
+      className="relative w-full h-full min-h-[340px] xs:min-h-[380px] sm:min-h-[420px] md:min-h-[460px] xl:min-h-[500px] rounded-2xl sm:rounded-3xl border border-neutral-800/90 hover:border-[#E21D1D] bg-neutral-950 overflow-hidden cursor-pointer group transition-all duration-300 ease-out hover:shadow-[0_20px_50px_rgba(226,29,29,0.35)] hover:-translate-y-1.5 select-none"
       style={{
         transform: "translate3d(0, 0, 0)",
-        willChange: "transform, border-color, background-color"
+        willChange: "transform, border-color"
       }}
     >
       {/* Ambient Backlight Glow matching product accent */}
       <div
-        className="absolute -top-12 -right-12 w-36 h-36 rounded-full blur-[60px] pointer-events-none transition-opacity duration-300"
+        className="absolute -top-12 -right-12 w-36 h-36 rounded-full blur-[60px] pointer-events-none transition-opacity duration-300 z-10"
         style={{
           backgroundColor: product.accentColor || "#E21D1D",
-          opacity: isHovered ? 0.45 : 0.08
+          opacity: isHovered ? 0.35 : 0.05
         }}
       />
 
       {/* Subtle First 5 Preview Indicator Tag (Only if not logged in) */}
       {!isAuthenticated && index < 5 && (
         <div className="absolute top-3 left-3 z-20">
-          <span className="font-mono text-[8.5px] font-black px-2.5 py-0.5 rounded-full bg-emerald-600/90 text-white shadow-lg flex items-center gap-1 backdrop-blur-md">
+          <span className="font-mono text-[8.5px] font-black px-2.5 py-1 rounded-full bg-emerald-600/95 text-white shadow-xl flex items-center gap-1 backdrop-blur-md border border-emerald-400/40">
             <Unlock className="w-2.5 h-2.5" />
             <span>PREVIEW</span>
           </span>
         </div>
       )}
 
-      {/* HUGE 100% VISIBLE PRODUCT IMAGE - MAXIMIZED TO FULLY FILL THE BOX */}
-      <div className="relative w-full flex-1 flex items-center justify-center my-auto overflow-hidden p-1 sm:p-2">
-        {/* Soft ground contact shadow */}
-        <div
-          className={`absolute bottom-1 w-4/5 h-4 rounded-full blur-[12px] bg-black/90 transition-all duration-300 pointer-events-none ${
-            isHovered ? "scale-110 opacity-95" : "scale-95 opacity-70"
-          }`}
-        />
-
-        {/* Big Product Image fitting the box */}
+      {/* FULL-BLEED PRODUCT IMAGE FILLING THE ENTIRE BOX */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-neutral-950">
         <img
           src={product.image}
           alt={product.name || "Factory Apparel Sample"}
-          className={`w-full h-full max-h-[260px] xs:max-h-[300px] sm:max-h-[340px] md:max-h-[380px] xl:max-h-[420px] object-contain transition-all duration-300 ease-out transform-gpu will-change-transform ${
+          className={`w-full h-full object-cover object-center transition-all duration-500 ease-out transform-gpu will-change-transform ${
             isLocked
               ? "filter blur-[8px] opacity-70 scale-105"
               : isHovered
-              ? "scale-108 drop-shadow-[0_25px_45px_rgba(0,0,0,0.98)] brightness-105"
-              : "scale-100 drop-shadow-[0_15px_25px_rgba(0,0,0,0.85)] opacity-95"
+              ? "scale-108 brightness-105 contrast-105"
+              : "scale-100 opacity-95"
           }`}
           loading="lazy"
           decoding="async"
@@ -181,10 +174,13 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
           }}
         />
 
+        {/* Subtle cinematic gradient overlay over image for depth and arrow contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/15 pointer-events-none" />
+
         {/* Lock Overlay for index >= 5 when not authenticated */}
         {isLocked && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none bg-black/40 backdrop-blur-[2px] rounded-2xl">
-            <span className="px-4 py-2 rounded-xl bg-black/90 border border-red-500/80 text-xs font-mono font-black text-white flex items-center gap-2 shadow-2xl">
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none bg-black/60 backdrop-blur-[3px]">
+            <span className="px-4 py-2.5 rounded-2xl bg-black/90 border border-red-500 text-xs font-mono font-black text-white flex items-center gap-2 shadow-[0_0_30px_rgba(226,29,29,0.6)]">
               <Lock className="w-4 h-4 text-red-500 animate-pulse" />
               <span>UNLOCK FREE</span>
             </span>
@@ -192,10 +188,10 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
         )}
       </div>
 
-      {/* Bottom Area: ONLY the Arrow Icon Button ("just arrow ka neshan rehny do") */}
-      <div className="z-10 pt-2 flex items-center justify-end w-full">
-        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-neutral-900/90 group-hover:bg-[#E21D1D] border border-neutral-800 group-hover:border-[#E21D1D] text-white flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
-          <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 group-hover:translate-x-0.5 transition-transform" />
+      {/* RED ARROW BUTTON FLOATING DIRECTLY OVER THE IMAGE */}
+      <div className="absolute bottom-3.5 right-3.5 sm:bottom-4 sm:right-4 z-20">
+        <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E21D1D] hover:bg-red-600 border border-red-400/50 text-white flex items-center justify-center transition-all duration-300 shadow-[0_4px_20px_rgba(226,29,29,0.7)] group-hover:scale-110 group-hover:shadow-[0_6px_25px_rgba(226,29,29,0.95)]">
+          <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-0.5 transition-transform" />
         </div>
       </div>
     </div>
@@ -340,14 +336,111 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
   const themeDetails =
     CATEGORY_BACKGROUND_THEMES[category.id] || CATEGORY_BACKGROUND_THEMES["sports-wears"];
 
-  // Multi-page product sliding, subcategory filtering and auto-slide state
+  // Multi-page product sliding, gender filter & rich subcategory state
+  const [genderFilter, setGenderFilter] = useState<"all" | "mens" | "womens">("all");
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>("all");
   const [currentPage, setCurrentPage] = useState(0);
   const [slideDirection, setSlideDirection] = useState<"next" | "prev">("next");
+  const subCategoryScrollRef = useRef<HTMLDivElement>(null);
 
-  const filteredProducts = selectedSubCategory === "all"
-    ? category.products
-    : category.products.filter((p) => p.subCategoryId === selectedSubCategory);
+  const scrollSubCategories = (direction: "left" | "right") => {
+    if (subCategoryScrollRef.current) {
+      const scrollAmount = direction === "left" ? -240 : 240;
+      subCategoryScrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
+  // Derive all distinct, real subcategories from the actual product list
+  const derivedSubCategories = useMemo(() => {
+    const map = new Map<
+      string,
+      {
+        id: string;
+        rawName: string;
+        label: string;
+        gender: "mens" | "womens" | "unisex";
+        count: number;
+      }
+    >();
+
+    (category.products || []).forEach((p) => {
+      const raw = (p.subCategory || "General").trim();
+      const id = raw.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      const isWomens = /women|female|ladies|bra|legging/i.test(raw);
+      const isMens = /men|male|stringer/i.test(raw) && !/women/i.test(raw);
+      const gender: "mens" | "womens" | "unisex" = isWomens ? "womens" : isMens ? "mens" : "unisex";
+
+      const cleanLabel = raw
+        .replace(/for\s+/i, "")
+        .replace(/Uhiform/i, "Uniform")
+        .replace(/Uniforms?/i, "Uniform")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      if (!map.has(id)) {
+        map.set(id, { id, rawName: raw, label: cleanLabel, gender, count: 0 });
+      }
+      map.get(id)!.count++;
+    });
+
+    return Array.from(map.values());
+  }, [category.products]);
+
+  // Counts for Gender Filter tabs
+  const genderCounts = useMemo(() => {
+    let mens = 0;
+    let womens = 0;
+    (category.products || []).forEach((p) => {
+      const raw = (p.subCategory || "").toLowerCase();
+      const isW = /women|female|ladies|bra|legging/.test(raw);
+      const isM = /men|male|stringer/.test(raw) && !/women/.test(raw);
+      if (isW) {
+        womens++;
+      } else if (isM) {
+        mens++;
+      } else {
+        // Unisex products (e.g. Martial Arts suits, unisex hoodies) belong in both
+        mens++;
+        womens++;
+      }
+    });
+    return {
+      all: (category.products || []).length,
+      mens,
+      womens
+    };
+  }, [category.products]);
+
+  // Subcategories visible according to gender filter
+  const visibleSubCategories = useMemo(() => {
+    if (genderFilter === "all") return derivedSubCategories;
+    return derivedSubCategories.filter((s) => s.gender === genderFilter || s.gender === "unisex");
+  }, [derivedSubCategories, genderFilter]);
+
+  // Products filtered by gender and selected subcategory
+  const filteredProducts = useMemo(() => {
+    return (category.products || []).filter((p) => {
+      const raw = (p.subCategory || "").trim();
+      const id = raw.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+      // Gender check
+      if (genderFilter !== "all") {
+        const isWomens = /women|female|ladies|bra|legging/i.test(raw);
+        const isMens = /men|male|stringer/i.test(raw) && !/women/i.test(raw);
+        const isUnisex = !isWomens && !isMens;
+
+        if (genderFilter === "mens" && !isMens && !isUnisex) return false;
+        if (genderFilter === "womens" && !isWomens && !isUnisex) return false;
+      }
+
+      // Subcategory check
+      if (selectedSubCategory !== "all") {
+        if (id !== selectedSubCategory) return false;
+      }
+
+      return true;
+    });
+  }, [category.products, genderFilter, selectedSubCategory]);
 
   const pageSize = 9;
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize));
@@ -360,20 +453,6 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
     setSelectedSubCategory(subId);
     setCurrentPage(0);
   };
-
-  // Calm, efficient 7s auto-slide timer
-  useEffect(() => {
-    if (totalPages <= 1) {
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setSlideDirection("next");
-      setCurrentPage((p) => (p + 1) % totalPages);
-    }, 7000);
-
-    return () => clearInterval(timer);
-  }, [totalPages]);
 
   const handlePrevPage = () => {
     setSlideDirection("prev");
@@ -656,16 +735,21 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             </div>
 
             {/* Header Bar above products with clean, intuitive navigation */}
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-2.5 pb-2.5 border-b border-neutral-800/80">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-2 pb-2 border-b border-neutral-800/80">
               <div className="flex items-center gap-2.5 flex-wrap">
                 <span className="font-mono text-xs sm:text-sm font-black text-[#E21D1D]">
                   [SAMPLE LINEUP]
                 </span>
-                <h4 className="font-display font-black text-base sm:text-lg lg:text-xl text-white uppercase tracking-tight">
-                  {category.name}
+                <h4 className="font-display font-black text-base sm:text-lg lg:text-xl text-white uppercase tracking-tight flex items-center flex-wrap gap-1.5">
+                  <span>{category.name}</span>
+                  {genderFilter !== "all" && (
+                    <span className="text-emerald-400 font-mono text-xs font-bold uppercase bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-500/30">
+                      / {genderFilter === "mens" ? "MEN'S" : "WOMEN'S"}
+                    </span>
+                  )}
                   {selectedSubCategory !== "all" && (
-                    <span className="text-[#E21D1D] font-mono text-xs sm:text-sm ml-2 normal-case font-bold">
-                      / {category.subCategories.find((s) => s.id === selectedSubCategory)?.name}
+                    <span className="text-[#E21D1D] font-mono text-xs font-bold uppercase">
+                      / {derivedSubCategories.find((s) => s.id === selectedSubCategory)?.label || selectedSubCategory}
                     </span>
                   )}
                 </h4>
@@ -716,51 +800,150 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
               </div>
             </div>
 
-            {/* HIGH-TECH SUB-CATEGORY SELECTOR TABS */}
-            <div className="flex flex-wrap items-center gap-2 mb-3.5 bg-black/70 p-2 sm:p-2.5 rounded-2xl border border-neutral-800/90 backdrop-blur-md max-h-40 overflow-y-auto pr-1">
-              <div className="flex items-center gap-1.5 mr-1 font-mono text-[10px] sm:text-xs font-black text-neutral-300 uppercase tracking-wider pl-1">
-                <Layers className="w-4 h-4 text-[#E21D1D]" />
-                <span className="hidden sm:inline">SUB-CATEGORIES:</span>
-              </div>
-
-              <button
-                onClick={() => handleSelectSubCategory("all")}
-                className={`px-3.5 py-2 rounded-xl font-mono text-[11px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-2 ${
-                  selectedSubCategory === "all"
-                    ? "bg-[#E21D1D] text-white shadow-lg shadow-[#E21D1D]/30 scale-102"
-                    : "bg-neutral-900/80 hover:bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-800"
-                }`}
-              >
-                <span>ALL SAMPLES</span>
-                <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${
-                  selectedSubCategory === "all" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"
-                }`}>
-                  {(category.products || []).length}
+            {/* 1. GENDER / DIVISION SELECTOR TABS (MENS / WOMENS / ALL) */}
+            {(genderCounts.mens > 0 && genderCounts.womens > 0) && (
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-2 pb-1.5 border-b border-neutral-800/80 overflow-x-auto scrollbar-none">
+                <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-wider flex items-center gap-1 shrink-0 mr-1">
+                  <Users className="w-3.5 h-3.5 text-[#E21D1D]" />
+                  <span>COLLECTION:</span>
                 </span>
-              </button>
 
-              {(category.subCategories || []).map((sub) => {
-                const isSubActive = selectedSubCategory === sub.id;
-                const count = (category.products || []).filter((p) => p.subCategoryId === sub.id).length;
-                return (
+                <div className="flex items-center gap-1.5 shrink-0">
                   <button
-                    key={sub.id}
-                    onClick={() => handleSelectSubCategory(sub.id)}
-                    className={`px-3.5 py-2 rounded-xl font-mono text-[11px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-2 ${
-                      isSubActive
-                        ? "bg-white text-black shadow-lg shadow-white/20 font-black scale-102"
-                        : "bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
+                    onClick={() => {
+                      setGenderFilter("all");
+                      setSelectedSubCategory("all");
+                      setCurrentPage(0);
+                    }}
+                    className={`px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
+                      genderFilter === "all"
+                        ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40"
+                        : "bg-neutral-900/90 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
                     }`}
                   >
-                    <span>{sub.name}</span>
-                    <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${
-                      isSubActive ? "bg-black text-white" : "bg-neutral-800 text-neutral-400"
-                    }`}>
-                      {count}
+                    <span>ALL SAMPLES</span>
+                    <span className={`text-[8.5px] px-1.5 py-0.2 rounded-full font-bold ${genderFilter === "all" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"}`}>
+                      {genderCounts.all}
                     </span>
                   </button>
-                );
-              })}
+
+                  <button
+                    onClick={() => {
+                      setGenderFilter("mens");
+                      setSelectedSubCategory("all");
+                      setCurrentPage(0);
+                    }}
+                    className={`px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
+                      genderFilter === "mens"
+                        ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40"
+                        : "bg-neutral-900/90 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
+                    }`}
+                  >
+                    <span>MEN'S APPAREL</span>
+                    <span className={`text-[8.5px] px-1.5 py-0.2 rounded-full font-bold ${genderFilter === "mens" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"}`}>
+                      {genderCounts.mens}
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setGenderFilter("womens");
+                      setSelectedSubCategory("all");
+                      setCurrentPage(0);
+                    }}
+                    className={`px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
+                      genderFilter === "womens"
+                        ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40"
+                        : "bg-neutral-900/90 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
+                    }`}
+                  >
+                    <span>WOMEN'S APPAREL</span>
+                    <span className={`text-[8.5px] px-1.5 py-0.2 rounded-full font-bold ${genderFilter === "womens" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"}`}>
+                      {genderCounts.womens}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* 2. COMPACT SUBCATEGORIES TRACK WITH SMOOTH HORIZONTAL SCROLL ARROWS (< and >) */}
+            <div className="relative flex items-center gap-1.5 mb-3.5 bg-black/75 p-1.5 sm:p-2 rounded-2xl border border-neutral-800/90 backdrop-blur-md">
+              {/* Left Arrow Button */}
+              <button
+                type="button"
+                onClick={() => scrollSubCategories("left")}
+                className="p-1.5 rounded-lg bg-neutral-900 hover:bg-[#E21D1D] text-neutral-300 hover:text-white border border-neutral-800 transition-colors shrink-0 shadow cursor-pointer active:scale-90"
+                title="Scroll Categories Left"
+                aria-label="Scroll Categories Left"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+
+              <div className="flex items-center gap-1.5 mr-1 font-mono text-[9px] sm:text-[10px] font-black text-neutral-400 uppercase tracking-wider pl-1 shrink-0">
+                <Layers className="w-3.5 h-3.5 text-[#E21D1D]" />
+                <span className="hidden md:inline">SUB-CATEGORIES:</span>
+              </div>
+
+              {/* Scrollable Container with all compact subcategory pills */}
+              <div
+                ref={subCategoryScrollRef}
+                className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-none scroll-smooth py-0.5"
+              >
+                <button
+                  type="button"
+                  onClick={() => handleSelectSubCategory("all")}
+                  className={`px-2.5 py-1 sm:py-1.5 rounded-lg font-mono text-[9.5px] sm:text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                    selectedSubCategory === "all"
+                      ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40 font-black scale-102"
+                      : "bg-neutral-900/80 hover:bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-800"
+                  }`}
+                >
+                  <span>ALL {genderFilter === "mens" ? "MEN'S" : genderFilter === "womens" ? "WOMEN'S" : ""} SAMPLES</span>
+                  <span
+                    className={`text-[8px] font-black px-1.5 py-0.2 rounded-full ${
+                      selectedSubCategory === "all" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"
+                    }`}
+                  >
+                    {filteredProducts.length}
+                  </span>
+                </button>
+
+                {visibleSubCategories.map((sub) => {
+                  const isSubActive = selectedSubCategory === sub.id;
+                  return (
+                    <button
+                      key={sub.id}
+                      type="button"
+                      onClick={() => handleSelectSubCategory(sub.id)}
+                      className={`px-2.5 py-1 sm:py-1.5 rounded-lg font-mono text-[9.5px] sm:text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                        isSubActive
+                          ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40 font-black scale-102"
+                          : "bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
+                      }`}
+                    >
+                      <span>{sub.label}</span>
+                      <span
+                        className={`text-[8px] font-black px-1.5 py-0.2 rounded-full ${
+                          isSubActive ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"
+                        }`}
+                      >
+                        {sub.count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Right Arrow Button */}
+              <button
+                type="button"
+                onClick={() => scrollSubCategories("right")}
+                className="p-1.5 rounded-lg bg-neutral-900 hover:bg-[#E21D1D] text-neutral-300 hover:text-white border border-neutral-800 transition-colors shrink-0 shadow cursor-pointer active:scale-90"
+                title="Scroll Categories Right"
+                aria-label="Scroll Categories Right"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
             </div>
 
             {/* 3x3 Grid of 9 Products with Smooth Transition */}
@@ -813,7 +996,9 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   <span>
                     {filteredProducts.length} SAMPLES DISPLAYED
                     {selectedSubCategory !== "all"
-                      ? ` IN ${category.subCategories.find((s) => s.id === selectedSubCategory)?.name.toUpperCase()}`
+                      ? ` IN ${(derivedSubCategories.find((s) => s.id === selectedSubCategory)?.label || selectedSubCategory).toUpperCase()}`
+                      : genderFilter !== "all"
+                      ? ` IN ${genderFilter === "mens" ? "MEN'S APPAREL" : "WOMEN'S APPAREL"}`
                       : ` • ${category.products.length} TOTAL IN CATEGORY`}
                   </span>
                 </span>
@@ -857,8 +1042,8 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   )}
                 </div>
 
-                <span className="hidden sm:inline text-neutral-500">
-                  AUTO-ADVANCING
+                <span className="hidden sm:inline text-neutral-500 font-mono text-[9px]">
+                  CLICK ARROW TO BROWSE
                 </span>
               </div>
             )}

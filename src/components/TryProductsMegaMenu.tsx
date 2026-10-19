@@ -183,9 +183,9 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
       <div className="relative" ref={menuRef}>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`relative flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
+          className={`relative flex items-center gap-1.5 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
             isOpen
-              ? "text-white bg-[#E21D1D] shadow-[0_0_20px_rgba(226,29,29,0.5)] scale-102 font-black"
+              ? "text-white bg-[#E21D1D] shadow-[0_0_15px_rgba(226,29,29,0.5)] font-black"
               : "text-neutral-200 hover:text-white hover:bg-neutral-800/80 border border-neutral-700/60"
           }`}
           title="Browse All Try Products Folders & Samples"
@@ -194,10 +194,7 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff3b3b]" />
           </span>
-          <span className="font-extrabold text-white tracking-wide">TRY PRODUCTS</span>
-          <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-black/60 text-[#ff7070] border border-red-500/30 font-black">
-            2,372
-          </span>
+          <span className="font-extrabold text-white tracking-wide">TRY WEARS</span>
           <ChevronDown
             className={`w-3.5 h-3.5 transition-transform duration-200 ${
               isOpen ? "rotate-180 text-white" : "text-neutral-400"
