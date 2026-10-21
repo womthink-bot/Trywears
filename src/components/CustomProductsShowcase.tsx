@@ -327,17 +327,17 @@ export function CustomProductsShowcase() {
   return (
     <section
       id="collections"
-      className="relative py-8 sm:py-14 lg:py-20 px-2 sm:px-4 lg:px-6 bg-[#050505] text-white overflow-hidden select-none border-b border-neutral-800/80 w-full"
+      className="relative py-8 sm:py-14 lg:py-20 px-2 sm:px-4 lg:px-6 bg-white dark:bg-[#050505] text-neutral-900 dark:text-white overflow-hidden select-none border-b border-neutral-200 dark:border-neutral-800/80 w-full transition-colors"
     >
       {/* Dynamic Background Ambience - Try Wears Red Brand Aura */}
-      <div className="absolute top-1/3 left-1/4 w-[350px] sm:w-[750px] h-[300px] sm:h-[500px] bg-[#E21D1D]/15 rounded-full blur-[140px] sm:blur-[180px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[300px] sm:w-[500px] h-[250px] sm:h-[400px] bg-red-950/25 rounded-full blur-[120px] sm:blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 w-[350px] sm:w-[750px] h-[300px] sm:h-[500px] bg-[#E21D1D]/10 dark:bg-[#E21D1D]/15 rounded-full blur-[140px] sm:blur-[180px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[300px] sm:w-[500px] h-[250px] sm:h-[400px] bg-red-950/15 dark:bg-red-950/25 rounded-full blur-[120px] sm:blur-[150px] pointer-events-none" />
 
       {/* Cyber Technical Grid Lines */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, #888888 1px, transparent 1px), linear-gradient(to bottom, #888888 1px, transparent 1px)`,
           backgroundSize: "40px 40px"
         }}
       />
@@ -345,23 +345,23 @@ export function CustomProductsShowcase() {
       <div className="w-full max-w-full mx-auto relative z-10 space-y-6 sm:space-y-8 px-1 sm:px-3 lg:px-4">
         
         {/* TOP SECTION HEADER */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 border-b border-neutral-800/80 pb-5 sm:pb-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 border-b border-neutral-200 dark:border-neutral-800/80 pb-5 sm:pb-6">
           <div className="space-y-2 max-w-3xl">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
-              <span className="text-[10px] sm:text-[11px] font-mono font-black text-[#ff4d4d] tracking-[0.2em] uppercase">
+              <span className="text-[10px] sm:text-[11px] font-mono font-black text-[#E21D1D] tracking-[0.2em] uppercase">
                 TRY WEARS BESPOKE OEM & ODM PRIVATE LABEL DIVISION
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-display font-black uppercase tracking-tight text-white leading-[1.1]">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-display font-black uppercase tracking-tight text-neutral-900 dark:text-white leading-[1.1]">
               CUSTOMIZED READY PRODUCTS FOR{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E21D1D] via-red-400 to-white">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E21D1D] via-red-500 to-amber-600 dark:to-white">
                 GLOBAL BRANDS & CLUBS
               </span>
             </h2>
 
-            <p className="text-xs sm:text-sm font-sans text-neutral-200 leading-relaxed pt-0.5">
+            <p className="text-xs sm:text-sm font-sans text-neutral-600 dark:text-neutral-200 leading-relaxed pt-0.5">
               End-to-end bespoke manufacturing for international apparel wholesalers, fitness chains, and combat federations — complete with custom brand crests, Pantone color matching, Italian sublimation, and retail-ready private labeling.
             </p>
           </div>
@@ -429,10 +429,10 @@ export function CustomProductsShowcase() {
               rotateY,
               transformStyle: "preserve-3d"
             }}
-            className="rounded-3xl bg-[#0e0e14] border border-neutral-700 shadow-[0_30px_90px_rgba(0,0,0,0.95)] overflow-hidden transition-shadow duration-300 hover:border-[#E21D1D]"
+            className="rounded-3xl bg-neutral-50 dark:bg-[#0e0e14] border border-neutral-300 dark:border-neutral-700 shadow-xl dark:shadow-[0_30px_90px_rgba(0,0,0,0.95)] overflow-hidden transition-all duration-300 hover:border-[#E21D1D]"
           >
             {/* Top Tactical Status Bar with 2-Second Auto-Change Progress Bar */}
-            <div className="relative border-b border-neutral-700/80 bg-[#12121a] backdrop-blur-md">
+            <div className="relative border-b border-neutral-200 dark:border-neutral-700/80 bg-neutral-100 dark:bg-[#12121a] backdrop-blur-md">
               {/* ✦ 2-SECOND ANIMATED PROGRESS INDICATOR */}
               {isAutoCycling && (
                 <motion.div
@@ -444,14 +444,14 @@ export function CustomProductsShowcase() {
                 />
               )}
 
-              <div className="flex flex-wrap items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3 text-[10px] font-mono tracking-wider text-neutral-300 gap-2">
+              <div className="flex flex-wrap items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3 text-[10px] font-mono tracking-wider text-neutral-600 dark:text-neutral-300 gap-2">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <span className="w-2 h-2 rounded-full bg-[#ff3333] animate-pulse shrink-0" />
-                  <span className="text-white font-black uppercase truncate">
+                  <span className="text-neutral-900 dark:text-white font-black uppercase truncate">
                     TRY WEARS • PRODUCT SHOWCASE
                   </span>
-                  <span className="hidden md:inline text-neutral-600">|</span>
-                  <span className="hidden md:inline text-emerald-400 font-bold">
+                  <span className="hidden md:inline text-neutral-400 dark:text-neutral-600">|</span>
+                  <span className="hidden md:inline text-emerald-600 dark:text-emerald-400 font-bold">
                     AUTO-CHANGING EVERY 2 SECONDS
                   </span>
                 </div>
@@ -462,8 +462,8 @@ export function CustomProductsShowcase() {
                     onClick={() => setIsAutoCycling(!isAutoCycling)}
                     className={`px-2.5 py-1 rounded text-[9px] font-mono font-black uppercase transition-colors cursor-pointer flex items-center gap-1 border ${
                       isAutoCycling
-                        ? "bg-[#E21D1D]/25 border-[#ff4d4d] text-[#ff4d4d]"
-                        : "bg-[#181824] border-neutral-700 text-neutral-300 hover:text-white"
+                        ? "bg-[#E21D1D]/15 dark:bg-[#E21D1D]/25 border-[#E21D1D] text-[#E21D1D]"
+                        : "bg-white dark:bg-[#181824] border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white"
                     }`}
                     title={isAutoCycling ? "Pause 2s Auto Change" : "Resume 2s Auto Change"}
                   >
@@ -476,7 +476,7 @@ export function CustomProductsShowcase() {
                     className={`px-2.5 py-1 rounded text-[9px] font-mono font-black uppercase transition-colors cursor-pointer border ${
                       viewPreset === "zoom"
                         ? "bg-[#E21D1D] text-white border-[#E21D1D]"
-                        : "bg-[#181824] text-neutral-300 border-neutral-700 hover:text-white"
+                        : "bg-white dark:bg-[#181824] text-neutral-700 dark:text-neutral-300 border-neutral-300 dark:border-neutral-700 hover:text-black dark:hover:text-white"
                     }`}
                   >
                     {viewPreset === "zoom" ? "FIT" : "MAX ZOOM"}
@@ -489,14 +489,14 @@ export function CustomProductsShowcase() {
             <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[auto] lg:min-h-[680px]">
               
               {/* LEFT STAGE (7 COLS): Clean Studio Backdrop + HUGE PRODUCT IMAGE FITTING THE BOX */}
-              <div className="lg:col-span-7 relative bg-[#07070a] border-b lg:border-b-0 lg:border-r border-neutral-700/80 overflow-hidden flex flex-col justify-between p-3.5 sm:p-5">
+              <div className="lg:col-span-7 relative bg-neutral-100/70 dark:bg-[#07070a] border-b lg:border-b-0 lg:border-r border-neutral-200 dark:border-neutral-700/80 overflow-hidden flex flex-col justify-between p-3.5 sm:p-5">
                 
                 {/* ✦ Clean Studio Spotlight Backdrop */}
                 <div
                   className="absolute inset-0 pointer-events-none"
                   style={{
                     background:
-                      "radial-gradient(ellipse at 50% 50%, rgba(226, 29, 29, 0.12) 0%, rgba(22, 22, 30, 0.6) 50%, #07070a 90%)"
+                      "radial-gradient(ellipse at 50% 50%, rgba(226, 29, 29, 0.08) 0%, rgba(120, 120, 140, 0.08) 50%, transparent 90%)"
                   }}
                 />
 
@@ -509,17 +509,17 @@ export function CustomProductsShowcase() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 10 }}
                       transition={{ duration: 0.25 }}
-                      className="bg-[#14141e]/95 backdrop-blur-md px-3 sm:px-3.5 py-1.5 rounded-xl border border-neutral-700 text-[10px] font-mono text-neutral-200 flex items-center gap-2 shadow-lg"
+                      className="bg-white/95 dark:bg-[#14141e]/95 backdrop-blur-md px-3 sm:px-3.5 py-1.5 rounded-xl border border-neutral-300 dark:border-neutral-700 text-[10px] font-mono text-neutral-800 dark:text-neutral-200 flex items-center gap-2 shadow-sm dark:shadow-lg"
                     >
-                      <Building2 className="w-3.5 h-3.5 text-[#ff4d4d] shrink-0" />
-                      <span className="text-white font-bold truncate max-w-[140px] sm:max-w-none">{currentProduct.clientBrand}</span>
-                      <span className="text-neutral-500">•</span>
-                      <span className="text-emerald-400 font-black">{currentProduct.orderVolume}</span>
+                      <Building2 className="w-3.5 h-3.5 text-[#E21D1D] shrink-0" />
+                      <span className="text-neutral-900 dark:text-white font-bold truncate max-w-[140px] sm:max-w-none">{currentProduct.clientBrand}</span>
+                      <span className="text-neutral-400 dark:text-neutral-500">•</span>
+                      <span className="text-emerald-600 dark:text-emerald-400 font-black">{currentProduct.orderVolume}</span>
                     </motion.div>
                   </AnimatePresence>
 
                   <div className="flex items-center gap-1.5 ml-auto">
-                    <span className="px-2.5 py-1 rounded-lg bg-[#14141e]/95 border border-neutral-700 text-[9px] font-mono font-black text-neutral-200 uppercase">
+                    <span className="px-2.5 py-1 rounded-lg bg-white/95 dark:bg-[#14141e]/95 border border-neutral-300 dark:border-neutral-700 text-[9px] font-mono font-black text-neutral-800 dark:text-neutral-200 uppercase shadow-xs">
                       {currentProduct.badge}
                     </span>
                   </div>
@@ -605,8 +605,8 @@ export function CustomProductsShowcase() {
                           }}
                           className={`p-1 sm:p-1.5 rounded-xl border text-center transition-all cursor-pointer relative overflow-hidden flex flex-col items-center justify-center shrink-0 w-[58px] sm:w-auto ${
                             isSelected
-                              ? "bg-[#181824] border-[#E21D1D] shadow-[0_0_15px_rgba(226,29,29,0.4)] ring-1 ring-[#E21D1D]"
-                              : "bg-[#111118] border-neutral-700 hover:border-neutral-500 opacity-70 hover:opacity-100"
+                              ? "bg-white dark:bg-[#181824] border-[#E21D1D] shadow-md dark:shadow-[0_0_15px_rgba(226,29,29,0.4)] ring-1 ring-[#E21D1D]"
+                              : "bg-neutral-100 dark:bg-[#111118] border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500 opacity-80 hover:opacity-100"
                           }`}
                         >
                           <div className="w-7 h-9 sm:w-9 sm:h-11 flex items-center justify-center">
@@ -616,7 +616,7 @@ export function CustomProductsShowcase() {
                               className="max-h-full max-w-full object-contain filter drop-shadow-sm"
                             />
                           </div>
-                          <span className="text-[8px] font-mono font-black text-neutral-200 block truncate w-full mt-0.5">
+                          <span className="text-[8px] font-mono font-black text-neutral-800 dark:text-neutral-200 block truncate w-full mt-0.5">
                             0{pIdx + 1}
                           </span>
                           {pIdx >= 5 && !isAuthenticated && (
@@ -636,7 +636,7 @@ export function CustomProductsShowcase() {
               </div>
 
               {/* RIGHT TECHNICAL & ORDER SPECIFICATION PANEL (5 COLS) */}
-              <div className="lg:col-span-5 p-5 sm:p-7 lg:p-8 flex flex-col justify-between bg-[#0e0e16] relative space-y-6">
+              <div className="lg:col-span-5 p-5 sm:p-7 lg:p-8 flex flex-col justify-between bg-white dark:bg-[#0e0e16] relative space-y-6 text-neutral-900 dark:text-white transition-colors">
                 
                 {/* Red Brand Corner Accent Marks */}
                 <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-[#ff3333]" />
@@ -645,21 +645,21 @@ export function CustomProductsShowcase() {
                 <div className="space-y-4">
                   {/* Category Identifier & Code */}
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono font-black text-[#ff4d4d] tracking-widest uppercase">
+                    <span className="text-[11px] font-mono font-black text-[#E21D1D] tracking-widest uppercase">
                       PRODUCT [0{currentProductIdx + 1} / 0{products.length}]
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#181824] border border-neutral-700 text-[9px] font-mono text-emerald-400 uppercase font-bold flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="px-2.5 py-0.5 rounded-full bg-neutral-100 dark:bg-[#181824] border border-neutral-300 dark:border-neutral-700 text-[9px] font-mono text-emerald-600 dark:text-emerald-400 uppercase font-bold flex items-center gap-1 shadow-xs">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                       WHOLESALE READY
                     </span>
                   </div>
 
                   {/* Main Headline */}
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest block font-bold">
+                    <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest block font-bold">
                       {currentProduct.categoryTag}
                     </span>
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-display font-black uppercase text-white tracking-tight leading-tight">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-display font-black uppercase text-neutral-900 dark:text-white tracking-tight leading-tight">
                       {currentProduct.name}
                     </h3>
                   </div>
@@ -672,31 +672,31 @@ export function CustomProductsShowcase() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
                       transition={{ duration: 0.25 }}
-                      className="p-4 rounded-2xl bg-[#14141e] border border-neutral-700 border-l-4 border-l-[#E21D1D] space-y-2 shadow-lg"
+                      className="p-4 rounded-2xl bg-neutral-50 dark:bg-[#14141e] border border-neutral-200 dark:border-neutral-700 border-l-4 border-l-[#E21D1D] space-y-2 shadow-sm dark:shadow-lg"
                     >
-                      <div className="flex items-center justify-between text-xs font-mono font-black text-white uppercase">
+                      <div className="flex items-center justify-between text-xs font-mono font-black text-neutral-900 dark:text-white uppercase">
                         <div className="flex items-center gap-1.5">
-                          <Building2 className="w-3.5 h-3.5 text-[#ff4d4d] shrink-0" />
+                          <Building2 className="w-3.5 h-3.5 text-[#E21D1D] shrink-0" />
                           <span className="truncate max-w-[160px] sm:max-w-none">CLIENT: {currentProduct.clientBrand}</span>
                         </div>
-                        <span className="text-[9px] text-[#ff4d4d] bg-[#E21D1D]/15 px-2 py-0.5 rounded border border-[#E21D1D]/40 shrink-0 font-bold">
+                        <span className="text-[9px] text-[#E21D1D] bg-[#E21D1D]/10 px-2 py-0.5 rounded border border-[#E21D1D]/30 shrink-0 font-bold">
                           {currentProduct.country}
                         </span>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-neutral-200 font-sans leading-relaxed">
+                      <p className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-200 font-sans leading-relaxed">
                         {currentProduct.customizationDetails}
                       </p>
-                      <p className="text-xs text-neutral-300 font-sans">
-                        Fabric Tech: <strong className="text-white font-bold">{currentProduct.fabricSpecs}</strong>
+                      <p className="text-xs text-neutral-600 dark:text-neutral-300 font-sans">
+                        Fabric Tech: <strong className="text-neutral-900 dark:text-white font-bold">{currentProduct.fabricSpecs}</strong>
                       </p>
                     </motion.div>
                   </AnimatePresence>
 
                   {/* Prominent Custom Capability Notice */}
-                  <div className="p-3.5 rounded-2xl bg-[#121219] border border-neutral-700 text-xs font-sans text-neutral-200 space-y-1">
-                    <div className="flex items-center gap-1.5 font-mono font-bold text-white text-xs uppercase">
-                      <Scissors className="w-3.5 h-3.5 text-[#ff4d4d]" />
+                  <div className="p-3.5 rounded-2xl bg-neutral-100/80 dark:bg-[#121219] border border-neutral-200 dark:border-neutral-700 text-xs font-sans text-neutral-700 dark:text-neutral-200 space-y-1">
+                    <div className="flex items-center gap-1.5 font-mono font-bold text-neutral-900 dark:text-white text-xs uppercase">
+                      <Scissors className="w-3.5 h-3.5 text-[#E21D1D]" />
                       <span>DIRECT FACTORY OEM/ODM FACILITY</span>
                     </div>
                     <p className="leading-relaxed">
@@ -706,16 +706,16 @@ export function CustomProductsShowcase() {
 
                   {/* Product Technical Features Grid */}
                   <div className="space-y-1.5 pt-1">
-                    <span className="text-[10px] font-mono font-bold text-neutral-300 uppercase tracking-wider block">
+                    <span className="text-[10px] font-mono font-bold text-neutral-700 dark:text-neutral-300 uppercase tracking-wider block">
                       FACTORY STANDARDS & CUSTOM OPTIONS:
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {currentProduct.features.map((feat, fIdx) => (
                         <div
                           key={fIdx}
-                          className="flex items-start gap-2 p-2 rounded-xl bg-[#151520] border border-neutral-700/80 text-xs font-mono text-neutral-100"
+                          className="flex items-start gap-2 p-2 rounded-xl bg-neutral-50 dark:bg-[#151520] border border-neutral-200 dark:border-neutral-700/80 text-xs font-mono text-neutral-800 dark:text-neutral-100"
                         >
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#ff3333] shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#E21D1D] shrink-0 mt-0.5" />
                           <span className="leading-tight">{feat}</span>
                         </div>
                       ))}
@@ -723,13 +723,13 @@ export function CustomProductsShowcase() {
                   </div>
 
                   {/* Factory Specs (MOQ, Turnaround, Fabric Tech) */}
-                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-neutral-800">
+                  <div className="grid grid-cols-2 gap-2 pt-2 border-t border-neutral-200 dark:border-neutral-800">
                     {currentProduct.specs.map((sp, sIdx) => (
-                      <div key={sIdx} className="p-2.5 rounded-xl bg-[#151520] border border-neutral-700">
-                        <span className="text-[9px] font-mono text-neutral-400 uppercase block font-bold">
+                      <div key={sIdx} className="p-2.5 rounded-xl bg-neutral-50 dark:bg-[#151520] border border-neutral-200 dark:border-neutral-700">
+                        <span className="text-[9px] font-mono text-neutral-500 dark:text-neutral-400 uppercase block font-bold">
                           {sp.label}
                         </span>
-                        <span className="text-xs font-mono font-black text-white uppercase block mt-0.5 truncate">
+                        <span className="text-xs font-mono font-black text-neutral-900 dark:text-white uppercase block mt-0.5 truncate">
                           {sp.val}
                         </span>
                       </div>
@@ -738,7 +738,7 @@ export function CustomProductsShowcase() {
                 </div>
 
                 {/* Bottom Order Controls & Category Switcher */}
-                <div className="pt-4 space-y-3.5 border-t border-neutral-800">
+                <div className="pt-4 space-y-3.5 border-t border-neutral-200 dark:border-neutral-800">
                   
                   {/* Primary CTA Buttons */}
                   <div className="flex items-center gap-2.5">
@@ -756,7 +756,7 @@ export function CustomProductsShowcase() {
                     <div className="flex items-center gap-1.5 shrink-0">
                       <button
                         onClick={handlePrevProduct}
-                        className="p-3 rounded-xl bg-[#181824] hover:bg-[#202030] text-white border border-neutral-700 hover:border-[#E21D1D] transition-colors cursor-pointer"
+                        className="p-3 rounded-xl bg-neutral-100 dark:bg-[#181824] hover:bg-neutral-200 dark:hover:bg-[#202030] text-neutral-800 dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-[#E21D1D] transition-colors cursor-pointer"
                         title="Previous Custom Product"
                       >
                         <ChevronLeft className="w-4 h-4" />

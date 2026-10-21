@@ -520,7 +520,7 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                 className={`px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full font-mono text-[10px] sm:text-xs font-bold uppercase transition-all duration-300 cursor-pointer flex items-center gap-1.5 sm:gap-2 ${
                   isActive
                     ? "bg-[#E21D1D] text-white shadow-[0_0_20px_rgba(226,29,29,0.5)] font-black scale-105"
-                    : "text-neutral-400 hover:text-white bg-black/60 hover:bg-neutral-900 border border-white/10"
+                    : "text-neutral-700 dark:text-neutral-400 hover:text-black dark:hover:text-white bg-white/80 dark:bg-black/60 hover:bg-neutral-100 dark:hover:bg-neutral-900 border border-neutral-200 dark:border-white/10 shadow-xs"
                 }`}
               >
                 <span className={isActive ? "text-white/80" : "text-[#E21D1D]"}>{cat.code}</span>
@@ -531,7 +531,7 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
         </div>
 
         {/* Minimal Category Tagline */}
-        <p className="text-[9.5px] sm:text-[11px] font-mono text-neutral-400 tracking-wider sm:tracking-widest uppercase text-center mt-0.5 px-3 line-clamp-1">
+        <p className="text-[9.5px] sm:text-[11px] font-mono text-neutral-600 dark:text-neutral-400 tracking-wider sm:tracking-widest uppercase text-center mt-0.5 px-3 line-clamp-1">
           {currentCollection.tagline}
         </p>
       </div>
@@ -639,7 +639,7 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                     <span className="text-[7.5px] sm:text-[8.5px] font-mono font-black text-[#E21D1D] tracking-wider uppercase">
                       {product.badge}
                     </span>
-                    <h4 className="text-[11px] sm:text-xs font-display font-black text-white uppercase tracking-wider mt-0.5 line-clamp-1 group-hover:text-red-400 transition-colors max-w-[180px]">
+                    <h4 className="text-[11px] sm:text-xs font-display font-black text-neutral-900 dark:text-white uppercase tracking-wider mt-0.5 line-clamp-1 group-hover:text-red-500 transition-colors max-w-[180px]">
                       {product.name}
                     </h4>
 
@@ -650,12 +650,12 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                           initial={{ opacity: 0, y: 2 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.15 }}
-                          className="text-[7.5px] sm:text-[8px] font-mono text-neutral-300 line-clamp-1 max-w-[170px]"
+                          className="text-[7.5px] sm:text-[8px] font-mono text-neutral-700 dark:text-neutral-300 line-clamp-1 max-w-[170px]"
                         >
                           {product.specs}
                         </motion.span>
                       ) : (
-                        <span className="text-[7.5px] sm:text-[8px] font-mono text-neutral-500 uppercase tracking-widest">
+                        <span className="text-[7.5px] sm:text-[8px] font-mono text-neutral-500 dark:text-neutral-500 uppercase tracking-widest">
                           0{idx + 1} / 04 • HOVER TO ZOOM
                         </span>
                       )}
@@ -669,10 +669,10 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
       </div>
 
       {/* 3. SLEEK MINIMALIST CONTROLS BAR (CLEAN SLOTS & TOUR PLAY/PAUSE) */}
-      <div className="relative z-20 w-full max-w-4xl mx-auto px-3 sm:px-4 pt-2.5 sm:pt-3 mt-1.5 sm:mt-2 border-t border-white/5 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 text-xs font-mono">
-        <div className="flex items-center gap-2 text-neutral-400 min-w-0">
+      <div className="relative z-20 w-full max-w-4xl mx-auto px-3 sm:px-4 pt-2.5 sm:pt-3 mt-1.5 sm:mt-2 border-t border-neutral-200 dark:border-white/5 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 text-xs font-mono">
+        <div className="flex items-center gap-2 text-neutral-500 dark:text-neutral-400 min-w-0">
           <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
-          <span className="text-white font-bold uppercase tracking-wider text-[9px] sm:text-[11px] truncate max-w-[200px] xs:max-w-[280px] sm:max-w-none">
+          <span className="text-neutral-800 dark:text-white font-bold uppercase tracking-wider text-[9px] sm:text-[11px] truncate max-w-[200px] xs:max-w-[280px] sm:max-w-none">
             TRY WEARS • PREMIER OEM & ODM MANUFACTURER • SIALKOT EXPORT QUALITY GUARANTEED
           </span>
         </div>
@@ -694,7 +694,7 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     isSelected
                       ? "w-7 bg-[#E21D1D] shadow-[0_0_10px_#E21D1D]"
-                      : "w-2 bg-white/20 hover:bg-white/50"
+                      : "w-2 bg-neutral-300 dark:bg-white/20 hover:bg-neutral-400 dark:hover:bg-white/50"
                   }`}
                   title={p.name}
                 />
@@ -702,22 +702,22 @@ export const Interactive3DGarmentsStage: React.FC<Interactive3DGarmentsStageProp
             })}
           </div>
 
-          <div className="h-4 w-px bg-white/10" />
+          <div className="h-4 w-px bg-neutral-200 dark:bg-white/10" />
 
           {/* Auto-Play Toggle */}
           <button
             onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white font-mono text-[10px] uppercase transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 text-neutral-700 dark:text-neutral-400 hover:text-black dark:hover:text-white font-mono text-[10px] uppercase transition-colors cursor-pointer border border-neutral-200 dark:border-transparent"
             title={isAutoPlaying ? "Pause Auto-Tour" : "Start Auto-Tour"}
           >
             {isAutoPlaying ? (
               <>
-                <Pause className="w-3 h-3 text-emerald-400" />
+                <Pause className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                 <span className="hidden sm:inline">TOUR ON</span>
               </>
             ) : (
               <>
-                <Play className="w-3 h-3" />
+                <Play className="w-3 h-3 text-neutral-600 dark:text-neutral-300" />
                 <span className="hidden sm:inline">PAUSED</span>
               </>
             )}

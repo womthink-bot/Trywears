@@ -33,8 +33,9 @@ import {
   LogOut,
   Unlock,
   UserCheck,
-  UserPlus,
-  User
+  User,
+  Sun,
+  Moon
 } from "lucide-react";
 import { useAuth } from "./context/AuthContext";
 import { AuthModal } from "./components/AuthModal";
@@ -373,53 +374,53 @@ export function App() {
       <SecurityAlerts />
 
       {/* 1. TOP NOTIFICATION RUNNER (FULL SCREEN WIDTH) WITH VISITOR NAME IN TOP RIGHT CORNER */}
-      <div className="bg-[#08080c] text-white py-1.5 sm:py-2 px-3 sm:px-6 lg:px-8 border-b border-neutral-800/80 overflow-hidden relative z-50">
+      <div className="bg-neutral-100 dark:bg-[#08080c] text-neutral-900 dark:text-white py-1.5 sm:py-2 px-3 sm:px-6 lg:px-8 border-b border-neutral-200 dark:border-neutral-800/80 overflow-hidden relative z-50 transition-colors">
         <div className="w-full flex items-center justify-between text-[8px] xs:text-[9px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest font-black uppercase">
           {/* Ticker on Left */}
           <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 pr-2">
             <span className="h-1.5 w-1.5 xs:h-2 xs:w-2 rounded-full bg-[#E21D1D] animate-ping shrink-0" />
-            <span className="truncate flex-1 min-w-0 text-neutral-200">
+            <span className="truncate flex-1 min-w-0 text-neutral-800 dark:text-neutral-200">
               {bannerText}
             </span>
           </div>
 
           {/* Right Corner: Factory Badges + Visitor Name / Auth Status */}
           <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
-            <div className="hidden lg:flex items-center gap-3.5 text-neutral-400">
+            <div className="hidden lg:flex items-center gap-3.5 text-neutral-600 dark:text-neutral-400">
               <button
                 onClick={() => navigateTo("sample-development")}
-                className="hover:text-white transition-colors text-emerald-400 font-bold cursor-pointer flex items-center gap-1.5"
+                className="hover:text-black dark:hover:text-white transition-colors text-emerald-600 dark:text-emerald-400 font-bold cursor-pointer flex items-center gap-1.5"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
                 <span>SAMPLE ON DEMAND</span>
               </button>
-              <span className="text-neutral-700">|</span>
-              <span className="text-[#ff3b3b] font-bold">ISO 9001:2015 FACTORY</span>
+              <span className="text-neutral-300 dark:text-neutral-700">|</span>
+              <span className="text-[#E21D1D] font-bold">ISO 9001:2015 FACTORY</span>
             </div>
 
             {/* VISITOR NAME / MEMBER STATUS SHIFTED TO TOP RIGHT CORNER */}
-            <div className="border-l border-neutral-800 pl-2 sm:pl-3 flex items-center">
+            <div className="border-l border-neutral-300 dark:border-neutral-800 pl-2 sm:pl-3 flex items-center">
               {!isAuthenticated ? (
                 <button
                   onClick={openAuthModal}
-                  className="flex items-center gap-1 px-2 sm:px-2.5 py-0.5 rounded-md font-mono text-[9px] xs:text-[10px] font-black uppercase tracking-wider bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white border border-emerald-500/40 shadow transition-all cursor-pointer whitespace-nowrap active:scale-95"
+                  className="flex items-center gap-1 px-2 sm:px-2.5 py-0.5 rounded-md font-mono text-[9px] xs:text-[10px] font-black uppercase tracking-wider bg-emerald-600/10 dark:bg-emerald-600/20 hover:bg-emerald-600 text-emerald-700 dark:text-emerald-400 hover:text-white border border-emerald-500/40 shadow-xs transition-all cursor-pointer whitespace-nowrap active:scale-95"
                   title="Sign Up Free to Unlock Full Catalog & FOB Wholesale Rates"
                 >
-                  <Lock className="w-3 h-3 text-emerald-400 shrink-0" />
+                  <Lock className="w-3 h-3 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <span>FREE SIGN UP</span>
                 </button>
               ) : (
-                <div className="flex items-center gap-1.5 bg-[#0e1422] border border-neutral-700/80 rounded-md px-2 py-0.5 font-mono text-[9px] xs:text-[10px] shadow">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="font-bold text-white tracking-wide">
+                <div className="flex items-center gap-1.5 bg-white dark:bg-[#0e1422] border border-neutral-300 dark:border-neutral-700/80 rounded-md px-2 py-0.5 font-mono text-[9px] xs:text-[10px] shadow-xs">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
+                  <span className="font-bold text-neutral-900 dark:text-white tracking-wide">
                     {user?.name.split(" ")[0]}
                   </span>
-                  <span className="text-[7.5px] px-1 py-0.2 rounded bg-emerald-950/90 text-emerald-300 border border-emerald-800 font-mono">
+                  <span className="text-[7.5px] px-1 py-0.2 rounded bg-emerald-100 dark:bg-emerald-950/90 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-mono">
                     UNLOCKED
                   </span>
                   <button
                     onClick={logout}
-                    className="p-0.5 text-neutral-400 hover:text-red-400 transition cursor-pointer ml-0.5"
+                    className="p-0.5 text-neutral-500 dark:text-neutral-400 hover:text-red-500 dark:hover:text-red-400 transition cursor-pointer ml-0.5"
                     title="Sign Out / Lock Catalog"
                   >
                     <LogOut className="w-3 h-3" />
@@ -427,12 +428,35 @@ export function App() {
                 </div>
               )}
             </div>
+
+            {/* 1-CLICK LIGHT / DARK MODE TOGGLE IN TOP MENU */}
+            <div className="border-l border-neutral-300 dark:border-neutral-800 pl-2 sm:pl-3 flex items-center">
+              <button
+                id="theme-mode-toggle"
+                onClick={toggleTheme}
+                className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md font-mono text-[9px] xs:text-[10px] font-black uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-xs active:scale-95 border bg-white dark:bg-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-neutral-900 dark:text-neutral-100 border-neutral-300 dark:border-neutral-700"
+                title={theme === "dark" ? "Click to switch to Full Light Mode" : "Click to switch to Cinematic Dark Mode"}
+                aria-label="Toggle Light and Dark Mode"
+              >
+                {theme === "dark" ? (
+                  <>
+                    <Sun className="w-3.5 h-3.5 text-amber-500" />
+                    <span className="font-bold text-amber-400">LIGHT</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-3.5 h-3.5 text-indigo-600" />
+                    <span className="font-bold text-indigo-700">DARK</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* 2. EXECUTIVE FULL-SCREEN NAVIGATION HEADER */}
-      <header className="sticky top-0 z-50 bg-[#07070b]/98 backdrop-blur-2xl border-b border-neutral-800 shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all">
+      <header className="sticky top-0 z-50 bg-white/95 dark:bg-[#07070b]/98 backdrop-blur-2xl border-b border-neutral-200 dark:border-neutral-800 shadow-[0_4px_20px_rgba(0,0,0,0.06)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.8)] transition-all">
         <div className="w-full px-2.5 xs:px-3 sm:px-5 lg:px-6 xl:px-8 py-2 sm:py-3 flex items-center justify-between gap-3 lg:gap-4 xl:gap-6">
           
           {/* Branded Logo - trymenulogo.png - Big, Bold, Clean & Clear */}
@@ -460,7 +484,7 @@ export function App() {
               className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                 activePage === "home"
                   ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
-                  : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+                  : "text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/60 border border-transparent"
               }`}
             >
               {activePage === "home" && <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping shrink-0" />}
@@ -473,7 +497,7 @@ export function App() {
               className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                 activePage === "about-us"
                   ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
-                  : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+                  : "text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/60 border border-transparent"
               }`}
             >
               {activePage === "about-us" && <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping shrink-0" />}
@@ -494,7 +518,7 @@ export function App() {
                 className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                   isServicesActive || activeDropdown === "services"
                     ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
-                    : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+                    : "text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/60 border border-transparent"
                 }`}
                 title="Click to view Services"
               >
@@ -515,21 +539,21 @@ export function App() {
                     transition={{ duration: 0.15, ease: "easeOut" }}
                     className="absolute top-full left-0 pt-2 w-64 z-50"
                   >
-                    <div className="p-3 bg-[#0a0a12] border border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1 backdrop-blur-xl">
+                    <div className="p-3 bg-white dark:bg-[#0a0a12] border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.12)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1 backdrop-blur-xl">
                       <button
                         onClick={() => {
                           setActiveDropdown(null);
                           navigateTo("services");
                         }}
-                        className="w-full text-left px-3 py-1.5 border-b border-neutral-800 mb-1 flex items-center justify-between hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
+                        className="w-full text-left px-3 py-1.5 border-b border-neutral-200 dark:border-neutral-800 mb-1 flex items-center justify-between hover:bg-neutral-100 dark:hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
                       >
                         <div>
-                          <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-white">
+                          <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-black dark:group-hover/title:text-white">
                             SERVICES OVERVIEW
                           </span>
                           <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
                         </div>
-                        <span className="text-[9px] font-mono text-neutral-400 group-hover/title:text-white">View All →</span>
+                        <span className="text-[9px] font-mono text-neutral-500 dark:text-neutral-400 group-hover/title:text-black dark:group-hover/title:text-white">View All →</span>
                       </button>
 
                       {SERVICES_MENU_ITEMS.map((item) => (
@@ -542,7 +566,7 @@ export function App() {
                           className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
                             activePage === item.page
                               ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                              : "text-neutral-300 hover:bg-white/10 hover:text-white"
+                              : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-white/10 hover:text-black dark:hover:text-white"
                           }`}
                         >
                           <span>{item.label}</span>
@@ -563,7 +587,7 @@ export function App() {
                 className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                   isSupportActive || activeDropdown === "support"
                     ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
-                    : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+                    : "text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/60 border border-transparent"
                 }`}
                 title="Click to view Support & Policies"
               >
@@ -584,21 +608,21 @@ export function App() {
                     transition={{ duration: 0.15, ease: "easeOut" }}
                     className="absolute top-full left-0 pt-2 w-64 z-50"
                   >
-                    <div className="p-3 bg-[#0a0a12] border border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1 backdrop-blur-xl">
+                    <div className="p-3 bg-white dark:bg-[#0a0a12] border border-neutral-200 dark:border-neutral-700 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.12)] dark:shadow-[0_20px_40px_rgba(0,0,0,0.95)] space-y-1 backdrop-blur-xl">
                       <button
                         onClick={() => {
                           setActiveDropdown(null);
                           navigateTo("support");
                         }}
-                        className="w-full text-left px-3 py-1.5 border-b border-neutral-800 mb-1 flex items-center justify-between hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
+                        className="w-full text-left px-3 py-1.5 border-b border-neutral-200 dark:border-neutral-800 mb-1 flex items-center justify-between hover:bg-neutral-100 dark:hover:bg-white/5 rounded transition-colors cursor-pointer group/title"
                       >
                         <div>
-                          <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-white">
+                          <span className="text-[10px] font-mono font-black text-[#d946ef] tracking-widest uppercase block group-hover/title:text-black dark:group-hover/title:text-white">
                             SUPPORT & POLICIES
                           </span>
                           <div className="w-6 h-0.5 bg-[#d946ef] rounded-full mt-1" />
                         </div>
-                        <span className="text-[9px] font-mono text-neutral-400 group-hover/title:text-white">View All →</span>
+                        <span className="text-[9px] font-mono text-neutral-500 dark:text-neutral-400 group-hover/title:text-black dark:group-hover/title:text-white">View All →</span>
                       </button>
 
                       {SUPPORT_MENU_ITEMS.map((item) => (
@@ -611,7 +635,7 @@ export function App() {
                           className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-colors flex items-center justify-between cursor-pointer ${
                             activePage === item.page
                               ? "bg-[#E21D1D]/20 text-[#ff4d4d] font-bold"
-                              : "text-neutral-300 hover:bg-white/10 hover:text-white"
+                              : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-white/10 hover:text-black dark:hover:text-white"
                           }`}
                         >
                           <span className="flex items-center gap-1.5">
@@ -637,7 +661,7 @@ export function App() {
               className={`relative flex items-center gap-1 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
                 activePage === "quality-process"
                   ? "text-[#ff3b3b] bg-[#e21d1d]/12 border border-[#e21d1d]/40 shadow-[0_0_12px_rgba(226,29,29,0.2)] font-black"
-                  : "text-neutral-300 hover:text-white hover:bg-neutral-800/60 border border-transparent"
+                  : "text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/60 border border-transparent"
               }`}
             >
               {activePage === "quality-process" && <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D] animate-ping shrink-0" />}
@@ -1067,7 +1091,7 @@ export function App() {
       </main>
 
       {/* 4. FOOTER WITH HIGH-CONTRAST TEXT & EXACT SERVICES & SUPPORT BLOCKS */}
-      <footer className="relative z-30 bg-[#0b0b14] text-white border-t-2 border-neutral-700 pt-16 pb-12 shadow-2xl">
+      <footer className="relative z-30 bg-neutral-100 dark:bg-[#0b0b14] text-neutral-900 dark:text-white border-t-2 border-neutral-200 dark:border-neutral-700 pt-16 pb-12 shadow-md dark:shadow-2xl transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           
           {/* Col 1: Brand Info */}
@@ -1083,17 +1107,17 @@ export function App() {
                 referrerPolicy="no-referrer" 
               />
             </div>
-            <p className="text-sm font-sans leading-relaxed text-neutral-100 font-normal">
+            <p className="text-sm font-sans leading-relaxed text-neutral-700 dark:text-neutral-100 font-normal">
               Direct OEM/ODM industrial manufacturing facility for world championship fight gear, heavyweight luxury streetwear, sublimated sportswear, and bespoke private label collections.
             </p>
-            <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="flex items-center gap-2 text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
               <span>ISO 9001:2015 & CE CERTIFIED FACTORY</span>
             </div>
             
             {/* 7 Official Social Channels Bar in Brand Col */}
             <div className="pt-1 space-y-2">
-              <span className="text-[10px] font-mono text-neutral-300 font-bold uppercase tracking-wider block">
+              <span className="text-[10px] font-mono text-neutral-600 dark:text-neutral-300 font-bold uppercase tracking-wider block">
                 Official Social Networks (7):
               </span>
               <SocialLinks variant="footer" />
@@ -1105,7 +1129,7 @@ export function App() {
             <div>
               <button
                 onClick={() => navigateTo("services")}
-                className="font-display font-black text-sm text-white uppercase tracking-wider hover:text-[#d946ef] transition-colors cursor-pointer block text-left"
+                className="font-display font-black text-sm text-neutral-900 dark:text-white uppercase tracking-wider hover:text-[#d946ef] transition-colors cursor-pointer block text-left"
               >
                 SERVICES
               </button>
@@ -1118,7 +1142,7 @@ export function App() {
                 <li key={item.page}>
                   <button
                     onClick={() => navigateTo(item.page)}
-                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-100 hover:font-bold text-left text-xs"
+                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-700 dark:text-neutral-100 hover:font-bold text-left text-xs"
                   >
                     {item.label}
                   </button>
@@ -1132,7 +1156,7 @@ export function App() {
             <div>
               <button
                 onClick={() => navigateTo("support")}
-                className="font-display font-black text-sm text-white uppercase tracking-wider hover:text-[#d946ef] transition-colors cursor-pointer block text-left"
+                className="font-display font-black text-sm text-neutral-900 dark:text-white uppercase tracking-wider hover:text-[#d946ef] transition-colors cursor-pointer block text-left"
               >
                 SUPPORT
               </button>
@@ -1145,11 +1169,11 @@ export function App() {
                 <li key={item.page}>
                   <button
                     onClick={() => navigateTo(item.page)}
-                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-100 hover:font-bold text-left text-xs flex items-center gap-1.5"
+                    className="hover:text-[#d946ef] transition-colors cursor-pointer text-neutral-700 dark:text-neutral-100 hover:font-bold text-left text-xs flex items-center gap-1.5"
                   >
                     <span>{item.label}</span>
                     {item.hasBadge && (
-                      <span className="w-4 h-4 rounded-full bg-[#d946ef]/30 border border-[#d946ef]/60 text-[#f0abfc] flex items-center justify-center text-[10px] font-bold">
+                      <span className="w-4 h-4 rounded-full bg-[#d946ef]/20 dark:bg-[#d946ef]/30 border border-[#d946ef]/60 text-[#c026d3] dark:text-[#f0abfc] flex items-center justify-center text-[10px] font-bold">
                         +
                       </span>
                     )}
@@ -1161,31 +1185,31 @@ export function App() {
 
           {/* Col 4: Direct Factory Contact & Quick Dispatches */}
           <div className="space-y-4 font-mono text-xs">
-            <h4 className="font-display font-black text-sm text-white uppercase tracking-widest">
+            <h4 className="font-display font-black text-sm text-neutral-900 dark:text-white uppercase tracking-widest">
               Direct Factory Contact
             </h4>
-            <div className="space-y-2.5 text-neutral-100">
+            <div className="space-y-2.5 text-neutral-700 dark:text-neutral-100">
               <div className="flex items-center gap-2.5">
                 <MapPin className="w-4 h-4 text-[#ff4d4d] shrink-0" />
-                <span className="text-white font-medium">Small Industrial Estate, Sialkot, Pakistan</span>
+                <span className="text-neutral-900 dark:text-white font-medium">Small Industrial Estate, Sialkot, Pakistan</span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#ff4d4d] shrink-0" />
-                <span className="text-white font-medium">export@trywears.com</span>
+                <span className="text-neutral-900 dark:text-white font-medium">export@trywears.com</span>
               </div>
               <a 
                 href={getWhatsAppUrl("Hello TRYWEARS, I would like to inquire about manufacturing.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 group hover:text-emerald-400 transition-colors"
+                className="flex items-center gap-2.5 group hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
               >
-                <Phone className="w-4 h-4 text-emerald-400 shrink-0 group-hover:scale-110 transition-transform" />
-                <span className="text-white font-bold group-hover:text-emerald-400">{WHATSAPP_DISPLAY} (WhatsApp 24/7 Desk)</span>
+                <Phone className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 group-hover:scale-110 transition-transform" />
+                <span className="text-neutral-900 dark:text-white font-bold group-hover:text-emerald-600 dark:group-hover:text-emerald-400">{WHATSAPP_DISPLAY} (WhatsApp 24/7 Desk)</span>
               </a>
             </div>
 
             <form onSubmit={handleContactSubmit} className="space-y-2 pt-2">
-              <span className="text-xs text-white uppercase font-bold block">
+              <span className="text-xs text-neutral-900 dark:text-white uppercase font-bold block">
                 Get Wholesale Price Catalog (£ GBP):
               </span>
               <div className="flex items-center gap-1.5">
@@ -1195,7 +1219,7 @@ export function App() {
                   placeholder="Enter your email address..."
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
-                  className="bg-[#141424] border border-neutral-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-neutral-300 focus:outline-none focus:border-[#E21D1D] w-full"
+                  className="bg-white dark:bg-[#141424] border border-neutral-300 dark:border-neutral-500 rounded-xl px-3.5 py-2.5 text-xs text-neutral-900 dark:text-white placeholder:text-neutral-500 dark:placeholder:text-neutral-300 focus:outline-none focus:border-[#E21D1D] w-full"
                 />
                 <button
                   type="submit"
@@ -1206,18 +1230,18 @@ export function App() {
                 </button>
               </div>
               {contactSuccess && (
-                <span className="text-xs text-emerald-400 font-bold block">✓ Catalog link dispatched!</span>
+                <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold block">✓ Catalog link dispatched!</span>
               )}
             </form>
           </div>
 
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 mt-10 border-t border-neutral-700 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 mt-10 border-t border-neutral-200 dark:border-neutral-700 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-600 dark:text-neutral-200">
           <div className="font-medium">
             © {new Date().getFullYear()} TRY WEARS SPORTSWEAR & COMBAT APPAREL MANUFACTURING. ALL RIGHTS RESERVED.
           </div>
-          <div className="flex items-center gap-4 text-white font-bold">
+          <div className="flex items-center gap-4 text-neutral-900 dark:text-white font-bold">
             <span>SIALKOT INDUSTRIAL DIVISION</span>
             <span
               onClick={openAdminModal}

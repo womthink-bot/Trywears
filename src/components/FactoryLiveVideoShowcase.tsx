@@ -177,17 +177,17 @@ export function FactoryLiveVideoShowcase() {
   return (
     <section
       id="factory-capabilities"
-      className="relative py-10 sm:py-14 px-3 sm:px-6 bg-[#040406] text-white overflow-hidden select-none border-b border-neutral-900"
+      className="relative py-10 sm:py-14 px-3 sm:px-6 bg-white dark:bg-[#040406] text-neutral-900 dark:text-white overflow-hidden select-none border-b border-neutral-200 dark:border-neutral-900 transition-colors"
     >
       {/* Dynamic Ambient Background Glow */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[350px] bg-[#E21D1D]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/2 right-10 -translate-y-1/2 w-[450px] h-[300px] bg-red-950/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 right-10 -translate-y-1/2 w-[450px] h-[300px] bg-red-950/15 dark:bg-red-950/20 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Cyber Technical Grid Overlay */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, #888888 1px, transparent 1px), linear-gradient(to bottom, #888888 1px, transparent 1px)`,
           backgroundSize: "40px 40px"
         }}
       />
@@ -195,7 +195,7 @@ export function FactoryLiveVideoShowcase() {
       <div className="max-w-7xl mx-auto relative z-10 space-y-4 sm:space-y-5">
         
         {/* COMPACT SECTION HEADER (1-Row Clean Header) */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-neutral-800/80 pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-neutral-200 dark:border-neutral-800/80 pb-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />
@@ -203,9 +203,9 @@ export function FactoryLiveVideoShowcase() {
                 TRY WEARS LIVE FACTORY FEED • DIRECT PRODUCTION STREAM
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-display font-black uppercase tracking-tight text-white leading-none">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-display font-black uppercase tracking-tight text-neutral-900 dark:text-white leading-none">
               LIVE ATELIER &{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E21D1D] via-red-500 to-amber-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E21D1D] via-red-500 to-amber-600">
                 FACTORY VIDEOS
               </span>
             </h2>
@@ -213,11 +213,11 @@ export function FactoryLiveVideoShowcase() {
 
           {/* Section Badges */}
           <div className="flex items-center gap-2 shrink-0">
-            <div className="px-3.5 py-1.5 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300 font-mono text-[10.5px] font-bold uppercase tracking-wider flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="px-3.5 py-1.5 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 font-mono text-[10.5px] font-bold uppercase tracking-wider flex items-center gap-2 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
               <span>4K FACTORY FEEDS ({videoList.length})</span>
             </div>
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#E21D1D]/10 border border-[#E21D1D]/30 text-[#ff4d4d] font-mono text-[10.5px] font-bold uppercase tracking-wider">
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#E21D1D]/10 border border-[#E21D1D]/30 text-[#E21D1D] font-mono text-[10.5px] font-bold uppercase tracking-wider">
               <Youtube className="w-3.5 h-3.5 text-[#E21D1D]" />
               <span>OFFICIAL PRODUCTION REELS</span>
             </div>
@@ -229,13 +229,13 @@ export function FactoryLiveVideoShowcase() {
           ref={stageRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="rounded-2xl sm:rounded-3xl bg-[#09090d] border border-neutral-800/90 shadow-[0_20px_60px_rgba(0,0,0,0.85)] overflow-hidden transition-all duration-300 hover:border-[#E21D1D]/40"
+          className="rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-[#09090d] border border-neutral-200 dark:border-neutral-800/90 shadow-xl dark:shadow-[0_20px_60px_rgba(0,0,0,0.85)] overflow-hidden transition-all duration-300 hover:border-[#E21D1D]/40"
         >
           {/* Top HUD Bar */}
-          <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 border-b border-neutral-800/80 bg-neutral-950/90 text-[10px] font-mono tracking-wider text-neutral-400">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 border-b border-neutral-200 dark:border-neutral-800/80 bg-neutral-100/90 dark:bg-neutral-950/90 text-[10px] font-mono tracking-wider text-neutral-600 dark:text-neutral-400">
             <div className="flex items-center gap-2.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-white font-black uppercase flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
+              <span className="text-neutral-900 dark:text-white font-black uppercase flex items-center gap-1.5">
                 <Factory className="w-3.5 h-3.5 text-[#E21D1D]" />
                 <span className="truncate max-w-[200px] sm:max-w-none">{activeVideo.factoryLocation}</span>
               </span>
@@ -264,10 +264,10 @@ export function FactoryLiveVideoShowcase() {
                 rotateY,
                 transformStyle: "preserve-3d"
               }}
-              className="lg:col-span-7 bg-black p-3 sm:p-4 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-neutral-800/80"
+              className="lg:col-span-7 bg-neutral-100 dark:bg-black p-3 sm:p-4 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-neutral-200 dark:border-neutral-800/80"
             >
               {/* YouTube Iframe Video Screen with 3D Bezel */}
-              <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-neutral-950 border border-neutral-800 shadow-[0_15px_40px_rgba(0,0,0,0.8)] group">
+              <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-neutral-950 border border-neutral-300 dark:border-neutral-800 shadow-[0_15px_40px_rgba(0,0,0,0.8)] group">
                 <iframe
                   key={youtubeId}
                   src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1`}
@@ -286,10 +286,10 @@ export function FactoryLiveVideoShowcase() {
 
               {/* Sub-Video Status & 3 Quick Metrics Integrated Right Below Video */}
               <div className="pt-3 space-y-2">
-                <div className="flex items-center justify-between text-[10px] font-mono text-neutral-400">
+                <div className="flex items-center justify-between text-[10px] font-mono text-neutral-600 dark:text-neutral-400">
                   <div className="flex items-center gap-1.5 truncate pr-2">
                     <span className="text-[#E21D1D] font-black">[{activeVideo.stageCode}/0{videoList.length}]</span>
-                    <span className="text-white font-bold truncate">{activeVideo.title}</span>
+                    <span className="text-neutral-900 dark:text-white font-bold truncate">{activeVideo.title}</span>
                   </div>
 
                   <a
@@ -304,28 +304,28 @@ export function FactoryLiveVideoShowcase() {
                 </div>
 
                 {/* 3 Compact Integrated Metrics */}
-                <div className="grid grid-cols-3 gap-2 pt-1 border-t border-neutral-900">
-                  <div className="p-2 rounded-xl bg-neutral-950/80 border border-neutral-800/80 flex items-center gap-2">
+                <div className="grid grid-cols-3 gap-2 pt-1 border-t border-neutral-200 dark:border-neutral-900">
+                  <div className="p-2 rounded-xl bg-white dark:bg-neutral-950/80 border border-neutral-200 dark:border-neutral-800/80 flex items-center gap-2 shadow-xs">
                     <Factory className="w-3.5 h-3.5 text-[#E21D1D] shrink-0" />
                     <div className="truncate">
                       <span className="text-[8px] font-mono text-neutral-500 uppercase block leading-none">CAPACITY</span>
-                      <span className="text-[10px] font-mono font-black text-white leading-tight">50,000+ PCS</span>
+                      <span className="text-[10px] font-mono font-black text-neutral-900 dark:text-white leading-tight">50,000+ PCS</span>
                     </div>
                   </div>
 
-                  <div className="p-2 rounded-xl bg-neutral-950/80 border border-neutral-800/80 flex items-center gap-2">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <div className="p-2 rounded-xl bg-white dark:bg-neutral-950/80 border border-neutral-200 dark:border-neutral-800/80 flex items-center gap-2 shadow-xs">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 shrink-0" />
                     <div className="truncate">
                       <span className="text-[8px] font-mono text-neutral-500 uppercase block leading-none">STANDARD</span>
-                      <span className="text-[10px] font-mono font-black text-white leading-tight">AQL 2.5 PASS</span>
+                      <span className="text-[10px] font-mono font-black text-neutral-900 dark:text-white leading-tight">AQL 2.5 PASS</span>
                     </div>
                   </div>
 
-                  <div className="p-2 rounded-xl bg-neutral-950/80 border border-neutral-800/80 flex items-center gap-2">
+                  <div className="p-2 rounded-xl bg-white dark:bg-neutral-950/80 border border-neutral-200 dark:border-neutral-800/80 flex items-center gap-2 shadow-xs">
                     <Film className="w-3.5 h-3.5 text-[#E21D1D] shrink-0" />
                     <div className="truncate">
                       <span className="text-[8px] font-mono text-neutral-500 uppercase block leading-none">VERIFIED</span>
-                      <span className="text-[10px] font-mono font-black text-white leading-tight">LIVE CAD & PROOFS</span>
+                      <span className="text-[10px] font-mono font-black text-neutral-900 dark:text-white leading-tight">LIVE CAD & PROOFS</span>
                     </div>
                   </div>
                 </div>
@@ -333,7 +333,7 @@ export function FactoryLiveVideoShowcase() {
             </motion.div>
 
             {/* RIGHT PLAYLIST & CONTROLS (5 COLS on lg) */}
-            <div className="lg:col-span-5 p-3.5 sm:p-5 flex flex-col justify-between bg-neutral-950/95 space-y-3">
+            <div className="lg:col-span-5 p-3.5 sm:p-5 flex flex-col justify-between bg-white dark:bg-neutral-950/95 space-y-3 text-neutral-900 dark:text-white transition-colors">
               
               {/* Active Stage Info Header */}
               <div className="space-y-1.5">
@@ -346,11 +346,11 @@ export function FactoryLiveVideoShowcase() {
                   </span>
                 </div>
 
-                <h3 className="text-base sm:text-lg font-display font-black uppercase text-white leading-tight">
+                <h3 className="text-base sm:text-lg font-display font-black uppercase text-neutral-900 dark:text-white leading-tight">
                   {activeVideo.title}
                 </h3>
 
-                <p className="text-[11px] text-neutral-400 font-sans leading-relaxed line-clamp-2">
+                <p className="text-[11px] text-neutral-600 dark:text-neutral-400 font-sans leading-relaxed line-clamp-2">
                   {activeVideo.description}
                 </p>
 
@@ -359,7 +359,7 @@ export function FactoryLiveVideoShowcase() {
                   {activeVideo.highlights.map((hl, hIdx) => (
                     <span
                       key={hIdx}
-                      className="px-2 py-0.5 rounded-lg bg-neutral-900 border border-neutral-800 text-[9.5px] font-mono text-neutral-300 flex items-center gap-1"
+                      className="px-2 py-0.5 rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-[9.5px] font-mono text-neutral-700 dark:text-neutral-300 flex items-center gap-1 shadow-xs"
                     >
                       <CheckCircle2 className="w-2.5 h-2.5 text-[#E21D1D] shrink-0" />
                       <span className="truncate max-w-[190px]">{hl}</span>
@@ -369,9 +369,9 @@ export function FactoryLiveVideoShowcase() {
               </div>
 
               {/* FACTORY VIDEO PLAYLIST (Compact, All Clickable at a Glance) */}
-              <div className="space-y-1.5 pt-1 border-t border-neutral-900">
-                <div className="flex items-center justify-between text-[9.5px] font-mono text-neutral-400 mb-1">
-                  <span className="font-bold text-white uppercase flex items-center gap-1.5">
+              <div className="space-y-1.5 pt-1 border-t border-neutral-200 dark:border-neutral-900">
+                <div className="flex items-center justify-between text-[9.5px] font-mono text-neutral-600 dark:text-neutral-400 mb-1">
+                  <span className="font-bold text-neutral-900 dark:text-white uppercase flex items-center gap-1.5">
                     <Film className="w-3 h-3 text-[#E21D1D]" />
                     <span>SELECT ANY FACTORY VIDEO ({videoList.length})</span>
                   </span>

@@ -129,7 +129,7 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
           onInspect(product);
         }
       }}
-      className="relative w-full h-full min-h-[340px] xs:min-h-[380px] sm:min-h-[420px] md:min-h-[460px] xl:min-h-[500px] rounded-2xl sm:rounded-3xl border border-neutral-800/90 hover:border-[#E21D1D] bg-neutral-950 overflow-hidden cursor-pointer group transition-all duration-300 ease-out hover:shadow-[0_20px_50px_rgba(226,29,29,0.35)] hover:-translate-y-1.5 select-none"
+      className="relative w-full h-full min-h-[340px] xs:min-h-[380px] sm:min-h-[420px] md:min-h-[460px] xl:min-h-[500px] rounded-2xl sm:rounded-3xl border border-neutral-200 dark:border-neutral-800/90 hover:border-[#E21D1D] bg-white dark:bg-neutral-950 overflow-hidden cursor-pointer group transition-all duration-300 ease-out shadow-sm hover:shadow-[0_20px_50px_rgba(226,29,29,0.35)] hover:-translate-y-1.5 select-none"
       style={{
         transform: "translate3d(0, 0, 0)",
         willChange: "transform, border-color"
@@ -155,7 +155,7 @@ const Interactive3DProductCard: React.FC<ProductCardProps> = ({
       )}
 
       {/* FULL-BLEED PRODUCT IMAGE FILLING THE ENTIRE BOX */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden bg-neutral-950">
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-neutral-100 dark:bg-neutral-950">
         <img
           src={product.image}
           alt={product.name || "Factory Apparel Sample"}
@@ -468,7 +468,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
     <section
       ref={sectionRef}
       id={`cat-section-${category.id}`}
-      className="relative py-6 sm:py-10 lg:py-14 px-1.5 sm:px-3 md:px-4 lg:px-5 overflow-hidden min-h-auto select-none w-full"
+      className="relative py-6 sm:py-10 lg:py-14 px-1.5 sm:px-3 md:px-4 lg:px-5 overflow-hidden min-h-auto select-none w-full bg-white dark:bg-black transition-colors"
     >
       {/* ============================================================== */}
       {/* 1. DYNAMIC CATEGORY-SPECIFIC LIVING BACKGROUND SYSTEM          */}
@@ -482,24 +482,31 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             src={category.bgImage}
             alt={category.bgAlt}
             loading="lazy"
-            className="w-full h-full object-cover object-center filter brightness-[0.32] contrast-125 saturate-125"
+            className="w-full h-full object-cover object-center filter opacity-15 dark:opacity-100 brightness-110 dark:brightness-[0.32] contrast-105 dark:contrast-125 saturate-100 dark:saturate-125 transition-all"
           />
         </div>
 
         {/* Multi-layered Vignettes: Center translucency + deep edge fading */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/45 to-black z-[1]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80 z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/70 to-white dark:from-black dark:via-black/45 dark:to-black z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-transparent to-white/95 dark:from-black/80 dark:via-transparent dark:to-black/80 z-[1]" />
         <div
-          className="absolute inset-0 z-[1]"
+          className="absolute inset-0 z-[1] hidden dark:block"
           style={{
             background:
               "radial-gradient(circle at 50% 50%, transparent 25%, rgba(0, 0, 0, 0.8) 85%, black 100%)"
           }}
         />
+        <div
+          className="absolute inset-0 z-[1] block dark:hidden"
+          style={{
+            background:
+              "radial-gradient(circle at 50% 50%, transparent 25%, rgba(255, 255, 255, 0.9) 85%, #ffffff 100%)"
+          }}
+        />
 
         {/* Ambient Category Glowing Atmosphere */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full blur-[140px] pointer-events-none z-[2] opacity-25"
+          className="absolute top-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full blur-[140px] pointer-events-none z-[2] opacity-15 dark:opacity-25"
           style={{
             backgroundColor: category.themeColor,
             left: isLeftImage ? "10%" : "50%"
@@ -508,16 +515,16 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
 
         {/* Large Typographic Watermark */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 left-0 w-full pointer-events-none select-none z-[2] opacity-[0.05] whitespace-nowrap overflow-hidden"
+          className="absolute top-1/2 -translate-y-1/2 left-0 w-full pointer-events-none select-none z-[2] opacity-[0.04] dark:opacity-[0.05] whitespace-nowrap overflow-hidden"
         >
-          <span className="font-display font-black text-[120px] sm:text-[180px] uppercase tracking-tighter text-white block">
+          <span className="font-display font-black text-[120px] sm:text-[180px] uppercase tracking-tighter text-neutral-900 dark:text-white block">
             {themeDetails.watermark}
           </span>
         </div>
 
         {/* Technical Blueprint Coordinate Grid Overlay */}
         <div
-          className="absolute inset-0 z-[2] opacity-15 pointer-events-none"
+          className="absolute inset-0 z-[2] opacity-10 dark:opacity-15 pointer-events-none"
           style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, ${category.themeColor} 1px, transparent 0)`,
             backgroundSize: "40px 40px"
@@ -525,10 +532,10 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
         />
 
         {/* Subtle Ambient Vignette & Texture */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none z-[3]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/50 dark:from-black/40 dark:via-transparent dark:to-black/60 pointer-events-none z-[3]" />
 
         {/* Background Environment Live Status Tag in Top Right Corner */}
-        <div className="absolute top-4 right-6 z-[3] hidden md:flex items-center gap-2 font-mono text-[9px] text-neutral-400 bg-black/60 px-3 py-1 rounded-full border border-white/10 backdrop-blur-md">
+        <div className="absolute top-4 right-6 z-[3] hidden md:flex items-center gap-2 font-mono text-[9px] text-neutral-700 dark:text-neutral-400 bg-white/85 dark:bg-black/60 px-3 py-1 rounded-full border border-neutral-200 dark:border-white/10 backdrop-blur-md shadow-sm">
           <span
             className="w-1.5 h-1.5 rounded-full animate-ping"
             style={{ backgroundColor: category.themeColor }}
@@ -553,7 +560,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             }`}
           >
             <div
-              className="relative rounded-3xl overflow-hidden border border-neutral-700/80 bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] xl:min-h-[780px] 2xl:min-h-[840px]"
+              className="relative rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-700/80 bg-white dark:bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-lg dark:shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] xl:min-h-[780px] 2xl:min-h-[840px] transition-colors"
             >
               {/* Big High-Resolution 3D Model / Garment Image or Seamless Video Loop */}
               <div className="absolute inset-0 overflow-hidden" style={{ transform: "translate3d(0, 0, 0)" }}>
@@ -563,17 +570,17 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   <img
                     src={category.heroImage}
                     alt={category.heroImageAlt || category.name}
-                    className="w-full h-full object-cover object-top filter brightness-[0.88] contrast-110"
+                    className="w-full h-full object-cover object-top opacity-35 dark:opacity-100 filter brightness-100 dark:brightness-[0.88] contrast-105 dark:contrast-110"
                   />
                 )}
-                {/* Vignette gradients for pristine text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent pointer-events-none" />
+                {/* Vignette gradients for pristine text readability in both Light and Dark mode */}
+                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-white/40 dark:from-black dark:via-black/70 dark:to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent dark:from-black/90 dark:via-black/40 dark:to-transparent pointer-events-none" />
               </div>
 
               {/* Dynamic Clean Light Sheen */}
               <div
-                className="absolute inset-0 pointer-events-none opacity-15 z-10"
+                className="absolute inset-0 pointer-events-none opacity-10 dark:opacity-15 z-10"
                 style={{
                   background:
                     "linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.4) 50%, transparent 65%)"
@@ -585,12 +592,12 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                 className="relative z-10 p-4 sm:p-7 flex items-center justify-between"
                 style={{ transform: "translateZ(20px)" }}
               >
-                <div className="inline-flex items-center gap-2 bg-black/85 border border-white/20 px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg">
+                <div className="inline-flex items-center gap-2 bg-white/95 dark:bg-black/85 border border-neutral-300 dark:border-white/20 px-3 py-1.5 rounded-full backdrop-blur-md shadow-xs dark:shadow-lg">
                   <span
                     className="w-2 h-2 rounded-full"
                     style={{ backgroundColor: category.themeColor }}
                   />
-                  <span className="font-mono text-[9px] sm:text-[10px] font-black text-white uppercase tracking-wider">
+                  <span className="font-mono text-[9px] sm:text-[10px] font-black text-neutral-900 dark:text-white uppercase tracking-wider">
                     {category.code} / 04 — {category.name}
                   </span>
                 </div>
@@ -610,14 +617,14 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   <span className="font-mono text-[10px] font-bold tracking-widest text-[#E21D1D] uppercase block mb-1">
                     {category.code} / 04 - {category.name}
                   </span>
-                  <p className="text-xs sm:text-sm font-mono text-neutral-200 leading-relaxed font-medium">
+                  <p className="text-xs sm:text-sm font-mono text-neutral-900 dark:text-neutral-200 leading-relaxed font-bold sm:font-semibold">
                     {category.description}
                   </p>
                 </div>
 
                 {/* KEY STATS BLOCK (MATCHING IMAGE.PNG EXACTLY) */}
-                <div className="pt-2 border-t border-white/10">
-                  <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-widest block mb-2">
+                <div className="pt-2 border-t border-neutral-300 dark:border-white/10">
+                  <span className="text-[10px] font-mono font-black text-neutral-900 dark:text-neutral-400 uppercase tracking-widest block mb-2">
                     KEY STATS
                   </span>
                   <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
@@ -628,12 +635,12 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                     ]).map((st, sIdx) => (
                       <div
                         key={sIdx}
-                        className="bg-black/80 backdrop-blur-md p-1.5 sm:p-2.5 rounded-xl border border-white/15 flex flex-col justify-center text-center"
+                        className="bg-white/95 dark:bg-black/80 backdrop-blur-md p-1.5 sm:p-2.5 rounded-xl border border-neutral-300 dark:border-white/15 flex flex-col justify-center text-center shadow-xs dark:shadow-md"
                       >
-                        <span className="font-mono text-[8.5px] xs:text-[10px] sm:text-xs font-black text-white block leading-tight truncate">
+                        <span className="font-mono text-[8.5px] xs:text-[10px] sm:text-xs font-black text-neutral-900 dark:text-white block leading-tight truncate">
                           {st.label}
                         </span>
-                        <span className="font-mono text-[7px] xs:text-[8px] text-neutral-400 block uppercase mt-0.5 truncate">
+                        <span className="font-mono text-[7px] xs:text-[8px] font-bold text-neutral-600 dark:text-neutral-400 block uppercase mt-0.5 truncate">
                           {st.value}
                         </span>
                       </div>
@@ -642,9 +649,9 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                 </div>
 
                 {/* SUB-CATEGORIES DIVISION SELECTOR */}
-                <div className="pt-2 border-t border-white/10">
+                <div className="pt-2 border-t border-neutral-300 dark:border-white/10">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-widest block">
+                    <span className="text-[10px] font-mono font-black text-neutral-900 dark:text-neutral-400 uppercase tracking-widest block">
                       SUB-CATEGORIES ({(category.subCategories || []).length})
                     </span>
                     <span className="text-[9px] font-mono text-[#E21D1D] font-bold">
@@ -663,12 +670,13 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                           className={`text-left p-2 rounded-xl border text-[10px] font-mono transition-all cursor-pointer flex items-center justify-between group/sub ${
                             isSubActive
                               ? "bg-[#E21D1D] border-[#E21D1D] text-white shadow-lg shadow-red-900/40"
-                              : "bg-black/80 hover:bg-neutral-900/90 border-white/15 text-neutral-300 hover:text-white"
+                              : "bg-white hover:bg-neutral-100 dark:bg-black/80 dark:hover:bg-neutral-900/90 border-neutral-300 hover:border-[#E21D1D] dark:border-white/15 text-neutral-900 hover:text-black dark:text-neutral-300 dark:hover:text-white shadow-xs"
                           }`}
                         >
                           <span className="truncate font-bold">{sub.name}</span>
-                          <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-full ${
-                            isSubActive ? "bg-black/50 text-white" : "bg-neutral-800 text-neutral-400"
+                          {/* Small count box: Black background with White numbers */}
+                          <span className={`text-[8.5px] font-mono font-black px-1.5 py-0.5 rounded-md min-w-[24px] text-center ${
+                            isSubActive ? "bg-black text-white" : "bg-neutral-900 dark:bg-neutral-800 text-white shadow-xs"
                           }`}>
                             {count}
                           </span>
@@ -689,7 +697,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   </a>
                   <a
                     href="#b2b-calculator"
-                    className="bg-black/70 hover:bg-black/95 text-white border border-white/25 hover:border-white font-display font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider text-center flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md"
+                    className="bg-white hover:bg-neutral-100 text-neutral-900 border border-neutral-300 hover:border-black dark:bg-black/70 dark:hover:bg-black/95 dark:text-white dark:border-white/25 dark:hover:border-white font-display font-bold py-3 px-4 rounded-xl text-xs uppercase tracking-wider text-center flex items-center justify-center gap-1.5 transition-all cursor-pointer backdrop-blur-md shadow-xs dark:shadow-none"
                   >
                     <span>REQUEST OEM QUOTE</span>
                   </a>
@@ -709,7 +717,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
           >
             {/* Ambient Under-Grid Chamber Backdrop Layer */}
             <div className="absolute inset-0 -m-3 sm:-m-4 pointer-events-none rounded-3xl overflow-hidden -z-10">
-              <div className="absolute inset-0 bg-neutral-950/60 backdrop-blur-[6px] border border-white/10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.8)]" />
+              <div className="absolute inset-0 bg-white/90 dark:bg-neutral-950/60 backdrop-blur-[6px] border border-neutral-200 dark:border-white/10 rounded-3xl shadow-lg dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)]" />
 
               {/* Subtle Laser Accent Line through Under-Grid Chamber */}
               <div
@@ -735,15 +743,15 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             </div>
 
             {/* Header Bar above products with clean, intuitive navigation */}
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-2 pb-2 border-b border-neutral-800/80">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-2 pb-2 border-b border-neutral-200 dark:border-neutral-800/80">
               <div className="flex items-center gap-2.5 flex-wrap">
                 <span className="font-mono text-xs sm:text-sm font-black text-[#E21D1D]">
                   [SAMPLE LINEUP]
                 </span>
-                <h4 className="font-display font-black text-base sm:text-lg lg:text-xl text-white uppercase tracking-tight flex items-center flex-wrap gap-1.5">
+                <h4 className="font-display font-black text-base sm:text-lg lg:text-xl text-neutral-900 dark:text-white uppercase tracking-tight flex items-center flex-wrap gap-1.5">
                   <span>{category.name}</span>
                   {genderFilter !== "all" && (
-                    <span className="text-emerald-400 font-mono text-xs font-bold uppercase bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-500/30">
+                    <span className="text-emerald-600 dark:text-emerald-400 font-mono text-xs font-bold uppercase bg-emerald-50 dark:bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-300 dark:border-emerald-500/30">
                       / {genderFilter === "mens" ? "MEN'S" : "WOMEN'S"}
                     </span>
                   )}
@@ -753,7 +761,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                     </span>
                   )}
                 </h4>
-                <span className="font-mono text-[10.5px] sm:text-xs text-neutral-300 bg-neutral-900/90 px-3 py-0.5 rounded-full border border-neutral-800">
+                <span className="font-mono text-[10.5px] sm:text-xs text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-900/90 px-3 py-0.5 rounded-full border border-neutral-200 dark:border-neutral-800 shadow-xs">
                   {filteredProducts.length > 0 ? currentPage * pageSize + 1 : 0}-{Math.min((currentPage + 1) * pageSize, filteredProducts.length)} OF {filteredProducts.length}
                 </span>
 
@@ -765,7 +773,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                       })
                     )
                   }
-                  className="inline-flex font-mono text-[11px] sm:text-xs font-black text-[#ff4d4d] hover:text-white hover:underline items-center gap-1 cursor-pointer ml-1"
+                  className="inline-flex font-mono text-[11px] sm:text-xs font-black text-[#E21D1D] hover:underline items-center gap-1 cursor-pointer ml-1"
                   title="Open All Products in Dedicated Catalog Page"
                 >
                   <span>VIEW FULL CATALOG ➔</span>
@@ -775,23 +783,23 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
               {/* Clean Left/Right Controls with Page Indicator */}
               <div className="flex items-center gap-2">
                 {totalPages > 1 && (
-                  <div className="flex items-center gap-2 bg-black/85 border border-neutral-700/80 rounded-xl p-1 shadow-lg backdrop-blur-md">
+                  <div className="flex items-center gap-2 bg-white dark:bg-black/85 border border-neutral-200 dark:border-neutral-700/80 rounded-xl p-1 shadow-md dark:shadow-lg backdrop-blur-md">
                     <button
                       onClick={handlePrevPage}
                       aria-label="Previous Products (Left)"
                       title="Previous Products"
-                      className="p-2 rounded-lg hover:bg-neutral-800 text-neutral-300 hover:text-white transition-colors cursor-pointer active:scale-90"
+                      className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors cursor-pointer active:scale-90"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
-                    <span className="font-mono text-xs font-bold text-white px-2.5 tracking-wider">
+                    <span className="font-mono text-xs font-bold text-neutral-900 dark:text-white px-2.5 tracking-wider">
                       {currentPage + 1} / {totalPages}
                     </span>
                     <button
                       onClick={handleNextPage}
                       aria-label="Next Products (Right)"
                       title="Next Products"
-                      className="p-2 rounded-lg hover:bg-neutral-800 text-neutral-300 hover:text-white transition-colors cursor-pointer active:scale-90"
+                      className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-colors cursor-pointer active:scale-90"
                     >
                       <ChevronRight className="w-4 h-4" />
                     </button>
@@ -802,8 +810,8 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
 
             {/* 1. GENDER / DIVISION SELECTOR TABS (MENS / WOMENS / ALL) */}
             {(genderCounts.mens > 0 && genderCounts.womens > 0) && (
-              <div className="flex items-center gap-1.5 sm:gap-2 mb-2 pb-1.5 border-b border-neutral-800/80 overflow-x-auto scrollbar-none">
-                <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-wider flex items-center gap-1 shrink-0 mr-1">
+              <div className="flex items-center gap-1.5 sm:gap-2 mb-2 pb-1.5 border-b border-neutral-200 dark:border-neutral-800/80 overflow-x-auto scrollbar-none">
+                <span className="text-[10px] font-mono font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider flex items-center gap-1 shrink-0 mr-1">
                   <Users className="w-3.5 h-3.5 text-[#E21D1D]" />
                   <span>COLLECTION:</span>
                 </span>
@@ -818,11 +826,11 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                     className={`px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
                       genderFilter === "all"
                         ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40"
-                        : "bg-neutral-900/90 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
+                        : "bg-white hover:bg-neutral-100 dark:bg-neutral-900/90 dark:hover:bg-neutral-800 text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white border border-neutral-200 dark:border-neutral-800 shadow-xs"
                     }`}
                   >
                     <span>ALL SAMPLES</span>
-                    <span className={`text-[8.5px] px-1.5 py-0.2 rounded-full font-bold ${genderFilter === "all" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"}`}>
+                    <span className={`text-[8.5px] px-1.5 py-0.5 rounded-md font-mono font-black ${genderFilter === "all" ? "bg-black text-white" : "bg-neutral-900 dark:bg-neutral-800 text-white shadow-xs"}`}>
                       {genderCounts.all}
                     </span>
                   </button>
@@ -836,11 +844,11 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                     className={`px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
                       genderFilter === "mens"
                         ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40"
-                        : "bg-neutral-900/90 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
+                        : "bg-white hover:bg-neutral-100 dark:bg-neutral-900/90 dark:hover:bg-neutral-800 text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white border border-neutral-200 dark:border-neutral-800 shadow-xs"
                     }`}
                   >
                     <span>MEN'S APPAREL</span>
-                    <span className={`text-[8.5px] px-1.5 py-0.2 rounded-full font-bold ${genderFilter === "mens" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"}`}>
+                    <span className={`text-[8.5px] px-1.5 py-0.5 rounded-md font-mono font-black ${genderFilter === "mens" ? "bg-black text-white" : "bg-neutral-900 dark:bg-neutral-800 text-white shadow-xs"}`}>
                       {genderCounts.mens}
                     </span>
                   </button>
@@ -854,11 +862,11 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                     className={`px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black uppercase transition-all cursor-pointer flex items-center gap-1.5 ${
                       genderFilter === "womens"
                         ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40"
-                        : "bg-neutral-900/90 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
+                        : "bg-white hover:bg-neutral-100 dark:bg-neutral-900/90 dark:hover:bg-neutral-800 text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white border border-neutral-200 dark:border-neutral-800 shadow-xs"
                     }`}
                   >
                     <span>WOMEN'S APPAREL</span>
-                    <span className={`text-[8.5px] px-1.5 py-0.2 rounded-full font-bold ${genderFilter === "womens" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"}`}>
+                    <span className={`text-[8.5px] px-1.5 py-0.5 rounded-md font-mono font-black ${genderFilter === "womens" ? "bg-black text-white" : "bg-neutral-900 dark:bg-neutral-800 text-white shadow-xs"}`}>
                       {genderCounts.womens}
                     </span>
                   </button>
@@ -867,19 +875,19 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             )}
 
             {/* 2. COMPACT SUBCATEGORIES TRACK WITH SMOOTH HORIZONTAL SCROLL ARROWS (< and >) */}
-            <div className="relative flex items-center gap-1.5 mb-3.5 bg-black/75 p-1.5 sm:p-2 rounded-2xl border border-neutral-800/90 backdrop-blur-md">
+            <div className="relative flex items-center gap-1.5 mb-3.5 bg-neutral-100/90 dark:bg-black/75 p-1.5 sm:p-2 rounded-2xl border border-neutral-200 dark:border-neutral-800/90 backdrop-blur-md shadow-sm dark:shadow-none">
               {/* Left Arrow Button */}
               <button
                 type="button"
                 onClick={() => scrollSubCategories("left")}
-                className="p-1.5 rounded-lg bg-neutral-900 hover:bg-[#E21D1D] text-neutral-300 hover:text-white border border-neutral-800 transition-colors shrink-0 shadow cursor-pointer active:scale-90"
+                className="p-1.5 rounded-lg bg-white dark:bg-neutral-900 hover:bg-[#E21D1D] text-neutral-700 dark:text-neutral-300 hover:text-white border border-neutral-200 dark:border-neutral-800 transition-colors shrink-0 shadow-xs cursor-pointer active:scale-90"
                 title="Scroll Categories Left"
                 aria-label="Scroll Categories Left"
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
               </button>
 
-              <div className="flex items-center gap-1.5 mr-1 font-mono text-[9px] sm:text-[10px] font-black text-neutral-400 uppercase tracking-wider pl-1 shrink-0">
+              <div className="flex items-center gap-1.5 mr-1 font-mono text-[9px] sm:text-[10px] font-black text-neutral-600 dark:text-neutral-400 uppercase tracking-wider pl-1 shrink-0">
                 <Layers className="w-3.5 h-3.5 text-[#E21D1D]" />
                 <span className="hidden md:inline">SUB-CATEGORIES:</span>
               </div>
@@ -895,13 +903,13 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   className={`px-2.5 py-1 sm:py-1.5 rounded-lg font-mono text-[9.5px] sm:text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                     selectedSubCategory === "all"
                       ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40 font-black scale-102"
-                      : "bg-neutral-900/80 hover:bg-neutral-800 text-neutral-400 hover:text-white border border-neutral-800"
+                      : "bg-white hover:bg-neutral-100 dark:bg-neutral-900/80 dark:hover:bg-neutral-800 text-neutral-700 hover:text-black dark:text-neutral-400 dark:hover:text-white border border-neutral-200 dark:border-neutral-800 shadow-xs"
                   }`}
                 >
                   <span>ALL {genderFilter === "mens" ? "MEN'S" : genderFilter === "womens" ? "WOMEN'S" : ""} SAMPLES</span>
                   <span
-                    className={`text-[8px] font-black px-1.5 py-0.2 rounded-full ${
-                      selectedSubCategory === "all" ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"
+                    className={`text-[8.5px] font-mono font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center ${
+                      selectedSubCategory === "all" ? "bg-black text-white" : "bg-neutral-900 dark:bg-neutral-800 text-white shadow-xs"
                     }`}
                   >
                     {filteredProducts.length}
@@ -918,13 +926,13 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                       className={`px-2.5 py-1 sm:py-1.5 rounded-lg font-mono text-[9.5px] sm:text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                         isSubActive
                           ? "bg-[#E21D1D] text-white shadow-md shadow-red-900/40 font-black scale-102"
-                          : "bg-neutral-900/80 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800"
+                          : "bg-white hover:bg-neutral-100 dark:bg-neutral-900/80 dark:hover:bg-neutral-800 text-neutral-800 hover:text-black dark:text-neutral-300 dark:hover:text-white border border-neutral-300 dark:border-neutral-800 shadow-xs"
                       }`}
                     >
-                      <span>{sub.label}</span>
+                      <span className="font-bold">{sub.label}</span>
                       <span
-                        className={`text-[8px] font-black px-1.5 py-0.2 rounded-full ${
-                          isSubActive ? "bg-black/40 text-white" : "bg-neutral-800 text-neutral-400"
+                        className={`text-[8.5px] font-mono font-black px-1.5 py-0.5 rounded-md min-w-[20px] text-center ${
+                          isSubActive ? "bg-black text-white" : "bg-neutral-900 dark:bg-neutral-800 text-white shadow-xs"
                         }`}
                       >
                         {sub.count}
@@ -938,7 +946,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
               <button
                 type="button"
                 onClick={() => scrollSubCategories("right")}
-                className="p-1.5 rounded-lg bg-neutral-900 hover:bg-[#E21D1D] text-neutral-300 hover:text-white border border-neutral-800 transition-colors shrink-0 shadow cursor-pointer active:scale-90"
+                className="p-1.5 rounded-lg bg-white dark:bg-neutral-900 hover:bg-[#E21D1D] text-neutral-700 dark:text-neutral-300 hover:text-white border border-neutral-200 dark:border-neutral-800 transition-colors shrink-0 shadow-xs cursor-pointer active:scale-90"
                 title="Scroll Categories Right"
                 aria-label="Scroll Categories Right"
               >
@@ -990,7 +998,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
 
             {/* Bottom Bar with Interactive Dots & Total Count */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between pt-2.5 mt-2 border-t border-neutral-800/80 text-[10px] font-mono text-neutral-400">
+              <div className="flex items-center justify-between pt-2.5 mt-2 border-t border-neutral-200 dark:border-neutral-800/80 text-[10px] font-mono text-neutral-600 dark:text-neutral-400">
                 <span className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#E21D1D]" />
                   <span>
@@ -1016,7 +1024,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                         className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                           currentPage === i
                             ? "w-7 bg-[#E21D1D]"
-                            : "w-2 bg-neutral-700 hover:bg-neutral-500"
+                            : "w-2 bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-500"
                         }`}
                         title={`Jump to Page ${i + 1}`}
                       />
@@ -1025,16 +1033,16 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                     <div className="flex items-center gap-1.5 font-mono text-[10px]">
                       <button
                         onClick={handlePrevPage}
-                        className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-700 hover:bg-neutral-800 text-neutral-300 hover:text-white"
+                        className="px-2 py-0.5 rounded bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white"
                       >
                         PREV
                       </button>
-                      <span className="text-white px-1 font-bold">
+                      <span className="text-neutral-900 dark:text-white px-1 font-bold">
                         PAGE {currentPage + 1} OF {totalPages}
                       </span>
                       <button
                         onClick={handleNextPage}
-                        className="px-2 py-0.5 rounded bg-neutral-900 border border-neutral-700 hover:bg-neutral-800 text-neutral-300 hover:text-white"
+                        className="px-2 py-0.5 rounded bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white"
                       >
                         NEXT
                       </button>
@@ -1137,10 +1145,10 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
   return (
     <div
       id="3d-deconstruction"
-      className="relative w-full bg-black text-white selection:bg-[#E21D1D] selection:text-white"
+      className="relative w-full bg-white dark:bg-black text-neutral-900 dark:text-white selection:bg-[#E21D1D] selection:text-white transition-colors"
     >
       {/* ================= 1. SECTION INTRO HEADER & QUICK JUMP BAR ================= */}
-      <div className="relative pt-20 sm:pt-24 pb-8 px-3 sm:px-6 lg:px-8 xl:px-10 2xl:px-14 w-full max-w-[2160px] mx-auto border-b border-neutral-800">
+      <div className="relative pt-20 sm:pt-24 pb-8 px-3 sm:px-6 lg:px-8 xl:px-10 2xl:px-14 w-full max-w-[2160px] mx-auto border-b border-neutral-200 dark:border-neutral-800">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-3">
@@ -1149,10 +1157,10 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
                 TRY WEARS GLOBAL OEM/ODM MANUFACTURING DIVISIONS • SIALKOT FACTORY DIRECT
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black tracking-tight text-white uppercase leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black tracking-tight text-neutral-900 dark:text-white uppercase leading-tight">
               CORE APPAREL & GEAR DIVISIONS FOR GLOBAL BUYERS
             </h2>
-            <p className="text-xs sm:text-sm font-mono text-neutral-300 mt-2 max-w-3xl leading-relaxed uppercase">
+            <p className="text-xs sm:text-sm font-mono text-neutral-600 dark:text-neutral-300 mt-2 max-w-3xl leading-relaxed uppercase">
               Factory direct manufacturing for sports federations, fitness chains, fight leagues, and luxury streetwear brands. Browse 72+ physical production samples with custom Pantone matching, Italian sublimation, 550 GSM heavyweight French Terry, and private label trims.
             </p>
           </div>
@@ -1160,7 +1168,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
           {/* Quick Actions Pills */}
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
             {/* Quick Stats Pill */}
-            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-neutral-900/90 border border-white/10 font-mono text-xs text-white shadow-lg">
+            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-white dark:bg-neutral-900/90 border border-neutral-200 dark:border-white/10 font-mono text-xs text-neutral-900 dark:text-white shadow-md dark:shadow-lg">
               <Factory className="w-4 h-4 text-[#E21D1D]" />
               <div>
                 <span className="text-[#E21D1D] font-bold block text-[10px]">DIRECT B2B SUPPLY</span>
@@ -1180,8 +1188,8 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
                 onClick={() => handleScrollToCategory(cat.id)}
                 className={`relative text-left p-3.5 rounded-xl border transition-all duration-300 cursor-pointer flex items-center justify-between group overflow-hidden ${
                   isActive
-                    ? "border-[#E21D1D] shadow-lg shadow-[#E21D1D]/20 bg-neutral-900/90"
-                    : "bg-neutral-950 border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900"
+                    ? "border-[#E21D1D] shadow-lg shadow-[#E21D1D]/20 bg-neutral-100 dark:bg-neutral-900/90"
+                    : "bg-white dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 hover:border-[#E21D1D]/60 hover:bg-neutral-50 dark:hover:bg-neutral-900 shadow-xs"
                 }`}
               >
                 {/* Active Sliding Glowing Background */}
@@ -1194,10 +1202,10 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
                 )}
 
                 <div className="relative z-10 flex-1 min-w-0 pr-2">
-                  <span className="font-mono text-[9px] font-bold text-neutral-500 group-hover:text-neutral-300 block">
+                  <span className="font-mono text-[9px] font-bold text-neutral-500 dark:text-neutral-500 group-hover:text-neutral-800 dark:group-hover:text-neutral-300 block">
                     CATEGORY {cat.code} • {cat.products?.length || 0} SAMPLES
                   </span>
-                  <span className="font-display font-black text-xs sm:text-sm uppercase tracking-tight text-white group-hover:text-[#E21D1D] transition-colors truncate block">
+                  <span className="font-display font-black text-xs sm:text-sm uppercase tracking-tight text-neutral-900 dark:text-white group-hover:text-[#E21D1D] transition-colors truncate block">
                     {cat.name}
                   </span>
 
@@ -1206,7 +1214,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
                     {cat.subCategories?.slice(0, 3).map((sub) => (
                       <span
                         key={sub.id}
-                        className="text-[7.5px] font-mono text-neutral-400 bg-neutral-900/90 px-1.5 py-0.5 rounded border border-white/5 truncate max-w-[105px]"
+                        className="text-[7.5px] font-mono text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-900/90 px-1.5 py-0.5 rounded border border-neutral-200 dark:border-white/5 truncate max-w-[105px]"
                       >
                         {sub.name}
                       </span>
@@ -1220,7 +1228,7 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
                 </div>
                 <ArrowRight
                   className={`w-4 h-4 shrink-0 relative z-10 transition-all ${
-                    isActive ? "text-[#E21D1D] translate-x-1" : "text-neutral-500 group-hover:text-white group-hover:translate-x-1"
+                    isActive ? "text-[#E21D1D] translate-x-1" : "text-neutral-400 group-hover:text-neutral-900 dark:group-hover:text-white group-hover:translate-x-1"
                   }`}
                 />
               </button>
@@ -1230,12 +1238,12 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
       </div>
 
       {/* ================= STICKY / FLOATING CATEGORIES NAVIGATION HUD ================= */}
-      <div className="sticky top-0 z-30 py-2.5 px-4 sm:px-6 bg-neutral-950/90 backdrop-blur-xl border-b border-neutral-800/80 flex items-center justify-between text-xs font-mono">
+      <div className="sticky top-0 z-30 py-2.5 px-4 sm:px-6 bg-white/95 dark:bg-neutral-950/90 backdrop-blur-xl border-b border-neutral-200 dark:border-neutral-800/80 flex items-center justify-between text-xs font-mono shadow-xs">
         <div className="flex items-center gap-2 sm:gap-3">
           <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />
           <span className="text-[#E21D1D] font-bold tracking-wider">TRY WEARS FACTORY DIVISIONS</span>
-          <span className="text-neutral-600 hidden sm:inline">|</span>
-          <span className="text-neutral-300 uppercase truncate">
+          <span className="text-neutral-400 dark:text-neutral-600 hidden sm:inline">|</span>
+          <span className="text-neutral-800 dark:text-neutral-300 uppercase truncate">
             CATEGORY {activeCategory.code}: {activeCategory.name}
           </span>
         </div>
@@ -1250,14 +1258,14 @@ export const ScrollDeconstructed3DGarment: React.FC = () => {
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   activeTab === c.id
                     ? "w-7 bg-[#E21D1D]"
-                    : "w-2.5 bg-neutral-700 hover:bg-neutral-500"
+                    : "w-2.5 bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-500"
                 }`}
                 title={c.name}
               />
             ))}
           </div>
 
-          <span className="text-[10px] text-neutral-400 hidden md:inline">
+          <span className="text-[10px] text-neutral-500 dark:text-neutral-400 hidden md:inline">
             {(categories || []).reduce((acc, curr) => acc + (curr.products?.length || 0), 0)} TOTAL SAMPLES
           </span>
         </div>

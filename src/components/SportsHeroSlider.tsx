@@ -236,7 +236,7 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
     <section
       id="hero-slider"
       ref={heroRef}
-      className="relative min-h-[520px] xs:min-h-[580px] sm:min-h-[700px] lg:min-h-[820px] bg-neutral-950 overflow-hidden border-b border-neutral-900 select-none"
+      className="relative min-h-[520px] xs:min-h-[580px] sm:min-h-[700px] lg:min-h-[820px] bg-white dark:bg-neutral-950 overflow-hidden border-b border-neutral-200 dark:border-neutral-900 select-none transition-colors"
     >
       {/* SOLID, HARDWARE-ACCELERATED HERO CONTAINER */}
       <div 
@@ -301,9 +301,9 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
             </AnimatePresence>
           )}
 
-          {/* Dark Gradients & Vignette for Contrast */}
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/45 to-neutral-950/70 pointer-events-none" />
-          <div className="absolute inset-y-0 left-0 w-full lg:w-[65%] bg-gradient-to-r from-neutral-950/95 via-neutral-950/75 to-transparent pointer-events-none" />
+          {/* Dark / Light Gradients & Vignette for Contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/50 to-white/70 dark:from-neutral-950 dark:via-neutral-950/45 dark:to-neutral-950/70 pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-full lg:w-[65%] bg-gradient-to-r from-white/98 via-white/85 to-transparent dark:from-neutral-950/95 dark:via-neutral-950/75 dark:to-transparent pointer-events-none" />
 
           {/* CYBER FLOOR GRID */}
           {videoSettings.showHoloGrid && (
@@ -359,24 +359,24 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
             
             {/* Left Status Badges */}
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-2 sm:gap-3 bg-black/75 backdrop-blur-md border border-white/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[9px] sm:text-[10px] font-mono text-neutral-300 shadow-xl">
+              <div className="inline-flex items-center gap-2 sm:gap-3 bg-white/90 dark:bg-black/75 backdrop-blur-md border border-neutral-200 dark:border-white/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[9px] sm:text-[10px] font-mono text-neutral-700 dark:text-neutral-300 shadow-md dark:shadow-xl">
                 <span className="flex h-2 w-2 relative shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E21D1D] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E21D1D]" />
                 </span>
-                <span className="font-black text-white tracking-wider sm:tracking-widest uppercase">
+                <span className="font-black text-neutral-900 dark:text-white tracking-wider sm:tracking-widest uppercase">
                   B2B COMBAT FACTORY ACTIVE
                 </span>
-                <span className="text-neutral-600 hidden sm:inline">|</span>
-                <span className="hidden sm:inline text-neutral-400">SIALKOT & NY EXPORT DIVISIONS</span>
-                <span className="text-neutral-600 hidden md:inline">|</span>
-                <span className="hidden md:inline text-emerald-400 font-bold">LOW MOQ 20 PCS</span>
+                <span className="text-neutral-400 dark:text-neutral-600 hidden sm:inline">|</span>
+                <span className="hidden sm:inline text-neutral-600 dark:text-neutral-400">SIALKOT & NY EXPORT DIVISIONS</span>
+                <span className="text-neutral-400 dark:text-neutral-600 hidden md:inline">|</span>
+                <span className="hidden md:inline text-emerald-600 dark:text-emerald-400 font-bold">LOW MOQ 20 PCS</span>
               </div>
 
               {/* Mode Indicator Badge */}
-              <div className="hidden sm:inline-flex items-center gap-2 bg-neutral-900/80 border border-white/10 px-3 py-1.5 rounded-full text-[10px] font-mono text-neutral-300">
+              <div className="hidden sm:inline-flex items-center gap-2 bg-neutral-100 dark:bg-neutral-900/80 border border-neutral-200 dark:border-white/10 px-3 py-1.5 rounded-full text-[10px] font-mono text-neutral-700 dark:text-neutral-300">
                 <Rotate3d className="w-3.5 h-3.5 text-[#E21D1D]" />
-                <span className="font-bold text-white uppercase">
+                <span className="font-bold text-neutral-900 dark:text-white uppercase">
                   {videoSettings.activeMode.toUpperCase()}
                 </span>
               </div>
@@ -394,11 +394,11 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
                       videoRef.current.muted = newMuteState;
                     }
                   }}
-                  className="p-2 rounded-full bg-black/70 hover:bg-black/90 border border-white/15 text-neutral-300 hover:text-white transition-all cursor-pointer"
+                  className="p-2 rounded-full bg-white dark:bg-black/70 hover:bg-neutral-100 dark:hover:bg-black/90 border border-neutral-200 dark:border-white/15 text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white transition-all cursor-pointer shadow-xs"
                   title={videoSettings.isMuted ? "Unmute Sound" : "Mute Sound"}
                 >
                   {videoSettings.isMuted ? (
-                    <VolumeX className="w-4 h-4 text-neutral-400" />
+                    <VolumeX className="w-4 h-4 text-neutral-500" />
                   ) : (
                     <Volume2 className="w-4 h-4 text-[#E21D1D] animate-pulse" />
                   )}
@@ -406,16 +406,16 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
               )}
 
               {/* Slide Counter / Play Pause */}
-              <div className="flex items-center gap-2.5 bg-black/75 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full font-mono text-xs shadow-xl">
+              <div className="flex items-center gap-2.5 bg-white dark:bg-black/75 backdrop-blur-md border border-neutral-200 dark:border-white/10 px-3 py-1.5 rounded-full font-mono text-xs shadow-xs dark:shadow-xl text-neutral-800 dark:text-neutral-300">
                 <span className="text-[#E21D1D] font-black text-xs">
                   0{currentSlide + 1}
                 </span>
-                <span className="text-neutral-600">/</span>
-                <span className="text-neutral-400 text-xs">0{slides.length}</span>
+                <span className="text-neutral-400 dark:text-neutral-600">/</span>
+                <span className="text-neutral-600 dark:text-neutral-400 text-xs">0{slides.length}</span>
                 
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="ml-1 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                  className="ml-1 text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer"
                   title={isPlaying ? "Pause Slideshow" : "Play Slideshow"}
                 >
                   {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}

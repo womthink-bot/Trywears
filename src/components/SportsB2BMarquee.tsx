@@ -26,7 +26,7 @@ const MARQUEE_ROW_2 = [
 export const SportsB2BMarquee: React.FC = () => {
   return (
     <div
-      className="relative z-20 py-6 overflow-hidden bg-[#060608] border-y border-neutral-800 select-none shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+      className="relative z-20 py-6 overflow-hidden bg-neutral-100 dark:bg-[#060608] border-y border-neutral-200 dark:border-neutral-800 select-none shadow-xs dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] transition-colors"
     >
       {/* Ambient Red Laser Beam Lights */}
       <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[#E21D1D] to-transparent shadow-[0_0_15px_#E21D1D]" />
@@ -51,10 +51,10 @@ export const SportsB2BMarquee: React.FC = () => {
                 {MARQUEE_ROW_1.map((item, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center gap-3 bg-neutral-900/90 border border-white/10 hover:border-[#E21D1D]/60 px-4 py-2 rounded-2xl shadow-lg transition-all group"
+                    className="flex items-center gap-3 bg-white dark:bg-neutral-900/90 border border-neutral-200 dark:border-white/10 hover:border-[#E21D1D]/60 px-4 py-2 rounded-2xl shadow-sm dark:shadow-lg transition-all group"
                   >
                     <span className="w-2 h-2 rounded-full bg-[#E21D1D] animate-ping" />
-                    <span className="font-display font-black text-xs sm:text-sm tracking-wider uppercase text-white group-hover:text-[#E21D1D] transition-colors">
+                    <span className="font-display font-black text-xs sm:text-sm tracking-wider uppercase text-neutral-900 dark:text-white group-hover:text-[#E21D1D] transition-colors">
                       {item}
                     </span>
                     <span className="text-[#E21D1D] text-xs font-black">★</span>

@@ -205,17 +205,17 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
     <section
       id="fashion-custom-video-studio"
       ref={sectionRef}
-      className="relative py-28 px-4 sm:px-6 lg:px-8 bg-neutral-950 overflow-hidden border-b border-neutral-900 selection:bg-[#E21D1D] selection:text-white"
+      className="relative py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white overflow-hidden border-b border-neutral-200 dark:border-neutral-900 selection:bg-[#E21D1D] selection:text-white transition-colors"
     >
       {/* Dynamic Luxury Ambient Glow Backgrounds */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] sm:w-[900px] h-[450px] bg-gradient-to-b from-[#E21D1D]/15 via-red-950/10 to-transparent blur-[140px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] sm:w-[900px] h-[450px] bg-gradient-to-b from-[#E21D1D]/10 via-red-950/5 dark:via-red-950/10 to-transparent blur-[140px] rounded-full pointer-events-none -z-10" />
       <div className="absolute bottom-10 right-10 w-[400px] h-[300px] bg-amber-600/5 blur-[120px] rounded-full pointer-events-none -z-10" />
 
       {/* Cyber Grid Texture */}
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none -z-10" 
         style={{
-          backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+          backgroundImage: "linear-gradient(#888 1px, transparent 1px), linear-gradient(90deg, #888 1px, transparent 1px)",
           backgroundSize: "48px 48px"
         }}
       />
@@ -223,18 +223,18 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* ================= 1. LUXURY SECTION HEADER ================= */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-neutral-200 dark:border-white/10 pb-8">
           <div className="space-y-3 max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E21D1D]/10 border border-[#E21D1D]/30 text-[#E21D1D] text-xs font-mono font-bold tracking-widest uppercase">
               <Sparkles className="w-3.5 h-3.5 animate-pulse" />
               <span>HAUTE STREETWEAR & BESPOKE CUT-SEW ATELIER</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-white uppercase tracking-tight leading-[1.1]">
-              CUSTOM FASHION WEAR & <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-white to-neutral-400">LUXURY ATELIER</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-neutral-900 dark:text-white uppercase tracking-tight leading-[1.1]">
+              CUSTOM FASHION WEAR & <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-600 dark:via-white to-neutral-700 dark:to-neutral-400">LUXURY ATELIER</span>
             </h2>
 
-            <p className="text-xs sm:text-sm text-neutral-400 font-mono uppercase tracking-wide leading-relaxed">
+            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-mono uppercase tracking-wide leading-relaxed">
               Design & manufacture your high-status fashion collections. From 550 GSM heavyweight organic French Terry hoodies and acid-washed vintage silhouettes to custom gunmetal hardware and private label packaging.
             </p>
           </div>
@@ -432,8 +432,8 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
                   onClick={() => setActiveFeatureTab(idx)}
                   className={`text-left p-4 sm:p-5 rounded-2xl border transition-all duration-300 cursor-pointer relative overflow-hidden flex flex-col justify-between ${
                     isActive
-                      ? "bg-neutral-900 border-[#E21D1D] shadow-[0_0_25px_rgba(226,29,29,0.3)] scale-[1.02]"
-                      : "bg-[#0c0c0c] hover:bg-neutral-900/80 border-white/5 hover:border-white/20"
+                      ? "bg-white dark:bg-neutral-900 border-[#E21D1D] shadow-md dark:shadow-[0_0_25px_rgba(226,29,29,0.3)] scale-[1.02]"
+                      : "bg-neutral-100 dark:bg-[#0c0c0c] hover:bg-neutral-200 dark:hover:bg-neutral-900/80 border-neutral-200 dark:border-white/5 hover:border-neutral-300 dark:hover:border-white/20"
                   }`}
                 >
                   {/* Top Code Badge */}
@@ -442,17 +442,17 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
                       {feat.code}
                     </span>
                     <span className={`text-[9px] font-mono font-bold tracking-widest uppercase px-2 py-0.5 rounded-full ${
-                      isActive ? "bg-[#E21D1D]/20 text-[#E21D1D]" : "bg-white/5 text-neutral-400"
+                      isActive ? "bg-[#E21D1D]/15 text-[#E21D1D]" : "bg-neutral-200 dark:bg-white/5 text-neutral-600 dark:text-neutral-400"
                     }`}>
                       {isActive ? "ACTIVE" : "EXPLORE"}
                     </span>
                   </div>
 
                   <div>
-                    <h4 className="text-xs sm:text-sm font-display font-black text-white uppercase tracking-wider line-clamp-2">
+                    <h4 className="text-xs sm:text-sm font-display font-black text-neutral-900 dark:text-white uppercase tracking-wider line-clamp-2">
                       {feat.subtitle}
                     </h4>
-                    <p className="text-[10px] font-mono text-neutral-400 mt-1 line-clamp-2">
+                    <p className="text-[10px] font-mono text-neutral-600 dark:text-neutral-400 mt-1 line-clamp-2">
                       {feat.title}
                     </p>
                   </div>
@@ -477,7 +477,7 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25 }}
-              className="p-6 sm:p-8 rounded-3xl bg-[#111118] border border-neutral-800 shadow-2xl"
+              className="p-6 sm:p-8 rounded-3xl bg-neutral-50 dark:bg-[#111118] border border-neutral-200 dark:border-neutral-800 shadow-xl dark:shadow-2xl"
             >
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
                 
@@ -487,19 +487,19 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
                     <span className="text-xs font-mono font-black text-[#E21D1D] uppercase px-2.5 py-1 rounded-lg bg-[#E21D1D]/15 border border-[#E21D1D]/30">
                       PILLAR {DEFAULT_FASHION_FEATURES[activeFeatureTab].code}
                     </span>
-                    <h4 className="text-lg sm:text-2xl font-display font-black text-white uppercase">
+                    <h4 className="text-lg sm:text-2xl font-display font-black text-neutral-900 dark:text-white uppercase">
                       {DEFAULT_FASHION_FEATURES[activeFeatureTab].title}
                     </h4>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-neutral-300 font-mono leading-relaxed">
+                  <p className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 font-mono leading-relaxed">
                     {DEFAULT_FASHION_FEATURES[activeFeatureTab].description}
                   </p>
 
                   {/* Bullet Specs Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
                     {DEFAULT_FASHION_FEATURES[activeFeatureTab].specs.map((spec, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs font-mono text-neutral-200">
+                      <div key={i} className="flex items-center gap-2 text-xs font-mono text-neutral-800 dark:text-neutral-200">
                         <CheckCircle2 className="w-4 h-4 text-[#E21D1D] shrink-0" />
                         <span>{spec}</span>
                       </div>
@@ -508,16 +508,16 @@ export const FashionWearCustomVideoSection: React.FC<{ onNavigatePage?: (page: s
                 </div>
 
                 {/* Right Side: Factory Turnaround Box */}
-                <div className="bg-black/60 border border-white/10 rounded-2xl p-5 space-y-4">
+                <div className="bg-white dark:bg-black/60 border border-neutral-200 dark:border-white/10 rounded-2xl p-5 space-y-4 shadow-sm">
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono font-bold text-neutral-400 uppercase tracking-widest block">
+                    <span className="text-[10px] font-mono font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-widest block">
                       FACTORY SAMPLING & PRODUCTION
                     </span>
 
                     <div className="space-y-2 text-xs font-mono">
-                      <div className="flex justify-between py-1 border-b border-white/5">
-                        <span className="text-neutral-400">Low MOQ:</span>
-                        <span className="text-white font-bold">20 Pcs / Colorway</span>
+                      <div className="flex justify-between py-1 border-b border-neutral-200 dark:border-white/5">
+                        <span className="text-neutral-500 dark:text-neutral-400">Low MOQ:</span>
+                        <span className="text-neutral-900 dark:text-white font-bold">20 Pcs / Colorway</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-white/5">
                         <span className="text-neutral-400">Sample Turnaround:</span>

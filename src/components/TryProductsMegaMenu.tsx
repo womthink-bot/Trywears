@@ -186,7 +186,7 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
           className={`relative flex items-center gap-1.5 px-2.5 2xl:px-3 py-1.5 rounded-lg text-[11px] 2xl:text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 cursor-pointer ${
             isOpen
               ? "text-white bg-[#E21D1D] shadow-[0_0_15px_rgba(226,29,29,0.5)] font-black"
-              : "text-neutral-200 hover:text-white hover:bg-neutral-800/80 border border-neutral-700/60"
+              : "text-neutral-800 dark:text-neutral-200 hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800/80 border border-neutral-300 dark:border-neutral-700/60"
           }`}
           title="Browse All Try Products Folders & Samples"
         >
@@ -194,10 +194,10 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff3b3b]" />
           </span>
-          <span className="font-extrabold text-white tracking-wide">TRY WEARS</span>
+          <span className={`font-extrabold tracking-wide ${isOpen ? "text-white" : "text-neutral-900 dark:text-white"}`}>TRY WEARS</span>
           <ChevronDown
             className={`w-3.5 h-3.5 transition-transform duration-200 ${
-              isOpen ? "rotate-180 text-white" : "text-neutral-400"
+              isOpen ? "rotate-180 text-white" : "text-neutral-500 dark:text-neutral-400"
             }`}
           />
         </button>
@@ -210,16 +210,16 @@ export const TryProductsMegaMenu: React.FC<TryProductsMegaMenuProps> = ({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.98 }}
               transition={{ duration: 0.18, ease: "easeOut" }}
-              className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 w-[92vw] max-w-5xl bg-[#090910] border border-neutral-700/80 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.95)] z-[100] overflow-hidden flex flex-col backdrop-blur-2xl"
+              className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 w-[92vw] max-w-5xl bg-white dark:bg-[#090910] border border-neutral-200 dark:border-neutral-700/80 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.95)] z-[100] overflow-hidden flex flex-col backdrop-blur-2xl text-neutral-900 dark:text-white"
             >
               {/* Header Bar with Live Search & Statistics */}
-              <div className="px-5 py-3.5 bg-neutral-950 border-b border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="px-5 py-3.5 bg-neutral-50 dark:bg-neutral-950 border-b border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <div className="p-1.5 rounded-lg bg-red-600/20 text-[#ff3b3b] border border-red-500/30">
                     <PackageCheck className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="font-display font-black text-sm text-white tracking-wide uppercase">
+                    <h3 className="font-display font-black text-sm text-neutral-900 dark:text-white tracking-wide uppercase">
                       TRY PRODUCTS DIRECT FACTORY CATALOG
                     </h3>
                     <p className="font-mono text-[9px] text-neutral-400">
