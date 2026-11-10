@@ -301,9 +301,9 @@ export const SportsHeroSlider: React.FC<SportsHeroSliderProps> = ({ slides, onOp
             </AnimatePresence>
           )}
 
-          {/* Dark / Light Gradients & Vignette for Contrast */}
-          <div className="absolute inset-0 bg-gradient-to-t from-white/95 via-white/50 to-white/70 dark:from-neutral-950 dark:via-neutral-950/45 dark:to-neutral-950/70 pointer-events-none" />
-          <div className="absolute inset-y-0 left-0 w-full lg:w-[65%] bg-gradient-to-r from-white/98 via-white/85 to-transparent dark:from-neutral-950/95 dark:via-neutral-950/75 dark:to-transparent pointer-events-none" />
+          {/* Dark / Light Gradients & Vignette for Contrast - Light touch to keep video vibrant */}
+          <div className="absolute inset-0 bg-gradient-to-t from-white/20 via-transparent to-transparent dark:from-neutral-950 dark:via-neutral-950/45 dark:to-neutral-950/70 pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-full lg:w-[45%] bg-gradient-to-r from-white/30 via-transparent to-transparent dark:from-neutral-950/95 dark:via-neutral-950/75 dark:to-transparent pointer-events-none" />
 
           {/* CYBER FLOOR GRID */}
           {videoSettings.showHoloGrid && (

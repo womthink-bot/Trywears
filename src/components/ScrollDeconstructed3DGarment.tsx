@@ -562,7 +562,7 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
             <div
               className="relative rounded-3xl overflow-hidden border border-neutral-200 dark:border-neutral-700/80 bg-white dark:bg-neutral-950 flex-1 h-full flex flex-col justify-between shadow-lg dark:shadow-[0_25px_60px_rgba(0,0,0,0.9)] group min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] xl:min-h-[780px] 2xl:min-h-[840px] transition-colors"
             >
-              {/* Big High-Resolution 3D Model / Garment Image or Seamless Video Loop */}
+              {/* Big High-Resolution 3D Model / Garment Image or Seamless Video Loop - 100% CLEAR VIDEO WITHOUT WHITE FOG */}
               <div className="absolute inset-0 overflow-hidden" style={{ transform: "translate3d(0, 0, 0)" }}>
                 {category.heroVideo || category.heroImage.endsWith(".mp4") || category.heroImage.endsWith(".webm") ? (
                   <SmoothSeamlessVideo src={category.heroVideo || category.heroImage} />
@@ -570,17 +570,16 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                   <img
                     src={category.heroImage}
                     alt={category.heroImageAlt || category.name}
-                    className="w-full h-full object-cover object-top opacity-35 dark:opacity-100 filter brightness-100 dark:brightness-[0.88] contrast-105 dark:contrast-110"
+                    className="w-full h-full object-cover object-top opacity-100 filter brightness-100 contrast-105"
                   />
                 )}
-                {/* Vignette gradients for pristine text readability in both Light and Dark mode */}
-                <div className="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-white/40 dark:from-black dark:via-black/70 dark:to-transparent pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent dark:from-black/90 dark:via-black/40 dark:to-transparent pointer-events-none" />
+                {/* Subtle bottom shadow vignette only to preserve video clarity across 85% of card */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
               </div>
 
               {/* Dynamic Clean Light Sheen */}
               <div
-                className="absolute inset-0 pointer-events-none opacity-10 dark:opacity-15 z-10"
+                className="absolute inset-0 pointer-events-none opacity-5 dark:opacity-15 z-10"
                 style={{
                   background:
                     "linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.4) 50%, transparent 65%)"
@@ -608,9 +607,9 @@ const CategoryShowcaseSection: React.FC<CategoryShowcaseSectionProps> = React.me
                 />
               </div>
 
-              {/* Bottom Card Content matching image.png */}
+              {/* Bottom Card Content matching image.png with pristine readability & floating glass backdrop */}
               <div
-                className="relative z-10 p-4 sm:p-7 space-y-3 sm:space-y-4"
+                className="relative z-10 p-3.5 sm:p-5 m-2 sm:m-3.5 rounded-2xl bg-white/95 dark:bg-black/85 backdrop-blur-md border border-neutral-200/90 dark:border-white/10 space-y-3 sm:space-y-4 shadow-xl"
                 style={{ transform: "translateZ(25px)" }}
               >
                 <div>
